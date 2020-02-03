@@ -3,6 +3,7 @@ package com.ssafy.wine.controller;
 import java.util.Collections;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "*")
 public class SignController {
 
 	private final UserRepository userRepository;

@@ -34,11 +34,11 @@ public class Comment {
 	private Long cid;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_email", insertable = false, updatable = false)
+	@JoinColumn(name = "uid")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "fid", insertable = false, updatable = false)
+	@JoinColumn(name = "fid")
 	private Feed feed;
 	
 	@Column(length = 4000)
@@ -48,7 +48,7 @@ public class Comment {
 	private LocalDateTime date;
 	
 	@ManyToOne
-    @JoinColumn(name = "reComment")
+    @JoinColumn(name = "reCid")
     private Comment reComment;
 	
 	@OneToMany(mappedBy = "reComment")
