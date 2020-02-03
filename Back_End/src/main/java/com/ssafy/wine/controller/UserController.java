@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping(value = "/user")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	private final ResponseService responseService; // 결과를 처리할 Service
@@ -64,7 +64,7 @@ public class UserController {
 	@ApiOperation(value = "회원 삭제", notes = "email로 회원정보를 삭제한다")
 
 	@DeleteMapping(value = "/{uid}")
-	public CommonResult delete(@ApiParam(value = "UID", required = true) @PathVariable Long uid) {
+	public CommonResult delete(@ApiParam(value = "UID", required = true, example = "123") @PathVariable Long uid) {
 		userRepository.deleteById(uid);
 		return responseService.getSuccessResult();
 	}
