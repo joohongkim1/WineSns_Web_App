@@ -21,6 +21,19 @@ spring:
   messages:
     basename: exception
     encoding: UTF-8
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ssafytest@gmail.com
+    password: 1q2w!@QW
+    properties:      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true      
 server:
   servlet:
     context-path: /WineProject
@@ -29,5 +42,3 @@ logging:
   level:
     com:
       andy: trace
-
-
