@@ -6,3 +6,7 @@
 body {
     font-family: 'Cafe24Shiningstar';
 }
+
+.MuiInputBase-input {
+    color : black;
+}
