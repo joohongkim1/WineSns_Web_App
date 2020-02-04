@@ -73,11 +73,11 @@ public class SignController {
 		try {
 			sendMail = new MailUtils(mailSender);
 			sendMail.setTo(email);
-			sendMail.setSubject("Dionysos 회원가입 이메일 인증");
+			sendMail.setSubject("[Dionysos] 회원가입 이메일 인증");
 			sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 					.append("<a href='http://localhost:8090/WineProject/user/Confirm?email=").append(email)
 					.append("&authkey=").append(authkey).append("' target='_blenk'>이메일 인증 확인</a>").toString());
-			sendMail.setFrom("abc@naver.com", "관리자명");
+			sendMail.setFrom("noreply@Dionysos.com", "Dionysos Master");
 			sendMail.send();
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
