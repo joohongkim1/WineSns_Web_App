@@ -48,10 +48,10 @@ public class Comment {
 	private LocalDateTime date;
 	
 	@ManyToOne
-    @JoinColumn(name = "reCid")
-    private Comment reComment;
+    @JoinColumn(name = "parent")
+    private Comment parentComment;
 	
-	@OneToMany(mappedBy = "reComment")
+	@OneToMany(mappedBy = "parentComment")
 	List<Comment> comments = new ArrayList<>();
 
 	@Builder
@@ -63,14 +63,12 @@ public class Comment {
 	}
 	
 	@Builder
-	public Comment(User user, Feed feed, String content, LocalDateTime date, Comment reComment) {
+	public Comment(User user, Feed feed, String content, LocalDateTime date, Comment parentComment) {
 		this.user = user;
 		this.feed = feed;
 		this.content = content;
 		this.date = date;
-		this.reComment = reComment;
+		this.parentComment = parentComment;
 	}
-	
-	
 	
 }

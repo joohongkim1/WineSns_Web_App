@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.ssafy.wine.advice.exception.CAuthenticationEntryPointException;
-import com.ssafy.wine.advice.exception.CEmailSigninFailedException;
-import com.ssafy.wine.advice.exception.CUserNotFoundException;
+import com.ssafy.wine.exception.CAuthenticationEntryPointException;
+import com.ssafy.wine.exception.CEmailSigninFailedException;
+import com.ssafy.wine.exception.CUserNotFoundException;
 import com.ssafy.wine.handler.CommonResult;
 import com.ssafy.wine.service.ResponseService;
 

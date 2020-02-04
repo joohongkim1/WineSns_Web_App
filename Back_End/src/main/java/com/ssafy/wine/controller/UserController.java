@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.advice.exception.CUserNotFoundException;
 import com.ssafy.wine.dto.User;
+import com.ssafy.wine.exception.CUserNotFoundException;
 import com.ssafy.wine.handler.CommonResult;
 import com.ssafy.wine.handler.SingleResult;
 import com.ssafy.wine.repo.UserRepository;
@@ -45,7 +45,8 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		String email = authentication.getName();
-		return responseService.getSingleResult(userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new));
+		return responseService
+				.getSingleResult(userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new));
 	}
 
 	@ApiImplicitParams({

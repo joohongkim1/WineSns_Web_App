@@ -48,7 +48,7 @@ public class User implements UserDetails {
 	@Column(name = "facebookId")
 	String facebookId;
 
-	@Column(name = "email", length = 50)
+	@Column(name = "email", length = 50, unique = true)
 	String email;
 
 	@Column(name = "password")
