@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import ReviewModal from "./ReviewModal";
 import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
+import Search from "./Search"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -148,6 +149,7 @@ export default function List() {
           </Typography>
         </Container>
       </div>
+      <Search />
       <ReviewModal />
       <Container className={classes.cardGrid}>
         <Grid container spacing={10}>
