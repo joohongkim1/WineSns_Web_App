@@ -20,10 +20,27 @@ spring:
       force: true
   messages:
     basename: exception
-    encoding: UTF-8  servlet:    multipart:
+    encoding: UTF-8
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ssafytest@gmail.com
+    password: 1q2w!@QW
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true      
+    encoding: UTF-8
+  servlet:
+    multipart:
       enabled: true
       max-file-size: 200MB
-      max-request-size: 215MB         
+      max-request-size: 215MB
 server:
   servlet:
     context-path: /WineProject
