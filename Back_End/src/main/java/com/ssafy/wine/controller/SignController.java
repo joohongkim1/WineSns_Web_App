@@ -3,14 +3,15 @@ package com.ssafy.wine.controller;
 import java.util.Collections;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.advice.exception.CEmailSigninFailedException;
 import com.ssafy.wine.dto.User;
+import com.ssafy.wine.exception.CEmailSigninFailedException;
 import com.ssafy.wine.handler.CommonResult;
 import com.ssafy.wine.handler.SingleResult;
 import com.ssafy.wine.repo.UserRepository;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "*")
 public class SignController {
 
 	private final UserRepository userRepository;

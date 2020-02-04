@@ -1,4 +1,4 @@
-package com.ssafy.wine.advice.exception;
+package com.ssafy.wine.exception;
 
 public class CEmailSigninFailedException extends RuntimeException {
 	public CEmailSigninFailedException(String msg, Throwable t) {

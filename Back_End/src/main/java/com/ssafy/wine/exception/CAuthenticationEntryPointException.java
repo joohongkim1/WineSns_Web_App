@@ -1,4 +1,4 @@
-package com.ssafy.wine.advice.exception;
+package com.ssafy.wine.exception;
 
 public class CAuthenticationEntryPointException extends RuntimeException {
 	public CAuthenticationEntryPointException(String msg, Throwable t) {

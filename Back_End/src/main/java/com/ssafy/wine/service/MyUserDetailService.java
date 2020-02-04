@@ -4,7 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.advice.exception.CUserNotFoundException;
+import com.ssafy.wine.exception.CUserNotFoundException;
 import com.ssafy.wine.repo.UserRepository;
 
 import lombok.RequiredArgsConstructor;
