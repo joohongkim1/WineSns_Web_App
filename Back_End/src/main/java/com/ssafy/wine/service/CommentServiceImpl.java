@@ -29,17 +29,20 @@ public class CommentServiceImpl implements CommentService {
 	private UserRepository userRepository;
 
 	@Transactional
+	public Comment create(Long fid, Long uid, String content) {
+		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
+		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
+		Comment comment = new Comment(user, feed, content, LocalDateTime.now());
+		return commentRepository.save(comment);
+	}
+
+	@Transactional
 	public Comment create(Long fid, Long uid, Long cid, String content) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Comment comment;
-		if (cid == null) {
-			comment = new Comment(user, feed, content, LocalDateTime.now());
-		} else {
-			Comment reComment = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
-			comment = new Comment(user, feed, content, LocalDateTime.now(), reComment);
-		}
-		return comment;
+		Comment reComment = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+		Comment comment = new Comment(user, feed, content, LocalDateTime.now(), reComment);
+		return commentRepository.save(comment);
 	}
 
 	@Transactional

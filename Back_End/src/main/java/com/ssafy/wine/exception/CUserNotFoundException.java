@@ -1,4 +1,4 @@
-package com.ssafy.wine.advice.exception;
+package com.ssafy.wine.exception;
 
 public class CUserNotFoundException extends RuntimeException {
 	public CUserNotFoundException(String msg, Throwable t) {

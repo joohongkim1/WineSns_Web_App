@@ -8,16 +8,17 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.advice.exception.CEmailSigninFailedException;
 import com.ssafy.wine.dto.User;
 import com.ssafy.wine.email.MailUtils;
 import com.ssafy.wine.email.TempKey;
+import com.ssafy.wine.exception.CEmailSigninFailedException;
 import com.ssafy.wine.handler.CommonResult;
 import com.ssafy.wine.handler.SingleResult;
 import com.ssafy.wine.repo.UserRepository;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "*")
 public class SignController {
 
 	@Autowired

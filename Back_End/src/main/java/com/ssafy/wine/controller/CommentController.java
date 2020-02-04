@@ -25,14 +25,25 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/comment")
 @CrossOrigin(origins = "*")
 public class CommentController {
-	
+
 	@Autowired
 	private CommentService commentService;
 
 	@ApiOperation(value = "Comment 추가")
 	@PostMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid, @RequestParam(required = false) Long cid,
-			@RequestParam String content) {
+	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid, @RequestParam String content) {
+		try {
+			Comment comment = commentService.create(fid, uid, content);
+			return new ResponseEntity<Object>(comment, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@ApiOperation(value = "Comment에 대한 답변 추가")
+	@PostMapping("/createRe")
+	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid,
+			@RequestParam(required = false) Long cid, @RequestParam String content) {
 		try {
 			Comment comment = commentService.create(fid, uid, cid, content);
 			return new ResponseEntity<Object>(comment, HttpStatus.OK);
@@ -50,9 +61,9 @@ public class CommentController {
 			throw e;
 		}
 	}
-	
+
 	@ApiOperation(value = "해당 feed comment 불러오기")
-	@GetMapping("/create/{fid}")
+	@GetMapping("/findByFeed/{fid}")
 	public ResponseEntity<Object> findByFeed(@PathVariable Long fid) {
 		try {
 			List<Comment> comments = commentService.findByFeed(fid);
@@ -61,5 +72,5 @@ public class CommentController {
 			throw e;
 		}
 	}
-	
+
 }

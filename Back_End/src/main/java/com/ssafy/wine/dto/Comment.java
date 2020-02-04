@@ -34,11 +34,11 @@ public class Comment {
 	private Long cid;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_email", insertable = false, updatable = false)
+	@JoinColumn(name = "uid")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "fid", insertable = false, updatable = false)
+	@JoinColumn(name = "fid")
 	private Feed feed;
 	
 	@Column(length = 4000)
@@ -48,10 +48,10 @@ public class Comment {
 	private LocalDateTime date;
 	
 	@ManyToOne
-    @JoinColumn(name = "reComment")
-    private Comment reComment;
+    @JoinColumn(name = "parent")
+    private Comment parentComment;
 	
-	@OneToMany(mappedBy = "reComment")
+	@OneToMany(mappedBy = "parentComment")
 	List<Comment> comments = new ArrayList<>();
 
 	@Builder
@@ -63,14 +63,12 @@ public class Comment {
 	}
 	
 	@Builder
-	public Comment(User user, Feed feed, String content, LocalDateTime date, Comment reComment) {
+	public Comment(User user, Feed feed, String content, LocalDateTime date, Comment parentComment) {
 		this.user = user;
 		this.feed = feed;
 		this.content = content;
 		this.date = date;
-		this.reComment = reComment;
+		this.parentComment = parentComment;
 	}
-	
-	
 	
 }

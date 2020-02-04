@@ -26,7 +26,8 @@ spring:
     port: 587
     username: ssafytest@gmail.com
     password: 1q2w!@QW
-    properties:      mail:
+    properties:
+      mail:
         transport:
           protocol: smtp
         smtp:
@@ -34,6 +35,12 @@ spring:
           starttls:
             enable: true
         debug: true      
+    encoding: UTF-8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 215MB
 server:
   servlet:
     context-path: /WineProject
@@ -42,3 +49,11 @@ logging:
   level:
     com:
       andy: trace
+      
+file:
+  upload-dir: ./uploads
+  
+## 프로젝트내의 폴더에 업로드 파일을 설정하고 싶으면 16번째 줄처럼 
+## 본인 PC의 특정 dir에 업로드 하고 싶으면 17번쨰 줄처럼 설정한다. 
+#file.upload-dir=./uploads 
+#file.upload-dir=/Users/pang/Documents/UPLOAD_FILES    
