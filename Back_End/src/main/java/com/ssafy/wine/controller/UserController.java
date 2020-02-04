@@ -43,7 +43,6 @@ public class UserController {
 	public SingleResult<User> findUserById(@ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang) {
 		// SecurityContext에서 인증받은 회원의 정보를 얻어온다.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 		String email = authentication.getName();
 		return responseService
 				.getSingleResult(userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new));
