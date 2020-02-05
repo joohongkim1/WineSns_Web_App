@@ -19,24 +19,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@IdClass(WineLikeId.class)
-@Table(name = "wine_like")
-public class WineLike {
+@IdClass(FeedLikeId.class)
+@Table(name = "feed_like")
+public class FeedLike {
 
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "wine_id")
-	private Wine wine;
+	@JoinColumn(name = "feed_id")
+	private Feed feed;
 
 	@Builder
-	public WineLike(User user, Wine wine) {
+	public FeedLike(User user, Feed feed) {
 		this.user = user;
-		this.wine = wine;
+		this.feed = feed;
 	}
-
+	
 }

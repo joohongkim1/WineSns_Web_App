@@ -27,7 +27,7 @@ public class WineController {
 	@Autowired
 	private WineService wineService;
 
-	@ApiOperation(value = "와인 목록, 0:한글오름, 1:영어오름, 2:방문내림, 3:좋아요내림")
+	@ApiOperation(value = "와인 목록 - 0:한글오름, 1:영어오름, 2:방문내림, 3:좋아요내림")
 	@GetMapping("/readAll/{sort}")
 	public ResponseEntity<Object> readAll(@PathVariable Integer sort) {
 		try {
@@ -38,7 +38,7 @@ public class WineController {
 		}
 	}
 
-	@ApiOperation(value = "와인 top10, 0:조회수, 1:좋아요")
+	@ApiOperation(value = "와인랭크 - 0:조회수3, 1:조회수10, 2:종아요3, 3:좋아요10")
 	@GetMapping("/readTop10/{sort}")
 	public ResponseEntity<Object> readTop10(@PathVariable Integer sort) {
 		try {
@@ -49,7 +49,7 @@ public class WineController {
 		}
 	}
 
-	@ApiOperation(value = "와인 번호 검색, 개별선택")
+	@ApiOperation(value = "와인 번호 검색 - 개별선택할때")
 	@GetMapping("/readByWid/{wid}")
 	public ResponseEntity<Object> readByWid(@PathVariable Long wid) {
 		try {

@@ -11,8 +11,10 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
+    generate-ddl: true
     hibernate:
-      ddl-auto: update    
+      ddl-auto: update
+      
   http:
     encoding:
       charset: UTF-8
@@ -51,7 +53,10 @@ logging:
       andy: trace
       
 file:
-  upload-dir: ./uploads
+  upload-img-feed: ../Img/Feed
+  upload-img-profile: ../Img/User/Profile
+  upload-img-background: ../Img/User/Background
+  
   
 ## 프로젝트내의 폴더에 업로드 파일을 설정하고 싶으면 16번째 줄처럼 
 ## 본인 PC의 특정 dir에 업로드 하고 싶으면 17번쨰 줄처럼 설정한다. 

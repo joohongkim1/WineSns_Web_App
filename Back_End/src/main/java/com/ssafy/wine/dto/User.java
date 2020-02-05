@@ -61,8 +61,11 @@ public class User implements UserDetails {
 	String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<WineLike> likes = new ArrayList<>();
-
+	private List<WineLike> wineLikes = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<FeedLike> feedLikes = new ArrayList<>();
+	
 	@OneToMany(mappedBy = "to", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Follow> follower = new ArrayList<>();
 

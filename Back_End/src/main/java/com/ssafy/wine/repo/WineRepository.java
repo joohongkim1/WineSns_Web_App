@@ -23,7 +23,11 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 
 	List<Wine> findAllByOrderByLikeNumDesc();
 
+	List<Wine> findTop3ByOrderByVisitDesc();
+
 	List<Wine> findTop10ByOrderByVisitDesc();
+
+	List<Wine> findTop3ByOrderByLikeNumDesc();
 
 	List<Wine> findTop10ByOrderByLikeNumDesc();
 
@@ -39,11 +43,10 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 	@Query(value = "UPDATE wine w set w.like_num = :num where w.wid = :wid", nativeQuery = true)
 	Integer updateLikeNum(@Param("wid") Long wid, @Param("num") Integer num);
 
-	
 	public default Predicate search(String type, Boolean sparkling, String country, Integer sweet) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QWine wine = QWine.wine;
-		if (type != null)
+		if (type != null)	
 			builder.and(wine.type.eq(type));
 		if (sparkling != null)
 			builder.and(wine.sparkling.eq(sparkling));

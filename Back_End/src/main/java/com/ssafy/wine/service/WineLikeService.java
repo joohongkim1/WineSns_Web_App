@@ -9,6 +9,7 @@ import com.ssafy.wine.dto.WineLike;
 public interface WineLikeService {
 	
 	public WineLike create(Long uid, Long wid);
+	public void updateLikeNum(Long wid);
 	public void delete(Long uid, Long wid);
 	public List<Wine> findByUser(Long uid);
 	public List<User> findByWine(Long wid);

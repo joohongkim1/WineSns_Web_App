@@ -14,29 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.dto.WineLike;
+import com.ssafy.wine.dto.Feed;
+import com.ssafy.wine.dto.FeedLike;
 import com.ssafy.wine.dto.User;
-import com.ssafy.wine.dto.Wine;
-import com.ssafy.wine.service.WineLikeService;
+import com.ssafy.wine.service.FeedLikeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = { "3. WineLike" }, description = "WineLike 정보 REST API")
-@RequestMapping(value = "/winelike")
+@Api(tags = { "4. FeedLike" }, description = "FeedLike 정보 REST API")
+@RequestMapping(value = "/feedlike")
 @CrossOrigin(origins = "*")
-public class WineLikeController {
+public class FeedLikeController {
 
 	@Autowired
-	private WineLikeService wineLikeService;
-
+	private FeedLikeService feedLikeService;
+	
 	@ApiOperation(value = "좋아요 추가")
 	@PutMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam Long wid) {
+	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam Long fid) {
 		try {
-			WineLike like = wineLikeService.create(uid, wid);
-			wineLikeService.updateLikeNum(wid);
+			FeedLike like = feedLikeService.create(uid, fid);
+			feedLikeService.updateLikeNum(fid);
 			return new ResponseEntity<Object>(like, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -45,34 +45,35 @@ public class WineLikeController {
 
 	@ApiOperation(value = "좋아요 취소/삭제")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long uid, @RequestParam Long wid) {
+	public void delete(@RequestParam Long fid, @RequestParam Long uid) {
 		try {
-			wineLikeService.delete(uid, wid);
-			wineLikeService.updateLikeNum(wid);
+			feedLikeService.delete(uid, fid);
+			feedLikeService.updateLikeNum(fid);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-
-	@ApiOperation(value = "해당 유저가 좋아요한 와인")
+	
+	@ApiOperation(value = "해당 유저가 좋아요한 피드")
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
 		try {
-			List<Wine> wines = wineLikeService.findByUser(uid);
+			List<Feed> wines = feedLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "해당 와인을 좋아요한 유저")
-	@GetMapping("/findByWine/{wid}")
-	public ResponseEntity<Object> findByWine(@PathVariable Long wid) {
+	@ApiOperation(value = "해당 피드 좋아요한 유저")
+	@GetMapping("/findByWine/{fid}")
+	public ResponseEntity<Object> findByWine(@PathVariable Long fid) {
 		try {
-			List<User> likes = wineLikeService.findByWine(wid);
+			List<User> likes = feedLikeService.findByFeed(fid);
 			return new ResponseEntity<Object>(likes, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
+	
 }
