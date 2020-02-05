@@ -46,7 +46,7 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 	public default Predicate search(String type, Boolean sparkling, String country, Integer sweet) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QWine wine = QWine.wine;
-		if (type != null)
+		if (type != null)	
 			builder.and(wine.type.eq(type));
 		if (sparkling != null)
 			builder.and(wine.sparkling.eq(sparkling));

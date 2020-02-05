@@ -16,6 +16,8 @@ public interface FeedService {
 	public List<Feed> findByWine(Long wid);
 
 	public List<Feed> findByUser(Long uid);
+	
+	public List<Feed> readTop10(Integer sort);
 
 	public Integer updateVisit(Long fid);
 

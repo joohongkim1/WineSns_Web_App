@@ -1,6 +1,7 @@
 package com.ssafy.wine.repo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,13 @@ import com.ssafy.wine.dto.Feed;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
 
+	List<Feed> findByRatingNotNull();
+	
+	List<Feed> findTop10ByRatingNotNullOrderByVisitDesc();
+
+	List<Feed> findTop10ByRatingNotNullOrderByLikeNumDesc();
+	
+	
 	@Modifying
 	@Query(value = "UPDATE feed f set f.content = :content, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)
 	Integer updateFeed(@Param("fid") Long fid, @Param("content") String content);

@@ -2,6 +2,7 @@ package com.ssafy.wine.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -62,6 +63,25 @@ public class FeedServiceImpl implements FeedService {
 	public List<Feed> findByUser(Long uid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		List<Feed> feeds = user.getFeeds();
+		return feeds;
+	}
+	
+	@Transactional
+	public List<Feed> readTop10(Integer sort) {
+		List<Feed> feeds = new ArrayList<>();
+		switch (sort) {
+		case 0:
+			feeds = feedRepository.findTop10ByRatingNotNullOrderByVisitDesc();
+			break;
+		case 1:
+			feeds = feedRepository.findTop10ByRatingNotNullOrderByLikeNumDesc();
+			break;
+		case 2:
+			feeds = feedRepository.findByRatingNotNull();
+			break;
+		default:
+			break;
+		}
 		return feeds;
 	}
 
