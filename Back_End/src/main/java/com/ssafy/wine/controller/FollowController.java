@@ -22,7 +22,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = { "5. Follow" }, description = "팔로우 정보 REST API")
+@Api(tags = { "6. Follow" }, description = "팔로우 정보 REST API")
 @RequestMapping(value = "/follow")
 @CrossOrigin(origins = "*")
 public class FollowController {
@@ -54,7 +54,7 @@ public class FollowController {
 	}
 
 	@ApiOperation(value = "following - 내가 팔로우하는 전체 그룹 반환")
-	@GetMapping("/findByFollowing/{fromEmail}")
+	@GetMapping("/findByFollowing/{fromUid}")
 	public ResponseEntity<Object> findByFollowing(@PathVariable Long fromUid) {
 		try {
 			List<User> following = followService.findByFollowing(fromUid);
@@ -65,7 +65,7 @@ public class FollowController {
 	}
 
 	@ApiOperation(value = "follower - 나를 팔로우한 전체 그룹 반환")
-	@GetMapping("/findByFollower/{toEmail}")
+	@GetMapping("/findByFollower/{toUid}")
 	public ResponseEntity<Object> findByFollower(@PathVariable Long toUid) {
 		try {
 			List<User> follower = followService.findByFollower(toUid);

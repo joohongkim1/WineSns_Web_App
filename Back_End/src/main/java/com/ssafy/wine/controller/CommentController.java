@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = { "7. Comment" }, description = "Comment 정보 rest api")
+@Api(tags = { "5. Comment" }, description = "Comment 정보 rest api")
 @RequestMapping(value = "/comment")
 @CrossOrigin(origins = "*")
 public class CommentController {

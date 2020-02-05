@@ -14,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -83,14 +87,15 @@ public class Wine {
 	@Column(nullable = false)
 	private Integer visit;
 	
+	@Column(nullable = false)
+	private Integer likeNum;
+
 	@OneToMany(mappedBy = "wine", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<WineLike> likes = new ArrayList<>();
+	private List<WineLike> wineLikes = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "wine", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Feed> feeds = new ArrayList<>();
 	
-	@Column
-	private Integer likeNum;
 
 	@Builder
 	public Wine(Long wid, String nameKor, String nameEng, String type, Boolean sparkling, String grape, String country,

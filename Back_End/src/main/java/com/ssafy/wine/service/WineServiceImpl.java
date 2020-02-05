@@ -18,9 +18,9 @@ public class WineServiceImpl implements WineService {
 
 	@Autowired
 	private WineRepository wineRepository;
-	
+
 	@Transactional
-	public List<Wine> readAll(Integer sort){
+	public List<Wine> readAll(Integer sort) {
 		List<Wine> wines = new ArrayList<>();
 		switch (0) {
 		case 0:
@@ -40,15 +40,21 @@ public class WineServiceImpl implements WineService {
 		}
 		return wines;
 	}
-	
+
 	@Transactional
-	public List<Wine> readTop10(Integer sort){
+	public List<Wine> readTop10(Integer sort) {
 		List<Wine> wines = new ArrayList<>();
 		switch (sort) {
 		case 0:
-			wines = wineRepository.findTop10ByOrderByVisitDesc();
+			wines = wineRepository.findTop3ByOrderByVisitDesc();
 			break;
 		case 1:
+			wines = wineRepository.findTop10ByOrderByVisitDesc();
+			break;
+		case 2:
+			wines = wineRepository.findTop3ByOrderByLikeNumDesc();
+			break;
+		case 3:
 			wines = wineRepository.findTop10ByOrderByLikeNumDesc();
 			break;
 		default:
@@ -56,50 +62,29 @@ public class WineServiceImpl implements WineService {
 		}
 		return wines;
 	}
-	
+
 	@Transactional
 	public Wine readByWid(Long wid) {
 		wineRepository.updateVisit(wid);
 		return wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
 	}
-	
+
 	@Transactional
-	public List<Wine> readByName(String name){
+	public List<Wine> readByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
 		return wines;
 	}
-	
+
 	@Transactional
 	public List<Wine> search(String type, Boolean sparkling, String country, Integer sweet) {
 		List<Wine> wines = new ArrayList<>();
 		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet)).forEach(wines::add);
 		return wines;
 	}
-	
+
 	@Transactional
 	public Integer updateVisit(Long wid) {
 		return wineRepository.updateVisit(wid);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

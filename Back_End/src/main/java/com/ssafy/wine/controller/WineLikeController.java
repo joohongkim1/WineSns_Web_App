@@ -23,19 +23,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = { "4. Like" }, description = "좋아요 정보 REST API")
-@RequestMapping(value = "/like")
+@Api(tags = { "3. WineLike" }, description = "WineLike 정보 REST API")
+@RequestMapping(value = "/winelike")
 @CrossOrigin(origins = "*")
 public class WineLikeController {
 
 	@Autowired
-	private WineLikeService likeService;
+	private WineLikeService wineLikeService;
 
 	@ApiOperation(value = "좋아요 추가")
 	@PutMapping("/create")
 	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam Long wid) {
 		try {
-			WineLike like = likeService.create(uid, wid);
+			WineLike like = wineLikeService.create(uid, wid);
+			wineLikeService.updateLikeNum(wid);
 			return new ResponseEntity<Object>(like, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -46,7 +47,8 @@ public class WineLikeController {
 	@DeleteMapping("/delete")
 	public void delete(@RequestParam Long uid, @RequestParam Long wid) {
 		try {
-			likeService.delete(uid, wid);
+			wineLikeService.delete(uid, wid);
+			wineLikeService.updateLikeNum(wid);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -56,7 +58,7 @@ public class WineLikeController {
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
 		try {
-			List<Wine> wines = likeService.findByUser(uid);
+			List<Wine> wines = wineLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -67,7 +69,7 @@ public class WineLikeController {
 	@GetMapping("/findByWine/{wid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long wid) {
 		try {
-			List<User> likes = likeService.findByWine(wid);
+			List<User> likes = wineLikeService.findByWine(wid);
 			return new ResponseEntity<Object>(likes, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

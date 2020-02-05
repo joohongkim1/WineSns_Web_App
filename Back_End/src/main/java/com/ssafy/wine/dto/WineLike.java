@@ -1,9 +1,6 @@
 package com.ssafy.wine.dto;
 
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -29,7 +26,7 @@ public class WineLike {
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "user_email")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@Id

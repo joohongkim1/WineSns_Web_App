@@ -12,4 +12,5 @@ public interface WineService {
 	public List<Wine> readByName(String name);
 	public List<Wine> search(String type, Boolean sparkling, String country, Integer sweet);
 	public Integer updateVisit(Long wid);
+	
 }

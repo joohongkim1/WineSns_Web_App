@@ -19,6 +19,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableConfigurationProperties({ FileUploadProperties.class })
 @EnableSwagger2
 public class BackEndApplication implements WebMvcConfigurer {
 

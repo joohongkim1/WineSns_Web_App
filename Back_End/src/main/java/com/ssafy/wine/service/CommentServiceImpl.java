@@ -53,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	public List<Comment> findByFeed(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
+		System.out.println(feed.getComments().size());
 		return feed.getComments();
 	}
 
