@@ -17,8 +17,12 @@ export function login(email : string, password : string) {
   
     
     await loginService.login(email, password).then(
+      
       token => {
         localStorage.setItem('token', <any>token);
+        console.log("hey");
+
+        console.log(localStorage.getItem('token'));
         dispatch(setLoginPending(false));
         dispatch(setLoginSuccess(true));
 

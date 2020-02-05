@@ -18,7 +18,7 @@ interface IState {
   password: string;
 }
 
-class TempForm extends React.Component<IProps, IState> {
+class Login extends React.Component<IProps, IState> {
 
   constructor(props: IProps) {
     
@@ -39,12 +39,12 @@ class TempForm extends React.Component<IProps, IState> {
         <form name="form" onSubmit={this.onSubmit}>
           <div className="form-group-collection">
             <div className="form-group">
-              <label>Email:</label>
+            <label htmlFor="email">Email : </label>
               <input disabled={isLoginPending} type="email" className="form-control" name="email" onChange={e => this.setState({ email: e.target.value })} value={email} />
             </div>
 
             <div className="form-group">
-              <label>Password:</label>
+            <label htmlFor="password">Password : </label>
               <input disabled={isLoginPending} type="password" className="form-control" name="password" onChange={e => this.setState({ password: e.target.value })} value={password} />
             </div>
           </div>
@@ -107,4 +107,5 @@ const mapStateToProps = (state : IProps ) => {
   };
 }
 
-export default connect(mapStateToProps)(TempForm);
+
+export default connect(mapStateToProps)(Login);

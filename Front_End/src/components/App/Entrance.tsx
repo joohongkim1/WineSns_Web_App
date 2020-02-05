@@ -1,24 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
-import { Rating } from '@material-ui/lab';
-import Box from '@material-ui/core/Box';
-import Switch from '@material-ui/core/Switch';
-import Slide from '@material-ui/core/Slide';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import WineInfo from "./Wine";
-import Section from "./Section";
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import purple from '@material-ui/core/colors/deepPurple';
 import brown from '@material-ui/core/colors/brown';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

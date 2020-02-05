@@ -15,9 +15,20 @@ import Container from "@material-ui/core/Container";
 import ReviewModal from "./ReviewModal";
 import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
+import Divider from "@material-ui/core/Divider";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      "& > *": {
+        margin: theme.spacing(1)
+      }
+    },
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
@@ -42,6 +53,41 @@ const useStyles = makeStyles((theme: Theme) =>
     cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
+    },
+    divider: {
+      backgroundColor: "#36342f",
+      marginBottom: "80px"
+    },
+    divider2: {
+      backgroundColor: "#36342f",
+      marginTop: "100px",
+      position: "relative",
+      zIndex: 6
+    },
+    btn: {
+      fontSize: "25px",
+      paddingLeft: "50px",
+      paddingRight: "50px"
+    },
+    btnGroup: {
+      display: "flex",
+      justifyContent: "center",
+      zIndex: 5,
+      position: "relative"
+      // marginTop: "20px",
+    },
+    total: {
+      display: "inline-block",
+      marginLeft: "15px"
+    },
+    search: {
+      display: "flex",
+      justifycontent: "right"
+    },
+    home: {
+      display: "inline-block flex",
+      float: "right",
+      marginRight: "20px"
     }
   })
 );
@@ -50,7 +96,7 @@ const wines = [
   {
     nameKor: "까스텔로 반 피",
     nameEng: "Castello Banfi, La Rosa",
-    counrty: "프랑스",
+    country: "프랑스",
     info: "장미빛의 은은한 레드를 띠며 스트로베리, 라즈베리 열매향을 지니며...",
     type: "Red",
     rating: 5,
@@ -60,7 +106,7 @@ const wines = [
   {
     nameKor: "아포틱 레드",
     nameEng: "Apothic Red",
-    counrty: "독일",
+    country: "한국",
     info:
       "진한 자주빛의 붉은색을 띠며 블랙 베리와 잘 익은 체리의 과실향을 느낄 수...",
     type: "Red",
@@ -71,62 +117,7 @@ const wines = [
   {
     nameKor: "조닌 아스티",
     nameEng: "Zonin, Asti",
-    counrty: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    counrty: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    counrty: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    counrty: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    counrty: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    counrty: "미국",
+    country: "미국",
     info:
       "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
     type: "White",
@@ -148,8 +139,34 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-      <ReviewModal />
+
+      {/* <ReviewModal /> */}
+      <div>
+        <Link
+          to={"/ranking"}
+          className={classes.home}
+          style={{ textDecoration: "none" }}
+        >
+          <Typography>Home > 와인 list</Typography>
+        </Link>
+      </div>
+      <div className={classes.divider2}>
+        <Divider variant="middle" />
+      </div>
+      <div className={classes.btnGroup}>
+        <ButtonGroup
+          size="large"
+          aria-label="large outlined primary button group"
+        >
+          <Button className={classes.btn}>유럽 와인</Button>
+          <Button className={classes.btn}>신대륙 와인</Button>
+          <Button className={classes.btn}>한국 와인</Button>
+        </ButtonGroup>
+      </div>
+
       <Container className={classes.cardGrid}>
+        <Typography className={classes.total}>Total </Typography>
+        <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
           {wines.map(wine => (
             <Grid item xs={4}>

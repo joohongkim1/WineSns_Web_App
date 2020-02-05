@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  font : {
+    color : 'black'
   }
 }),
 );
@@ -68,6 +71,7 @@ export default function SignUp() {
               variant="outlined"
               margin="normal"
               required
+            
               fullWidth
               id="name"
               label="Name"
@@ -87,16 +91,19 @@ export default function SignUp() {
               autoFocus
             />
             <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={classes.font}
+                  name="비밀번호"
+                  label="비밀번호"
+                  type="password"
+                  id="password"
+                  // value={password}
+                  // onChange={handlePassword}
+                  placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
+                autoComplete="current-password"
+                />
             <Button
               type="submit"
               fullWidth
