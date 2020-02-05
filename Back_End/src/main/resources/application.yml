@@ -53,9 +53,9 @@ logging:
       andy: trace
       
 file:
-  upload-img-feed: /Img/Feed
-  upload-img-profile: /Img/User/Profile
-  upload-img-background: /Img/User/Background
+  upload-img-feed: ../Img/Feed
+  upload-img-profile: ../Img/User/Profile
+  upload-img-background: ../Img/User/Background
   
   
 ## 프로젝트내의 폴더에 업로드 파일을 설정하고 싶으면 16번째 줄처럼 
