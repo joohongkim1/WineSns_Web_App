@@ -23,6 +23,7 @@ public class FollowServiceImpl implements FollowService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Override
 	@Transactional
 	public Follow create(Long fromUid, Long toUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
@@ -30,6 +31,7 @@ public class FollowServiceImpl implements FollowService {
 		return followRepository.save(new Follow(from, to));
 	}
 
+	@Override
 	@Transactional
 	public void delete(Long fromUid, Long toUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
@@ -37,6 +39,7 @@ public class FollowServiceImpl implements FollowService {
 		followRepository.delete(new Follow(from, to));
 	}
 
+	@Override
 	@Transactional
 	public List<User> findByFollowing(Long fromUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
@@ -47,6 +50,7 @@ public class FollowServiceImpl implements FollowService {
 		return following;
 	}
 
+	@Override
 	@Transactional
 	public List<User> findByFollower(Long toUid) {
 		User to = userRepository.findById(toUid).orElseThrow(NoSuchElementException::new);

@@ -48,7 +48,7 @@ public class User implements UserDetails {
 	@Column(name = "facebookId")
 	String facebookId;
 
-	@Column(name = "email", length = 50, unique = true)
+	@Column(name = "email", length = 50)
 	String email;
 
 	@Column(name = "password")
@@ -56,6 +56,9 @@ public class User implements UserDetails {
 
 	@Column(name = "name", length = 20)
 	String nickName;
+
+	@Column(name = "emailcertify")
+	String emailCertify;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<WineLike> wineLikes = new ArrayList<>();
@@ -115,6 +118,6 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.getEmail();
+		return this.getUid().toString();
 	}
 }

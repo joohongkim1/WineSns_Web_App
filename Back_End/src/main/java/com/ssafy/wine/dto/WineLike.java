@@ -15,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -23,12 +22,12 @@ import lombok.NoArgsConstructor;
 @IdClass(WineLikeId.class)
 @Table(name = "wine_like")
 public class WineLike {
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "wine_id")

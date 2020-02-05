@@ -19,19 +19,17 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class JwtService { // JWT 생성 및 검증
-	
+
 	@Value("spring.jwt.secret")
 	private String secretKey;
-	
+
 	private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
 	private final UserDetailsService userDetailsService;
-	
+
 	@PostConstruct
 	protected void init() {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -39,6 +37,7 @@ public class JwtService { // JWT 생성 및 검증
 
 	// Jwt 토큰 생성
 	public String createToken(String userPk, List<String> roles) {
+		System.out.println(secretKey);
 		Claims claims = Jwts.claims().setSubject(userPk);
 		claims.put("roles", roles);
 		Date now = new Date();

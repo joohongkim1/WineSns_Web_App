@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.WineLike;
 import com.ssafy.wine.dto.Wine;
 import com.ssafy.wine.repo.WineRepository;
 
@@ -18,7 +17,8 @@ public class WineServiceImpl implements WineService {
 
 	@Autowired
 	private WineRepository wineRepository;
-
+	
+	@Override
 	@Transactional
 	public List<Wine> readAll(Integer sort) {
 		List<Wine> wines = new ArrayList<>();
@@ -41,6 +41,7 @@ public class WineServiceImpl implements WineService {
 		return wines;
 	}
 
+	@Override
 	@Transactional
 	public List<Wine> readTop10(Integer sort) {
 		List<Wine> wines = new ArrayList<>();
@@ -63,26 +64,28 @@ public class WineServiceImpl implements WineService {
 		return wines;
 	}
 
+	@Override
 	@Transactional
 	public Wine readByWid(Long wid) {
 		wineRepository.updateVisit(wid);
 		return wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
 	}
 
+	@Override
 	@Transactional
 	public List<Wine> readByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
 		return wines;
 	}
-
+	@Override
 	@Transactional
 	public List<Wine> search(String type, Boolean sparkling, String country, Integer sweet) {
 		List<Wine> wines = new ArrayList<>();
 		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet)).forEach(wines::add);
 		return wines;
 	}
-
+	@Override
 	@Transactional
 	public Integer updateVisit(Long wid) {
 		return wineRepository.updateVisit(wid);

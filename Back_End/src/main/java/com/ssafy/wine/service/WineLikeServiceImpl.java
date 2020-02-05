@@ -16,8 +16,6 @@ import com.ssafy.wine.repo.WineLikeRepository;
 import com.ssafy.wine.repo.UserRepository;
 import com.ssafy.wine.repo.WineRepository;
 
-import io.jsonwebtoken.lang.Arrays;
-
 @Service
 public class WineLikeServiceImpl implements WineLikeService {
 
@@ -52,7 +50,6 @@ public class WineLikeServiceImpl implements WineLikeService {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
 		wineRepository.updateLikeNum(wid, wine.getWineLikes().size());
 	}
-
 
 	@Override
 	@Transactional
