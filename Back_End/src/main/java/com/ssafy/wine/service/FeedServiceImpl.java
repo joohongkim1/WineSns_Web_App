@@ -28,6 +28,7 @@ public class FeedServiceImpl implements FeedService {
 	@Autowired
 	private WineRepository wineRepository;
 
+	@Override
 	@Transactional
 	public Feed create(Long uid, Long wid, String content) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
@@ -41,11 +42,13 @@ public class FeedServiceImpl implements FeedService {
 		return feedRepository.save(feed);
 	}
 
+	@Override
 	@Transactional
 	public void delete(Long fid) {
 		feedRepository.deleteById(fid);
 	}
 
+	@Override
 	@Transactional
 	public List<Feed> findByWine(Long wid) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
@@ -53,6 +56,7 @@ public class FeedServiceImpl implements FeedService {
 		return feeds;
 	}
 
+	@Override
 	@Transactional
 	public List<Feed> findByUser(Long uid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);

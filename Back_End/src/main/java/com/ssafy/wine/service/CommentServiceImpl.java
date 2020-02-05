@@ -28,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Override
 	@Transactional
 	public Comment create(Long fid, Long uid, String content) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
@@ -36,6 +37,7 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.save(comment);
 	}
 
+	@Override
 	@Transactional
 	public Comment create(Long fid, Long uid, Long cid, String content) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
@@ -45,11 +47,13 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.save(comment);
 	}
 
+	@Override
 	@Transactional
 	public void delete(Long cid) {
 		commentRepository.deleteById(cid);
 	}
 
+	@Override
 	@Transactional
 	public List<Comment> findByFeed(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);

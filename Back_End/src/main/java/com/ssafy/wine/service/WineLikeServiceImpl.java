@@ -16,8 +16,6 @@ import com.ssafy.wine.repo.WineLikeRepository;
 import com.ssafy.wine.repo.UserRepository;
 import com.ssafy.wine.repo.WineRepository;
 
-import io.jsonwebtoken.lang.Arrays;
-
 @Service
 public class WineLikeServiceImpl implements WineLikeService {
 
@@ -30,6 +28,7 @@ public class WineLikeServiceImpl implements WineLikeService {
 	@Autowired
 	private WineRepository wineRepository;
 
+	@Override
 	@Transactional
 	public WineLike create(Long uid, Long wid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
@@ -38,6 +37,7 @@ public class WineLikeServiceImpl implements WineLikeService {
 		return likeRepository.save(new WineLike(user, wine));
 	}
 
+	@Override
 	@Transactional
 	public void delete(Long uid, Long wid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
@@ -46,6 +46,7 @@ public class WineLikeServiceImpl implements WineLikeService {
 		likeRepository.delete(new WineLike(user, wine));
 	}
 
+	@Override
 	@Transactional
 	public List<Wine> findByUser(Long uid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
@@ -57,6 +58,7 @@ public class WineLikeServiceImpl implements WineLikeService {
 		return wines;
 	}
 
+	@Override
 	@Transactional
 	public List<User> findByWine(Long wid) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);

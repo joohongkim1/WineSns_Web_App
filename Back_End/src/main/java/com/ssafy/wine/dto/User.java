@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,7 +48,7 @@ public class User implements UserDetails {
 	@Column(name = "facebookId")
 	String facebookId;
 
-	@Column(name = "email", length = 50, unique = true)
+	@Column(name = "email", length = 50)
 	String email;
 
 	@Column(name = "password")
@@ -116,6 +115,6 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.getEmail();
+		return this.getUid().toString();
 	}
 }

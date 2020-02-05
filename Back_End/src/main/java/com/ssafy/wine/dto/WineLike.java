@@ -1,9 +1,6 @@
 package com.ssafy.wine.dto;
 
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -18,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -26,12 +22,12 @@ import lombok.NoArgsConstructor;
 @IdClass(WineLikeId.class)
 @Table(name = "wine_like")
 public class WineLike {
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "user_email")
 	private User user;
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "wine_id")

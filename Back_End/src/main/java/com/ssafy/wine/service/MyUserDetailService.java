@@ -15,7 +15,8 @@ public class MyUserDetailService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 
-	public UserDetails loadUserByUsername(String email) {
-		return userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new);
+	@Override
+	public UserDetails loadUserByUsername(String id) {
+		return userRepository.findById(Long.parseLong(id)).orElseThrow(CUserNotFoundException::new);
 	}
 }

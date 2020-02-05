@@ -47,8 +47,8 @@ public class SignController {
 
 	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
 	@GetMapping(value = "/signin")
-	public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String email,
-			@ApiParam(value = "비밀번호", required = true) @RequestParam String password) {
+	public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일") @RequestParam String email,
+			@ApiParam(value = "비밀번호") @RequestParam String password) {
 		User user = userRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
 		if (!passwordEncoder.matches(password, user.getPassword()))
 			throw new CEmailSigninFailedException();
@@ -57,9 +57,9 @@ public class SignController {
 
 	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
 	@PostMapping(value = "/signup")
-	public CommonResult signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String email,
-			@ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-			@ApiParam(value = "닉네임", required = true) @RequestParam String nickName) {
+	public CommonResult signin(@ApiParam(value = "회원ID : 이메일") @RequestParam String email,
+			@ApiParam(value = "비밀번호") @RequestParam String password,
+			@ApiParam(value = "닉네임") @RequestParam String nickName) {
 		User user = userRepository.findByEmail(email).orElse(null);
 		if (user != null) {
 			System.out.println(user.getEmail());
@@ -70,7 +70,7 @@ public class SignController {
 		String authkey = new TempKey().getKey(50, false);
 
 		userRepository.save(User.builder().email(email).password(passwordEncoder.encode(password)).nickName(nickName)
-				.emailCertify(authkey).roles(Collections.singletonList("USER")).build());
+				.emailCertify(authkey).roles(Collections.singletonList("EMAIL_USER")).build());
 		MailUtils sendMail;
 		try {
 			sendMail = new MailUtils(mailSender);
@@ -90,8 +90,8 @@ public class SignController {
 
 	@ApiOperation(value = "이메일 인증", notes = "이메일 인증용")
 	@GetMapping(value = "/Confirm")
-	public CommonResult emailConfirm(@RequestParam String email,
-			@ApiParam(value = "비밀번호", required = true) @RequestParam String authkey) throws Exception {
+	public CommonResult emailConfirm(@RequestParam String email, @ApiParam(value = "비밀번호") @RequestParam String authkey)
+			throws Exception {
 		User user = userRepository.findByEmail(email).orElse(null);
 		if (user != null) {
 			if (user.getEmailCertify() == "Y") {
@@ -104,5 +104,45 @@ public class SignController {
 				return responseService.getFailResult(-9999, "인증키가 다릅니다.");
 		}
 		return responseService.getFailResult(-9999, "회원 검색 실패");
+	}
+
+	@ApiOperation(value = "SNS 가입 및 로그인", notes = "SNS 회원가입 및 로그인을 한다.")
+	@PostMapping(value = "/sns/signup")
+	public SingleResult<String> sns_signin(@ApiParam(value = "SNS_ID") @RequestParam String sns_id,
+			@ApiParam(value = "닉네임") @RequestParam String nickName,
+			@ApiParam(value = "SNS 타입") @RequestParam String snsType) {
+		User user = null;
+		switch (snsType) {
+		case "KAKAO":
+			user = userRepository.findByKakaotalkId(sns_id).orElse(null);
+			if (user == null)
+				user = userRepository.save(User.builder().kakaotalkId(sns_id).nickName(nickName)
+						.roles(Collections.singletonList("SNS_USER")).build());
+			break;
+		case "GOOGLE":
+			user = userRepository.findByGoogleId(sns_id).orElse(null);
+			if (user == null)
+				user = userRepository.save(User.builder().googleId(sns_id).nickName(nickName)
+						.roles(Collections.singletonList("SNS_USER")).build());
+			break;
+		case "NAVER":
+			user = userRepository.findByNaverId(sns_id).orElse(null);
+			if (user == null)
+				user = userRepository.save(User.builder().naverId(sns_id).nickName(nickName)
+						.roles(Collections.singletonList("SNS_USER")).build());
+			break;
+		}
+		return responseService.getSingleResult(jwtService.createToken(user.getUsername(), user.getRoles()));
+	}
+
+	@ApiOperation(value = "이메일 중복 검사", notes = "이메일 중복 검사")
+	@PostMapping(value = "/checkEmail")
+	public CommonResult checkDuplicateEmail(@ApiParam(value = "email") @RequestParam String email) {
+		User user = userRepository.findByEmail(email).orElse(null);
+		if (user == null) {
+			return responseService.getSuccessResult();
+		} else {
+			return responseService.getFailResult(-9999, "중복된 회원");
+		}
 	}
 }
