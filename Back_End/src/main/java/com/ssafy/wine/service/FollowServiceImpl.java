@@ -9,8 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.Follow;
-import com.ssafy.wine.dto.User;
+import com.ssafy.wine.entity.Follow;
+import com.ssafy.wine.entity.User;
 import com.ssafy.wine.repo.FollowRepository;
 import com.ssafy.wine.repo.UserRepository;
 

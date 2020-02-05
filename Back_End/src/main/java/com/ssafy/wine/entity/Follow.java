@@ -1,4 +1,4 @@
-package com.ssafy.wine.dto;
+package com.ssafy.wine.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,24 +19,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@IdClass(WineLikeId.class)
-@Table(name = "wine_like")
-public class WineLike {
+@IdClass(FollowId.class)
+@Table(name = "follow")
+public class Follow {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-
+	@JoinColumn(name = "from_email")
+	private User from;
+	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "wine_id")
-	private Wine wine;
+	@JoinColumn(name = "to_email")
+	private User to;
 
 	@Builder
-	public WineLike(User user, Wine wine) {
-		this.user = user;
-		this.wine = wine;
+	public Follow(User from, User to) {
+		this.from = from;
+		this.to = to;
 	}
-
 }

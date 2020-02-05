@@ -3,7 +3,7 @@ package com.ssafy.wine.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.ssafy.wine.dto.Feed;
+import com.ssafy.wine.entity.Feed;
 
 public interface FeedService {
 

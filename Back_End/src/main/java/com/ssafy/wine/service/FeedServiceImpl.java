@@ -11,9 +11,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.Feed;
-import com.ssafy.wine.dto.User;
-import com.ssafy.wine.dto.Wine;
+import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.entity.User;
+import com.ssafy.wine.entity.Wine;
 import com.ssafy.wine.repo.FeedRepository;
 import com.ssafy.wine.repo.UserRepository;
 import com.ssafy.wine.repo.WineRepository;

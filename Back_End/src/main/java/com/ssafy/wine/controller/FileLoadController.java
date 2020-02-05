@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ssafy.wine.dto.FileLoad;
+import com.ssafy.wine.entity.FileLoad;
 import com.ssafy.wine.service.FileLoadService;
 
 @RestController

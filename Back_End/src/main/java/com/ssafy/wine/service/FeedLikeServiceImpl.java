@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.Feed;
-import com.ssafy.wine.dto.FeedLike;
-import com.ssafy.wine.dto.User;
+import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.entity.FeedLike;
+import com.ssafy.wine.entity.User;
 import com.ssafy.wine.repo.FeedLikeRepository;
 import com.ssafy.wine.repo.FeedRepository;
 import com.ssafy.wine.repo.UserRepository;

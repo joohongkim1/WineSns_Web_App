@@ -2,7 +2,7 @@ package com.ssafy.wine.service;
 
 import java.util.List;
 
-import com.ssafy.wine.dto.Comment;
+import com.ssafy.wine.entity.Comment;
 
 public interface CommentService {
 	

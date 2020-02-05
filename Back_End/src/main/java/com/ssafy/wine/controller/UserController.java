@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.dto.User;
+import com.ssafy.wine.entity.User;
 import com.ssafy.wine.exception.CUserNotFoundException;
 import com.ssafy.wine.handler.CommonResult;
 import com.ssafy.wine.handler.SingleResult;

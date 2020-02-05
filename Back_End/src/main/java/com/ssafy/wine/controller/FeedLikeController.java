@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.dto.Feed;
-import com.ssafy.wine.dto.FeedLike;
-import com.ssafy.wine.dto.User;
+import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.entity.FeedLike;
+import com.ssafy.wine.entity.User;
 import com.ssafy.wine.service.FeedLikeService;
 
 import io.swagger.annotations.Api;

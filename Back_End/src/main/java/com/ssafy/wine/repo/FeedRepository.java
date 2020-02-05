@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.ssafy.wine.dto.Feed;
+import com.ssafy.wine.entity.Feed;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
 

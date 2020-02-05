@@ -1,4 +1,4 @@
-package com.ssafy.wine.dto;
+package com.ssafy.wine.entity;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-public class WineLikeId implements Serializable {
+public class FeedLikeId implements Serializable {
 	private Long user;
-	private Long wine;
+	private Long feed;
 }

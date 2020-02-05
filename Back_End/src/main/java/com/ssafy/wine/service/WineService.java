@@ -2,7 +2,7 @@ package com.ssafy.wine.service;
 
 import java.util.List;
 
-import com.ssafy.wine.dto.Wine;
+import com.ssafy.wine.entity.Wine;
 
 public interface WineService {
 

@@ -1,4 +1,4 @@
-package com.ssafy.wine.dto;
+package com.ssafy.wine.entity;
 
 import java.io.Serializable;
 

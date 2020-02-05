@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.wine.dto.User;
+import com.ssafy.wine.entity.User;
 
 // Database에 접근
 public interface UserRepository extends JpaRepository<User, Long> {

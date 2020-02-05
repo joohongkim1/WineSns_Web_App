@@ -1,4 +1,4 @@
-package com.ssafy.wine.dto;
+package com.ssafy.wine.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
