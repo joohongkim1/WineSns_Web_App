@@ -1,14 +1,18 @@
 package com.ssafy.wine.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.Follow;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.repo.FollowRepository;
@@ -22,9 +26,11 @@ public class FollowServiceImpl implements FollowService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	@Transactional
 	public Follow create(Long fromUid, Long toUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
 		User to = userRepository.findById(toUid).orElseThrow(NoSuchElementException::new);
@@ -40,25 +46,27 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	@Transactional
-	public List<User> findByFollowing(Long fromUid) {
+	public List<UserDto> findByFollowing(Long fromUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
 		List<User> following = new ArrayList<>();
 		for (Follow follow : from.getFollowing()) {
 			following.add(follow.getTo());
-		}
-		return following;
+		}		
+		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
+		List<UserDto> userDtos = modelMapper.map(following, typeToken);
+		return userDtos;
 	}
 
 	@Override
-	@Transactional
-	public List<User> findByFollower(Long toUid) {
+	public List<UserDto> findByFollower(Long toUid) {
 		User to = userRepository.findById(toUid).orElseThrow(NoSuchElementException::new);
 		List<User> follower = new ArrayList<>();
 		for (Follow follow : to.getFollower()) {
 			follower.add(follow.getFrom());
 		}
-		return follower;
+		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
+		List<UserDto> userDtos = modelMapper.map(follower, typeToken);
+		return userDtos;
 	}
 
 }

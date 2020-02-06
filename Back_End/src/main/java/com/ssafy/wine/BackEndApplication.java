@@ -1,5 +1,6 @@
 package com.ssafy.wine;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,5 +42,10 @@ public class BackEndApplication implements WebMvcConfigurer {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+	
+	@Bean
+	public ModelMapper modelMapper(){
+	    return new ModelMapper();
 	}
 }

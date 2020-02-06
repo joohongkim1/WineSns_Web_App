@@ -1,14 +1,17 @@
 package com.ssafy.wine.service;
 
-import java.time.LocalDateTime;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.wine.dto.CommentDto;
 import com.ssafy.wine.entity.Comment;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.User;
@@ -28,22 +31,20 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Override
-	@Transactional
-	public Comment create(Long fid, Long uid, String content) {
-		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
-		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Comment comment = new Comment(user, feed, content, LocalDateTime.now());
-		return commentRepository.save(comment);
-	}
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	@Transactional
 	public Comment create(Long fid, Long uid, Long cid, String content) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Comment reComment = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
-		Comment comment = new Comment(user, feed, content, LocalDateTime.now(), reComment);
+		Comment comment;
+		if (cid != null) {
+			Comment reCid = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+			comment = new Comment(user, feed, content, reCid);
+		} else {
+			comment = new Comment(user, feed, content);
+		}
 		return commentRepository.save(comment);
 	}
 
@@ -54,11 +55,18 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	@Transactional
-	public List<Comment> findByFeed(Long fid) {
+	public List<CommentDto> findByFeed(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
-		System.out.println(feed.getComments().size());
-		return feed.getComments();
+		Type typeToken = new TypeToken<List<CommentDto>>() {
+		}.getType();
+		List<CommentDto> commentDtos = modelMapper.map(feed.getComments(), typeToken);
+		return commentDtos;
+	}
+
+	@Override
+	@Transactional
+	public Integer update(Long cid, String content) {
+		return commentRepository.updateFeed(cid, content);
 	}
 
 }

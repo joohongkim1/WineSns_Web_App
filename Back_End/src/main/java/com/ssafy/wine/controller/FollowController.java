@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.Follow;
-import com.ssafy.wine.entity.User;
 import com.ssafy.wine.service.FollowService;
 
 import io.swagger.annotations.Api;
@@ -35,9 +35,11 @@ public class FollowController {
 		try {
 			if (fromUid.equals(toUid))
 				return new ResponseEntity<Object>("same email", HttpStatus.NOT_ACCEPTABLE);
-
 			Follow follow = followService.create(fromUid, toUid);
-			return new ResponseEntity<Object>(follow, HttpStatus.OK);
+			StringBuilder sb = new StringBuilder();
+			sb.append("From: ").append(follow.getFrom().getEmail()).append("\n").append("to: ")
+					.append(follow.getTo().getEmail()).append("\n").append("follow를 추가했습니다.");
+			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -45,34 +47,34 @@ public class FollowController {
 
 	@ApiOperation(value = "follow 취소/삭제")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long fromUid, @RequestParam Long toUid) {
+	public ResponseEntity<Object> delete(@RequestParam Long fromUid, @RequestParam Long toUid) {
 		try {
 			followService.delete(fromUid, toUid);
+			return new ResponseEntity<Object>("Follow를 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "following - 내가 팔로우하는 전체 그룹 반환")
+	@ApiOperation(value = "following - 해당 유저가 팔로우하는 전체 그룹 반환")
 	@GetMapping("/findByFollowing/{fromUid}")
 	public ResponseEntity<Object> findByFollowing(@PathVariable Long fromUid) {
 		try {
-			List<User> following = followService.findByFollowing(fromUid);
+			List<UserDto> following = followService.findByFollowing(fromUid);
 			return new ResponseEntity<Object>(following, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "follower - 나를 팔로우한 전체 그룹 반환")
+	@ApiOperation(value = "follower - 해당 유저를 팔로우한 전체 그룹 반환")
 	@GetMapping("/findByFollower/{toUid}")
 	public ResponseEntity<Object> findByFollower(@PathVariable Long toUid) {
 		try {
-			List<User> follower = followService.findByFollower(toUid);
+			List<UserDto> follower = followService.findByFollower(toUid);
 			return new ResponseEntity<Object>(follower, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-
 }
