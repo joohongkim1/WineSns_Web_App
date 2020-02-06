@@ -1,5 +1,7 @@
 package com.ssafy.wine.controller;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.exception.CUserNotFoundException;
 import com.ssafy.wine.handler.CommonResult;
@@ -36,17 +39,21 @@ public class UserController {
 	private final ResponseService responseService; // 결과를 처리할 Service
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 단건 조회(FrontEnd에서 사용 금지)", notes = "access_token으로 회원을 조회한다")
 	@GetMapping(value = "/")
-	public SingleResult<User> findUserById() {
+	public SingleResult<UserDto> findUserById() {
 		// SecurityContext에서 인증받은 회원의 정보를 얻어온다.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String uid = authentication.getName();
-		return responseService
-				.getSingleResult(userRepository.findById(Long.parseLong(uid)).orElseThrow(CUserNotFoundException::new));
+		User user = userRepository.findById(Long.parseLong(uid)).orElseThrow(CUserNotFoundException::new);
+		UserDto userDto = modelMapper.map(user, UserDto.class);
+		return responseService.getSingleResult(userDto);
 	}
 
 	@ApiImplicitParams({

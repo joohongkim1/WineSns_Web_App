@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.entity.User;
-import com.ssafy.wine.entity.Wine;
+import com.ssafy.wine.dto.UserDto;
+import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.WineLike;
 import com.ssafy.wine.service.WineLikeService;
 
@@ -37,7 +37,11 @@ public class WineLikeController {
 		try {
 			WineLike like = wineLikeService.create(uid, wid);
 			wineLikeService.updateLikeNum(wid);
-			return new ResponseEntity<Object>(like, HttpStatus.OK);
+			StringBuilder sb = new StringBuilder();
+			sb.append("User: ").append(like.getUser().getEmail()).append("\n")
+			.append("Wine: ").append(like.getWine().getNameKor()).append("\n")
+			.append("WineLike 추가되었습니다.");
+			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -45,10 +49,11 @@ public class WineLikeController {
 
 	@ApiOperation(value = "좋아요 취소/삭제")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long uid, @RequestParam Long wid) {
+	public ResponseEntity<Object> delete(@RequestParam Long uid, @RequestParam Long wid) {
 		try {
 			wineLikeService.delete(uid, wid);
 			wineLikeService.updateLikeNum(wid);
+			return new ResponseEntity<Object>("WineLike 삭제되었습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -58,7 +63,7 @@ public class WineLikeController {
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
 		try {
-			List<Wine> wines = wineLikeService.findByUser(uid);
+			List<WineDto> wines = wineLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -69,10 +74,12 @@ public class WineLikeController {
 	@GetMapping("/findByWine/{wid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long wid) {
 		try {
-			List<User> likes = wineLikeService.findByWine(wid);
+			List<UserDto> likes = wineLikeService.findByWine(wid);
 			return new ResponseEntity<Object>(likes, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
+	
 }
+

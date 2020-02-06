@@ -1,14 +1,19 @@
 package com.ssafy.wine.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.wine.dto.FeedDto;
+import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.FeedLike;
 import com.ssafy.wine.entity.User;
@@ -27,9 +32,11 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 
 	@Autowired
 	private FeedRepository feedRepostitory;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	@Transactional
 	public FeedLike create(Long uid, Long fid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
@@ -52,25 +59,27 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 	}
 
 	@Override
-	@Transactional
-	public List<Feed> findByUser(Long uid) {
+	public List<FeedDto> findByUser(Long uid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		List<Feed> feeds = new ArrayList<>();
 		for (FeedLike like : user.getFeedLikes()) {
 			feeds.add(like.getFeed());
 		}
-		return feeds;
+		Type typeToken =  new TypeToken<List<FeedDto>>() {}.getType();
+		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
+		return feedDtos;
 	}
 
 	@Override
-	@Transactional
-	public List<User> findByFeed(Long fid) {
+	public List<UserDto> findByFeed(Long fid) {
 		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
 		List<User> users = new ArrayList<>();
 		for (FeedLike like : feed.getFeedLikes()) {
 			users.add(like.getUser());
 		}
-		return users;
+		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
+		List<UserDto> userDtos = modelMapper.map(users, typeToken);
+		return userDtos;
 	}
 
 }

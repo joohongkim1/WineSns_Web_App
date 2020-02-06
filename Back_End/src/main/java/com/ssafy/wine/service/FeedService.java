@@ -3,7 +3,9 @@ package com.ssafy.wine.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.ssafy.wine.dto.FeedDto;
 import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.enums.FeedRankEnum;
 
 public interface FeedService {
 
@@ -13,11 +15,11 @@ public interface FeedService {
 
 	public Integer update(Long fid, Long wid, BigDecimal rating, String content);
 
-	public List<Feed> findByWine(Long wid);
+	public List<FeedDto> findByWine(Long wid);
 
-	public List<Feed> findByUser(Long uid);
+	public List<FeedDto> findByUser(Long uid);
 	
-	public List<Feed> readTop10(Integer sort);
+	public List<FeedDto> findTop10(FeedRankEnum type);
 
 	public Integer updateVisit(Long fid);
 
