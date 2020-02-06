@@ -1,7 +1,9 @@
 package com.ssafy.wine.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -20,6 +22,7 @@ import com.ssafy.wine.email.TempKey;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.exception.CEmailSigninFailedException;
 import com.ssafy.wine.handler.CommonResult;
+import com.ssafy.wine.handler.ListResult;
 import com.ssafy.wine.handler.SingleResult;
 import com.ssafy.wine.repo.UserRepository;
 import com.ssafy.wine.security.JwtService;
@@ -47,12 +50,15 @@ public class SignController {
 
 	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
 	@GetMapping(value = "/signin")
-	public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일") @RequestParam String email,
+	public ListResult<String> signin(@ApiParam(value = "회원ID : 이메일") @RequestParam String email,
 			@ApiParam(value = "비밀번호") @RequestParam String password) {
 		User user = userRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
 		if (!passwordEncoder.matches(password, user.getPassword()))
 			throw new CEmailSigninFailedException();
-		return responseService.getSingleResult(jwtService.createToken(user.getUsername(), user.getRoles()));
+		List<String> result = new ArrayList<String>();
+		result.add(jwtService.createToken(user.getUsername(), user.getRoles()));
+		result.add(user.getNickName());
+		return responseService.getListResult(result);
 	}
 
 	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
@@ -108,7 +114,7 @@ public class SignController {
 
 	@ApiOperation(value = "SNS 가입 및 로그인", notes = "SNS 회원가입 및 로그인을 한다.")
 	@PostMapping(value = "/sns/signup")
-	public SingleResult<String> sns_signin(@ApiParam(value = "SNS_ID") @RequestParam String sns_id,
+	public ListResult<String> sns_signin(@ApiParam(value = "SNS_ID") @RequestParam String sns_id,
 			@ApiParam(value = "닉네임") @RequestParam String nickName,
 			@ApiParam(value = "SNS 타입") @RequestParam String snsType) {
 		User user = null;
@@ -132,7 +138,10 @@ public class SignController {
 						.roles(Collections.singletonList("SNS_USER")).build());
 			break;
 		}
-		return responseService.getSingleResult(jwtService.createToken(user.getUsername(), user.getRoles()));
+		List<String> result = new ArrayList<String>();
+		result.add(jwtService.createToken(user.getUsername(), user.getRoles()));
+		result.add(user.getNickName());
+		return responseService.getListResult(result);
 	}
 
 	@ApiOperation(value = "이메일 중복 검사", notes = "이메일 중복 검사")
