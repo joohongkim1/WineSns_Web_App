@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.entity.Wine;
+import com.ssafy.wine.dto.WineDto;
+import com.ssafy.wine.enums.WineFindEnum;
+import com.ssafy.wine.enums.WineRankEnum;
 import com.ssafy.wine.service.WineService;
 
 import io.swagger.annotations.Api;
@@ -27,22 +30,22 @@ public class WineController {
 	@Autowired
 	private WineService wineService;
 
-	@ApiOperation(value = "와인 목록 - 0:한글오름, 1:영어오름, 2:방문내림, 3:좋아요내림")
-	@GetMapping("/readAll/{sort}")
-	public ResponseEntity<Object> readAll(@PathVariable Integer sort) {
+	@ApiOperation(value = "와인 목록 - 정렬 출력")
+	@GetMapping("/readAll/{type}")
+	public ResponseEntity<Object> readAll(@PathVariable WineFindEnum type) {
 		try {
-			List<Wine> wines = wineService.readAll(sort);
+			List<WineDto> wines = wineService.findAll(type);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "와인랭크 - 0:조회수3, 1:조회수10, 2:종아요3, 3:좋아요10")
-	@GetMapping("/readTop10/{sort}")
-	public ResponseEntity<Object> readTop10(@PathVariable Integer sort) {
+	@ApiOperation(value = "와인랭크 - 조회수,좋아요")
+	@GetMapping("/readRank/{type}")
+	public ResponseEntity<Object> readRank(@PathVariable WineRankEnum type) {
 		try {
-			List<Wine> wines = wineService.readTop10(sort);
+			List<WineDto> wines = wineService.findTop10(type);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -53,7 +56,7 @@ public class WineController {
 	@GetMapping("/readByWid/{wid}")
 	public ResponseEntity<Object> readByWid(@PathVariable Long wid) {
 		try {
-			Wine wine = wineService.readByWid(wid);
+			WineDto wine = wineService.findByWid(wid);
 			return new ResponseEntity<Object>(wine, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -64,7 +67,7 @@ public class WineController {
 	@GetMapping("/readByName/{name}")
 	public ResponseEntity<Object> readByName(@PathVariable String name) {
 		try {
-			List<Wine> wines = wineService.readByName(name);
+			List<WineDto> wines = wineService.searchByName(name);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -73,9 +76,10 @@ public class WineController {
 
 	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country, sweet")
 	@GetMapping("/search")
-	public ResponseEntity<Object> search(String type, Boolean sparkling, String country, Integer sweet) {
+	public ResponseEntity<Object> search(@RequestParam String type, @RequestParam Boolean sparkling,
+			@RequestParam String country, @RequestParam Integer sweet) {
 		try {
-			List<Wine> wines = wineService.search(type, sparkling, country, sweet);
+			List<WineDto> wines = wineService.search(type, sparkling, country, sweet);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -96,5 +100,4 @@ public class WineController {
 			throw e;
 		}
 	}
-
 }
