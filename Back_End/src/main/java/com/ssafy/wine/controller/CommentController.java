@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.wine.dto.CommentDto;
 import com.ssafy.wine.entity.Comment;
 import com.ssafy.wine.service.CommentService;
 
@@ -29,24 +31,17 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
-	@ApiOperation(value = "Comment 추가")
+	@ApiOperation(value = "Comment 추가 - 대댓글은 cid 추가")
 	@PostMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid, @RequestParam String content) {
-		try {
-			Comment comment = commentService.create(fid, uid, content);
-			return new ResponseEntity<Object>(comment, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@ApiOperation(value = "Comment에 대한 답변 추가")
-	@PostMapping("/createRe")
 	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid,
 			@RequestParam(required = false) Long cid, @RequestParam String content) {
 		try {
 			Comment comment = commentService.create(fid, uid, cid, content);
-			return new ResponseEntity<Object>(comment, HttpStatus.OK);
+			StringBuilder sb = new StringBuilder();
+			sb.append("User: ").append(comment.getUser().getEmail()).append("\n")
+			.append("Comment_ID: ").append(comment.getCid()).append("\n")
+			.append("Comment가 추가되었습니다.");
+			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -54,9 +49,10 @@ public class CommentController {
 
 	@ApiOperation(value = "Comment 제거")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long cid) {
+	public ResponseEntity<Object> delete(@RequestParam Long cid) {
 		try {
 			commentService.delete(cid);
+			return new ResponseEntity<Object>("Comment가 삭제되었습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -66,8 +62,19 @@ public class CommentController {
 	@GetMapping("/findByFeed/{fid}")
 	public ResponseEntity<Object> findByFeed(@PathVariable Long fid) {
 		try {
-			List<Comment> comments = commentService.findByFeed(fid);
+			List<CommentDto> comments = commentService.findByFeed(fid);
 			return new ResponseEntity<Object>(comments, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "해당 Comment 수정")
+	@PutMapping("/update")
+	public ResponseEntity<Object> update(@RequestParam Long cid, @RequestParam String content) {
+		try {
+			int result = commentService.update(cid, content);
+			return new ResponseEntity<Object>(result + "개 업데이트", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

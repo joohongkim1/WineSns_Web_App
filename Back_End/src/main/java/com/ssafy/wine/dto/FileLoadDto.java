@@ -1,17 +1,15 @@
-package com.ssafy.wine.entity;
+package com.ssafy.wine.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class FileLoad {
+@Data
+public class FileLoadDto {
 	private String fileName;
-	private String fileDownloadUri;
+	private String filePath;
 	private String fileType;
 	private long size;
 }
