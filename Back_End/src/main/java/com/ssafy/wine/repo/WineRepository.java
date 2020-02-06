@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.ssafy.wine.dto.QWine;
+import com.ssafy.wine.entity.QWine;
 import com.ssafy.wine.entity.Wine;
 
 public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPredicateExecutor<Wine> {
@@ -46,7 +46,7 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 	public default Predicate search(String type, Boolean sparkling, String country, Integer sweet) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QWine wine = QWine.wine;
-		if (type != null)	
+		if (type != null)
 			builder.and(wine.type.eq(type));
 		if (sparkling != null)
 			builder.and(wine.sparkling.eq(sparkling));
