@@ -1,15 +1,21 @@
 package com.ssafy.wine.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.Wine;
+import com.ssafy.wine.enums.WineFindEnum;
+import com.ssafy.wine.enums.WineRankEnum;
 import com.ssafy.wine.repo.WineRepository;
 
 @Service
@@ -17,74 +23,85 @@ public class WineServiceImpl implements WineService {
 
 	@Autowired
 	private WineRepository wineRepository;
-	
+
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@Override
-	@Transactional
-	public List<Wine> readAll(Integer sort) {
+	public List<WineDto> findAll(WineFindEnum type) {
 		List<Wine> wines = new ArrayList<>();
-		switch (0) {
-		case 0:
+		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		switch (type) {
+		case KOR_UP:
 			wines = wineRepository.findAllByOrderByNameKorAsc();
 			break;
-		case 1:
+		case ENG_UP:
 			wines = wineRepository.findAllByOrderByNameEngAsc();
 			break;
-		case 2:
+		case VISIT_DOWN:
 			wines = wineRepository.findAllByOrderByVisitDesc();
 			break;
-		case 3:
+		case LIKE_DOWN:
 			wines = wineRepository.findAllByOrderByLikeNumDesc();
 			break;
 		default:
 			break;
 		}
-		return wines;
+
+		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
+		return wineDtos;
 	}
 
 	@Override
-	@Transactional
-	public List<Wine> readTop10(Integer sort) {
+	public List<WineDto> findTop10(WineRankEnum type) {
 		List<Wine> wines = new ArrayList<>();
-		switch (sort) {
-		case 0:
+		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		switch (type) {
+		case VISIT_3:
 			wines = wineRepository.findTop3ByOrderByVisitDesc();
 			break;
-		case 1:
+		case VISIT_10:
 			wines = wineRepository.findTop10ByOrderByVisitDesc();
 			break;
-		case 2:
+		case LIKE_3:
 			wines = wineRepository.findTop3ByOrderByLikeNumDesc();
 			break;
-		case 3:
+		case LIKE_10:
 			wines = wineRepository.findTop10ByOrderByLikeNumDesc();
 			break;
 		default:
 			break;
 		}
-		return wines;
+		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
+		return wineDtos;
 	}
 
 	@Override
-	@Transactional
-	public Wine readByWid(Long wid) {
-		wineRepository.updateVisit(wid);
-		return wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
+	public WineDto findByWid(Long wid) {
+		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
+		WineDto wineDto = modelMapper.map(wine, WineDto.class);
+		System.out.println(wineDto);
+		return wineDto;
 	}
 
 	@Override
-	@Transactional
-	public List<Wine> readByName(String name) {
+	public List<WineDto> searchByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
-		return wines;
+		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
+		return wineDtos;
 	}
+
 	@Override
-	@Transactional
-	public List<Wine> search(String type, Boolean sparkling, String country, Integer sweet) {
+	public List<WineDto> search(String type, Boolean sparkling, String country, Integer sweet) {
 		List<Wine> wines = new ArrayList<>();
 		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet)).forEach(wines::add);
-		return wines;
+		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
+		return wineDtos;
 	}
+
 	@Override
 	@Transactional
 	public Integer updateVisit(Long wid) {

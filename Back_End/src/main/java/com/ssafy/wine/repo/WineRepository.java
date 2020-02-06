@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.ssafy.wine.dto.QWine;
+import com.ssafy.wine.entity.QWine;
 import com.ssafy.wine.entity.Wine;
 
 public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPredicateExecutor<Wine> {

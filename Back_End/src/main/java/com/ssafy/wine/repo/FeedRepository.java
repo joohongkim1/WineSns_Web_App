@@ -12,8 +12,6 @@ import com.ssafy.wine.entity.Feed;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
 
-	List<Feed> findByRatingNotNull();
-	
 	List<Feed> findTop10ByRatingNotNullOrderByVisitDesc();
 
 	List<Feed> findTop10ByRatingNotNullOrderByLikeNumDesc();

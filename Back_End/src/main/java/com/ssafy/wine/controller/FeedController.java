@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.wine.dto.FeedDto;
 import com.ssafy.wine.entity.Feed;
-import com.ssafy.wine.entity.Wine;
+import com.ssafy.wine.enums.FeedRankEnum;
 import com.ssafy.wine.service.FeedService;
 
 import io.swagger.annotations.Api;
@@ -38,7 +39,10 @@ public class FeedController {
 			@RequestParam(required = false) BigDecimal rating, @RequestParam(required = false) String content) {
 		try {
 			Feed feed = feedService.create(uid, wid, rating, content);
-			return new ResponseEntity<Object>(feed, HttpStatus.OK);
+			StringBuilder sb = new StringBuilder();
+			sb.append("User: ").append(feed.getUser().getEmail()).append("\n")
+			.append("Feed_ID: ").append(feed.getFid()).append("\nFeed 작성완료");
+			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -46,9 +50,10 @@ public class FeedController {
 
 	@ApiOperation(value = "Feed 제거")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long fid) {
+	public ResponseEntity<Object> delete(@RequestParam Long fid) {
 		try {
 			feedService.delete(fid);
+			return new ResponseEntity<Object>("Feed가 제거되었습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -60,7 +65,7 @@ public class FeedController {
 			@RequestParam(required = false) BigDecimal rating, @RequestParam(required = false) String content) {
 		try {
 			Integer result = feedService.update(fid, wid, rating, content);
-			return new ResponseEntity<Object>(result, HttpStatus.OK);
+			return new ResponseEntity<Object>(result + "개 수정되었습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -70,7 +75,7 @@ public class FeedController {
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
 		try {
-			List<Feed> feeds = feedService.findByUser(uid);
+			List<FeedDto> feeds = feedService.findByUser(uid);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -81,22 +86,33 @@ public class FeedController {
 	@GetMapping("/findByWine/{wid}")
 	public ResponseEntity<Object> findByWine(@RequestParam Long wid) {
 		try {
-			List<Feed> feeds = feedService.findByWine(wid);
+			List<FeedDto> feeds = feedService.findByWine(wid);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	@ApiOperation(value = "와인랭크 - 0:조회수10, 1:좋아요10")
-	@GetMapping("/readTop10/{sort}")
-	public ResponseEntity<Object> readTop10(@PathVariable Integer sort) {
+	@ApiOperation(value = "피드랭크 - 조회수, 좋아요")
+	@GetMapping("/readTop10/{type}")
+	public ResponseEntity<Object> readTop10(@PathVariable FeedRankEnum type) {
 		try {
-			List<Feed> feeds = feedService.readTop10(sort);
+			List<FeedDto> feeds = feedService.findTop10(type);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-
+	
+	@ApiOperation(value = "해당 Feed 조회수 +1")
+	@PutMapping("/updateVisit")
+	public ResponseEntity<Object> updateVisit(@RequestParam Long fid) {
+		try {
+			feedService.updateVisit(fid);
+			return new ResponseEntity<Object>("조회수 증가", HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 }

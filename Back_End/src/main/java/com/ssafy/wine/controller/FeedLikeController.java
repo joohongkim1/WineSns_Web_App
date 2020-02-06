@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.dto.FeedDto;
+import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.FeedLike;
-import com.ssafy.wine.entity.User;
 import com.ssafy.wine.service.FeedLikeService;
 
 import io.swagger.annotations.Api;
@@ -37,7 +37,11 @@ public class FeedLikeController {
 		try {
 			FeedLike like = feedLikeService.create(uid, fid);
 			feedLikeService.updateLikeNum(fid);
-			return new ResponseEntity<Object>(like, HttpStatus.OK);
+			StringBuilder sb = new StringBuilder();
+			sb.append("User: ").append(like.getUser().getEmail()).append("\n")
+			.append("Feed_ID: ").append(like.getFeed().getFid()).append("\n")
+			.append("FeedLike 추가했습니다.");
+			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -45,10 +49,11 @@ public class FeedLikeController {
 
 	@ApiOperation(value = "좋아요 취소/삭제")
 	@DeleteMapping("/delete")
-	public void delete(@RequestParam Long fid, @RequestParam Long uid) {
+	public ResponseEntity<Object> delete(@RequestParam Long fid, @RequestParam Long uid) {
 		try {
 			feedLikeService.delete(uid, fid);
 			feedLikeService.updateLikeNum(fid);
+			return new ResponseEntity<Object>("FeedLike 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -58,7 +63,7 @@ public class FeedLikeController {
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
 		try {
-			List<Feed> wines = feedLikeService.findByUser(uid);
+			List<FeedDto> wines = feedLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -69,7 +74,7 @@ public class FeedLikeController {
 	@GetMapping("/findByWine/{fid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long fid) {
 		try {
-			List<User> likes = feedLikeService.findByFeed(fid);
+			List<UserDto> likes = feedLikeService.findByFeed(fid);
 			return new ResponseEntity<Object>(likes, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
