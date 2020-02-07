@@ -9,10 +9,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import {Redirect} from 'react-router-dom';
+
 
 import { connect } from 'react-redux';
 import { register, emailCheck, SNSRegister } from '../../../stores/register/actions/register';
 import K from 'react-kakao-login';
+
 const KakaoLogin: any = K;
 
 import GoogleLogin from 'react-google-login';
@@ -268,9 +271,8 @@ function SignUp() {
           </div>
           <div className="message">
               {isRegisterPending && <div>Please wait...</div>}
-      
-                {
-                  (function() {
+              {
+                (function() {
                     if (registerError=="register error") {
                       return (
                         <span>입력하신 정보로 가입 하실 수 없습니다.</span>
@@ -313,8 +315,7 @@ function SignUp() {
               } else {
                 // 회원가입이 성공했을 때!!
                 return(
-                  // 여기서 /ranking 으로 바로 넘어가게 만들어주세요!
-                <div>hello</div>
+                  <Redirect to="/ranking" />
                 )
               }
 
