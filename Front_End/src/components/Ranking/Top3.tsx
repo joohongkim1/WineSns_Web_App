@@ -16,10 +16,7 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import WineInfo from "./Wine";
-import Section from "./Section";
-
-
+import WineInfo from "../Interface/Wine";
 
 
 const useStyles = makeStyles((theme: Theme) =>

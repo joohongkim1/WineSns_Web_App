@@ -18,10 +18,13 @@ import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import Backdrop from '@material-ui/core/Backdrop';
-import Container from '@material-ui/core/Container';
-import Login from "../../stores/login_form/components/TemForm";
+// import Login from "../../../stores/login/components/Login";
+// import Login from "../../../stores/login/components/FormPage";
+import Login from "../../../stores/login/components/FormPage";
+
 import Section from "./Section";
 import purple from '@material-ui/core/colors/purple';
+import {logout} from '../../../stores/login/actions/login';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -124,6 +127,8 @@ export default function Navbar() {
   
     window.location.href = '/ranking';
     sessionStorage.clear();
+    logout();
+    
   }
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -185,7 +190,7 @@ export default function Navbar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem >
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -265,34 +270,37 @@ export default function Navbar() {
           (function() {
             if (!sessionStorage.getItem('userInfo')) {
               return (
-              <div>
-              <Button onClick={handleOpen} className={classes.link}>
-              Login </Button>
-                      <Modal
-                      aria-labelledby="transition-modal-title"
-                      aria-describedby="transition-modal-description"
-                      className={classes.modal}
-                      open={open}
-                      onClose={handleClose}
-                      closeAfterTransition
-                      BackdropComponent={Backdrop}
-                      BackdropProps={{
-                          timeout: 500,
-                      }}
-                  >
-         <Fade in={open}>
-         <Container component="main" maxWidth="xs">
+                <div>
+            
+                <Button onClick={handleOpen} className={classes.link}>
+                Login </Button>
+                        <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+           <Fade in={open}>
         
-      
-        <div className={classes.paper}>
-      
-                <Login />
-                </div>
-                </Container>
-                </Fade>
-      
-                </Modal>
-            </div>
+          
+        
+          <div className={classes.paper}>
+        
+                  <Login />
+                  </div>
+                  
+                  </Fade>
+        
+                  </Modal>
+                  <a href="/signUp" className={classes.link}>
+          Register </a>
+              </div>
               );
             } 
             else  { 

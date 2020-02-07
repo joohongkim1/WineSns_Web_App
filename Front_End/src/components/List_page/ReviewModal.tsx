@@ -5,7 +5,6 @@ import SimpleRating from "./Start";
 import TextField from "@material-ui/core/TextField";
 import UploadButtons from "./UploadBtn";
 import Button from "@material-ui/core/Button";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;

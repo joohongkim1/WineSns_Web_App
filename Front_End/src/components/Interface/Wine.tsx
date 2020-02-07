@@ -14,7 +14,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
-import '../index.css';
+import '../../index.css';
 
 
 interface WineInfo {
