@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.wine.dto.FileInfoDto;
 import com.ssafy.wine.dto.FileLoadDto;
 import com.ssafy.wine.enums.FileLoadEnum;
 import com.ssafy.wine.exception.FileUploadException;
@@ -21,7 +22,6 @@ import com.ssafy.wine.property.FileLoadProperties;
 @Service
 public class FileLoadServiceImpl implements FileLoadSerivce {
 
-	
 	private final Path profileLocation;
 	private final Path backgroundLocation;
 	private final Path feedLocation;
@@ -31,7 +31,7 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 		this.profileLocation = Paths.get(prop.getUploadImgProfile()).toAbsolutePath().normalize();
 		this.backgroundLocation = Paths.get(prop.getUploadImgBackground()).toAbsolutePath().normalize();
 		this.feedLocation = Paths.get(prop.getUploadImgFeed()).toAbsolutePath().normalize();
-		
+
 		try {
 			Files.createDirectories(this.profileLocation);
 			Files.createDirectories(this.backgroundLocation);
@@ -47,7 +47,8 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 		try {
 			Path targetLocation;
 			StringBuilder sb = new StringBuilder();
-			sb.append(String.valueOf(id)).append("/").append(String.valueOf(num)).append(".").append(file.getContentType().split("/")[1]);
+			sb.append(String.valueOf(id)).append("/").append(String.valueOf(num)).append(".")
+					.append(file.getContentType().split("/")[1]);
 			switch (type) {
 			case PROFILE:
 				Files.createDirectories(this.profileLocation.resolve(String.valueOf(id)));
@@ -73,7 +74,7 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 	}
 
 	@Override
-	public List<String> downloadFile(FileLoadEnum type, Long id) {
+	public List<FileInfoDto> downloadFile(FileLoadEnum type, Long id, String uri) {
 		try {
 			Path filePath;
 			switch (type) {
@@ -89,18 +90,47 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 			default:
 				throw new FileUploadException("Feed 파일 다운로드 실패하였습니다. 잘못된 type 값 입니다.");
 			}
-			
+
 			File f = new File(filePath.toString());
 			File[] files = f.listFiles();
-			List<String> paths = new ArrayList<>();
-			
+			List<FileInfoDto> fileInfoDtos = new ArrayList<>();
+
 			for (File file : files) {
-				paths.add(file.toURI().toString().split("Img")[1]);
+				StringBuilder sb = new StringBuilder();
+				sb.append(uri).append(file.toURI().toString().split("Img")[1]);
+				fileInfoDtos.add(new FileInfoDto(file.getName(), file.length(), sb.toString()));
 			}
-			return paths;
+			return fileInfoDtos;
 		} catch (Exception e) {
 			throw new FileUploadException("Feed 파일 다운로드 실패하였습니다.", e);
 		}
+	}
+
+	@Override
+	public String deleteFile(FileLoadEnum type, Long id, String name) {
+		try {
+			Path targetPath;
+			StringBuilder sb = new StringBuilder();
+			sb.append(String.valueOf(id)).append("/").append(name);
+			switch (type) {
+			case PROFILE:
+				targetPath = this.profileLocation.resolve(sb.toString()).normalize();
+				break;
+			case BACKGROUND:
+				targetPath = this.backgroundLocation.resolve(sb.toString()).normalize();
+				break;
+			case FEED:
+				targetPath = this.feedLocation.resolve(sb.toString()).normalize();
+				break;
+			default:
+				throw new FileUploadException("Feed 파일 삭제에 실패했습니다. 잘못된 type 값 입니다.");
+			}
+			Files.delete(targetPath);
+			return targetPath.toString();
+		} catch (Exception e) {
+			throw new FileUploadException("Feed 파일 삭제에 실패하였습니다.", e);
+		}
+
 	}
 
 }
