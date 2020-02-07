@@ -21,8 +21,6 @@ import GoogleLogin from 'react-google-login';
 import { useSelector,  useDispatch } from 'react-redux';
 import { rootState } from '../../../stores/login/store';
 
-import { bindActionCreators, Dispatch } from 'redux';
-
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
