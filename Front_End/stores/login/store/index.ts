@@ -4,6 +4,10 @@ import { logger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import loginReducer from '../reducers/login_reducer';
 import registerReducer from "../../register/reducers/register_reducer";
+
+import {loginState} from "../reducers/login_reducer";
+import {registerState} from "../../register/reducers/register_reducer";
+
 const middlewares: any[] = [];
 
 middlewares.push(logger);
@@ -13,6 +17,12 @@ const rootReducer = combineReducers({
   loginReducer,
   registerReducer,
 });
+
+export interface rootState {
+  loginReucer : loginState,
+  registerReducer: registerState,
+}
+
 
 export default function configureStore(initialState : any) {
   return createStore(

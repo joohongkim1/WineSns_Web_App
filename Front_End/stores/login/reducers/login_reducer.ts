@@ -1,12 +1,12 @@
 import { actions } from '../actions/login'
 
-export interface loginAction {
+export interface loginState {
   isLoginPending: boolean;
   isLoginSuccess: boolean,
   loginError: string
 }
 
-const initialState: loginAction = {
+const initialState: loginState = {
   isLoginPending: false,
   isLoginSuccess: false,
   loginError: '',

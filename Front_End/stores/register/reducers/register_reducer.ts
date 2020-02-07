@@ -1,18 +1,20 @@
 import { actions } from '../actions/register'
 
-export interface RegisterUser {
+export interface registerState {
   isRegisterPending: boolean;
   isRegisterSuccess: boolean;
   registerError: string;
+  emailState : string;
 }
 
-const initialState: RegisterUser = {
+const initialState: registerState = {
   isRegisterPending: false,
   isRegisterSuccess: false,
-  registerError: ''
+  registerError: '',
+  emailState : ''
 };
 
-export default function rootReducer(state = initialState, action : any) {
+export default function registerReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_REGISTER_PENDING:
       return Object.assign({}, state, {
@@ -28,6 +30,11 @@ export default function rootReducer(state = initialState, action : any) {
       return Object.assign({}, state, {
         registerError: action.registerError
       });
+
+      case actions.SET_EMAIL_STATE:
+        return Object.assign({}, state, {
+          emailState: action.emailState
+        });
 
     default:
       return state;

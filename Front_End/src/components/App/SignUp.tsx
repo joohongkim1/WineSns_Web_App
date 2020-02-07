@@ -11,16 +11,17 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 import { connect } from 'react-redux';
-import { register } from '../../../stores/register/actions/register';
-import { registerService } from '../../../stores/register/services/register';
-
-
+import { register, emailCheck, SNSRegister } from '../../../stores/register/actions/register';
 import K from 'react-kakao-login';
 const KakaoLogin: any = K;
 
 import GoogleLogin from 'react-google-login';
 
+// Redux
+import { useSelector,  useDispatch } from 'react-redux';
+import { rootState } from '../../../stores/login/store';
 
+import { bindActionCreators, Dispatch } from 'redux';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,6 +71,8 @@ interface IProps {
   isRegisterSuccess: boolean;
   registerError: string;
   register?(nickname : string, email: string, password: string): void;
+  emailCheck?(email: string): void;
+  SNSRegister?(nickname : string, id : string, provider : string): void;
   dispatch: Function;
 }
 
@@ -83,11 +86,17 @@ interface IState {
 
 
 function SignUp() {
+
   const classes = useStyles();
 
+  const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
+  const { isRegisterPending, isRegisterSuccess, registerError, emailState} = useSelector(
+    (state: rootState) => state.registerReducer
+  );
+
   const [state, setState] = useState( {nickname : '', email : '', password : '', provider : '', id : ''});
-  let alarm : string = '';
+ 
   // const [props, setProps] = useState({
   //   isRegisterPending: false,
   //   isRegisterSuccess: false,
@@ -104,7 +113,8 @@ function SignUp() {
     let { nickname, email, password } = state;
 
     console.log("hey");
-    await registerService.register(nickname, email, password);
+    await dispatch(register(state.nickname, state.email, state.password));
+       
 
     console.log()
   
@@ -126,7 +136,8 @@ function SignUp() {
             provider: 'GOOGLE'
         })
 
-        await registerService.SNSRegister(state.nickname, state.id, state.provider);
+        //dispatch(registerService.SNSRegister(state.nickname, state.id, state.provider));
+        await dispatch(SNSRegister(state.nickname, state.id, state.provider));
      
     }
     // Kakao Login
@@ -143,7 +154,7 @@ function SignUp() {
         })
 
 
-        await registerService.SNSRegister(state.nickname, state.id, state.provider);
+        await dispatch(SNSRegister(state.nickname, state.id, state.provider));
  
     }
 
@@ -157,124 +168,157 @@ function SignUp() {
     
 
 
-  const emailCheck = async () => {
-    let { email } = state;
-    
-    let flag = await registerService.emailCheck(email);
+  const onEmailCheck = async () => {
+  
+    console.log("email");
+    console.log(state.email);
+    await dispatch(emailCheck(state.email));
 
-    if(!flag) { //중복된 이메일일 때
-      alarm ='중복된 이메일입니다';
-    } else { // 처음 가입하는 이메일
-      alarm = '사용할 수 있는 이메일입니다';
-    }
-
-    console.log(alarm);
-    console.log(flag);
+    console.log("email State");
+    console.log(isRegisterSuccess);
+    console.log(emailState);
   
   }
 
+  if(!isRegisterSuccess) {
+    return (
 
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form className={classes.form} onSubmit={onSubmit}>
-          <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="nickname"
-              label="nickname"
-              name="nickname"
-              autoComplete="nickname"
-              autoFocus
-              onChange={e => setState({ nickname: e.target.value, email : state.email, password : state.password, id : '', provider : ''})} 
-              value={state.nickname}
-            />
-         
-           
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={e => setState({ nickname: state.nickname, email : e.target.value, password : state.password , id : '', provider : ''})} 
-              value={state.email}
-            />
-            <Button 
-              variant="outlined"
-              color="primary"
-              className={classes.check}
-              onClick={emailCheck}
-            >
-              Email 중복 체크
-            </Button>
-        
-            <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  className={classes.font}
-                  name="비밀번호"
-                  label="비밀번호"
-                  type="password"
-                  id="password"
-                  // value={password}
-                  // onChange={handlePassword}
-                  onChange={e => setState({ nickname: state.nickname, email : state.email, password : e.target.value, id : '', provider : ''})} 
-                  value={state.password}
-                  placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
-                autoComplete="current-password"
-                />
-          
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               Sign Up
-            </Button>
-          </form>
-        </div>
-        <div>
+            </Typography>
+            <form className={classes.form} onSubmit={onSubmit}>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="nickname"
+                label="nickname"
+                name="nickname"
+                autoComplete="nickname"
+                autoFocus
+                onChange={e => setState({ nickname: e.target.value, email : state.email, password : state.password, id : '', provider : ''})} 
+                value={state.nickname}
+              />
+          
+            
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={e => setState({ nickname: state.nickname, email : e.target.value, password : state.password , id : '', provider : ''})} 
+                value={state.email}
+              />
+              <Button 
+                variant="outlined"
+                color="primary"
+                className={classes.check}
+                onClick={onEmailCheck}
+              >
+                Email 중복 체크
+              </Button>
+              {
+                  (function() {
+                    if (emailState!="not yet") {
+                      return (
+                      <span>{emailState}</span>
+                      );
+                    } 
+                
+                  })()
+                }
+              <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    className={classes.font}
+                    name="비밀번호"
+                    label="비밀번호"
+                    type="password"
+                    id="password"
+                    // value={password}
+                    // onChange={handlePassword}
+                    onChange={e => setState({ nickname: state.nickname, email : state.email, password : e.target.value, id : '', provider : ''})} 
+                    value={state.password}
+                    placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
+                  autoComplete="current-password"
+                  />
+            
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+            </form>
+          </div>
+          <div className="message">
+              {isRegisterPending && <div>Please wait...</div>}
+      
+                {
+                  (function() {
+                    if (registerError=="register error") {
+                      return (
+                        <span>입력하신 정보로 가입 하실 수 없습니다.</span>
+                      );
+                    } 
 
-        <GoogleLogin
-                    clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-                    render={(props) => <button className="login100-social-item bg1" onClick={props.onClick}><i className="fa fa-google"></i></button>}
-                    buttonText="Google"
-                    onSuccess={responseGoogle}
-                    onFailure={responseFail}
-                    cookiePolicy={'single_host_origin'}
-                />
-               
-              <KakaoLogin
-                    jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-                    render={(props : any) => <button className="login100-social-item bg2" onClick={props.onClick}><i className="fa fa-kakao"></i></button>}
-                    onSuccess={responseKakao}
-                    onFailure={responseFail}
-                    throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
-                    getProfile={true}
-                />
+                    if (isRegisterSuccess) {
+                      return (
+                        <span>회원 가입 완료</span>
+                      );
+                    } 
+                
+                  })()
+                }
+            </div>
+          <div>
 
-        </div>
+          <GoogleLogin
+                      clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
+                      render={(props) => <button className="login100-social-item bg1" onClick={props.onClick}><i className="fa fa-google"></i></button>}
+                      buttonText="Google"
+                      onSuccess={responseGoogle}
+                      onFailure={responseFail}
+                      cookiePolicy={'single_host_origin'}
+                  />
+                
+                <KakaoLogin
+                      jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
+                      render={(props : any) => <button className="login100-social-item bg2" onClick={props.onClick}><i className="fa fa-kakao"></i></button>}
+                      onSuccess={responseKakao}
+                      onFailure={responseFail}
+                      throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
+                      getProfile={true}
+                  />
+
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+              } else {
+                // 회원가입이 성공했을 때!!
+                return(
+                  // 여기서 /ranking 으로 바로 넘어가게 만들어주세요!
+                <div>hello</div>
+                )
+              }
 
   
 }
@@ -288,14 +332,14 @@ function SignUp() {
 //   };
 // }
 // store 안의 state 값을 props 로 연결해줍니다.
-const mapStateToProps = (state : any) => {
-  console.log(state);
-  return {
-    isRegisterPending: state.registerReducer.isRegisterPending,
-    isRegisterSuccess: state.registerReducer.isRegisterSuccess,
-    registerError: state.registerReducer.isRegisterError
-  }
-}
+// const mapStateToProps = (state : any) => {
+//   console.log(state);
+//   return {
+//     isRegisterPending: state.registerReducer.isRegisterPending,
+//     isRegisterSuccess: state.registerReducer.isRegisterSuccess,
+//     registerError: state.registerReducer.isRegisterError
+//   }
+// }
 
 /* 
   액션 생성자를 사용하여 액션을 생성하고,
@@ -313,8 +357,16 @@ const mapStateToProps = (state : any) => {
 //   };
 // }
 
+// export default connect(
+//   null,
+//   (dispatch : Dispatch) => ({
+//       register: bindActionCreators(register, dispatch),
+//       emailCheck: bindActionCreators(emailCheck, dispatch),
+//       SNSRegister: bindActionCreators(SNSRegister, dispatch)
+//   })
+// )(SignUp);
 
-export default connect(mapStateToProps)(SignUp);
+export default SignUp;
 
 // export default connect(
 //   (state) => ({
