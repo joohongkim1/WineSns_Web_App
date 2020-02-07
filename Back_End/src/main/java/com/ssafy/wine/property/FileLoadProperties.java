@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "file")
-public class FileUploadProperties {
+public class FileLoadProperties {
 	
 	private String uploadImgProfile;
 	private String uploadImgBackground;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.wine.dto.FileLoadDto;
+import com.ssafy.wine.enums.FileLoadEnum;
 import com.ssafy.wine.service.FileLoadServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -31,66 +32,25 @@ public class FileLoadController {
 	@Autowired
 	private FileLoadServiceImpl fileLoadService;
 
-	@ApiOperation(value = "프로필 사진 업로드 1개만")
-	@PostMapping("/uploadProfile")
-	public ResponseEntity<Object> uploadProfile(@RequestPart("file") MultipartFile file, @RequestParam Long uid) {
-		try {
-			FileLoadDto fileDtos = fileLoadService.uploadProfile(file, uid);
-			return new ResponseEntity<Object>(fileDtos, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@ApiOperation(value = "프로필 배경 업로드 1개만")
-	@PostMapping("/uploadBackground")
-	public ResponseEntity<Object> uploadBackground(@RequestPart("file") MultipartFile file, @RequestParam Long uid) {
-		try {
-			FileLoadDto fileDtos = fileLoadService.uploadBackground(file, uid);
-			return new ResponseEntity<Object>(fileDtos, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@ApiOperation(value = "피드 게시글에 사진 첨부 여러개 (현재 오류)")
-	@PostMapping("/uploadFeed")
-	public ResponseEntity<Object> uploadFeed(@RequestPart("file") MultipartFile[] files, @RequestParam Long fid) {
+	@ApiOperation(value = "파일 업로드 - Swagger로 하면 오류가 있어요")
+	@PostMapping("/uploadFile")
+	public ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile[] files, @RequestParam FileLoadEnum type, @RequestParam Long id) {
 		try {
 			List<FileLoadDto> fileDtos = new ArrayList<>();
+			for (int i = 0; i < files.length; i++) {
+				fileDtos.add(fileLoadService.uploadFile(files[i], type, id, i));
+			}
 			return new ResponseEntity<Object>(fileDtos, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "프로필 사진 불러오기")
-	@GetMapping("/downloadProfile")
-	public ResponseEntity<Object> downloadProfile(@RequestParam Long uid) {
+	@ApiOperation(value = "파일 불러오기")
+	@GetMapping("/downloadFile")
+	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam Long id) {
 		try {
-			String path = fileLoadService.downloadProfile(uid);
-			return new ResponseEntity<Object>(path, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@ApiOperation(value = "프로필 배경화면 불러오기")
-	@GetMapping("/downloadBackground")
-	public ResponseEntity<Object> downloadBackground(@RequestParam Long uid) {
-		try {
-			String path = fileLoadService.downloadBackground(uid);
-			return new ResponseEntity<Object>(path, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-	
-	@ApiOperation(value = "피드 사진들 불러오기")
-	@GetMapping("/downloadFeed")
-	public ResponseEntity<Object> downloadFeed(@RequestParam Long fid) {
-		try {
-			List<String> paths = fileLoadService.downloadFeed(fid);
+			List<String> paths = fileLoadService.downloadFile(type, id);
 			return new ResponseEntity<Object>(paths, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
