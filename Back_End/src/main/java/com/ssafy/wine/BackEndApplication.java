@@ -1,15 +1,20 @@
 package com.ssafy.wine;
 
+import java.nio.file.Paths;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ssafy.wine.property.FileUploadProperties;
+import com.ssafy.wine.property.FileLoadProperties;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -20,14 +25,15 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ FileUploadProperties.class })
+@EnableConfigurationProperties({ FileLoadProperties.class })
 @EnableSwagger2
+@Configuration
 public class BackEndApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
 	}
-
+	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
@@ -43,9 +49,21 @@ public class BackEndApplication implements WebMvcConfigurer {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-	
+
 	@Bean
-	public ModelMapper modelMapper(){
-	    return new ModelMapper();
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
+	
+	@Autowired
+	private FileLoadProperties fileLoadProperty;
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/Profile/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgProfile()).toUri().toString());
+        registry.addResourceHandler("/Background/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgBackground()).toUri().toString());
+        registry.addResourceHandler("/Feed/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgFeed()).toUri().toString());
+        
+	}
+
 }

@@ -5,13 +5,10 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.wine.dto.FileLoadDto;
+import com.ssafy.wine.enums.FileLoadEnum;
 
 public interface FileLoadSerivce {
 
-	public FileLoadDto uploadProfile(MultipartFile file, Long uid);
-	public FileLoadDto uploadBackground(MultipartFile file, Long uid);
-	public FileLoadDto uploadFeed(MultipartFile file, Long fid, Integer num);
-	public String downloadProfile(Long uid);
-	public String downloadBackground(Long uid);
-	public List<String> downloadFeed(Long fid);
+	public FileLoadDto uploadFile(MultipartFile file, FileLoadEnum type, Long id, Integer num);
+	public List<String> downloadFile(FileLoadEnum type, Long id);
 }
