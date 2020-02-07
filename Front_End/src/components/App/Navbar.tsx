@@ -21,10 +21,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 // import Login from "../../../stores/login/components/Login";
 // import Login from "../../../stores/login/components/FormPage";
 import Login from "../../../stores/login/components/FormPage";
-import SignUp from "../../../stores/login/components/SignUp";
+
 import Section from "./Section";
 import purple from '@material-ui/core/colors/purple';
-
+import {logout} from '../../../stores/login/actions/login';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -127,6 +127,8 @@ export default function Navbar() {
   
     window.location.href = '/ranking';
     sessionStorage.clear();
+    logout();
+    
   }
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
