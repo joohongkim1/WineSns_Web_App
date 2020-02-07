@@ -76,8 +76,8 @@ public class WineController {
 
 	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country, sweet")
 	@GetMapping("/search")
-	public ResponseEntity<Object> search(@RequestParam String type, @RequestParam Boolean sparkling,
-			@RequestParam String country, @RequestParam Integer sweet) {
+	public ResponseEntity<Object> search(@RequestParam(required = false) String type, @RequestParam(required = false) Boolean sparkling,
+			@RequestParam(required = false) String country, @RequestParam(required = false) Integer sweet) {
 		try {
 			List<WineDto> wines = wineService.search(type, sparkling, country, sweet);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);

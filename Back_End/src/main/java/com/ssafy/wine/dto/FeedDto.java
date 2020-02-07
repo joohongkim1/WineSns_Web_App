@@ -17,7 +17,7 @@ public class FeedDto {
 	private String content;
 	private LocalDateTime createdTimeAt;
 	private LocalDateTime updateTimeAt;
-	private Long wineWid;
+	private WineDto wine;
 	private String userEmail;
 	private String userNickname;
 	private Integer visit;
