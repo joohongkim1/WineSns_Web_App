@@ -72,7 +72,7 @@ async function SNSRegister(nickname : string, id : string, provider : string): P
 
 // 이메일 중복 체크 함수
 async function emailCheck(email : string): Promise<Response> {
-
+  console.log("what")
   return axios.post('http://54.180.9.92:8090/WineProject/user/checkEmail',null, {
     params :{ 
             email : email
@@ -86,8 +86,8 @@ async function emailCheck(email : string): Promise<Response> {
     
    }
    console.log("heys");
-   console.log(response.data.success);
-   
+
+   console.log(response.data.succss);
    return response.data.success;
   })
   .catch((e) => {

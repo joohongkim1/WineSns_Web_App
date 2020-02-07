@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import configureStore from "./stores/login/store/configure";
+import configureStore from "./stores/login/store";
 import App from "./src/App";
 import Navbar from "./src/components/App/Navbar";
 import Footer from "./src/components/App/Footer";
