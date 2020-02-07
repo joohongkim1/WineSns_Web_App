@@ -11,6 +11,7 @@ const KakaoLogin: any = K;
 import GoogleLogin from 'react-google-login';
 
 
+
 interface IProps {
     isLoginPending: boolean;
     isLoginSuccess: boolean;
@@ -26,7 +27,6 @@ interface IProps {
     password: string;
     nickname: string;
   }
-
 
 
 class FormPage extends React.Component<IProps, IState> {
@@ -47,11 +47,11 @@ class FormPage extends React.Component<IProps, IState> {
       {
           console.log("success")
           console.log(res);
-          console.log(res.w3.ofa);
+         
           console.log(res.googleId);
           this.setState({
               id: res.googleId,
-              nickname : res.w3.ofa,
+              nickname : 'temp',
               provider: 'GOOGLE'
           })
 
@@ -180,6 +180,7 @@ class FormPage extends React.Component<IProps, IState> {
         console.log("end");
         console.log(this.props);
     }
+    
 }
 
 const mapStateToProps = (state : any) => {
@@ -190,4 +191,6 @@ const mapStateToProps = (state : any) => {
     }
 }
 
+
+ 
 export default connect(mapStateToProps)(FormPage);

@@ -23,7 +23,7 @@ export default function registerReducer(state = initialState, action : any) {
 
     case actions.SET_REGISTER_SUCCESS:
       return Object.assign({}, state, {
-        isRegisteruccess: action.isRegisterSuccess
+        isRegisterSuccess: action.isRegisterSuccess
       });
 
     case actions.SET_REGISTER_ERROR:
