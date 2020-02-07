@@ -112,10 +112,15 @@
   content: "G";
 }
 
-.bg3 {
+.bg1 {
   background-color: #ea4335;
 }
 
-.MuiInputBase-input {
-   font: inherit;
+.fa-kakao:before {
+  content: "K";
+}
+
+
+.bg2 {
+  background-color: #fffc00;
 }
