@@ -1,138 +1,144 @@
-import React from 'react';
-import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
-import Backdrop from '@material-ui/core/Backdrop';
+import React from "react";
+import {
+  fade,
+  makeStyles,
+  Theme,
+  createStyles
+} from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import Badge from "@material-ui/core/Badge";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MailIcon from "@material-ui/icons/Mail";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import Modal from "@material-ui/core/Modal";
+import Fade from "@material-ui/core/Fade";
+import Button from "@material-ui/core/Button";
+import Backdrop from "@material-ui/core/Backdrop";
 // import Login from "../../../stores/login/components/Login";
 // import Login from "../../../stores/login/components/FormPage";
 import Login from "../../../stores/login/components/FormPage";
 
 import Section from "./Section";
-import purple from '@material-ui/core/colors/purple';
-import {logout} from '../../../stores/login/actions/login';
+import purple from "@material-ui/core/colors/purple";
+import { logout } from "../../../stores/login/actions/login";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
-    
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    link: {
-        margin: theme.spacing(1, 1.5),
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
-      paper: {
-   
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-      },
-      appBar: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-      },
-      toolbar: {
-        flexWrap: 'wrap',
-      },
+    link: {
+      margin: theme.spacing(1, 1.5)
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3)
+    },
+    appBar: {
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    toolbar: {
+      flexWrap: "wrap"
+    },
     grow: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
+      display: "none",
+      [theme.breakpoints.up("sm")]: {
+        display: "block"
       },
-      fontSize : 48,
+      fontSize: 48
     },
     search: {
-      position: 'relative',
+      position: "relative",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
+        width: "auto"
+      }
     },
     searchIcon: {
       width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
     inputRoot: {
-      color: 'inherit',
+      color: "inherit"
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: 200,
-      },
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: 200
+      }
     },
     sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
+      display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "flex"
+      }
     },
     sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-  }),
+      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "none"
+      }
+    }
+  })
 );
 export default function Navbar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
-      setOpen(true);
+    setOpen(true);
   };
   const handleClose = () => {
-      setOpen(false);
+    setOpen(false);
   };
-  
+
   const logoutFunction = () => {
     //e.preventDefault();
-  
-    window.location.href = '/ranking';
+
+    window.location.href = "/ranking";
     sessionStorage.clear();
     logout();
-    
-  }
+  };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [
+    mobileMoreAnchorEl,
+    setMobileMoreAnchorEl
+  ] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -148,14 +154,14 @@ export default function Navbar() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -163,14 +169,14 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -190,7 +196,7 @@ export default function Navbar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem >
+      <MenuItem>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -205,7 +211,12 @@ export default function Navbar() {
   );
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+      <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        className={classes.appBar}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -215,8 +226,8 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap >
-          Dionysos
+          <Typography className={classes.title} variant="h6" noWrap>
+            Dionysos
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -226,14 +237,15 @@ export default function Navbar() {
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput,
+                input: classes.inputInput
               }}
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
           </div>
           <Section />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {/* 메일 및 쪽지 알림참 */}
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={8} color="secondary">
                 <MailIcon />
@@ -266,54 +278,48 @@ export default function Navbar() {
               <MoreIcon />
             </IconButton>
           </div>
-          {
-          (function() {
-            if (!sessionStorage.getItem('userInfo')) {
+          {(function() {
+            if (!sessionStorage.getItem("userInfo")) {
               return (
                 <div>
-            
-                <Button onClick={handleOpen} className={classes.link}>
-                Login </Button>
-                        <Modal
-                        aria-labelledby="transition-modal-title"
-                        aria-describedby="transition-modal-description"
-                        className={classes.modal}
-                        open={open}
-                        onClose={handleClose}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                            timeout: 500,
-                        }}
-                    >
-           <Fade in={open}>
-        
-          
-        
-          <div className={classes.paper}>
-        
-                  <Login />
-                  </div>
-                  
-                  </Fade>
-        
+                  <Button onClick={handleOpen} className={classes.link}>
+                    Login{" "}
+                  </Button>
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500
+                    }}
+                  >
+                    <Fade in={open}>
+                      <div className={classes.paper}>
+                        <Login />
+                      </div>
+                    </Fade>
                   </Modal>
-                  <a href="/signUp" className={classes.link}>
-          Register </a>
-              </div>
+                  <Link
+                    to="/signUp"
+                    className={classes.link}
+                    style={{ textDecoration: "none" }}
+                  >
+                    Register{" "}
+                  </Link>
+                </div>
               );
-            } 
-            else  { 
-          
+            } else {
               return (
-              
                 <Button onClick={logoutFunction} className={classes.link}>
-                Logout </Button>
+                  Logout{" "}
+                </Button>
               );
             }
-          })()
-        }
-     
+          })()}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

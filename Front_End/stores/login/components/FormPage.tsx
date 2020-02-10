@@ -1,35 +1,42 @@
 import React from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "./login_style.css";
 
-import { login, SNSLogin } from '../actions/login'
-import { logout } from '../actions/login'
+import { login, SNSLogin } from "../actions/login";
+import { logout } from "../actions/login";
 // import KakaoLogin from 'react-kakao-login';
-import K from 'react-kakao-login';
+import K from "react-kakao-login";
 const KakaoLogin: any = K;
 
-import GoogleLogin from 'react-google-login';
-
+import GoogleLogin from "react-google-login";
 
 
 interface IProps {
-    isLoginPending: boolean;
-    isLoginSuccess: boolean;
-    loginError: string;
-    login?(email: string, password: string): void;
-    dispatch: Function;
-  }
-  
-  interface IState {
-    id : string;
-    provider: string;
-    email: string;
-    password: string;
-    nickname: string;
-  }
-
+  isLoginPending: boolean;
+  isLoginSuccess: boolean;
+  loginError: string;
+  login?(email: string, password: string): void;
+  dispatch: Function;
+}
 
 class FormPage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    console.log("this is props");
+    console.log(props);
+    console.log("this is login state");
+
+    this.state = {
+      id: "",
+      provider: "",
+      email: "",
+      password: "",
+      nickname: ""
+    };
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
     constructor(props: IProps) {
         super(props);
@@ -128,67 +135,29 @@ class FormPage extends React.Component<IProps, IState> {
         <a href="#">Forgot Password?</a>
         <a href="/signUp">Sign up</a>
         </div>
-        <GoogleLogin
-                    clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-                    render={(props) => <button className="login100-social-item bg1" onClick={props.onClick}><i className="fa fa-google"></i></button>}
-                    buttonText="Google"
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseFail}
-                    cookiePolicy={'single_host_origin'}
-                />
-               
-              <KakaoLogin
-                    jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-                    render={(props : any) => <button className="login100-social-item bg2" onClick={props.onClick}><i className="fa fa-kakao"></i></button>}
-                    onSuccess={this.responseKakao}
-                    onFailure={this.responseFail}
-                    throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
-                    getProfile={true}
-                />
-  
-                
-      </form>
-    
-      </div>
-
-
-
-  );
+      );
     } else {
+      return (
+        // // const history = createBrowserHistory();
+        // // history.push('/ranking');
+        // //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
 
-     
-    return ( 
-// // const history = createBrowserHistory();
-// // history.push('/ranking');
-// //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
-
-      
-    <div><pre></pre>Welcome To Dionysos</div>
-    
-    )
-
-}
-
-}
-
-  async onSubmit(e : React.FormEvent<HTMLFormElement> ) {
-     
-        e.preventDefault();
-        let { email, password } = this.state;
-        console.log("start");
-        await this.props.dispatch(login(email, password));
-        console.log("end");
-        console.log(this.props);
+        <div>
+          <pre></pre>Welcome To Dionysos
+        </div>
+      );
     }
     
 }
 
-const mapStateToProps = (state : any) => {
-    return {
-      isLoginPending: state.loginReducer.isLoginPending,
-      isLoginSuccess: state.loginReducer.isLoginSuccess,
-      loginError: state.loginReducer.loginError
-    }
+  async onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    let { email, password } = this.state;
+    console.log("start");
+    await this.props.dispatch(login(email, password));
+    console.log("end");
+    console.log(this.props);
+  }
 }
 
 
