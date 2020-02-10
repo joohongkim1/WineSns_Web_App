@@ -1,6 +1,6 @@
 import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Link } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import brown from "@material-ui/core/colors/brown";
 import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
@@ -57,6 +57,7 @@ export default function Section() {
         {sections.map(section => (
           <Link
             color="inherit"
+            noWrap
             key={section.title}
             variant="body2"
             href={section.url}
