@@ -98,14 +98,6 @@ function SignUp() {
 
   const [state, setState] = useState( {nickname : '', email : '', password : '', provider : '', id : ''});
  
-  // const [props, setProps] = useState({
-  //   isRegisterPending: false,
-  //   isRegisterSuccess: false,
-  //   registerError: "not Yet",
-  //   register?(nickname : string, email: string, password: string),
-  //   dispatch: Function
-
-  // });
 
 
   const onSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
@@ -323,57 +315,7 @@ function SignUp() {
 }
 
 
-// const mapStateToProps = (state : IProps ) => {
-//   return {
-//   isRegisterPending: state.isRegisterPending,
-//   isRegisterSuccess: state.isRegisterSuccess,
-//   registerError: state.registerError
-//   };
-// }
-// store 안의 state 값을 props 로 연결해줍니다.
-// const mapStateToProps = (state : any) => {
-//   console.log(state);
-//   return {
-//     isRegisterPending: state.registerReducer.isRegisterPending,
-//     isRegisterSuccess: state.registerReducer.isRegisterSuccess,
-//     registerError: state.registerReducer.isRegisterError
-//   }
-// }
 
-/* 
-  액션 생성자를 사용하여 액션을 생성하고,
-  해당 액션을 dispatch 하는 함수를 만들은 후, 이를 props 로 연결해줍니다.
-*/
-
-
-
-
-// const mapDispatchToProps = (dispatch : IProps ) => {
-//   return {
-//   isRegisterPending: dispatch.isRegisterPending,
-//   isRegisterSuccess: dispatch.isRegisterSuccess,
-//   registerError: dispatch.registerError
-//   };
-// }
-
-// export default connect(
-//   null,
-//   (dispatch : Dispatch) => ({
-//       register: bindActionCreators(register, dispatch),
-//       emailCheck: bindActionCreators(emailCheck, dispatch),
-//       SNSRegister: bindActionCreators(SNSRegister, dispatch)
-//   })
-// )(SignUp);
 
 export default SignUp;
 
-// export default connect(
-//   (state) => ({
-//     email : state.RegisterUser.email,
-    
-//   }), 
-//   (dispatch) => ({
-//     increment: () => dispatch(counterActions.increment()),
-//     decrement: () => dispatch(counterActions.decrement())
-//   })
-// )(CounterContainer);

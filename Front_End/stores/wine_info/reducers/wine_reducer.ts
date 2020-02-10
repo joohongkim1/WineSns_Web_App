@@ -2,7 +2,7 @@ import { actions } from '../actions/wineInfo'
 
 
 // example consuming code
-interface Wine {
+export interface Wine {
   wid: number;
   nameKor : string;
   nameEng: string;
@@ -25,52 +25,60 @@ interface Wine {
   likeNum: number
 }
 
-const initialState = { 
-  AllWine : [{ 
-    wid: 0,
-    nameKor : '',
-    nameEng: '',
-    type: '',
-    sparkling: false,
-    grape: '',
-    country: '',
-    countrySub: '',
-    winery: '',
-    alcohol: 0,
-    whenUse: '',
-    grade: '',
-    sweet: 0,
-    body: 0,
-    acid: 0,
-    tannin: 0,
-    foodMatch: '',
-    info: '',
-    visit : 0,
-    likeNum: 0}] as Wine[],
+
+export interface wineState  {
+  wineList : Wine[],
+  isWinePending : boolean,
+  isWineSucceess : boolean,
+  isWineError : string
+
+}
+const initialState : wineState = { 
+  wineList : [],
     isWinePending : false,
     isWineSucceess : false,
-    isWineError : false
+    isWineError : ''
 }
 
+// {
+  // wid: 0,
+  // nameKor : '',
+  // nameEng: '',
+  // type: '',
+  // sparkling: false,
+  // grape: '',
+  // country: '',
+  // countrySub: '',
+  // winery: '',
+  // alcohol: 0,
+  // whenUse: '',
+  // grade: '',
+  // sweet: 0,
+  // body: 0,
+  // acid: 0,
+  // tannin: 0,
+  // foodMatch: '',
+  // info: '',
+  // visit : 0,
+  // likeNum: 0}
 
 export default function rootReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_WINE_INFO_PENDING:
-      return Object.assign({}, state, {
+      return {...state, 
         isLoginPending: action.isWinePending
-      });
+      }
 
     case actions.SET_WINE_INFO_SUCCESS:
-      return Object.assign({}, state, {
+      return {...state,
         isLoginSuccess: action.isWineSuccess,
-        AllWine : action.AllWine
-      });
+        wineList : action.wineList
+      }
 
     case actions.SET_WINE_INFO_ERROR:
-      return Object.assign({}, state, {
+      return {...state,
         loginError: action.WineError
-      });
-
+      }
     default:
       return state;
   }

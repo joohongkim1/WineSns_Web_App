@@ -26,6 +26,12 @@ import Section from "./Section";
 import purple from '@material-ui/core/colors/purple';
 import {logout} from '../../../stores/login/actions/login';
 
+
+import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
+// Redux
+import { useSelector,  useDispatch } from 'react-redux';
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
@@ -115,6 +121,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Navbar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+
+
+
   const handleOpen = () => {
       setOpen(true);
   };
@@ -149,6 +158,8 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const menuId = 'primary-search-account-menu';
+
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -163,6 +174,9 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
+
+
+
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -203,6 +217,8 @@ export default function Navbar() {
       </MenuItem>
     </Menu>
   );
+
+
   return (
     <div className={classes.grow}>
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
