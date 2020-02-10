@@ -2,24 +2,18 @@ import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import brown from "@material-ui/core/colors/brown";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    toolbar: {
-      borderBottom: `1px solid ${theme.palette.divider}`
-    },
-    toolbarTitle: {
-      flex: 1
-    },
     toolbarSecondary: {
-      justifyContent: "center",
-      overflowX: "auto"
+      // justifyContent: "center",
+      position: "relative",
+      marginLeft: 120
     },
     toolbarLink: {
-      fontSize: 32,
-      color: brown["900"],
-      padding: theme.spacing(2),
+      fontSize: 24,
+      color: "#ffffff",
+      padding: theme.spacing(4),
       flexShrink: 0
     }
   })
@@ -48,7 +42,7 @@ export default function Section() {
             key={section.title}
             to={section.url}
             className={classes.toolbarLink}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "#000000" }}
           >
             {section.title}
           </Link>

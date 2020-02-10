@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "600px",
       height: "400px",
       top: "30%",
-      left: "20%",
-      backgroundColor: brown[700]
+      left: "18%",
+      backgroundColor: brown[700],
+      opacity: "0.9"
     },
     card: {
       backgroundColor: "transparent",
@@ -83,7 +84,8 @@ export default function Entrance() {
               align="center"
               style={{
                 color: "#fce4ec",
-                marginLeft: 230,
+                marginLeft: "auto",
+                marginRight: "auto",
                 marginTop: 50,
                 fontWeight: "bold"
               }}
@@ -97,7 +99,9 @@ export default function Entrance() {
               align="center"
               style={{
                 color: "#fce4ec",
-                marginLeft: 180,
+                // marginLeft: "auto",
+                marginLeft: "auto",
+                marginRight: "auto",
                 marginTop: 20,
                 fontWeight: "bold"
               }}
@@ -110,7 +114,12 @@ export default function Entrance() {
               variant="h6"
               component="h2"
               align="center"
-              style={{ color: "#fce4ec", marginLeft: 160, marginTop: 10 }}
+              style={{
+                color: "#fce4ec",
+                marginTop: 10,
+                marginLeft: "auto",
+                marginRight: "auto"
+              }}
             >
               만 19세 이상 음주 가능한 연령 입니까?
             </Typography>

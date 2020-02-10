@@ -45,12 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
     //   padding: theme.spacing(2, 4, 3)
     // },
     appBar: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      height: 130
+      borderBottom: `1px solid ${theme.palette.divider}`
     },
     toolbar: {
-      flexWrap: "wrap",
-      height: 130
+      flexWrap: "wrap"
     },
     grow: {
       flexGrow: 1
@@ -63,11 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         display: "block"
       },
-      fontSize: 40,
-      fontFamily: "Recipekorea"
-    },
-    sign: {
-      marginLeft: "20px"
+      fontSize: 48
     },
     // search: {
     //   position: "relative",
@@ -104,11 +98,6 @@ const useStyles = makeStyles((theme: Theme) =>
         width: 200
       }
     },
-    wine_img: {
-      width: "48px",
-      heigth: "48px",
-      marginRight: "5px"
-    },
     sectionDesktop: {
       display: "none",
       [theme.breakpoints.up("md")]: {
@@ -126,7 +115,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Navbar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const baseUrl = "../../components/assets/images/";
   const handleOpen = () => {
     setOpen(true);
   };
@@ -226,11 +214,6 @@ export default function Navbar() {
         className={classes.appBar}
       >
         <Toolbar className={classes.toolbar}>
-          <img
-            className={classes.wine_img}
-            src="https://image.flaticon.com/icons/svg/1150/1150262.svg"
-            alt="wine"
-          />
           <Typography className={classes.title} variant="h6" noWrap>
             Dionysos
           </Typography>
@@ -286,7 +269,7 @@ export default function Navbar() {
           {(function() {
             if (!sessionStorage.getItem("userInfo")) {
               return (
-                <div className={classes.sign}>
+                <div>
                   <Button onClick={handleOpen} className={classes.link}>
                     Login{" "}
                   </Button>
@@ -308,15 +291,13 @@ export default function Navbar() {
                       {/* </div> */}
                     </Fade>
                   </Modal>
-                  <Button>
-                    <Link
-                      to="/signUp"
-                      className={classes.link}
-                      style={{ textDecoration: "none", color: "#000000" }}
-                    >
-                      SignUp{" "}
-                    </Link>
-                  </Button>
+                  <Link
+                    to="/signUp"
+                    className={classes.link}
+                    style={{ textDecoration: "none" }}
+                  >
+                    Register{" "}
+                  </Link>
                 </div>
               );
             } else {
