@@ -18,11 +18,11 @@ import '../../index.css';
 
 
 interface WineInfo {
+    wid : number; 
     nameKor: string;
     nameEng : string;
     type : string;
     info: string;
-    rating: number;
 }
 
 
@@ -51,8 +51,8 @@ function WineInfo(wine: WineInfo) {
   const classes = useStyles();
 
   const [checked] = React.useState(true);
-  let num: number = wine.rating;
-  const [value] = React.useState(num);
+  
+
     return (
       <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
         <Grid item xs={12} sm={6} md={4}>
@@ -60,7 +60,7 @@ function WineInfo(wine: WineInfo) {
                 <CardMedia
                     
                     className={classes.cardMedia}
-                    image="https://crwine.com/wp-content/uploads/2016/09/cedar-ridge-falcon-hill-wine.jpg"
+                    image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
@@ -81,9 +81,7 @@ function WineInfo(wine: WineInfo) {
                     {/* <Button size="small" color="primary">
                         View
       </Button> */}
-                    <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Rating name="read-only" value={value} readOnly />
-                    </Box>
+    
               
             </Card>
         </Grid>

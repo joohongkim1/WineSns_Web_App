@@ -15,19 +15,19 @@ const initialState: loginState = {
 export default function loginReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_LOGIN_PENDING:
-      return Object.assign({}, state, {
+      return {...state,
         isLoginPending: action.isLoginPending
-      });
+      }
 
     case actions.SET_LOGIN_SUCCESS:
-      return Object.assign({}, state, {
+      return {...state,
         isLoginSuccess: action.isLoginSuccess
-      });
+      }
 
     case actions.SET_LOGIN_ERROR:
-      return Object.assign({}, state, {
+      return {...state,
         loginError: action.loginError
-      });
+      }
 
     default:
       return state;

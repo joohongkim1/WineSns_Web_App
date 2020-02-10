@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import "./login_style.css";
 
 import { login, SNSLogin } from "../actions/login";
@@ -49,11 +48,11 @@ class FormPage extends React.Component<IProps, IState> {
   responseGoogle = async (res: any) => {
     console.log("success");
     console.log(res);
-    console.log(res.w3.ofa);
+
     console.log(res.googleId);
     this.setState({
       id: res.googleId,
-      nickname: res.w3.ofa,
+      nickname: "temp",
       provider: "GOOGLE"
     });
 
@@ -92,80 +91,82 @@ class FormPage extends React.Component<IProps, IState> {
       console.log(sessionStorage.getItem("userInfo"));
 
       return (
-        <form name="form" onSubmit={this.onSubmit} className="login-form">
-          <h1>Login</h1>
+        <div>
+          <form name="form" onSubmit={this.onSubmit} className="login-form">
+            <h1>Login</h1>
 
-          <div className="txtb">
-            <input
-              type="email"
-              disabled={isLoginPending}
-              className="form-control"
-              name="email"
-              onChange={e => this.setState({ email: e.target.value })}
-              value={email}
-            ></input>
-            <span data-placeholder="Email"></span>
-          </div>
-          <div className="txtb">
-            <input
-              type="password"
-              disabled={isLoginPending}
-              className="form-control"
-              name="password"
-              onChange={e => this.setState({ password: e.target.value })}
-              value={password}
-            ></input>
-            <span data-placeholder="Password"></span>
-          </div>
+            <div className="txtb">
+              <input
+                type="email"
+                disabled={isLoginPending}
+                className="form-control"
+                name="email"
+                onChange={e => this.setState({ email: e.target.value })}
+                value={email}
+              ></input>
+              <span data-placeholder="Email"></span>
+            </div>
+            <div className="txtb">
+              <input
+                type="password"
+                disabled={isLoginPending}
+                className="form-control"
+                name="password"
+                onChange={e => this.setState({ password: e.target.value })}
+                value={password}
+              ></input>
+              <span data-placeholder="Password"></span>
+            </div>
 
-          <input type="submit" className="logbtn" value="Login" />
+            <input type="submit" className="logbtn" value="Login" />
 
-          <br />
-          <div className="message">
-            {isLoginPending && <div>Please wait...</div>}
+            <br />
+            <div className="message">
+              {isLoginPending && <div>Please wait...</div>}
 
-            {(function() {
-              if (loginError == "login error") {
-                return <span>email 과 password를 확인해주세요.</span>;
-              }
-            })()}
-          </div>
-          <div className="bottom-text">
-            <Link to="#">Forgot Password?</Link>
-            <Link to="/signUp">Sign up</Link>
-          </div>
-          <GoogleLogin
-            clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-            render={props => (
-              <button
-                className="login100-social-item bg1"
-                onClick={props.onClick}
-              >
-                <i className="fa fa-google"></i>
-              </button>
-            )}
-            buttonText="Google"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseFail}
-            cookiePolicy={"single_host_origin"}
-          />
+              {(function() {
+                if (loginError == "login error") {
+                  return <span>email 과 password를 확인해주세요.</span>;
+                }
+              })()}
+            </div>
+            <div className="bottom-text">
+              <a href="#">Forgot Password?</a>
+              <a href="/signUp">Sign up</a>
+            </div>
+            <GoogleLogin
+              clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
+              render={props => (
+                <button
+                  className="login100-social-item bg1"
+                  onClick={props.onClick}
+                >
+                  <i className="fa fa-google"></i>
+                </button>
+              )}
+              buttonText="Google"
+              onSuccess={this.responseGoogle}
+              onFailure={this.responseFail}
+              cookiePolicy={"single_host_origin"}
+            />
 
-          <KakaoLogin
-            jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-            render={(props: any) => (
-              <button
-                className="login100-social-item bg2"
-                onClick={props.onClick}
-              >
-                <i className="fa fa-kakao"></i>
-              </button>
-            )}
-            onSuccess={this.responseKakao}
-            onFailure={this.responseFail}
-            throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
-            getProfile={true}
-          />
-        </form>
+            <KakaoLogin
+              jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
+              render={(props: any) => (
+                <button
+                  className="login100-social-item bg2"
+                  onClick={props.onClick}
+                >
+                  <i className="fa fa-kakao"></i>
+                </button>
+              )}
+              onSuccess={this.responseKakao}
+              onFailure={this.responseFail}
+              throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
+              getProfile={true}
+            />
+          </form>
+        </div>
       );
     } else {
       return (

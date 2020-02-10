@@ -19,6 +19,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import WineInfo from "../Interface/Wine";
 
 
+// Redux
+import { useSelector,  useDispatch} from 'react-redux';
+import { rootState } from '../../../stores/login/store';
+import { getWineTop3 } from '../../../stores/wine_info/actions/mainRank';
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     icon: {
@@ -73,11 +79,26 @@ info : "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스�
 export default function TempTop3() {
   const classes = useStyles();
   const [value] = React.useState(4); // for Rati$ng : value 는 rating 점수
+  const [wineState, setWineState] = React.useState(false);
+  const dispatch = useDispatch();
+  //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
+  const { wineTop3, isWinePending,isWineTop3Succeess, isWineError} = useSelector(
+    (state: rootState) => state.wineRankReducer
+  );
+  
+  
 
-  const [checked, setChecked] = React.useState(true);
-  const handleChange = () => {
-    setChecked(prev => !prev);
-  };
+  const loadWineTop3 = async () => {
+    console.log("onWineTop3List");
+    await dispatch(getWineTop3("VISIT_3"));
+  }
+
+  if(!isWineTop3Succeess && !wineState) {
+    loadWineTop3();
+    setWineState(true);
+  } else {
+
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -88,13 +109,14 @@ export default function TempTop3() {
           <Container className={classes.cardGrid} maxWidth="md">
             ​ ​{/* End hero unit */}​ ​
             <Grid container spacing={4}>
-              {wines.map(wine => (
+              {wineTop3.map(wine => (
                            <WineInfo
+                           wid={wine.wid}
                            nameKor={wine.nameKor}
                            nameEng={wine.nameEng}
                            info={wine.info}
                            type={wine.type}
-                           rating={wine.rating}
+                          
                          />
               ))}
             </Grid>
