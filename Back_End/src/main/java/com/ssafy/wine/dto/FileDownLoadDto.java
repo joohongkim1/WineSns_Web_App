@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class FileInfoDto {
-
-	private String name;
-	private Long size;
-	private String url;
-
+public class FileDownLoadDto {
+	
+	private String fileUrl;
+	private String fileName;
+	private long fileSize;
+	
 }

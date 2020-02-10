@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.wine.dto.FileInfoDto;
-import com.ssafy.wine.dto.FileLoadDto;
+import com.ssafy.wine.dto.FileDownLoadDto;
+import com.ssafy.wine.dto.FileUpLoadDto;
 import com.ssafy.wine.enums.FileLoadEnum;
 import com.ssafy.wine.service.FileLoadServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 
 @RestController
 @Api(tags = { "7. FileLoad" }, description = "File Upload & Download REST API")
@@ -36,13 +35,15 @@ public class FileLoadController {
 	@Autowired
 	private FileLoadServiceImpl fileLoadService;
 
-	@ApiOperation(value = "파일 업로드 - Swagger로 하면 오류가 있어요, 주어진 링크로 다중파일까지 잘 됨")
+//	@ConfigurationProperties(prefix = "spring.servlet.multipart", ignoreUnknownFields = false)
+	@ApiOperation(value = "파일 업로드 - Swagger로 하면 오류, Postman으로 시험시에 잘 됬습니다.")
 	@PostMapping("/uploadFile")
-	public ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile[] files, @RequestParam FileLoadEnum type, @RequestParam Long id) {
+	public ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile[] files,
+			@RequestParam FileLoadEnum type, @RequestParam String id) {
 		try {
-			List<FileLoadDto> fileDtos = new ArrayList<>();
+			List<FileUpLoadDto> fileDtos = new ArrayList<>();
 			for (int i = 0; i < files.length; i++) {
-				fileDtos.add(fileLoadService.uploadFile(files[i], type, id, i));
+				fileDtos.add(fileLoadService.uploadFile(files[i], type, id, String.valueOf(i)));
 			}
 			return new ResponseEntity<Object>(fileDtos, HttpStatus.OK);
 		} catch (Exception e) {
@@ -52,24 +53,27 @@ public class FileLoadController {
 
 	@ApiOperation(value = "파일 불러오기")
 	@GetMapping("/downloadFile")
-	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam Long id, HttpServletRequest req) {
+	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam Long id,
+			HttpServletRequest req) {
 		try {
-			List<FileInfoDto> fileInfoDtos = fileLoadService.downloadFile(type, id, req.getRequestURL().toString().split("/fileload")[0]);
+			List<FileDownLoadDto> fileInfoDtos = fileLoadService.downloadFile(type, String.valueOf(id),
+					req.getRequestURL().toString().split("/fileload")[0]);
 			return new ResponseEntity<Object>(fileInfoDtos, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 	@ApiOperation(value = "파일 삭제 = 확장자 명까지 필수")
 	@DeleteMapping("/deleteFile")
-	public ResponseEntity<Object> deleteFile(@RequestParam FileLoadEnum type, @RequestParam Long id, @RequestParam String name) {
+	public ResponseEntity<Object> deleteFile(@RequestParam FileLoadEnum type, @RequestParam Long id,
+			@RequestParam String fileName) {
 		try {
-			String path = fileLoadService.deleteFile(type, id, name);
-			return new ResponseEntity<Object>(path, HttpStatus.OK);
+			String path = fileLoadService.deleteFile(type, String.valueOf(id), fileName);
+			return new ResponseEntity<Object>(path + " 파일을 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 }

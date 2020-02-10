@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.wine.dto.FileInfoDto;
-import com.ssafy.wine.dto.FileLoadDto;
+import com.ssafy.wine.dto.FileDownLoadDto;
+import com.ssafy.wine.dto.FileUpLoadDto;
 import com.ssafy.wine.enums.FileLoadEnum;
 
 public interface FileLoadSerivce {
 
-	public FileLoadDto uploadFile(MultipartFile file, FileLoadEnum type, Long id, Integer num);
+	public FileUpLoadDto uploadFile(MultipartFile file, FileLoadEnum type, String id, String num);
 
-	public List<FileInfoDto> downloadFile(FileLoadEnum type, Long id, String uri);
+	public List<FileDownLoadDto> downloadFile(FileLoadEnum type, String id, String uri);
 
-	public String deleteFile(FileLoadEnum type, Long id, String name);
+	public String deleteFile(FileLoadEnum type, String id, String name);
 
 }

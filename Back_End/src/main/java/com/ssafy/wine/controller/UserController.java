@@ -39,7 +39,7 @@ public class UserController {
 	private final ResponseService responseService; // 결과를 처리할 Service
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 

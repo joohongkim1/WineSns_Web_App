@@ -60,9 +60,10 @@ public class BackEndApplication implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/Profile/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgProfile()).toUri().toString());
-        registry.addResourceHandler("/Background/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgBackground()).toUri().toString());
-        registry.addResourceHandler("/Feed/**").addResourceLocations(Paths.get(fileLoadProperty.getUploadImgFeed()).toUri().toString());
+		registry.addResourceHandler("/Wine/**").addResourceLocations(Paths.get(fileLoadProperty.getImgWine()).toUri().toString());
+        registry.addResourceHandler("/Profile/**").addResourceLocations(Paths.get(fileLoadProperty.getImgProfile()).toUri().toString());
+        registry.addResourceHandler("/Background/**").addResourceLocations(Paths.get(fileLoadProperty.getImgBackground()).toUri().toString());
+        registry.addResourceHandler("/Feed/**").addResourceLocations(Paths.get(fileLoadProperty.getImgFeed()).toUri().toString());
         
 	}
 
