@@ -142,10 +142,30 @@ class FormPage extends React.Component<IProps, IState> {
         // // history.push('/ranking');
         // //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
 
-        <div>
-          <pre></pre>Welcome To Dionysos
-        </div>
-      );
+     
+    return ( 
+// // const history = createBrowserHistory();
+// // history.push('/ranking');
+// //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
+
+      
+    <div><pre></pre>Welcome To Dionysos</div>
+  
+    
+    )
+
+}
+
+}
+
+  async onSubmit(e : React.FormEvent<HTMLFormElement> ) {
+     
+        e.preventDefault();
+        let { email, password } = this.state;
+        console.log("start");
+        await this.props.dispatch(login(email, password));
+        console.log("end");
+        console.log(this.props);
     }
     
 }

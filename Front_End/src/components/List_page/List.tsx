@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -18,6 +18,12 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+
+
+// Redux
+import { useSelector,  useDispatch} from 'react-redux';
+import { rootState } from '../../../stores/login/store';
+import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -129,6 +135,25 @@ const wines = [
 
 export default function List() {
   const classes = useStyles();
+  const [wineState, setWineState] = useState(false);
+  const dispatch = useDispatch();
+  //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
+  const { wineList, isWinePending, isWineSucceess, isWineError} = useSelector(
+    (state: rootState) => state.wineReducer
+  );
+
+
+  const loadWineList = async () => {
+    console.log("onWineList");
+    await dispatch(getWineListByType("KOR_UP"));
+  }
+
+  if(!isWineSucceess && !wineState) {
+    loadWineList();
+    setWineState(true);
+  } else {
+
+  }
 
   return (
     <React.Fragment>
@@ -168,7 +193,8 @@ export default function List() {
         <Typography className={classes.total}>Total </Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
-          {wines.map(wine => (
+          {wineList.map(wine => (
+            
             <Grid item xs={4}>
               <Card className={classes.card}>
                 <CardHeader
@@ -180,10 +206,10 @@ export default function List() {
                   title={wine.nameKor}
                   subheader={wine.nameEng}
                 />
-                <Link to={"/detail"} style={{ textDecoration: "none" }}>
+                <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
                   <CardMedia
                     className={classes.media}
-                    image={wine.image}
+                    image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
                     title={wine.nameEng}
                   />
                 </Link>

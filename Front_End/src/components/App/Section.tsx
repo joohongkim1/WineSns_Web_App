@@ -3,6 +3,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import brown from "@material-ui/core/colors/brown";
+import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
+// Redux
+import { useSelector,  useDispatch } from 'react-redux';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,7 +38,15 @@ const sections = [
 
 export default function Section() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  const onWineList = async () => {
+  
+    console.log("onWineList");
+    await dispatch(getWineListByType("KOR_UP"));
+
+  
+  }
   return (
     <div className="container">
       <Toolbar
@@ -46,7 +58,9 @@ export default function Section() {
           <Link
             color="inherit"
             key={section.title}
-            to={section.url}
+            variant="body2"
+            href={section.url}
+           // onClick={onWineList}
             className={classes.toolbarLink}
             style={{ textDecoration: "none" }}
           >

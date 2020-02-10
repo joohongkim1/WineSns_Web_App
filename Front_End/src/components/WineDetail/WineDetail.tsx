@@ -33,11 +33,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const wines = [{nameKor : "와인의 최고봉", nameEng : "Good Good", 
+const wines = [{wid : 1, nameKor : "와인의 최고봉", nameEng : "Good Good", 
 info : "너무너무 맛있어요...", type: "Red", rating : 5},
-{nameKor : "이 와인 추천 합니다.", nameEng : "Recommend", 
+{wid : 2, nameKor : "이 와인 추천 합니다.", nameEng : "Recommend", 
 info : "과일향이 너무 좋아요...", type: "Red", rating : 4},
-{nameKor : "요새 마신 와인 중 최고", nameEng : "Best", 
+{wid : 3, nameKor : "요새 마신 와인 중 최고", nameEng : "Best", 
 info : "요새 마신 와인들 중에 제일 맛있었습니다....", type: "White", rating : 5 }
 
 ]; 
@@ -133,11 +133,12 @@ export default function WineList() {
             <Grid container spacing={4}>
               {wines.map(wine => (
                            <WineInfo
+                            wid={wine.wid}
                            nameKor={wine.nameKor}
                            nameEng={wine.nameEng}
                            info={wine.info}
                            type={wine.type}
-                           rating={wine.rating}
+                          
                          />
               ))}
             </Grid>
