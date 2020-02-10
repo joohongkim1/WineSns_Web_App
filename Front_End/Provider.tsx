@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "./stores/login/store";
 import App from "./src/App";
