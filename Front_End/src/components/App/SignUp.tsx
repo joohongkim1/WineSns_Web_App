@@ -99,14 +99,6 @@ function SignUp() {
     emailState
   } = useSelector((state: rootState) => state.registerReducer);
 
-  const [state, setState] = useState({
-    nickname: "",
-    email: "",
-    password: "",
-    provider: "",
-    id: ""
-  });
-
   const [state, setState] = useState( {nickname : '', email : '', password : '', provider : '', id : ''});
  
 
