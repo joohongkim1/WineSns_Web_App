@@ -1,6 +1,9 @@
 package com.ssafy.wine.service;
 
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,6 +19,8 @@ import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.Wine;
 import com.ssafy.wine.enums.WineFindEnum;
 import com.ssafy.wine.enums.WineRankEnum;
+import com.ssafy.wine.exception.FileUploadException;
+import com.ssafy.wine.property.FileLoadProperties;
 import com.ssafy.wine.repo.WineRepository;
 
 @Service
@@ -27,10 +32,21 @@ public class WineServiceImpl implements WineService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	private final Path wineImgLocation;
+	
+	@Autowired
+	public WineServiceImpl (FileLoadProperties prop) {
+		wineImgLocation =  Paths.get(prop.getImgWine()).toAbsolutePath().normalize();
+		try {
+			Files.createDirectories(this.wineImgLocation);
+		} catch (Exception e) {
+			throw new FileUploadException("파일을 업로드할 디렉토리를 생성하지 못했습니다.", e);
+		}
+	}
+	
 	@Override
 	public List<WineDto> findAll(WineFindEnum type) {
 		List<Wine> wines = new ArrayList<>();
-		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
 		switch (type) {
 		case KOR_UP:
 			wines = wineRepository.findAllByOrderByNameKorAsc();
@@ -48,6 +64,7 @@ public class WineServiceImpl implements WineService {
 			break;
 		}
 
+		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
 		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
 		return wineDtos;
 	}

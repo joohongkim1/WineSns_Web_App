@@ -10,8 +10,9 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "file")
 public class FileLoadProperties {
 	
-	private String uploadImgProfile;
-	private String uploadImgBackground;
-	private String uploadImgFeed;
+	private String imgWine;
+	private String imgProfile;
+	private String imgBackground;
+	private String imgFeed;
 	
 }

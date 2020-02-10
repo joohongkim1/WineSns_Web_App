@@ -53,11 +53,11 @@ public class Feed {
 
 	@Column(length = 4000)
 	private String content;
-	
+
 	@Column
 	@CreationTimestamp
 	protected LocalDateTime createdTimeAt;
-	
+
 	@Column
 	@UpdateTimestamp
 	protected LocalDateTime updateTimeAt;
