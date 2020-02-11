@@ -34,9 +34,13 @@ const useStyles = makeStyles((theme: Theme) =>
     flexDirection: 'column',
   },
   cardMedia: {
-    width: '100%',
-    maxHeight: 'auto',
-    paddingTop: '56.25%', // 16:9
+    // width: '100%',
+    // maxHeight: 'auto',
+    width:'70px',
+    //paddingTop: '56.25%', // 16:9
+    position: 'relative',
+    marginLeft : '40%',
+    height: '230px',
   },
   cardContent: {
     flexGrow: 1,

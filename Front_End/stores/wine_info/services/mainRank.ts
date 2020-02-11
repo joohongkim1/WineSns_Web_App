@@ -36,7 +36,7 @@ async function getWineTop3(type: string): Promise<Response> {
 
 async function getWineTop10(type : string): Promise<Response> {
   
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readRank/VISIT_10', {
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/readRank/VISIT_5', {
   
     headers: {
       'Access-Control-Allow-Origin': "*",

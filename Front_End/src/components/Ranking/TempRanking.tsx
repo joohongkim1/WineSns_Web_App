@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '',
             height: '100%',
             // paddingTop: theme.spacing(6),
-            paddingLeft: '15%'
+            paddingLeft: '18%'
         },
 
         listFont: {

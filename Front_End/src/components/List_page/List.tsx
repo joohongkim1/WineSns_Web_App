@@ -54,8 +54,13 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      height: 0,
-      paddingTop: "90%" // 16:9
+      width:'70px',
+      //paddingTop: '56.25%', // 16:9
+      position: 'relative',
+      marginLeft : '40%',
+      height: '230px',
+
+
     },
 
     cardGrid: {
@@ -177,7 +182,7 @@ export default function List() {
       </div>
 
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total </Typography>
+        <Typography className={classes.total}>Total {wineList.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
           {wineList.slice(minValue, maxValue).map(wine => (
@@ -206,7 +211,7 @@ export default function List() {
                     color="textSecondary"
                     component="p"
                   >
-                    {wine.info}
+                    {wine.info.slice(0,50)}...
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
