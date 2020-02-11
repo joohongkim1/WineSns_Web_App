@@ -108,8 +108,8 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
               <div className="product_wine clfix">
               <div className="bxl">
               <div className="img"> 
-              <span> <img src="http://m.wine.co.kr/upload/products/wineList/spain/CavaClassicoDO.png"
-               alt="안나 드 코도르뉴 블랑 드 블랑" className="sz619" id="wineMainImage" /> 
+              <span>  <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt={wine.nameKor} className="sz619" id="wineMainImage"  />
+    
                </span>
                 </div>
                  </div>   
