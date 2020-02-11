@@ -18,6 +18,7 @@ import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.entity.Wine;
 import com.ssafy.wine.enums.FeedRankEnum;
+import com.ssafy.wine.enums.FeedReviewEnum;
 import com.ssafy.wine.repo.FeedRepository;
 import com.ssafy.wine.repo.UserRepository;
 import com.ssafy.wine.repo.WineRepository;
@@ -40,14 +41,9 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public Feed create(Long uid, Long wid, BigDecimal rating, String content) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Feed feed;
-		if (wid == null || rating == null) {
-			feed = new Feed(user, content);
-		} else {
-			Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-			feed = new Feed(user, wine, rating, content);
-		}
-		return feedRepository.save(feed);
+		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
+		Feed feed = feedRepository.save(new Feed(user, wine, rating, content));
+		return feed;
 	}
 
 	@Override
@@ -57,34 +53,60 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<FeedDto> findByWine(Long wid) {
+	public List<FeedDto> findByWine(Long wid, FeedReviewEnum type) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-		List<Feed> feeds = wine.getFeeds();
-		Type typeToken = new TypeToken<List<FeedDto>>() {
-		}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
-	}
-
-	@Override
-	public List<FeedDto> findByUser(Long uid) {
-		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		List<Feed> feeds = user.getFeeds();
-		Type typeToken = new TypeToken<List<FeedDto>>() {
-		}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
-	}
-
-	@Override
-	public List<FeedDto> findTop10(FeedRankEnum type) {
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
-		case VISIT_10:
-			feeds = feedRepository.findTop10ByRatingNotNullOrderByVisitDesc();
+		case ALL:
+			feeds = wine.getFeeds();
 			break;
-		case LIKE_10:
-			feeds = feedRepository.findTop10ByRatingNotNullOrderByLikeNumDesc();
+		case FEED:
+			feeds = feedRepository.findByWineAndRatingNull(wine);
+			break;
+		case REVIEW:
+			feeds = feedRepository.findByWineAndRatingNotNull(wine);
+			break;
+		default:
+			break;
+		}
+		Type typeToken = new TypeToken<List<FeedDto>>() {
+		}.getType();
+		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
+		return feedDtos;
+	}
+
+	@Override
+	public List<FeedDto> findByUser(Long uid, FeedReviewEnum type) {
+		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
+		List<Feed> feeds = new ArrayList<>();
+		switch (type) {
+		case ALL:
+			feeds = user.getFeeds();
+			break;
+		case FEED:
+			feeds = feedRepository.findByUserAndRatingNull(user);
+			break;
+		case REVIEW:
+			feeds = feedRepository.findByUserAndRatingNotNull(user);
+			break;
+		default:
+			break;
+		}
+		Type typeToken = new TypeToken<List<FeedDto>>() {
+		}.getType();
+		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
+		return feedDtos;
+	}
+
+	@Override
+	public List<FeedDto> findRank(FeedRankEnum type) {
+		List<Feed> feeds = new ArrayList<>();
+		switch (type) {
+		case LIKE_5:
+			feeds = feedRepository.findTop5ByRatingNotNullOrderByVisitDesc();
+			break;
+		case VISIT_5:
+			feeds = feedRepository.findTop5ByRatingNotNullOrderByLikeNumDesc();
 			break;
 		default:
 			break;
@@ -98,7 +120,8 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	@Transactional
 	public Integer update(Long fid, Long wid, BigDecimal rating, String content) {
-		return feedRepository.updateFeed(fid, wid, rating, content);
+		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
+		return feedRepository.updateFeed(fid, wine, rating, content);
 	}
 
 	@Override

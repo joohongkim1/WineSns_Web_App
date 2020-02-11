@@ -44,23 +44,23 @@ public class Feed {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column(length = 4000)
+	private String content;
+
+	@Column
+	@CreationTimestamp
+	private LocalDateTime createdTimeAt;
+
+	@Column
+	@UpdateTimestamp
+	private LocalDateTime updateTimeAt;
+
 	@ManyToOne
 	@JoinColumn(name = "wine_id")
 	private Wine wine;
 
 	@Column
 	private BigDecimal rating;
-
-	@Column(length = 4000)
-	private String content;
-
-	@Column
-	@CreationTimestamp
-	protected LocalDateTime createdTimeAt;
-
-	@Column
-	@UpdateTimestamp
-	protected LocalDateTime updateTimeAt;
 
 	@Column
 	@ColumnDefault("0")
@@ -89,5 +89,6 @@ public class Feed {
 		this.rating = rating;
 		this.content = content;
 	}
+
 
 }

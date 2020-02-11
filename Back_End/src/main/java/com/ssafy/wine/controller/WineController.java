@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.wine.dto.WineDto;
+import com.ssafy.wine.enums.WineCountryEnum;
 import com.ssafy.wine.enums.WineFindEnum;
 import com.ssafy.wine.enums.WineRankEnum;
 import com.ssafy.wine.service.WineService;
@@ -45,7 +46,7 @@ public class WineController {
 	@GetMapping("/readRank/{type}")
 	public ResponseEntity<Object> readRank(@PathVariable WineRankEnum type) {
 		try {
-			List<WineDto> wines = wineService.findTop10(type);
+			List<WineDto> wines = wineService.findRank(type);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -74,13 +75,37 @@ public class WineController {
 		}
 	}
 
-	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country, sweet")
+	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country, winery, sweet")
 	@GetMapping("/search")
-	public ResponseEntity<Object> search(@RequestParam(required = false) String type, @RequestParam(required = false) Boolean sparkling,
-			@RequestParam(required = false) String country, @RequestParam(required = false) Integer sweet) {
+	public ResponseEntity<Object> search(@RequestParam(required = false) String type,
+			@RequestParam(required = false) Boolean sparkling,
+			@RequestParam(required = false) WineCountryEnum[] country, @RequestParam(required = false) String[] winery,
+			@RequestParam(required = false) Integer sweet) {
 		try {
-			List<WineDto> wines = wineService.search(type, sparkling, country, sweet);
+			List<WineDto> wines = wineService.search(type, sparkling, country, winery, sweet);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@ApiOperation(value = "모든 국가 와이너리 검색")
+	@GetMapping("/findWineryAll")
+	public ResponseEntity<Object> findWineryAll() {
+		try {
+			List<String> winerys = wineService.findWineryAll();
+			return new ResponseEntity<Object>(winerys, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@ApiOperation(value = "국가별 와이너리 검색")
+	@GetMapping("/findWineryByCountry")
+	public ResponseEntity<Object> findWineryByCountry(@RequestParam WineCountryEnum country) {
+		try {
+			List<String> winerys = wineService.findWineryByCountry(country);
+			return new ResponseEntity<Object>(winerys, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -92,7 +117,7 @@ public class WineController {
 		try {
 			Integer result = wineService.updateVisit(wid);
 			if (result != null) {
-				return new ResponseEntity<Object>(result, HttpStatus.OK);
+				return new ResponseEntity<Object>(result + "개 조회수 증가", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<Object>(result, HttpStatus.NOT_ACCEPTABLE);
 			}
