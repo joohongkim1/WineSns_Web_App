@@ -74,7 +74,7 @@ function WineInfo(wine: WineInfo) {
                         {wine.type}
       </Typography>
       <Typography>
-                        {wine.info}
+                        {wine.info.substring(0,80)}...
       </Typography>
                 </CardContent>
                

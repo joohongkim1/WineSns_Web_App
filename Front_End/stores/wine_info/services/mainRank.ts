@@ -35,10 +35,9 @@ async function getWineTop3(type: string): Promise<Response> {
 
 
 async function getWineTop10(type : string): Promise<Response> {
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readByName', {
-    params: {
-      name : name
-    },
+  
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/readRank/VISIT_10', {
+  
     headers: {
       'Access-Control-Allow-Origin': "*",
     }
@@ -53,7 +52,7 @@ async function getWineTop10(type : string): Promise<Response> {
 
       console.log("GET TOP 10 Wine List");
 
-      return response.data;
+      return response.data as any;
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');
@@ -61,5 +60,3 @@ async function getWineTop10(type : string): Promise<Response> {
     })
 
 }
-
-
