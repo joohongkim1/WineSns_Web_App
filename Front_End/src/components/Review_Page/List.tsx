@@ -19,8 +19,7 @@ import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
 import { rootState } from '../../../stores/login/store';
@@ -109,34 +108,20 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function List() {
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
-  const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError} = useSelector(
     (state: rootState) => state.wineReducer
   );
 
-  let start : number = 0;
-  let end : number = 0;
 
   const loadWineList = async () => {
     console.log("onWineList");
-    await dispatch(getWineListByType("KOR_UP"));
+    //await dispatch(getWineListByType("KOR_UP"));
   }
-  const numEachPage : number = 30;
-
-  const handleChange = (value : number) => {
-    setMinValue((value-1) * numEachPage);
-    setMaxValue((value) * numEachPage);
-    // setState({
-    //   minValue: (value - 1) * numEachPage,
-    //   maxValue: value * numEachPage
-    // });
-  };
 
   if(!isWineSucceess && !wineState) {
-    loadWineList();
+    // loadWineList();
     setWineState(true);
   } else {
 
@@ -147,7 +132,7 @@ export default function List() {
       <div className={classes.heroContent}>
         <Container>
           <Typography component="h1" variant="h1" align="center">
-            Wine List
+            Review List
           </Typography>
         </Container>
       </div>
@@ -159,7 +144,7 @@ export default function List() {
           className={classes.home}
           style={{ textDecoration: "none" }}
         >
-          <Typography>Home > 와인 list</Typography>
+          <Typography>Home > 리뷰 list</Typography>
         </Link>
       </div>
       <div className={classes.divider2}>
@@ -180,7 +165,7 @@ export default function List() {
         <Typography className={classes.total}>Total </Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
-          {wineList.slice(minValue, maxValue).map(wine => (
+          {wineList.map(wine => (
             
             <Grid item xs={4}>
               <Card className={classes.card}>
@@ -225,16 +210,7 @@ export default function List() {
               </Card>
             </Grid>
           ))}
-
         </Grid>
-        <div>
-        <Pagination
-      total={wineList.length}
-      // showTotal={total => `Total ${total} items`}
-      onChange={handleChange}
-      pageSize={numEachPage}
-      defaultCurrent={1}
-    /></div>
         {/* <ReviewModal /> */}
       </Container>
     </React.Fragment>

@@ -11,6 +11,7 @@ import MyReview from "./src/components/MyReview";
 import List from "./src/components/List_page/List";
 import WineDetail from "./src/components/WineDetail/WineDetail";
 import Entrance from "./src/components/App/Entrance";
+import WineReview from "./src/components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
 import SignUp from "./src/components/App/SignUp";
 class AppForm extends Component {
@@ -28,7 +29,8 @@ class AppForm extends Component {
           <Route path="/ranking" component={App} />
           <Route path="/myreview" component={MyReview} />
           <Route path="/list" component={List} />
-          <Route path="/detail" component={WineDetail} />
+          <Route path="/detail/:wid" component={WineDetail} exact={true} />
+          <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
           <Footer />
         </BrowserRouter>
