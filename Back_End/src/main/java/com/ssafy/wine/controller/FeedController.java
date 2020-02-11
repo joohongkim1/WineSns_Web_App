@@ -49,8 +49,8 @@ public class FeedController {
 			Long uid = userController.findUserById().getData().getUid();
 			Feed feed = feedService.create(uid, wid, rating, content);
 			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(feed.getUser().getEmail()).append("\n").append("Reciew_ID: ")
-					.append(feed.getFid()).append("\nReview 작성완료");
+			sb.append("User: ").append(feed.getUser().getEmail()).append("\n").append("Feed_Id: ")
+					.append(feed.getFid()).append("\Feed 작성완료");
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
