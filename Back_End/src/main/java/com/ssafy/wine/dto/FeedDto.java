@@ -13,14 +13,15 @@ import lombok.NoArgsConstructor;
 public class FeedDto {
 
 	private Long fid;
-	private BigDecimal rating;
 	private String content;
 	private LocalDateTime createdTimeAt;
 	private LocalDateTime updateTimeAt;
-	private WineDto wine;
-	private String userEmail;
-	private String userNickname;
 	private Integer visit;
 	private Integer likeNum;
+	private BigDecimal rating;
+	private WineDto wine;
+	private UserDto user;
+	
+	
 	
 }

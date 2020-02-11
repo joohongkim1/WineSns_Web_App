@@ -6,6 +6,7 @@ import java.util.List;
 import com.ssafy.wine.dto.FeedDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.enums.FeedRankEnum;
+import com.ssafy.wine.enums.FeedReviewEnum;
 
 public interface FeedService {
 
@@ -14,12 +15,12 @@ public interface FeedService {
 	public void delete(Long fid);
 
 	public Integer update(Long fid, Long wid, BigDecimal rating, String content);
-
-	public List<FeedDto> findByWine(Long wid);
-
-	public List<FeedDto> findByUser(Long uid);
 	
-	public List<FeedDto> findTop10(FeedRankEnum type);
+	public List<FeedDto> findByWine(Long wid, FeedReviewEnum type);
+
+	public List<FeedDto> findByUser(Long uid, FeedReviewEnum type);
+	
+	public List<FeedDto> findRank(FeedRankEnum type);
 
 	public Integer updateVisit(Long fid);
 

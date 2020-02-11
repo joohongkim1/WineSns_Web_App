@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.Wine;
+import com.ssafy.wine.enums.WineCountryEnum;
 import com.ssafy.wine.enums.WineFindEnum;
 import com.ssafy.wine.enums.WineRankEnum;
 import com.ssafy.wine.exception.FileUploadException;
@@ -33,17 +34,17 @@ public class WineServiceImpl implements WineService {
 	private ModelMapper modelMapper;
 
 	private final Path wineImgLocation;
-	
+
 	@Autowired
-	public WineServiceImpl (FileLoadProperties prop) {
-		wineImgLocation =  Paths.get(prop.getImgWine()).toAbsolutePath().normalize();
+	public WineServiceImpl(FileLoadProperties prop) {
+		wineImgLocation = Paths.get(prop.getImgWine()).toAbsolutePath().normalize();
 		try {
 			Files.createDirectories(this.wineImgLocation);
 		} catch (Exception e) {
 			throw new FileUploadException("파일을 업로드할 디렉토리를 생성하지 못했습니다.", e);
 		}
 	}
-	
+
 	@Override
 	public List<WineDto> findAll(WineFindEnum type) {
 		List<Wine> wines = new ArrayList<>();
@@ -64,27 +65,29 @@ public class WineServiceImpl implements WineService {
 			break;
 		}
 
-		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		Type typeToken = new TypeToken<List<WineDto>>() {
+		}.getType();
 		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
 		return wineDtos;
 	}
 
 	@Override
-	public List<WineDto> findTop10(WineRankEnum type) {
+	public List<WineDto> findRank(WineRankEnum type) {
 		List<Wine> wines = new ArrayList<>();
-		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		Type typeToken = new TypeToken<List<WineDto>>() {
+		}.getType();
 		switch (type) {
 		case VISIT_3:
 			wines = wineRepository.findTop3ByOrderByVisitDesc();
 			break;
-		case VISIT_10:
-			wines = wineRepository.findTop10ByOrderByVisitDesc();
+		case VISIT_5:
+			wines = wineRepository.findTop5ByOrderByVisitDesc();
 			break;
 		case LIKE_3:
 			wines = wineRepository.findTop3ByOrderByLikeNumDesc();
 			break;
-		case LIKE_10:
-			wines = wineRepository.findTop10ByOrderByLikeNumDesc();
+		case LIKE_5:
+			wines = wineRepository.findTop5ByOrderByLikeNumDesc();
 			break;
 		default:
 			break;
@@ -105,16 +108,19 @@ public class WineServiceImpl implements WineService {
 	public List<WineDto> searchByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
-		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		Type typeToken = new TypeToken<List<WineDto>>() {
+		}.getType();
 		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
 		return wineDtos;
 	}
 
 	@Override
-	public List<WineDto> search(String type, Boolean sparkling, String country, Integer sweet) {
+	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, String[] winery,
+			Integer sweet) {
 		List<Wine> wines = new ArrayList<>();
-		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet)).forEach(wines::add);
-		Type typeToken =  new TypeToken<List<WineDto>>() {}.getType();
+		wineRepository.findAll(wineRepository.search(type, sparkling, country, winery, sweet)).forEach(wines::add);
+		Type typeToken = new TypeToken<List<WineDto>>() {
+		}.getType();
 		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
 		return wineDtos;
 	}
@@ -123,5 +129,16 @@ public class WineServiceImpl implements WineService {
 	@Transactional
 	public Integer updateVisit(Long wid) {
 		return wineRepository.updateVisit(wid);
+	}
+
+	@Override
+	public List<String> findWineryAll() {
+		return wineRepository.findDistinctWineryAll();
+	}
+
+	@Override
+	public List<String> findWineryByCountry(WineCountryEnum country) {
+		return wineRepository.findDistinctWineryByCountry(country.toString());
+
 	}
 }

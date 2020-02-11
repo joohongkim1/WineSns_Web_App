@@ -20,6 +20,8 @@ import com.ssafy.wine.entity.FeedLike;
 import com.ssafy.wine.service.FeedLikeService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -30,27 +32,35 @@ public class FeedLikeController {
 
 	@Autowired
 	private FeedLikeService feedLikeService;
-	
+
+	@Autowired
+	private UserController userController;
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "좋아요 추가")
 	@PutMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam Long fid) {
+	public ResponseEntity<Object> create(@RequestParam Long fid) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			FeedLike like = feedLikeService.create(uid, fid);
 			feedLikeService.updateLikeNum(fid);
 			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(like.getUser().getEmail()).append("\n")
-			.append("Feed_ID: ").append(like.getFeed().getFid()).append("\n")
-			.append("FeedLike 추가했습니다.");
+			sb.append("User: ").append(like.getUser().getEmail()).append("\n").append("Feed_ID: ")
+					.append(like.getFeed().getFid()).append("\n").append("FeedLike 추가했습니다.");
 			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "좋아요 취소/삭제")
 	@DeleteMapping("/delete")
-	public ResponseEntity<Object> delete(@RequestParam Long fid, @RequestParam Long uid) {
+	public ResponseEntity<Object> delete(@RequestParam Long fid) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			feedLikeService.delete(uid, fid);
 			feedLikeService.updateLikeNum(fid);
 			return new ResponseEntity<Object>("FeedLike 삭제했습니다.", HttpStatus.OK);
@@ -58,11 +68,14 @@ public class FeedLikeController {
 			throw e;
 		}
 	}
-	
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 유저가 좋아요한 피드")
 	@GetMapping("/findByUser")
-	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
+	public ResponseEntity<Object> findByUser() {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			List<FeedDto> wines = feedLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
@@ -80,5 +93,5 @@ public class FeedLikeController {
 			throw e;
 		}
 	}
-	
+
 }
