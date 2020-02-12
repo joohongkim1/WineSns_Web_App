@@ -22,8 +22,8 @@ async function getWineDetail(wid : number): Promise<Response> {
       if (!response) {
         return Promise.reject(response.statusText);
       }
-        console.log("in axios");
-        console.log(response.data);
+        // console.log("in axios");
+        // console.log(response.data);
       return response.data as any;
     })
     .catch(() => {

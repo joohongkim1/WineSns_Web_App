@@ -34,7 +34,7 @@ export interface wineState  {
 
 }
 const initialState : wineState = { 
-  wineList : [],
+    wineList : [],
     isWinePending : false,
     isWineSucceess : false,
     isWineError : ''

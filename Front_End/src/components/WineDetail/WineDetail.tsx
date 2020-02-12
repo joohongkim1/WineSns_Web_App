@@ -11,7 +11,7 @@ import Container from "@material-ui/core/Container";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import './wineDetail.css';
-import WineInfo from "../Interface/Wine";
+import ReviewInfo from "../Interface/Review";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
 
@@ -19,6 +19,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useSelector,  useDispatch} from 'react-redux';
 import { rootState } from '../../../stores/login/store';
 import { getWineDetail } from '../../../stores/wine_info/actions/wineDetail';
+import { getFeedListByWID } from '../../../stores/feed/actions/feedInfo';
 
 
 
@@ -71,6 +72,10 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
     (state: rootState) => state.wineDetailReducer
   );
 
+  const { feedList, isFeedPending, isFeedSucceess, isFeedError} = useSelector(
+    (state: rootState) => state.feedReducer
+  );
+
   // console.log("wine initialState");
   // console.log(wine);
 
@@ -78,6 +83,7 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
  
     // console.log("onWine");
     await dispatch(getWineDetail(wid));
+    await dispatch(getFeedListByWID(3, "REVIEW"));
     console.log("this is wine State");
     console.log(wine);
   }
@@ -207,13 +213,12 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
     <Container className={classes.cardGrid} maxWidth="md">
             ​ ​{/* End hero unit */}​ ​
             <Grid container spacing={4}>
-              {wines.map(wine => (
-                           <WineInfo
-                            wid={wine.wid}
-                           nameKor={wine.nameKor}
-                           nameEng={wine.nameEng}
-                           info={wine.info}
-                           type={wine.type}
+              {feedList.map(feed => (
+                           <ReviewInfo
+                            fid={feed.fid}
+                           nameEng={feed.wine.nameEng}
+                           content={feed.content}
+                           rating={feed.rating}
                           
                          />
               ))}
