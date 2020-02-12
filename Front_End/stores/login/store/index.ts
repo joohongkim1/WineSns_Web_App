@@ -8,6 +8,7 @@ import wineReducer from "../../wine_info/reducers/wine_reducer";
 import wineRankReducer from "../../wine_info/reducers/wineRank_reducer";
 import wineDetailReducer from "../../wine_info/reducers/wineDetail_reducer";
 import feedReducer from "../../feed/reducers/feed_reducer";
+import feedAllReducer from "../../feed/reducers/feed_all_reducer";
 
 import {loginState} from "../reducers/login_reducer";
 import {registerState} from "../../register/reducers/register_reducer";
@@ -15,6 +16,7 @@ import {wineState} from "../../wine_info/reducers/wine_reducer";
 import {wineRankState} from "../../wine_info/reducers/wineRank_reducer";
 import {wineDetailState} from "../../wine_info/reducers/wineDetail_reducer";
 import {feedState} from "../../feed/reducers/feed_reducer";
+import {feedAll} from "../../feed/reducers/feed_all_reducer";
 
 const middlewares: any[] = [];
 
@@ -27,7 +29,8 @@ const rootReducer = combineReducers({
   wineReducer,
   wineRankReducer,
   wineDetailReducer,
-  feedReducer
+  feedReducer,
+  feedAllReducer
 });
 
 export interface rootState {
@@ -36,7 +39,8 @@ export interface rootState {
   wineReducer : wineState,
   wineRankReducer : wineRankState,
   wineDetailReducer : wineDetailState,
-  feedReducer : feedState
+  feedReducer : feedState,
+  feedAllReducer : feedAll
 }
 
 

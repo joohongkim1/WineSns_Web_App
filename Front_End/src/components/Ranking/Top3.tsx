@@ -117,7 +117,9 @@ export default function TempTop3() {
         >
           ​
         </img>
+     
         <Container className={classes.cardGrid} maxWidth="md">
+        <h3 className="tit40_line">Top3 Wine</h3>
           <Grid container spacing={4}>
             {wineTop3.map(wine => (
               <WineInfo

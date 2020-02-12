@@ -7,7 +7,7 @@ export const wineDetailService = {
 
 async function getWineDetail(wid : number): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readByWid/' + wid, {
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/findByWid/' + wid, {
     
     // params: {
     //   type : type

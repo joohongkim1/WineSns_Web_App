@@ -95,8 +95,39 @@ export default function Ranking() {
                                                   </div>
         
                                 </Grid>
-
-                            
+                                <div>
+           
+               
+           <h3 className="tit40_line">Today's Review</h3>
+           <Grid container className={classes.gridContainer} >
+           <div className="bx_new_wine scroll-pane horizontal-only" style={{overflow: "hidden", padding: "0px", width: "1200px"}}>
+               <div className="jspContainer" style={{width: "1200px", height: "375px"}}>
+                   <div className="jspPane" style={{padding: "0px", top: "0px", left: "0px", width: "1200px"}}>
+                       <div className="monthly_products"> <ul className="clfix" id="monthly-detail-nav">
+                       {wineTop10.map(wine => (
+                           <li>
+                           <a href="#">
+                                   <div> <div className="img">
+                                       <span className="ctype red"> <span className="hide_txt">Red</span> </span>
+                                       <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
+                                           <span className="shadow"></span> 
                         </div>
-                        );
+                                       <strong className="tit">{wine.nameKor}</strong> </div> </a>
+                         </li>   ))}
+                         
+                       
+
+                                            </ul> 
+                                              </div>
+                                              </div>
+                                         </div>
+                                         </div>
+
+                       </Grid>
+
+                   
+               </div>
+               </div>
+
+    );
 }

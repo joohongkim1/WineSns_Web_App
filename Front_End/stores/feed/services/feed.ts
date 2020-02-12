@@ -1,7 +1,7 @@
 
 import axios from "axios";
 // import { Wine } from "../reducers/feed_reducer";
-export const wineService = {
+export const feedService = {
   getFeedListByWID
 }
 

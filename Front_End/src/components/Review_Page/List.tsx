@@ -18,13 +18,13 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-
+import ReviewInfo from "../../components/Interface/Review";
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getFeedListByWID } from '../../../stores/feed/actions/feedInfo';
+import { getFeedAll } from '../../../stores/feed/actions/feedAll';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,16 +113,16 @@ export default function List() {
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { feedList, isFeedPending, isFeedSucceess, isFeedError} = useSelector(
-    (state: rootState) => state.feedReducer
+  const { feedAll, isFeedAllPending, isFeedAllSucceess, isFeedAllError} = useSelector(
+    (state: rootState) => state.feedAllReducer
   );
 
   let start : number = 0;
   let end : number = 0;
 
-  const loadWineList = async () => {
-    console.log("onWineList");
-    await dispatch(getFeedListByWID(3, "REVIEW"));
+  const loadReviewList = async () => {
+    console.log("onReviewList");
+    await dispatch(getFeedAll());
   }
   const numEachPage : number = 30;
 
@@ -135,8 +135,8 @@ export default function List() {
     // });
   };
 
-  if(!isFeedSucceess && !reviewState) {
-    loadWineList();
+  if(!isFeedAllSucceess && !reviewState) {
+    loadReviewList();
     setReviewState(true);
   } else {
 
@@ -159,7 +159,7 @@ export default function List() {
           className={classes.home}
           style={{ textDecoration: "none" }}
         >
-          <Typography>Home > 와인 list</Typography>
+          <Typography>Home > 리뷰 list</Typography>
         </Link>
       </div>
       <div className={classes.divider2}>
@@ -177,10 +177,29 @@ export default function List() {
       </div>
 
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {feedList.length}</Typography>
+        <Typography className={classes.total}>Total {feedAll.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
      
+        <Grid container spacing={10}>
+          {feedAll.slice(minValue, maxValue).map(feed => (
+             <ReviewInfo
+             fid={feed.fid}
+            nameEng={feed.wine.nameEng}
+            content={feed.content}
+            rating={feed.rating}
+           
+          />
+          ))}
 
+        </Grid>
+        <div>
+        <Pagination
+      total={feedAll.length}
+      // showTotal={total => `Total ${total} items`}
+      onChange={handleChange}
+      pageSize={numEachPage}
+      defaultCurrent={1}
+    /></div>
       </Container>
     </React.Fragment>
   );
