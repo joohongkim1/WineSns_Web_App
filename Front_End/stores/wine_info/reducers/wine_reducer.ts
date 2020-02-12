@@ -66,18 +66,18 @@ export default function rootReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_WINE_INFO_PENDING:
       return {...state, 
-        isLoginPending: action.isWinePending
+        isWinePending: action.isWinePending
       }
 
     case actions.SET_WINE_INFO_SUCCESS:
       return {...state,
-        isLoginSuccess: action.isWineSuccess,
+        isWineSuccess: action.isWineSuccess,
         wineList : action.wineList
       }
 
     case actions.SET_WINE_INFO_ERROR:
       return {...state,
-        loginError: action.WineError
+        isWineError: action.WineError
       }
     default:
       return state;

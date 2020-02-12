@@ -54,13 +54,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      width:'70px',
-      //paddingTop: '56.25%', // 16:9
-      position: 'relative',
-      marginLeft : '40%',
-      height: '230px',
-
-
+      height: 0,
+      paddingTop: "90%" // 16:9
     },
 
     cardGrid: {
@@ -211,7 +206,7 @@ export default function List() {
                     color="textSecondary"
                     component="p"
                   >
-                    {wine.info.slice(0,50)}...
+                    {wine.info}
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
