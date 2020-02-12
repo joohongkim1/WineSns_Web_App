@@ -13,6 +13,7 @@ import { Rating } from '@material-ui/lab';
 import Box from '@material-ui/core/Box';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
+import { Link } from "react-router-dom";
 
 import '../../index.css';
 
@@ -46,11 +47,16 @@ const useStyles = makeStyles((theme: Theme) =>
   },
   typography: {
     fontFamily: 'Cafe24Shiningstar',
-  },                                                                                                                                 
+  },        
+  more : {
+    "& > *": {
+      margin: theme.spacing(1, 8)
+    }        
+  }                                                                                                                 
 }),
 );
 
-function WineInfo(review: ReviewInfo) {
+function ReviewInfo(review: ReviewInfo) {
   const classes = useStyles();
 
   const [checked] = React.useState(true);
@@ -58,7 +64,7 @@ function WineInfo(review: ReviewInfo) {
 
     return (
       <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
-        <Grid item xs={12} sm={6} md={4}>
+        {/* <Grid item xs={12} sm={6} md={4}> */}
             <Card className={classes.card}>
                 <CardMedia
                     
@@ -76,12 +82,16 @@ function WineInfo(review: ReviewInfo) {
                 <Box component="fieldset" mb={3} borderColor="transparent">
         <Rating name="read-only" value={review.rating} readOnly />
       </Box>
-    
+      <div className={classes.more}>
+                  <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
+                      <Button variant="outlined">View More</Button>
+                    </Link>
+                  </div>
               
             </Card>
-        </Grid>
+        {/* </Grid> */}
         </Slide>
     );
 }
 
-export default WineInfo;
+export default ReviewInfo;

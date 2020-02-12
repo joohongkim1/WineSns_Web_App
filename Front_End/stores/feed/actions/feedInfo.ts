@@ -1,4 +1,4 @@
-import { wineService } from '../services/feed';
+import { feedService } from '../services/feed';
 import { createBrowserHistory } from 'history';
 import {feedState} from "../reducers/feed_reducer";
 
@@ -10,14 +10,14 @@ export const actions = {
 }
 export function getFeedListByWID(wid : number, type : string) {
   return async (dispatch: (arg0: { type: string; isFeedPending?: boolean; isFeedSuccess?: boolean; FeedError?: string; }) => void) => {
-   dispatch(setWinePending(true));
+   dispatch(setFeedPending(true));
 
-   dispatch(setWineError("not yet"));
+   dispatch(setFeedError("not yet"));
  
    
-   await wineService.getFeedListByWID(wid, type).then(
+   await feedService.getFeedListByWID(wid, type).then(
      (response : any) => {
-      dispatch(setWinePending(false));
+      dispatch(setFeedPending(false));
       console.log("this wine response");
       console.log(response);
       console.log("success");
@@ -30,26 +30,26 @@ export function getFeedListByWID(wid : number, type : string) {
 
       console.log("this is feedList");
       console.log(feedList);
-      dispatch(setWineSuccess(true, feedList));
+      dispatch(setFeedSuccess(true, feedList));
       
      },
      error => {
-       dispatch(setWinePending(false));
-       dispatch(setWineError("getWineListByType error"));
+       dispatch(setFeedPending(false));
+       dispatch(setFeedError("getWineListByType error"));
      }
    );
  }
 }
 
 
-function setWinePending(isFeedPending : boolean) {
+function setFeedPending(isFeedPending : boolean) {
   return {
     type: actions.SET_FEED_INFO_PENDING,
     isFeedPending
   };
 }
 
-function setWineSuccess(isFeedSuccess : boolean, feedList : feedState[]) {
+function setFeedSuccess(isFeedSuccess : boolean, feedList : feedState[]) {
   return {
     type: actions.SET_FEED_INFO_SUCCESS,
     isFeedSuccess,
@@ -57,7 +57,7 @@ function setWineSuccess(isFeedSuccess : boolean, feedList : feedState[]) {
   };
 }
 
-function setWineError(FeedError : string) {
+function setFeedError(FeedError : string) {
   return {
     type: actions.SET_FEED_INFO_ERROR,
     FeedError
