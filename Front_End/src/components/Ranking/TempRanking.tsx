@@ -86,26 +86,7 @@ export default function Ranking() {
                                                 <strong className="tit">{wine.nameKor}</strong> </div> </a>
                                   </li>   ))}
                                   
-                                  {/* <li> <a href="#">
-                                            <div> <div className="img">
-                                                <span className="ctype white"> <span className="hide_txt">White</span> </span>
-                                                {/* <img src="https://4.bp.blogspot.com/-yaW1SjkYpBI/TbfMM80ug7I/AAAAAAAAAHA/6SKTqxy3jbw/s1600/lollipop%255B2%255D.jpg" alt="" /> */}
-                                                    {/* <span className="shadow"></span> </div> <strong className="tit">산타리타 120 샤도네</strong> </div></a> </li>
-                                            <li> <a href="#">
-                                                <div> <div className="img"> <span className="ctype red">
-                                                    <span className="hide_txt">Red</span> </span>
-                                                    {/* <img src="https://4.bp.blogspot.com/-yaW1SjkYpBI/TbfMM80ug7I/AAAAAAAAAHA/6SKTqxy3jbw/s1600/lollipop%255B2%255D.jpg" alt="" /> */}
-                                                        {/* <span className="shadow"></span> </div>
-                                                    <strong className="tit">산타리타 120 멜로 375</strong> </div> </a></li>
-                                                <li> <a href="#"> <div>
-                                                    <div className="img"> <span className="ctype white">
-                                                        <span className="hide_txt">White</span> </span>
-                                                        {/* <img src="https://4.bp.blogspot.com/-yaW1SjkYpBI/TbfMM80ug7I/AAAAAAAAAHA/6SKTqxy3jbw/s1600/lollipop%255B2%255D.jpg" alt="" /> */}
-                                                            {/* <span className="shadow"></span> </div>
-                                                        <strong className="tit">산타리타 120 샤도네 375 Scap</strong>
-                                                    </div></a> 
-                                                    </li> */} 
-
+                                
 
                                                      </ul> 
                                                        </div>

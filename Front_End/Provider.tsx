@@ -14,6 +14,7 @@ import Entrance from "./src/components/App/Entrance";
 import WineReview from "./src/components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
 import SignUp from "./src/components/App/SignUp";
+import SmartSearch from "./src/components/smartSearch/WineSearch";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -32,6 +33,7 @@ class AppForm extends Component {
           <Route path="/detail/:wid" component={WineDetail} exact={true} />
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
+          {/* <Route path="/smartSearch" component={SmartSearch} /> */}
           <Footer />
         </BrowserRouter>
       </Provider>
