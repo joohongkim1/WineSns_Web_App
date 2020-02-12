@@ -8,8 +8,7 @@ export const wineService = {
 
 async function getWineListByType(type: string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readAll/' + type, {
-    
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/fineAll/' + type, {
     // params: {
     //   type : type
     // },
