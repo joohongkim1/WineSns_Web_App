@@ -24,7 +24,7 @@ import { Pagination } from 'antd';
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
+import { getFeedListByWID } from '../../../stores/feed/actions/feedInfo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -108,13 +108,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function List() {
   const classes = useStyles();
-  const [wineState, setWineState] = useState(false);
+  const [reviewState, setReviewState] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { wineList, isWinePending, isWineSucceess, isWineError} = useSelector(
-    (state: rootState) => state.wineReducer
+  const { feedList, isFeedPending, isFeedSucceess, isFeedError} = useSelector(
+    (state: rootState) => state.feedReducer
   );
 
   let start : number = 0;
@@ -122,7 +122,7 @@ export default function List() {
 
   const loadWineList = async () => {
     console.log("onWineList");
-    await dispatch(getWineListByType("KOR_UP"));
+    await dispatch(getFeedListByWID(3, "REVIEW"));
   }
   const numEachPage : number = 30;
 
@@ -135,9 +135,9 @@ export default function List() {
     // });
   };
 
-  if(!isWineSucceess && !wineState) {
+  if(!isFeedSucceess && !reviewState) {
     loadWineList();
-    setWineState(true);
+    setReviewState(true);
   } else {
 
   }
@@ -147,7 +147,7 @@ export default function List() {
       <div className={classes.heroContent}>
         <Container>
           <Typography component="h1" variant="h1" align="center">
-            Wine List
+            Review List
           </Typography>
         </Container>
       </div>
@@ -177,65 +177,10 @@ export default function List() {
       </div>
 
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>Total {feedList.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
-          {wineList.slice(minValue, maxValue).map(wine => (
-            
-            <Grid item xs={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={wine.nameKor}
-                  subheader={wine.nameEng}
-                />
-                {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
-                  <CardMedia
-                    className={classes.media}
-                    image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
-                    title={wine.nameEng}
-                  />
-                {/* </Link> */}
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {wine.info}
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon color="secondary" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <div className={classes.more}>
-                  <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
-                      <Button variant="outlined">View More</Button>
-                    </Link>
-                  </div>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+     
 
-        </Grid>
-        <div>
-        <Pagination
-      total={wineList.length}
-      // showTotal={total => `Total ${total} items`}
-      onChange={handleChange}
-      pageSize={numEachPage}
-      defaultCurrent={1}
-    /></div>
-        {/* <ReviewModal /> */}
       </Container>
     </React.Fragment>
   );
