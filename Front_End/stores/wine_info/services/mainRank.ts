@@ -1,18 +1,15 @@
 
 import axios from "axios";
-import { Wine } from "../reducers/wine_reducer";
-export const wineService = {
-  getWineListByType,
-  getWineListByName
+export const wineMainService = {
+    getWineTop10,
+    getWineTop3
 }
 
-async function getWineListByType(type: string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readAll/' + type, {
-    
-    // params: {
-    //   type : type
-    // },
+async function getWineTop3(type: string): Promise<Response> {
+
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/readRank/VISIT_3', {
+  
     headers: {
       'Access-Control-Allow-Origin': "*",
     }
@@ -25,7 +22,7 @@ async function getWineListByType(type: string): Promise<Response> {
 
       }
 
-      console.log("GET Wine List");
+      console.log("GET TOP 3 Wine List");
 
       return response.data as any;
     })
@@ -37,11 +34,10 @@ async function getWineListByType(type: string): Promise<Response> {
 }
 
 
-async function getWineListByName(name : string): Promise<Response> {
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readByName', {
-    params: {
-      name : name
-    },
+async function getWineTop10(type : string): Promise<Response> {
+  
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/readRank/VISIT_5', {
+  
     headers: {
       'Access-Control-Allow-Origin': "*",
     }
@@ -54,9 +50,9 @@ async function getWineListByName(name : string): Promise<Response> {
 
       }
 
-      console.log("GET Wine List");
+      console.log("GET TOP 10 Wine List");
 
-      return response.data;
+      return response.data as any;
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');

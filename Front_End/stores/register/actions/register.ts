@@ -22,7 +22,6 @@ export function register(nickname : string, email : string, password : string) {
         console.log(response);
         dispatch(setRegisterPending(false));
         dispatch(setRegisterSuccess(true));
-
     
 
       },
