@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: 120
     },
     toolbarLink: {
-      fontSize: 24,
+      fontSize: 20,
       color: "#ffffff",
       padding: theme.spacing(4),
-      flexShrink: 0
+      flexShrink: 0,
+      fontFamily: "S-CoreDream-8Heavy"
     }
   })
 );

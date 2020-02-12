@@ -7,8 +7,8 @@ import "./index.css";
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: "S-CoreDream-8Heavy",
-    fontSize: 18
+    // fontFamily: "S-CoreDream-8Heavy",
+    // fontSize: 18
   }
 });
 ReactDOM.render(
