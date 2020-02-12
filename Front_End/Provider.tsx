@@ -33,7 +33,7 @@ class AppForm extends Component {
           <Route path="/detail/:wid" component={WineDetail} exact={true} />
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
-          {/* <Route path="/smartSearch" component={SmartSearch} /> */}
+          <Route path="/smartSearch" component={SmartSearch} />
           <Footer />
         </BrowserRouter>
       </Provider>
