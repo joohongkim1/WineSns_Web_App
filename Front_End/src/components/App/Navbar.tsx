@@ -204,9 +204,11 @@ export default function Navbar() {
             src="https://image.flaticon.com/icons/svg/1150/1150262.svg"
             alt="wine"
           />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Dionysos
-          </Typography>
+          <Link to="/ranking">
+            <Typography className={classes.title} variant="h6" noWrap>
+              Dionysos
+            </Typography>
+          </Link>
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

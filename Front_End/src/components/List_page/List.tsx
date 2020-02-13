@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -18,17 +18,18 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
 // Redux
-import { useSelector,  useDispatch} from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getWineListByType } from '../../../stores/wine_info/actions/wineInfo';
-
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
+//antDesign
+import "antd/dist/antd.css";
+import { Checkbox, Row, Col } from "antd";
+import { render } from "react-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
     root: {
       display: "flex",
       flexDirection: "column",
@@ -54,15 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      width:'70px',
+      width: "70px",
       //paddingTop: '56.25%', // 16:9
-      position: 'relative',
-      marginLeft : '40%',
-      height: '230px',
-
-
+      position: "relative",
+      marginLeft: "40%",
+      height: "230px"
     },
-
     cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
@@ -102,51 +100,53 @@ const useStyles = makeStyles((theme: Theme) =>
       float: "right",
       marginRight: "20px"
     },
-    more : {
+    more: {
       "& > *": {
         margin: theme.spacing(1, 8)
       }
     }
   })
 );
-
-
 export default function List() {
+  const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { wineList, isWinePending, isWineSucceess, isWineError} = useSelector(
+  const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
   );
-
-  let start : number = 0;
-  let end : number = 0;
-
+  let start: number = 0;
+  let end: number = 0;
   const loadWineList = async () => {
     console.log("onWineList");
     await dispatch(getWineListByType("KOR_UP"));
-  }
-  const numEachPage : number = 30;
-
-  const handleChange = (value : number) => {
-    setMinValue((value-1) * numEachPage);
-    setMaxValue((value) * numEachPage);
+  };
+  const numEachPage: number = 30;
+  const handleChange = (value: number) => {
+    setMinValue((value - 1) * numEachPage);
+    setMaxValue(value * numEachPage);
     // setState({
     //   minValue: (value - 1) * numEachPage,
     //   maxValue: value * numEachPage
     // });
   };
-
-  if(!isWineSucceess && !wineState) {
+  function onChangeCountryChk(checkedValues: any) {
+    console.log("checked = ", checkedValues);
+  }
+  const handleEuropeBtn = () => {
+    setBtnNum(1);
+  };
+  const handleAmericaBtn = () => {
+    setBtnNum(2);
+  };
+  if (!isWineSucceess && !wineState) {
     loadWineList();
     setWineState(true);
   } else {
-
   }
-
   return (
     <React.Fragment>
       <div className={classes.heroContent}>
@@ -156,8 +156,7 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-
-      {/* <ReviewModal /> */}
+      ​{/* <ReviewModal /> */}
       <div>
         <Link
           to={"/ranking"}
@@ -175,18 +174,64 @@ export default function List() {
           size="large"
           aria-label="large outlined primary button group"
         >
-          <Button className={classes.btn}>유럽 와인</Button>
-          <Button className={classes.btn}>신대륙 와인</Button>
-          <Button className={classes.btn}>한국 와인</Button>
+          <Button className={classes.btn} onClick={handleEuropeBtn}>
+            유럽 와인
+          </Button>
+          <Button className={classes.btn} onClick={handleAmericaBtn}>
+            신대륙 와인
+          </Button>
         </ButtonGroup>
       </div>
-
+      <div>
+        {(function() {
+          if (btnNum == 1) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="France">France</Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Germany">Germany</Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Italy">Italy</Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Spain">Spain</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } else if (btnNum == 2) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="USA">USA</Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Chile">Chile</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          }
+        })()}
+      </div>
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>
+          Total {wineList.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
           {wineList.slice(minValue, maxValue).map(wine => (
-            
             <Grid item xs={4}>
               <Card className={classes.card}>
                 <CardHeader
@@ -199,11 +244,11 @@ export default function List() {
                   subheader={wine.nameEng}
                 />
                 {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
-                  <CardMedia
-                    className={classes.media}
-                    image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
-                    title={wine.nameEng}
-                  />
+                <CardMedia
+                  className={classes.media}
+                  image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                  title={wine.nameEng}
+                />
                 {/* </Link> */}
                 <CardContent>
                   <Typography
@@ -211,7 +256,7 @@ export default function List() {
                     color="textSecondary"
                     component="p"
                   >
-                    {wine.info.slice(0,50)}...
+                    {wine.info.slice(0, 50)}...
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -222,7 +267,10 @@ export default function List() {
                     <ShareIcon />
                   </IconButton>
                   <div className={classes.more}>
-                  <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
+                    <Link
+                      to={`/detail/${wine.wid}`}
+                      style={{ textDecoration: "none" }}
+                    >
                       <Button variant="outlined">View More</Button>
                     </Link>
                   </div>
@@ -230,16 +278,17 @@ export default function List() {
               </Card>
             </Grid>
           ))}
-
+          ​
         </Grid>
         <div>
-        <Pagination
-      total={wineList.length}
-      // showTotal={total => `Total ${total} items`}
-      onChange={handleChange}
-      pageSize={numEachPage}
-      defaultCurrent={1}
-    /></div>
+          <Pagination
+            total={wineList.length}
+            // showTotal={total => `Total ${total} items`}
+            onChange={handleChange}
+            pageSize={numEachPage}
+            defaultCurrent={1}
+          />
+        </div>
         {/* <ReviewModal /> */}
       </Container>
     </React.Fragment>

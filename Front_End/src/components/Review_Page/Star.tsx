@@ -3,17 +3,7 @@ import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       "& > *": {
-//         margin: theme.spacing(2, 15, 0)
-//       }
-//     }
-//   })
-// );
-
-export default function SimpleRating() {
+export default function Star() {
   const [value, setValue] = React.useState<number | null>(2);
   // const classes = useStyles();
 
@@ -23,7 +13,6 @@ export default function SimpleRating() {
         display="flex"
         // component="fieldset"
         borderColor="transparent"
-        justifyContent="flex-end"
         marginTop="10px"
         marginBottom="10px"
       >

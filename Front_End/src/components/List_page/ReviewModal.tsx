@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import SimpleRating from "./Start";
+import SimpleRating from "./Star";
 import TextField from "@material-ui/core/TextField";
 import UploadButtons from "./UploadBtn";
 import Button from "@material-ui/core/Button";
