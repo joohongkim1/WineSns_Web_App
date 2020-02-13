@@ -1,64 +1,64 @@
-import { feedService } from '../services/userFeed';
+import { userFeedService } from '../services/userFeed';
 import { createBrowserHistory } from 'history';
-import {feedState} from "../reducers/userFeed_reducer";
+import {userFeedState} from "../reducers/userFeed_reducer";
 
 export const actions = {
-  SET_FEED_INFO_PENDING: 'SET_FEED_INFO_PENDING',
-  SET_FEED_INFO_SUCCESS: 'SET_FEED_INFO_SUCCESS',
-  SET_FEED_INFO_ERROR: 'SET_FEED_INFO_ERROR'
+  SET_USER_FEED_INFO_PENDING: 'SET_USER_FEED_INFO_PENDING',
+  SET_USER_FEED_INFO_SUCCESS: 'SET_USER_FEED_INFO_SUCCESS',
+  SET_USER_FEED_INFO_ERROR: 'SET_USER_FEED_INFO_ERROR'
 }
-export function getFeedListByWID(wid : number, type : string) {
+export function getUserFeedList(type : string) {
   return async (dispatch: (arg0: { type: string; isFeedPending?: boolean; isFeedSuccess?: boolean; FeedError?: string; }) => void) => {
-   dispatch(setFeedPending(true));
+   dispatch(setUserFeedPending(true));
 
-   dispatch(setFeedError("not yet"));
+   dispatch(setUserFeedError("not yet"));
  
    
-   await feedService.getFeedListByWID(wid, type).then(
+   await userFeedService.getUserFeedList(type).then(
      (response : any) => {
-      dispatch(setFeedPending(false));
+      dispatch(setUserFeedPending(false));
       console.log("this wine response");
       console.log(response);
       console.log("success");
 
-      let feedList : feedState[] = response;
+      let userFeed : userFeedState[] = response;
 
       // let wineList : Wine[] = response.map((item: Wine) => {
       //   console.log(item);
       // });
 
-      console.log("this is feedList");
-      console.log(feedList);
-      dispatch(setFeedSuccess(true, feedList));
+      console.log("this is userFeed");
+      console.log(userFeed);
+      dispatch(setUserFeedSuccess(true, userFeed));
       
      },
      error => {
-       dispatch(setFeedPending(false));
-       dispatch(setFeedError("getWineListByType error"));
+       dispatch(setUserFeedPending(false));
+       dispatch(setUserFeedError("getWineListByType error"));
      }
    );
  }
 }
 
 
-function setFeedPending(isFeedPending : boolean) {
+function setUserFeedPending(isUserFeedPending : boolean) {
   return {
-    type: actions.SET_FEED_INFO_PENDING,
-    isFeedPending
+    type: actions.SET_USER_FEED_INFO_PENDING,
+    isUserFeedPending
   };
 }
 
-function setFeedSuccess(isFeedSuccess : boolean, feedList : feedState[]) {
+function setUserFeedSuccess(isUserFeedSuccess : boolean, userFeed : userFeedState[]) {
   return {
-    type: actions.SET_FEED_INFO_SUCCESS,
-    isFeedSuccess,
-    feedList
+    type: actions.SET_USER_FEED_INFO_SUCCESS,
+    isUserFeedSuccess,
+    userFeed
   };
 }
 
-function setFeedError(FeedError : string) {
+function setUserFeedError(UserFeedError : string) {
   return {
-    type: actions.SET_FEED_INFO_ERROR,
-    FeedError
+    type: actions.SET_USER_FEED_INFO_ERROR,
+    UserFeedError
   }
 }
