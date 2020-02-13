@@ -61,7 +61,7 @@ public class JwtService { // JWT 생성 및 검증
 
 	// Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
 	public String resolveToken(HttpServletRequest req) {
-		return req.getHeader("X-AUTH-TOKEN");
+		return req.getHeader("TOKEN");
 	}
 
 	// Jwt 토큰의 유효성 + 만료일자 확인

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/follow")
 @CrossOrigin(origins = "*")
 public class FollowController {
+
 	@Autowired
 	private FollowService followService;
 
@@ -34,9 +35,9 @@ public class FollowController {
 	private UserController userController;
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "follow 추가")
-	@PutMapping("/create")
+	@PostMapping("/create")
 	public ResponseEntity<Object> create(@RequestParam Long toUid) {
 		try {
 			Long fromUid = userController.findUserById().getData().getUid();
@@ -53,27 +54,11 @@ public class FollowController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "follow 취소/삭제")
-	@DeleteMapping("/delete")
-	public ResponseEntity<Object> delete(@RequestParam Long toUid) {
-		try {
-			Long fromUid = userController.findUserById().getData().getUid();
-			followService.delete(fromUid, toUid);
-			return new ResponseEntity<Object>("Follow를 삭제했습니다.", HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "following - 해당 유저가 팔로우하는 전체 그룹 반환 - 나일 경우 토큰만, 다른 유저일 경우 해당 유저 uid")
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "following - 해당 유저가 팔로우하는 전체 그룹 반환")
 	@GetMapping("/findByFollowing")
-	public ResponseEntity<Object> findByFollowing(@RequestParam(required = false) Long fromUid) {
+	public ResponseEntity<Object> findByFollowing(@RequestParam Long fromUid) {
 		try {
-			if (fromUid == null)
-				fromUid = userController.findUserById().getData().getUid();
 			List<UserDto> following = followService.findByFollowing(fromUid);
 			return new ResponseEntity<Object>(following, HttpStatus.OK);
 		} catch (Exception e) {
@@ -82,15 +67,27 @@ public class FollowController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "follower - 해당 유저를 팔로우한 전체 그룹 반환  - 나일 경우 토큰만, 다른 유저일 경우 해당 유저 uid")
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "follower - 해당 유저를 팔로우한 전체 그룹 반환")
 	@GetMapping("/findByFollower")
-	public ResponseEntity<Object> findByFollower(@RequestParam(required = false) Long toUid) {
+	public ResponseEntity<Object> findByFollower(@RequestParam Long toUid) {
 		try {
-			if (toUid == null)
-				toUid = userController.findUserById().getData().getUid();
 			List<UserDto> follower = followService.findByFollower(toUid);
 			return new ResponseEntity<Object>(follower, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "follow 취소/삭제")
+	@DeleteMapping("/delete")
+	public ResponseEntity<Object> delete(@RequestParam Long toUid) {
+		try {
+			Long fromUid = userController.findUserById().getData().getUid();
+			followService.delete(fromUid, toUid);
+			return new ResponseEntity<Object>("Follow를 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

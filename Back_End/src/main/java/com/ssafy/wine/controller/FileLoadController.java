@@ -41,17 +41,17 @@ public class FileLoadController {
 	private UserController userController;
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "파일 업로드 - Swagger로 하면 오류, Postman 가능, 유저면 해당 token, feed 이미지면 id")
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "파일 업로드 - Swagger로 하면 오류, Postman 가능, id는 uid or fid, type값에 따라 정확히 입력바랍니다. 잘못 들어갈 수 있어요")
 	@PostMapping("/uploadFile")
 	public ResponseEntity<Object> uploadFile(@RequestPart("file") MultipartFile[] files,
-			@RequestParam FileLoadEnum type, @RequestParam(required = false, value = "feed id") Long id) {
+			@RequestParam FileLoadEnum type, @RequestParam Long id) {
 		try {
-			if (id == null)
+			if (type == FileLoadEnum.FEED)
 				id = userController.findUserById().getData().getUid();
 			List<FileUpLoadDto> fileDtos = new ArrayList<>();
 			for (int i = 0; i < files.length; i++) {
-				fileDtos.add(fileLoadService.uploadFile(files[i], type, String.valueOf(id), String.valueOf(i)));
+				fileDtos.add(fileLoadService.uploadFile(files[i], type, id.toString(), String.valueOf(i)));
 			}
 			return new ResponseEntity<Object>(fileDtos, HttpStatus.OK);
 		} catch (Exception e) {
@@ -60,15 +60,13 @@ public class FileLoadController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "파일 불러오기 - 본인이면 token, 다른유저나 feed는 id")
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "파일 불러오기 - id는 uid or fid, type값에 따라 정확히 입력바랍니다. 잘못 들어갈 수 있어요")
 	@GetMapping("/downloadFile")
-	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam(required = false) Long id,
+	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam Long id,
 			HttpServletRequest req) {
 		try {
-			if (id == null)
-				id = userController.findUserById().getData().getUid();
-			List<FileDownLoadDto> fileInfoDtos = fileLoadService.downloadFile(type, String.valueOf(id),
+			List<FileDownLoadDto> fileInfoDtos = fileLoadService.downloadFile(type, id.toString(),
 					req.getRequestURL().toString().split("/fileload")[0]);
 			return new ResponseEntity<Object>(fileInfoDtos, HttpStatus.OK);
 		} catch (Exception e) {
@@ -77,15 +75,15 @@ public class FileLoadController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "파일 삭제 - 확장자 명까지 필수, 유저면 token, feed면 id")
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "파일 삭제 - 확장자 명까지 필수, id는 uid or fid, type값에 따라 정확히 입력바랍니다. 잘못 들어갈 수 있어요")
 	@DeleteMapping("/deleteFile")
-	public ResponseEntity<Object> deleteFile(@RequestParam FileLoadEnum type, @RequestParam(required = false) Long id,
+	public ResponseEntity<Object> deleteFile(@RequestParam FileLoadEnum type, @RequestParam Long id,
 			@RequestParam String fileName) {
 		try {
-			if (id == null)
+			if (type == FileLoadEnum.FEED)
 				id = userController.findUserById().getData().getUid();
-			String path = fileLoadService.deleteFile(type, String.valueOf(id), fileName);
+			String path = fileLoadService.deleteFile(type, id.toString(), fileName);
 			return new ResponseEntity<Object>(path + " 파일을 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

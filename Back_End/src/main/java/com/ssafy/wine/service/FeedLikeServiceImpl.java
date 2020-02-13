@@ -12,7 +12,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.FeedDto;
+import com.ssafy.wine.dto.FeedOutputDto;
 import com.ssafy.wine.dto.UserDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.FeedLike;
@@ -44,30 +44,14 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 	}
 
 	@Override
-	@Transactional
-	public void delete(Long uid, Long fid) {
-		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
-		feedLikeRepository.delete(new FeedLike(user, feed));
-	}
-
-	@Override
-	@Transactional
-	public void updateLikeNum(Long fid) {
-		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
-		feedRepostitory.updateLikeNum(fid, feed.getFeedLikes().size());
-	}
-
-	@Override
-	public List<FeedDto> findByUser(Long uid) {
+	public List<FeedOutputDto> findByUser(Long uid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		List<Feed> feeds = new ArrayList<>();
 		for (FeedLike like : user.getFeedLikes()) {
 			feeds.add(like.getFeed());
 		}
-		Type typeToken =  new TypeToken<List<FeedDto>>() {}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
+		Type typeToken =  new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(feeds, typeToken);
 	}
 
 	@Override
@@ -78,8 +62,21 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 			users.add(like.getUser());
 		}
 		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
-		List<UserDto> userDtos = modelMapper.map(users, typeToken);
-		return userDtos;
+		return modelMapper.map(users, typeToken);
 	}
-
+	
+	@Override
+	@Transactional
+	public void updateLikeNum(Long fid) {
+		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
+		feedRepostitory.updateLikeNum(fid, feed.getFeedLikes().size());
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Long uid, Long fid) {
+		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
+		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
+		feedLikeRepository.delete(new FeedLike(user, feed));
+	}
 }

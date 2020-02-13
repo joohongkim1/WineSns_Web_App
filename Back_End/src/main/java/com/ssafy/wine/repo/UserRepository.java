@@ -1,5 +1,6 @@
 package com.ssafy.wine.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,8 @@ import com.ssafy.wine.entity.User;
 
 // Database에 접근
 public interface UserRepository extends JpaRepository<User, Long> {
+
+	List<User> findByNickNameLike(String name);
 
 	Optional<User> findByEmail(String email);
 

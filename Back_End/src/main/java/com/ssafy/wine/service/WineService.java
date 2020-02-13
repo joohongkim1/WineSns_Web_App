@@ -1,5 +1,6 @@
 package com.ssafy.wine.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ssafy.wine.dto.WineDto;
@@ -13,17 +14,18 @@ public interface WineService {
 
 	public List<WineDto> findRank(WineRankEnum type);
 
-	public WineDto findByWid(Long wid);
+	public WineDto findByWine(Long wid);
 
-	public List<WineDto> searchByName(String name);
+	public List<WineDto> findByName(String name);
 
-	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, String[] winery,
-			Integer sweet);
+	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol);
 
-	public Integer updateVisit(Long wid);
+	public List<String> findCountryAll();
 
 	public List<String> findWineryAll();
-
+	
 	public List<String> findWineryByCountry(WineCountryEnum country);
+
+	public Integer updateVisit(Long wid);
 
 }

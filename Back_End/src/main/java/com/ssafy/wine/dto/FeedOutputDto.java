@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class FeedDto {
+public class FeedOutputDto {
 
 	private Long fid;
+	private String title;
 	private String content;
 	private LocalDateTime createdTimeAt;
 	private LocalDateTime updateTimeAt;
@@ -21,7 +22,5 @@ public class FeedDto {
 	private BigDecimal rating;
 	private WineDto wine;
 	private UserDto user;
-	
-	
 	
 }

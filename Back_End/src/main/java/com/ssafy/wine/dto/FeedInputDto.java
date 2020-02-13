@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ReviewDto {
-
+public class FeedInputDto {
+	private String title;
+	private String content;
+	private Long wid;
 	private BigDecimal rating;
-	private WineDto wine;
 }
