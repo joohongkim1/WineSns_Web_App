@@ -25,7 +25,8 @@ import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
-import Search2 from "./Search";
+import Search from "./Search";
+import Temp from "./temp";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -224,13 +225,14 @@ export default function List() {
           }
         })()}
       </div>
-      <Search2 />
+      <Search />
+      {/* <Temp /> */}
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
+        <Grid container spacing={10} direction="row">
           {wineList.slice(minValue, maxValue).map(wine => (
             <Grid item xs={4}>
               <Card className={classes.card}>

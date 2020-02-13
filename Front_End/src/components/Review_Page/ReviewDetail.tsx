@@ -12,19 +12,23 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      flexWrap: "wrap",
+      display: "inline",
+      // flexWrap: "wrap",
+      // justifyContent: "flex-end",
+      float: "right",
       // justifyContent: "space-around",
-      // overflow: "hidden",
+      overflow: "hidden",
       backgroundColor: theme.palette.background.paper
     },
+
     gridList: {
       width: 1000,
       height: 1000
     },
     icon: {
       color: "rgba(255, 255, 255, 0.54)"
-    }
+    },
+    wineimg: {}
   })
 );
 
@@ -61,32 +65,35 @@ export default function ReviewDetail() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Link to={"/detail/1"}>
+    <div>
+      <Link to={"/detail/1"} className={classes.wineimg}>
         <img
           src="https://material-ui.com/static/images/grid-list/burgers.jpg"
           alt=""
         />
       </Link>
-      <GridList cellHeight={400} className={classes.gridList}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about ${tile.title}`}
-                  className={classes.icon}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
+      <div className={classes.root}>
+        <GridList cellHeight={400} className={classes.gridList}>
+          {tileData.map(tile => (
+            <GridListTile key={tile.img}>
+              <img src={tile.img} alt={tile.title} />
+              <GridListTileBar
+                actionPosition="right"
+                title={tile.title}
+                subtitle={<span>by: {tile.author}</span>}
+                actionIcon={
+                  <IconButton
+                    aria-label={`info about ${tile.title}`}
+                    className={classes.icon}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
     </div>
   );
 }
