@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function MyReview() {
+export default function MyPage() {
   const classes = useStyles();
 
   return (

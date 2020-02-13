@@ -32,6 +32,10 @@ export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}
 
 // saga 생성
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+// export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}: contents) => ({content, rating, title, wid}));
+
+// // saga 생성
+// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
 }
@@ -48,7 +52,7 @@ const initialState = {
 const write = handleActions<any, any>(
   { 
     [INITIALIZE]: state => initialState, // initialState를 넣으면 초기상태로 바뀜
-    [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
+    [CHANGE_FIELD]: (state, { payload: { key, value }}) => ({
       ...state,
       [key]: value, // 특정 key 값을 업데이트
     }),

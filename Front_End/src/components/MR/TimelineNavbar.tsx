@@ -29,9 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const buttons = [
   { title: 'My Review', url: 'myreview' },
-  { title: 'My Page', url: 'mypage' },
   { title: 'My Likes', url: 'mylikes' },
-  { title: 'My Friends', url: 'myfriends' },
+  { title: 'My Friends', url: 'myfriends' }, 
 ];
 
 export default function TimelineNavbar() {
