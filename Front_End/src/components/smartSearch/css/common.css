@@ -5,6 +5,8 @@
 .clfix:after{clear:both}
 .hidden{visibility:hidden}
 
+
+
 /*! space */
 .mg0{margin:0!important}
 .mgt0{margin-top:0!important}
@@ -248,6 +250,9 @@ input:-moz-placeholder{color:#444!important;font-family:"맑은 고딕","Malgun 
 .country_radio .input_radio label span{width:48px;height:32px;margin:0}
 .country_radio .radio_checked{background:url(images/common/img_radio_flag_checked.gif) no-repeat}
 .country_radio input:focus+label .radio_checked{outline:#b56 dotted 2px}
+.input_radio input:focus+label .radio_checked, .input_radio input:focus+label>span {
+    outline:#b56 dotted 2px}
+
 .country_radio .ct01 .radio_basic{background:url(images/common/img_radio_ct01.gif) no-repeat}
 .country_radio .ct02 .radio_basic{background:url(images/common/img_radio_ct02.gif) no-repeat}
 .country_radio .ct03 .radio_basic{background:url(images/common/img_radio_ct03.gif) no-repeat}

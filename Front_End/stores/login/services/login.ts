@@ -2,18 +2,12 @@
 import axios from "axios";
 export const loginService = {
   login,
-  SNSLogin
+  SNSLogin,
+  likeWineByUser
 }
 
 async function login(email: string, password: string): Promise<Response> {
-  const requestOptions = {
-    methods: 'GET',
-    headers: [['Access-Control-Allow-Origin', '*'], ['Content-Type', 'application/json'], ['Accept', 'application/json']],
-    // body: JSON.stringify({
-    //   user: { email: email, password: password, remember_me: true } ['Access-Control-Allow-Origin', '*'],
-    // })
 
-  };
 
   return axios.get('http://54.180.9.92:8090/WineProject/user/signin', {
     params: {
@@ -31,10 +25,65 @@ async function login(email: string, password: string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
+      // console.log("in axios");
+      // console.log(response);
+      localStorage.setItem('token', <any>response.data.list[0].toString());
+      console.log(localStorage.getItem('token'));
 
-      console.log("heeeey");
 
-      return response.data.data;
+      sessionStorage.setItem(
+        "uid", response.data.list[1].toString()
+      );
+      
+   
+      sessionStorage.setItem(
+        "userInfo", response.data.list[2].toString()
+      );
+
+
+      likeWineByUser();
+
+      return response;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
+
+
+async function likeWineByUser(): Promise<Response> {
+
+  return axios.get('http://54.180.9.92:8090/WineProject/winelike/findByUser', {
+    params: {
+      uid : sessionStorage.getItem('uid')
+    },
+    headers: {
+      'TOKEN' : localStorage.getItem('token'),
+    }
+  }
+  
+  ).then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+
+      }
+      console.log(response);
+      console.log(response.data);
+      sessionStorage.setItem(
+        "userLike", JSON.stringify(response.data)
+      );
+      
+      console.log("user Like");
+
+      let userLike = JSON.parse(sessionStorage.getItem('userLike') || '{}');
+      
+      console.log(userLike);
+      
+      return response;
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');
@@ -46,7 +95,6 @@ async function login(email: string, password: string): Promise<Response> {
 
 
 async function SNSLogin(id: string, nickname: string, provider: string): Promise<Response> {
-
 
   return axios.post('http://54.180.9.92:8090/WineProject/user/sns/signup', null, {
     params: {
@@ -62,10 +110,25 @@ async function SNSLogin(id: string, nickname: string, provider: string): Promise
         return Promise.reject(response.statusText);
 
       }
+      // console.log("in axios");
+      // console.log(response);
+      localStorage.setItem('token', <any>response.data.list[0].toString());
 
-      console.log("heeeey");
 
-      return response.data.data;
+      sessionStorage.setItem(
+        "uid", response.data.list[1].toString()
+      );
+      
+   
+      sessionStorage.setItem(
+        "userInfo", response.data.list[2].toString()
+      );
+
+
+      likeWineByUser();
+
+      return response;
+
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');

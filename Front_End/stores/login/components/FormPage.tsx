@@ -29,9 +29,9 @@ interface IState {
 class FormPage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    console.log("this is props");
+
     console.log(props);
-    console.log("this is login state");
+ 
 
     this.state = {
       id: "",
@@ -46,10 +46,8 @@ class FormPage extends React.Component<IProps, IState> {
 
   // Google Login
   responseGoogle = async (res: any) => {
-    console.log("success");
-    console.log(res);
 
-    console.log(res.googleId);
+    
     this.setState({
       id: res.googleId,
       nickname: "temp",
@@ -62,9 +60,9 @@ class FormPage extends React.Component<IProps, IState> {
   };
   // Kakao Login
   responseKakao = async (res: any) => {
-    console.log(res);
-    console.log(res.profile.id);
-    console.log(res.profile.properties.nickname);
+    // console.log(res);
+    // console.log(res.profile.id);
+    // console.log(res.profile.properties.nickname);
     this.setState({
       id: res.profile.id,
       nickname: res.profile.properties.nickname,
@@ -78,9 +76,7 @@ class FormPage extends React.Component<IProps, IState> {
 
   // Login Fail
   responseFail = (err: any) => {
-    console.log("hey");
-    console.log(err);
-    console.error(err);
+
   };
 
   render() {
@@ -88,8 +84,6 @@ class FormPage extends React.Component<IProps, IState> {
     let { isLoginPending, isLoginSuccess, loginError } = this.props;
 
     if (!isLoginSuccess) {
-      console.log(sessionStorage.getItem("userInfo"));
-
       return (
         <div>
           <form name="form" onSubmit={this.onSubmit} className="login-form">
@@ -184,10 +178,8 @@ class FormPage extends React.Component<IProps, IState> {
   async onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let { email, password } = this.state;
-    console.log("start");
+   
     await this.props.dispatch(login(email, password));
-    console.log("end");
-    console.log(this.props);
   }
 }
 

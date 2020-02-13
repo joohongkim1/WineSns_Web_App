@@ -3,7 +3,7 @@ import axios from "axios";
 import { Wine } from "../reducers/wine_reducer";
 export const wineService = {
   getWineListByType,
-  getWineListByName
+  getWineListByNameList
 }
 
 async function getWineListByType(type: string): Promise<Response> {
@@ -36,11 +36,13 @@ async function getWineListByType(type: string): Promise<Response> {
 }
 
 
-async function getWineListByName(name : string): Promise<Response> {
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readByName', {
-    params: {
-      name : name
-    },
+async function getWineListByNameList(names : string[]): Promise<Response> {
+  let query = "country=" + names[0];
+  for(var i =1; i<names.length; i++){
+     query += "&country=" + names[i];                                      
+  }
+
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/search?' + query, {
     headers: {
       'Access-Control-Allow-Origin': "*",
     }
@@ -52,10 +54,11 @@ async function getWineListByName(name : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
+      console.log(query);
       console.log("GET Wine List");
+      console.log(response.data);
 
-      return response.data;
+      return response.data as any;
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');
