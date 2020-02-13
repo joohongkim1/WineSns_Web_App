@@ -1,13 +1,13 @@
 import React from 'react';
-import Editor from './Editor';
+import EditorContainer from './containers/EditorContainer';
+import WriteActionButtonsContainer from './containers/WriteActionButtonsContainer';
 import WriteActionButtons from './WriteActionButtons';
 
 export default function WritePage() {
   return(
     <div>
-      <Editor />
-      <WriteActionButtons />
+      <EditorContainer />
+      <WriteActionButtonsContainer />
     </div>
-    
   );
 }
