@@ -20,17 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Editor(params: { content: string, rating: number, title: string, wid: number, onChangeField: any }){
   const quillElement = useRef<any>();
   const quillInstance = useRef<any>();
-<<<<<<< HEAD
-  const [contents, setContents] = React.useState('');
-
-  const sendFeed = async () => {
-    console.log(quillInstance);
-  }
-  
-  
-=======
-
->>>>>>> eb5dfc7a1a542931b31f6992e8e246825c641abe
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
       theme: 'bubble',
@@ -63,20 +52,6 @@ export default function Editor(params: { content: string, rating: number, title:
 
   return (
     <div>
-<<<<<<< HEAD
-      <div ref={quillElement}/>
-      <div>
-      <Button onClick={sendFeed}>
-        포스트 등록
-      </Button>
-      <Button>
-        취소
-      </Button>
-      </div>
-    </div>
-)
-}
-=======
       <input
         placeholder="제목을 입력하세요"
         onChange={onChangeTitle}
@@ -86,4 +61,3 @@ export default function Editor(params: { content: string, rating: number, title:
       </div>
   );
 };
->>>>>>> eb5dfc7a1a542931b31f6992e8e246825c641abe
