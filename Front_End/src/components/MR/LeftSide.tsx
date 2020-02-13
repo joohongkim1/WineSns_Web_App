@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme: Theme) =>
     bottom: "auto",
     left: "auto",
     // zIndex: "0",
-    position: "absolute",
+    // position: "absolute",
+    // display: "inline",
     // position: "relative",
     top: "400px", // need to change
     width: "323px",
@@ -24,11 +25,60 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+let User = {
+  "code": 0,
+  "data": {
+    "authorities": [
+      {
+        "authority": "token"
+      }
+    ],
+    "email": "sysh5656@naver.com",
+    "follower": [
+      {}
+    ],
+    "following": [
+      {}
+    ],
+    "likes": [
+      {
+        "foodMatch": "string",
+        "grade": "string",
+        "grape": "string",
+        "info": "string",
+        "likeNum": 0,
+
+        "nameEng": "string",
+        "nameKor": "안나 드 코도르뉴 블랑 드 블랑",
+        "sparkling": true,
+        "sweet": 0,
+        "tannin": 0,
+        "type": "string",
+        "visit": 0,
+        "whenUse": "string",
+        "wid": 0,
+        "winery": "string"
+      },
+
+    ],
+    "nickName": "pjs",
+    "uid": 0,
+    "username": "박재성"
+  },
+  "msg": "string",
+  "success": true
+}
+
 export default function LeftSide() {
   const classes = useStyles();
   return (
     <div className={classes.mrSide}>
-      <Profile />
+      <Profile
+        code={User.code} 
+        data={User.data} 
+        msg={User.msg} 
+        success={User.success}
+        />
     </div>
   );
 }

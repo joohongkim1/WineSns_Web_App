@@ -1,12 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as Q from "quill";
 const Quill: any = Q;
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  styled
-} from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 export default function Editor() {

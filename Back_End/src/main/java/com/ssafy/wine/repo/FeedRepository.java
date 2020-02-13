@@ -9,23 +9,26 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.ssafy.wine.entity.Feed;
+import com.ssafy.wine.entity.User;
+import com.ssafy.wine.entity.Wine;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
 
-	List<Feed> findTop10ByRatingNotNullOrderByVisitDesc();
+	List<Feed> findByWineAndRatingNull(Wine wine);
 
-	List<Feed> findTop10ByRatingNotNullOrderByLikeNumDesc();
-	
-	
-	@Modifying
-	@Query(value = "UPDATE feed f set f.content = :content, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)
-	Integer updateFeed(@Param("fid") Long fid, @Param("content") String content);
+	List<Feed> findByWineAndRatingNotNull(Wine wine);
+
+	List<Feed> findByUserAndRatingNull(User user);
+
+	List<Feed> findByUserAndRatingNotNull(User user);
+
+	List<Feed> findTop5ByRatingNotNullOrderByVisitDesc();
+
+	List<Feed> findTop5ByRatingNotNullOrderByLikeNumDesc();
 
 	@Modifying
-	@Query(value = "UPDATE feed f " + "set f.content = :content, f.wine_id = :wid, f.rating = :rating, f.update_time_at = now()"
-			+ "where f.fid = :fid", nativeQuery = true)
-	Integer updateFeed(@Param("fid") Long fid, @Param("wid") Long wid, @Param("rating") BigDecimal rating,
-			@Param("content") String content);
+	@Query(value = "UPDATE feed f set f.content = :content, f.wine_id = :wid, f.rating = :rating, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)
+	Integer updateFeed(@Param("fid") Long fid, @Param("wid") Wine wine, @Param("rating") BigDecimal rating, @Param("content") String content);
 
 	@Modifying
 	@Query(value = "UPDATE feed f set f.visit = f.visit + 1 where f.fid = :fid", nativeQuery = true)

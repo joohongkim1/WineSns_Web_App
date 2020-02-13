@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     mrFeed: {
-      marginLeft: "354px",
+      // marginLeft: "354px",
       width: "600px",
-      display: "flex",
+      display: "inline-block",
     },
 
   }),

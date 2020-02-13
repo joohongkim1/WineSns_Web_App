@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.wine.dto.FeedDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.enums.FeedRankEnum;
+import com.ssafy.wine.enums.FeedReviewEnum;
 import com.ssafy.wine.service.FeedService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -33,16 +36,22 @@ public class FeedController {
 	@Autowired
 	private FeedService feedService;
 
-	@ApiOperation(value = "Feed 추가")
+	@Autowired
+	private UserController userController;
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "Feed 추가 - rating 값으로 review 판단")
 	@PostMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam(required = false) Long wid,
+	public ResponseEntity<Object> createReview(@RequestParam(required = false) Long wid,
 			@RequestParam(required = false) BigDecimal rating, @RequestParam(required = false) String content) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			Feed feed = feedService.create(uid, wid, rating, content);
 			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(feed.getUser().getEmail()).append("\n")
-			.append("Feed_ID: ").append(feed.getFid()).append("\nFeed 작성완료");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			sb.append("User: ").append(feed.getUser().getEmail()).append("\n").append("Feed_Id: ")
+					.append(feed.getFid()).append("\Feed 작성완료");
+			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -71,48 +80,53 @@ public class FeedController {
 		}
 	}
 
-	@ApiOperation(value = "해당 유저 feed 불러오기")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "해당 유저 Feed 불러오기 - 본인이면 token, 아니면 uid")
 	@GetMapping("/findByUser")
-	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
+	public ResponseEntity<Object> findByUser(@RequestParam(required = false) Long uid,
+			@RequestParam FeedReviewEnum type) {
 		try {
-			List<FeedDto> feeds = feedService.findByUser(uid);
+			if (uid == null)
+				uid = userController.findUserById().getData().getUid();
+			List<FeedDto> feeds = feedService.findByUser(uid, type);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "해당 와인 feed 불러오기")
+	@ApiOperation(value = "해당 와인 feed(review) 불러오기")
 	@GetMapping("/findByWine/{wid}")
-	public ResponseEntity<Object> findByWine(@RequestParam Long wid) {
+	public ResponseEntity<Object> findByWine(@RequestParam Long wid, @RequestParam FeedReviewEnum type) {
 		try {
-			List<FeedDto> feeds = feedService.findByWine(wid);
+			List<FeedDto> feeds = feedService.findByWine(wid, type);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
-	@ApiOperation(value = "피드랭크 - 조회수, 좋아요")
-	@GetMapping("/readTop10/{type}")
-	public ResponseEntity<Object> readTop10(@PathVariable FeedRankEnum type) {
+
+	@ApiOperation(value = "리뷰랭크: 조회수, 좋아요 - 리뷰만(rating != null) 불러온다")
+	@GetMapping("/ReviewRank/{type}")
+	public ResponseEntity<Object> ReviewRank(@PathVariable FeedRankEnum type) {
 		try {
-			List<FeedDto> feeds = feedService.findTop10(type);
+			List<FeedDto> feeds = feedService.findRank(type);
 			return new ResponseEntity<Object>(feeds, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 	@ApiOperation(value = "해당 Feed 조회수 +1")
 	@PutMapping("/updateVisit")
 	public ResponseEntity<Object> updateVisit(@RequestParam Long fid) {
 		try {
-			feedService.updateVisit(fid);
-			return new ResponseEntity<Object>("조회수 증가", HttpStatus.OK);
+			Integer result = feedService.updateVisit(fid);
+			return new ResponseEntity<Object>(result + "개 조회수 증가", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 }

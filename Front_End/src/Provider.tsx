@@ -14,6 +14,7 @@ import WineReview from "./components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
 import SignUp from "./components/App/SignUp";
 import SmartSearch from "./components/smartSearch/WineSearch";
+import ReviewDetail from "./components/Review_Page/ReviewDetail";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -29,7 +30,7 @@ class AppForm extends Component {
           <Route path="/ranking" component={App} />
           <Route path="/list" component={List} />
           <Route path="/detail/:wid" component={WineDetail} exact={true} />
-          <Route path="/wineReview" component={WineReview} />
+          <Route path="/reviewDetail" component={ReviewDetail} />
           <Route path="/signUp" component={SignUp} />
           <Route path="/smartSearch" component={SmartSearch} />
           <Footer />

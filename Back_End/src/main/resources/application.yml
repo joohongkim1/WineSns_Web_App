@@ -2,7 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://127.0.0.1:3306/wineproject?serverTimezone=UTC
-#    url: jdbc:mysql://70.12.246.40:3306/wineproject?serverTimezone=UTC
+#    username: root
+#    password: ssafy
     url: jdbc:mysql://54.180.9.92:3306/wineproject?serverTimezone=UTC
     username: test
     password: 1234
@@ -42,8 +43,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 200MB
-      max-request-size: 215MB
+      max-file-size: 100MB
+      max-request-size: 200MB
 server:
   servlet:
     context-path: /WineProject
@@ -52,13 +53,12 @@ logging:
   level:
     com:
       andy: trace
-      
+
 file:
-  upload-img-feed: ../Img/Feed
-  upload-img-profile: ../Img/User/Profile
-  upload-img-background: ../Img/User/Background
-  
-  
+  img-wine: Img/Wine
+  img-feed: Img/Feed
+  img-profile: Img/Profile
+  img-background: Img/Background
 ## 프로젝트내의 폴더에 업로드 파일을 설정하고 싶으면 16번째 줄처럼 
 ## 본인 PC의 특정 dir에 업로드 하고 싶으면 17번쨰 줄처럼 설정한다. 
 #file.upload-dir=./uploads 

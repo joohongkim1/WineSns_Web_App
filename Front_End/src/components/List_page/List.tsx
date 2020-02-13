@@ -12,8 +12,6 @@ import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -27,7 +25,8 @@ import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
-import { render } from "react-dom";
+import Search2 from "./Search";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -225,6 +224,7 @@ export default function List() {
           }
         })()}
       </div>
+      <Search2 />
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>
           Total {wineList.length}
