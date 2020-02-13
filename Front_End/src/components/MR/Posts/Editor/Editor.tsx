@@ -5,18 +5,6 @@ const Quill: any = Q;
 // import styled from 'styled-components'
 import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/styles';
 
-// const QuillWrapper = styled.div`
-// .ql-editor {
-//   padding: 0;
-//   min-height: 320px;
-//   font-size: 1.125rem;
-//   line-height: 1.5;
-// }
-// .ql-editor.ql-blank::befor {
-//   left: 0px;
-// }
-// `;
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
 
@@ -24,7 +12,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 );
 
-export default function Editor(params: { title: string, body: string, onChangeField: any}) {
+// export default function Editor(params: { title: string, body: string, onChangeField: any}) {
+export default function Editor() {
   const quillElement = useRef<any>();
   const quillInstance = useRef<any>();
   const [contents, setContents] = React.useState('');

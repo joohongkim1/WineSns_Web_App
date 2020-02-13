@@ -9,6 +9,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from '@material-ui/core/TextField';
 
 import PostList from './Posts/PostList';
+import WritePage from './Posts/Editor/WirtePage';
 
 
 function rand() {
@@ -87,6 +88,8 @@ export default function Feed() {
           <h2 id="simple-modal-title">My Review</h2>
           <div>
             {/* 에디터 들어갈 공간 */}
+            <WritePage />
+
           </div>
           
           {/* <div className={classes.widContainer}>

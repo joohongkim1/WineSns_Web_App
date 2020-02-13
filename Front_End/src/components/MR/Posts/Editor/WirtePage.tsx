@@ -4,7 +4,10 @@ import WriteActionButtons from './WriteActionButtons';
 
 export default function WritePage() {
   return(
-    <Editor />
-    <WriteActionButtons />
+    <div>
+      <Editor />
+      <WriteActionButtons />
+    </div>
+    
   );
 }
