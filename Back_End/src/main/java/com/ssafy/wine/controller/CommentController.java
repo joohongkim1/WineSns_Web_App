@@ -20,6 +20,8 @@ import com.ssafy.wine.entity.Comment;
 import com.ssafy.wine.service.CommentService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -31,16 +33,21 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
+	@Autowired
+	private UserController userController;
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "Comment 추가 - 대댓글은 cid 추가")
 	@PostMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam Long uid,
-			@RequestParam(required = false) Long cid, @RequestParam String content) {
+	public ResponseEntity<Object> create(@RequestParam Long fid, @RequestParam(required = false) Long cid,
+			@RequestParam String content) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			Comment comment = commentService.create(fid, uid, cid, content);
 			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(comment.getUser().getEmail()).append("\n")
-			.append("Comment_ID: ").append(comment.getCid()).append("\n")
-			.append("Comment가 추가되었습니다.");
+			sb.append("User: ").append(comment.getUser().getEmail()).append("\n").append("Comment_ID: ")
+					.append(comment.getCid()).append("\n").append("Comment가 추가되었습니다.");
 			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -68,7 +75,7 @@ public class CommentController {
 			throw e;
 		}
 	}
-	
+
 	@ApiOperation(value = "해당 Comment 수정")
 	@PutMapping("/update")
 	public ResponseEntity<Object> update(@RequestParam Long cid, @RequestParam String content) {

@@ -20,6 +20,8 @@ import com.ssafy.wine.entity.WineLike;
 import com.ssafy.wine.service.WineLikeService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -31,10 +33,16 @@ public class WineLikeController {
 	@Autowired
 	private WineLikeService wineLikeService;
 
+	@Autowired
+	private UserController userController;
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "좋아요 추가")
 	@PutMapping("/create")
-	public ResponseEntity<Object> create(@RequestParam Long uid, @RequestParam Long wid) {
+	public ResponseEntity<Object> create(@RequestParam Long wid) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			WineLike like = wineLikeService.create(uid, wid);
 			wineLikeService.updateLikeNum(wid);
 			StringBuilder sb = new StringBuilder();
@@ -46,11 +54,14 @@ public class WineLikeController {
 			throw e;
 		}
 	}
-
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "좋아요 취소/삭제")
 	@DeleteMapping("/delete")
-	public ResponseEntity<Object> delete(@RequestParam Long uid, @RequestParam Long wid) {
+	public ResponseEntity<Object> delete(@RequestParam Long wid) {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			wineLikeService.delete(uid, wid);
 			wineLikeService.updateLikeNum(wid);
 			return new ResponseEntity<Object>("WineLike 삭제되었습니다.", HttpStatus.OK);
@@ -59,10 +70,13 @@ public class WineLikeController {
 		}
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 유저가 좋아요한 와인")
 	@GetMapping("/findByUser")
-	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
+	public ResponseEntity<Object> findByUser() {
 		try {
+			Long uid = userController.findUserById().getData().getUid();
 			List<WineDto> wines = wineLikeService.findByUser(uid);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {

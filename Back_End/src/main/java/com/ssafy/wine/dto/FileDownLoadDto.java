@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class FileLoadDto {
+public class FileDownLoadDto {
+	
+	private String fileUrl;
 	private String fileName;
-	private String filePath;
-	private String fileType;
-	private long size;
+	private long fileSize;
+	
 }

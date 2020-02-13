@@ -91,7 +91,6 @@ public class Wine {
 	
 	@OneToMany(mappedBy = "wine", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Feed> feeds = new ArrayList<>();
-	
 
 	@Builder
 	public Wine(Long wid, String nameKor, String nameEng, String type, Boolean sparkling, String grape, String country,
