@@ -13,12 +13,12 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import './wineDetail.css';
 import ReviewInfo from "../Interface/Review";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-
+import IconButton from "@material-ui/core/IconButton";
 
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getWineDetail } from '../../../stores/wine_info/actions/wineDetail';
+import { getWineDetail, createWineLike, deleteWineLike } from '../../../stores/wine_info/actions/wineDetail';
 import { getFeedListByWID } from '../../../stores/feed/actions/feedInfo';
 
 
@@ -43,14 +43,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const wines = [{wid : 1, nameKor : "와인의 최고봉", nameEng : "Good Good", 
-info : "너무너무 맛있어요...", type: "Red", rating : 5},
-{wid : 2, nameKor : "이 와인 추천 합니다.", nameEng : "Recommend", 
-info : "과일향이 너무 좋아요...", type: "Red", rating : 4},
-{wid : 3, nameKor : "요새 마신 와인 중 최고", nameEng : "Best", 
-info : "요새 마신 와인들 중에 제일 맛있었습니다....", type: "White", rating : 5 }
-
-]; 
 
 
 interface RouterProps { // type for `match.params`
@@ -67,7 +59,9 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
   console.log(wid);
 
   const [wineState, setWineState] = React.useState(false);
+  const [likeState, setLikeState] = React.useState(false);
   const dispatch = useDispatch();
+
   const { wine, isWineDetailPending , isWineDetailSucceess, WineDetailError} = useSelector(
     (state: rootState) => state.wineDetailReducer
   );
@@ -80,20 +74,42 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
   // console.log(wine);
 
   const loadWineDetail = async () => {
- 
+
+    let userLike = JSON.parse(sessionStorage.getItem('userLike') || '{}');
+
+
+    for(var i =0; i<userLike.length; i++){
+      if(userLike[i].wid==wid) {
+          setLikeState(true)
+          break
+      }                                                            
+    }
+
+
+    
     // console.log("onWine");
     await dispatch(getWineDetail(wid));
-    await dispatch(getFeedListByWID(3, "REVIEW"));
+    await dispatch(getFeedListByWID(wid, "REVIEW"));
     console.log("this is wine State");
     console.log(wine);
-  }
+  };
 
-  if(!isWineDetailSucceess && !wineState) {
+  const likeThis = async () => {
+    await dispatch(createWineLike(wid));
+    setLikeState(true);   
+  };
+
+  const hateThis = async () => {
+    await dispatch(deleteWineLike(wid));
+    setLikeState(false);   
+  };
+
+
+
+  if(!wineState) {
     loadWineDetail();
     setWineState(true);
-  } else {
-
-  }
+  } 
   return (
     <React.Fragment>
       <main>
@@ -182,9 +198,29 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
 
 
                 <div className="btn_area right"> 
+                {(function() {
+                 
+                if (likeState) {
+            
+                  return (
+                    <IconButton aria-label="add to favorites" onClick={hateThis}>
+                    <FavoriteIcon color="secondary" />
+                   
+                    </IconButton>
+                  )
+                } else {
+                  return (
+
+                    <IconButton aria-label="add to favorites" onClick={likeThis}>
+                        <FavoriteIcon color="inherit" />
+                    </IconButton>
+                  );
+                }
+              })()}
+                
                 <button className="btns btn_line_type blue"> 
                 <span className="ico fb"></span>리뷰작성</button>
-
+              
 
                 {/* Wiine 제품 정보 */}
 
@@ -231,6 +267,7 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
       </main>
   </React.Fragment>
   );
+
 }
 
 

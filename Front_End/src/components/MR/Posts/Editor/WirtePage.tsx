@@ -6,7 +6,6 @@ export default function WritePage() {
   return(
     <div>
       <Editor />
-      <WriteActionButtons />
     </div>
     
   );

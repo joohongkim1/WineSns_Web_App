@@ -14,6 +14,7 @@ import Entrance from "./src/components/App/Entrance";
 import WineReview from "./src/components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
 import SignUp from "./src/components/App/SignUp";
+import MyAccount from "./src/components/App/MyAccount";
 import SmartSearch from "./src/components/smartSearch/WineSearch";
 class AppForm extends Component {
   public store = (): object => {
@@ -34,6 +35,7 @@ class AppForm extends Component {
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
           <Route path="/smartSearch" component={SmartSearch} />
+          <Route path="/myAccount" component={MyAccount} />
           <Footer />
         </BrowserRouter>
       </Provider>
