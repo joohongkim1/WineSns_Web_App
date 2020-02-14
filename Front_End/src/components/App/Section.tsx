@@ -28,7 +28,7 @@ const sections = [
   { title: "랭킹", url: "/ranking" },
   { title: "와인 리스트", url: "/list" },
   { title: "와인 리뷰", url: "/wineReview" },
-  { title: "My SNS", url: "/myreview" },
+  { title: "My SNS", url: "/mypage" },
   {title : "Smart Search", url: "/smartSearch"}
 ];
 
