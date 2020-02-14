@@ -10,6 +10,9 @@ export const writePost = ({content, rating, title, wid}: contents) => {
 
 
   return axios.post('http://54.180.9.92:8090/WineProject/feed/create', null, {
+    headers: { 
+      'TOKEN': 'application/x-www-form-urlencoded'
+    },
     params: {
       content: content,
       rating: rating,
