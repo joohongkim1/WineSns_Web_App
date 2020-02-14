@@ -1,5 +1,6 @@
 package com.ssafy.wine.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,30 +22,33 @@ import com.ssafy.wine.service.WineService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Api(tags = { "3. Wine" })
 @RequestMapping(value = "/wine")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class WineController {
 
 	@Autowired
 	private WineService wineService;
 
-	@ApiOperation(value = "와인 목록 - 정렬 출력")
-	@GetMapping("/readAll/{type}")
-	public ResponseEntity<Object> readAll(@PathVariable WineFindEnum type) {
+	@ApiOperation(value = "와인 전체 목록")
+	@GetMapping("/fineAll/{type}")
+	public ResponseEntity<Object> fineAll(@PathVariable WineFindEnum type) {
 		try {
 			List<WineDto> wines = wineService.findAll(type);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("findAll fail", e);
 			throw e;
 		}
 	}
 
 	@ApiOperation(value = "와인랭크 - 조회수,좋아요")
-	@GetMapping("/readRank/{type}")
-	public ResponseEntity<Object> readRank(@PathVariable WineRankEnum type) {
+	@GetMapping("/findRank/{type}")
+	public ResponseEntity<Object> findRank(@PathVariable WineRankEnum type) {
 		try {
 			List<WineDto> wines = wineService.findRank(type);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
@@ -54,10 +58,10 @@ public class WineController {
 	}
 
 	@ApiOperation(value = "와인 번호 검색 - 개별선택할때")
-	@GetMapping("/readByWid/{wid}")
-	public ResponseEntity<Object> readByWid(@PathVariable Long wid) {
+	@GetMapping("/findByWid/{wid}")
+	public ResponseEntity<Object> findByWid(@PathVariable Long wid) {
 		try {
-			WineDto wine = wineService.findByWid(wid);
+			WineDto wine = wineService.findByWine(wid);
 			return new ResponseEntity<Object>(wine, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -65,31 +69,44 @@ public class WineController {
 	}
 
 	@ApiOperation(value = "와인 이름 검색")
-	@GetMapping("/readByName/{name}")
-	public ResponseEntity<Object> readByName(@PathVariable String name) {
+	@GetMapping("/findByName/{name}")
+	public ResponseEntity<Object> findByName(@PathVariable String name) {
 		try {
-			List<WineDto> wines = wineService.searchByName(name);
+			List<WineDto> wines = wineService.findByName(name);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country, winery, sweet")
+	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country[],  sweet")
 	@GetMapping("/search")
-	public ResponseEntity<Object> search(@RequestParam(required = false) String type,
+	public ResponseEntity<Object> search(
+			@RequestParam(required = false) String type,
 			@RequestParam(required = false) Boolean sparkling,
-			@RequestParam(required = false) WineCountryEnum[] country, @RequestParam(required = false) String[] winery,
-			@RequestParam(required = false) Integer sweet) {
+			@RequestParam(required = false) WineCountryEnum[] country,
+			@RequestParam(required = false) Integer sweet,
+			@RequestParam(required = false) BigDecimal alcohol) {
 		try {
-			List<WineDto> wines = wineService.search(type, sparkling, country, winery, sweet);
+			List<WineDto> wines = wineService.search(type, sparkling, country, sweet, alcohol);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiOperation(value = "모든 국가 와이너리 검색")
+	@ApiOperation(value = "모든 국가 검색")
+	@GetMapping("/findCountryAll")
+	public ResponseEntity<Object> findCountryAll() {
+		try {
+			List<String> countrys = wineService.findCountryAll();
+			return new ResponseEntity<Object>(countrys, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "모든 와이너리 검색")
 	@GetMapping("/findWineryAll")
 	public ResponseEntity<Object> findWineryAll() {
 		try {
@@ -122,6 +139,7 @@ public class WineController {
 				return new ResponseEntity<Object>(result, HttpStatus.NOT_ACCEPTABLE);
 			}
 		} catch (Exception e) {
+			log.error("updateVisit fail", e);
 			throw e;
 		}
 	}

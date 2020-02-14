@@ -1,6 +1,7 @@
 package com.ssafy.wine.service;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,6 +48,7 @@ public class WineServiceImpl implements WineService {
 
 	@Override
 	public List<WineDto> findAll(WineFindEnum type) {
+		
 		List<Wine> wines = new ArrayList<>();
 		switch (type) {
 		case KOR_UP:
@@ -64,18 +66,13 @@ public class WineServiceImpl implements WineService {
 		default:
 			break;
 		}
-
-		Type typeToken = new TypeToken<List<WineDto>>() {
-		}.getType();
-		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
-		return wineDtos;
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
 	}
 
 	@Override
 	public List<WineDto> findRank(WineRankEnum type) {
 		List<Wine> wines = new ArrayList<>();
-		Type typeToken = new TypeToken<List<WineDto>>() {
-		}.getType();
 		switch (type) {
 		case VISIT_3:
 			wines = wineRepository.findTop3ByOrderByVisitDesc();
@@ -92,43 +89,35 @@ public class WineServiceImpl implements WineService {
 		default:
 			break;
 		}
-		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
-		return wineDtos;
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
 	}
 
 	@Override
-	public WineDto findByWid(Long wid) {
+	public WineDto findByWine(Long wid) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-		WineDto wineDto = modelMapper.map(wine, WineDto.class);
-		System.out.println(wineDto);
-		return wineDto;
+		return modelMapper.map(wine, WineDto.class);
 	}
 
 	@Override
-	public List<WineDto> searchByName(String name) {
+	public List<WineDto> findByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
-		Type typeToken = new TypeToken<List<WineDto>>() {
-		}.getType();
-		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
-		return wineDtos;
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
 	}
 
 	@Override
-	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, String[] winery,
-			Integer sweet) {
+	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol) {
 		List<Wine> wines = new ArrayList<>();
-		wineRepository.findAll(wineRepository.search(type, sparkling, country, winery, sweet)).forEach(wines::add);
-		Type typeToken = new TypeToken<List<WineDto>>() {
-		}.getType();
-		List<WineDto> wineDtos = modelMapper.map(wines, typeToken);
-		return wineDtos;
+		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet, alcohol)).forEach(wines::add);
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
 	}
-
+	
 	@Override
-	@Transactional
-	public Integer updateVisit(Long wid) {
-		return wineRepository.updateVisit(wid);
+	public List<String> findCountryAll(){
+		return wineRepository.findDistinctCountryAll();
 	}
 
 	@Override
@@ -140,5 +129,11 @@ public class WineServiceImpl implements WineService {
 	public List<String> findWineryByCountry(WineCountryEnum country) {
 		return wineRepository.findDistinctWineryByCountry(country.toString());
 
+	}
+
+	@Override
+	@Transactional
+	public Integer updateVisit(Long wid) {
+		return wineRepository.updateVisit(wid);
 	}
 }
