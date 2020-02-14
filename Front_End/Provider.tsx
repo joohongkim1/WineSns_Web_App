@@ -6,7 +6,7 @@ import App from "./src/App";
 import Navbar from "./src/components/App/Navbar";
 import Footer from "./src/components/App/Footer";
 import Section from "./src/components/App/Section";
-import { HashRouter, BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import MyPage from "./src/components/MyPage";
 import List from "./src/components/List_page/List";
 import WineDetail from "./src/components/WineDetail/WineDetail";
@@ -26,7 +26,7 @@ class AppForm extends Component {
   public render(): JSX.Element {
     return (
       <Provider store={this.store() as any}>
-        <HashRouter>
+        <BrowserRouter>
           <Navbar />
           <Route exact={true} path="/" component={Entrance} />
           <Route path="/ranking" component={App} />
@@ -39,7 +39,7 @@ class AppForm extends Component {
           <Route path="/myAccount" component={MyAccount} />
           <Route path="/searchList" component={SmartList} />
           <Footer />
-        </HashRouter>
+        </BrowserRouter>
       </Provider>
     );
   }
