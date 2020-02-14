@@ -7,7 +7,7 @@ export const actions = {
   SET_USER_FEED_INFO_SUCCESS: 'SET_USER_FEED_INFO_SUCCESS',
   SET_USER_FEED_INFO_ERROR: 'SET_USER_FEED_INFO_ERROR'
 }
-export async function getUserFeedList() {
+export function getUserFeedList() {
   return async (dispatch: (arg0: { type: string; isFeedPending?: boolean; isFeedSuccess?: boolean; FeedError?: string; }) => void) => {
    dispatch(setUserFeedPending(true));
 

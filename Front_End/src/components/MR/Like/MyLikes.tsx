@@ -123,7 +123,7 @@ export default function MyLikes() {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
 
- 
+  console.log(userLike);
   const numEachPage: number = 30;
 ​
   const handleChange = (value: number) => {
@@ -144,7 +144,7 @@ export default function MyLikes() {
         <Typography className={classes.total}>Total {userLike.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
-          {userLike.slice(minValue, maxValue).map((wine: WineLike) => (
+          {userLike.map((wine: WineLike) => (
 ​
             <Grid item xs={4}>
               <Card className={classes.card}>
@@ -192,13 +192,15 @@ export default function MyLikes() {
 ​
         </Grid>
         <div>
-          <Pagination
+          {/* <Pagination
             total={userLike.length}
             // showTotal={total => `Total ${total} items`}
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
-          /></div>
+          /> */}
+          
+          </div>
         {/* <ReviewModal /> */}
       </Container>
 
