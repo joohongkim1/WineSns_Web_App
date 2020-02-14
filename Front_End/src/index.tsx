@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import IndexProvider from "./Provider";
+import IndexProvider from "../Provider";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import "./index.css";
 

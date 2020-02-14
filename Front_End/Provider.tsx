@@ -17,6 +17,8 @@ import SignUp from "./src/components/App/SignUp";
 import MyAccount from "./src/components/App/MyAccount";
 import SmartSearch from "./src/components/smartSearch/WineSearch";
 import SmartList from "./src/components/SearchList/List";
+import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
+import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -37,6 +39,8 @@ class AppForm extends Component {
           <Route path="/smartSearch" component={SmartSearch} />
           <Route path="/myAccount" component={MyAccount} />
           <Route path="/searchList" component={SmartList} />
+          <Route path="/reviewList" component={ReviewList} />
+          <Route path="/reviewDetail" component={ReviewDetail} />
           <Footer />
         </BrowserRouter>
       </Provider>
