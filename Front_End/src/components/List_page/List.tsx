@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-        "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
+        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -107,6 +107,10 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
+    },
+    checkbox: {
+      marginLeft: "30%",
+      marginTop: "3%"
     }
   })
 );
@@ -159,7 +163,12 @@ export default function List() {
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center">
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
             Wine List
           </Typography>
         </Container>
@@ -191,8 +200,8 @@ export default function List() {
           </Button>
         </ButtonGroup>
       </div>
-      <div>
-        {(function() {
+      <div className={classes.checkbox}>
+        {function() {
           if (btnNum == 1) {
             return (
               <Checkbox.Group
@@ -200,17 +209,25 @@ export default function List() {
                 onChange={onChangeCountryChk}
               >
                 <Row>
-                  <Col span={8}>
-                    <Checkbox value="France">France</Checkbox>
+                  <Col span={4}>
+                    <Checkbox value="France">
+                      <span style={{ fontSize: "22px" }}>France</span>
+                    </Checkbox>
                   </Col>
-                  <Col span={8}>
-                    <Checkbox value="Germany">Germany</Checkbox>
+                  <Col span={4}>
+                    <Checkbox value="Germany">
+                      <span style={{ fontSize: "22px" }}>Germany</span>
+                    </Checkbox>
                   </Col>
-                  <Col span={8}>
-                    <Checkbox value="Italy">Italy</Checkbox>
+                  <Col span={4}>
+                    <Checkbox value="Italy">
+                      <span style={{ fontSize: "22px" }}>Italy</span>
+                    </Checkbox>
                   </Col>
-                  <Col span={8}>
-                    <Checkbox value="Spain">Spain</Checkbox>
+                  <Col span={4}>
+                    <Checkbox value="Spain">
+                      <span style={{ fontSize: "22px" }}>Spain</span>
+                    </Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
@@ -223,16 +240,20 @@ export default function List() {
               >
                 <Row>
                   <Col span={8}>
-                    <Checkbox value="USA">USA</Checkbox>
+                    <Checkbox value="USA">
+                      <span style={{ fontSize: "22px" }}>USA</span>
+                    </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="Chile">Chile</Checkbox>
+                    <Checkbox value="Chile">
+                      <span style={{ fontSize: "22px" }}>Chile</span>
+                    </Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
             );
           }
-        })()}
+        }}
       </div>
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>

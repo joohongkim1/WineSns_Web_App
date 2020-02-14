@@ -14,27 +14,28 @@ export interface User {
 
 export interface Feed {
     fid: number,
+    title : string,
     content: string,
     // createdTimeAt: string,
     // updateTimeAt: string,
     visit: number,
     likeNum: number,
     rating: number,
-    wine: Wine,
+    wine: any,
     user: User
   }
 
-  export interface feedState {
-    feedList : Feed[],
-    isFeedPending : boolean,
-    isFeedSucceess : boolean,
-    isFeedError : string
+  export interface userFeedState {
+    userFeed : Feed[],
+    isUserFeedPending : boolean,
+    isUserFeedSucceess : boolean,
+    isUserFeedError : string
   }
 
 
 
 
-const initialState : feedState = { 
+const initialState : userFeedState = { 
 
   // fid: 0,
   // content: '',
@@ -45,38 +46,29 @@ const initialState : feedState = {
   // rating: 0,
   // wine: null,
   // user: null,
-  feedList : [],
-  isFeedPending : false,
-  isFeedSucceess : false,
-  isFeedError : ''
+  userFeed : [],
+  isUserFeedPending : false,
+  isUserFeedSucceess : false,
+  isUserFeedError : ''
 }
 
 
 export default function feedReducer(state = initialState, action : any) {
   switch (action.type) {
-    case actions.SET_FEED_INFO_PENDING:
+    case actions.SET_USER_FEED_INFO_PENDING:
       return {...state, 
-        isFeedPending: action.isFeedPending
+        isUserFeedPending: action.isUserFeedPending
       }
 
-    case actions.SET_FEED_INFO_SUCCESS:
+    case actions.SET_USER_FEED_INFO_SUCCESS:
       return {...state,
-        isFeedSuccess: action.isFeedSuccess,
-        feedList : action.feedList
-        // fid: action.feed.fid,
-        // content: action.feed.content,
-        // // createdTimeAt: string,
-        // // updateTimeAt: string,
-        // visit: action.feed.visit,
-        // likeNum: action.feed.likeNum,
-        // rating: action.feed.rating,
-        // wine: action.feed.wine,
-        // user: action.feed.user,
+        isUserFeedSuccess: action.isUserFeedSuccess,
+        userFeed : action.userFeed
       }
 
-    case actions.SET_FEED_INFO_ERROR:
+    case actions.SET_USER_FEED_INFO_ERROR:
       return {...state,
-        isFeedError: action.FeedError
+        isUserFeedError: action.UserFeedError
       }
     default:
       return state;

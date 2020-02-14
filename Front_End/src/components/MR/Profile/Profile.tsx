@@ -1,5 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,11 +18,23 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     profileHeader: {
       borderBottom: "solid 1px #ddd",
-      marginLeft: "10px"
+      marginLeft: "10px",
+      display: "flex",
+      padding: ""
+    },
+    profileHead: {
+      margin: "12px 0px",
+      fontSize: "20px",
+      fontWeight: "bold"
     },
     liCommon: {
       margin: "10px"
     },
+    margin: {
+
+      margin: theme.spacing(1),
+    
+    }
 
   })
 );
@@ -76,10 +90,22 @@ interface User {
 
 export default function Profile(profile: User) {
   const classes = useStyles();
+  const [edit, setEdit] = React.useState(false);
+  
+  const editOpen = () => {
+    setEdit(true);
+  };
+  const editClose = () => {
+    setEdit(false);
+  };
+
+  // onclick 함수?
   return (
     <ul className={classes.mrProfile}>
       <li className={classes.profileHeader}>
-        <h1>Profile</h1>
+        <div className={classes.profileHead}>Profile</div>
+        <Button size="small" className={classes.margin} onClick={editOpen}><EditIcon fontSize="small" /></Button>
+        
       </li>
       <li className={classes.liCommon}>
         닉네임: {profile.data.nickName}

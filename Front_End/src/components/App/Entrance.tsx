@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import brown from "@material-ui/core/colors/brown";
+import pink from "@material-ui/core/colors/pink";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,10 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.common.white,
       backgroundImage:
-        "url(https://learn.winecoolerdirect.com/wp-content/uploads/2017/09/tuscany-wine.jpg)",
-      backgroundSize: "cover",
+        "url(https://i.gifer.com/MQt.gif)",
+      backgroundSize: "contain",
+   
       backgroundRepeat: "no-repeat",
-      backgroundPosition: "center"
+      backgroundPosition: "right"
     },
 
     cardGrid: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "400px",
       top: "30%",
       left: "18%",
-      backgroundColor: brown[700],
+      backgroundColor: pink[800],
       opacity: "0.9"
     },
     card: {

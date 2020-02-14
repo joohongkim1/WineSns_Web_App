@@ -23,6 +23,7 @@ import {
   deleteWineLike
 } from "../../../stores/wine_info/actions/wineDetail";
 import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
+
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(8)
   }
 }));
+
 interface RouterProps {
   // type for `match.params`
   wid: string; // must be type `string` since value comes from the URL
@@ -54,12 +56,14 @@ function WineDetail(props: MyComponentProps) {
   const [wineState, setWineState] = React.useState(false);
   const [likeState, setLikeState] = React.useState(false);
   const dispatch = useDispatch();
+
   const {
     wine,
     isWineDetailPending,
     isWineDetailSucceess,
     WineDetailError
   } = useSelector((state: rootState) => state.wineDetailReducer);
+
   const { feedList, isFeedPending, isFeedSucceess, isFeedError } = useSelector(
     (state: rootState) => state.feedReducer
   );
@@ -67,12 +71,14 @@ function WineDetail(props: MyComponentProps) {
   // console.log(wine);
   const loadWineDetail = async () => {
     let userLike = JSON.parse(sessionStorage.getItem("userLike") || "{}");
+
     for (var i = 0; i < userLike.length; i++) {
       if (userLike[i].wid == wid) {
         setLikeState(true);
         break;
       }
     }
+
     // console.log("onWine");
     await dispatch(getWineDetail(wid));
     await dispatch(getFeedListByWID(wid, "REVIEW"));
@@ -87,6 +93,7 @@ function WineDetail(props: MyComponentProps) {
     await dispatch(deleteWineLike(wid));
     setLikeState(false);
   };
+
   if (!wineState) {
     loadWineDetail();
     setWineState(true);
@@ -102,7 +109,8 @@ function WineDetail(props: MyComponentProps) {
             </Typography>
           </Container>
         </div>
-        ​ ​{/* Wiine 제품 이미지 및 정보 */}
+
+        {/* Wiine 제품 이미지 및 정보 */}
         <div id="wrap" className="wrap">
           <section className="detail_wine">
             <div className="product_wine clfix">
@@ -121,7 +129,6 @@ function WineDetail(props: MyComponentProps) {
               </div>
 
               <div className="bxr">
-                ​ ​
                 <h1 className="tit">
                   {wine.nameEng}
                   <span id="wineKorName">{wine.nameKor}</span>{" "}
@@ -135,28 +142,21 @@ function WineDetail(props: MyComponentProps) {
                     {" "}
                     <li>
                       {" "}
-                      <img src="/images/common/img_wine_alcohol.png" alt="" />
+                      <img className="imgWineAlcohol" />
                       <strong>
                         알코올 <span>{wine.alcohol}</span>{" "}
                       </strong>{" "}
                     </li>
                     <li>
                       {" "}
-                      <img src="/images/common/img_wine_volume.png" alt="" />
-                      <strong>
-                        용량 <span>750ml</span>{" "}
-                      </strong>{" "}
-                    </li>
-                    <li>
-                      {" "}
-                      <img src="/images/common/img_wine_kind.png" alt="" />
+                      <img className="imgWineKind" />
                       <strong>
                         와인 종류 <span>White</span>{" "}
                       </strong>{" "}
                     </li>
                     <li>
                       {" "}
-                      <img src="/images/common/img_wine_sparkling.png" alt="" />
+                      <img className="imgWineSparkling" />
                       <strong>
                         탄산 분류
                         {(function() {
@@ -165,12 +165,11 @@ function WineDetail(props: MyComponentProps) {
                           } else {
                             return <span>Still</span>;
                           }
-                        })()}{" "}
-                      </strong>{" "}
+                        })()}
+                      </strong>
                     </li>
                     <li>
-                      {" "}
-                      <img src="/images/common/img_wine_sugar.png" alt="" />
+                      <img className="imgWineSugar" />
                       <strong>
                         당도
                         {(function() {
@@ -190,7 +189,7 @@ function WineDetail(props: MyComponentProps) {
                     </li>
                     <li>
                       {" "}
-                      <img src="/images/common/img_wine_sugar.png" alt="" />
+                      <img className="imgWineBody" />
                       <strong>
                         바디
                         {(function() {
@@ -208,7 +207,7 @@ function WineDetail(props: MyComponentProps) {
                 </div>
               </div>
             </div>
-            ​ ​ ​
+
             <div className="btn_area right">
               {(function() {
                 if (likeState) {
@@ -231,105 +230,88 @@ function WineDetail(props: MyComponentProps) {
                   );
                 }
               })()}
-              <button className="btns btn_line_type blue">
-                <span className="ico fb"></span>리뷰작성
-              </button>
-              ​{/* Wiine 제품 정보 */}​
+
+              <button className="btns btn_line_type blue">리뷰작성</button>
+
+              {/* Wiine 제품 정보 */}
             </div>
-            <h2 className="tit_h2">와인 제품 정보</h2>
-            <div className="product_info clfix">
-              {" "}
-              <div>
-                {" "}
-                <dl>
+            <div className="product_wine clfix">
+              <div className="wineInfo">
+                <h2 className="tit_h2">와인 제품 정보</h2>
+                <div className="product_info clfix">
                   {" "}
-                  <dt>포도 품종</dt>{" "}
-                  <dd>
+                  <div>
+                    <dl>
+                      <dt>포도 품종</dt>
+                      <dd>
+                        <span className="info01Img"></span>
+                        {wine.grape}
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>제조사</dt>
+                      <dd>
+                        <span className="info02Img"></span>
+                        {wine.winery}
+                      </dd>
+                    </dl>
+                  </div>
+                  <div>
                     {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info01.jpg" alt="" />
-                    </span>
-                    {wine.grape}{" "}
-                  </dd>{" "}
-                </dl>{" "}
-                <dl>
-                  {" "}
-                  <dt>제조사</dt>{" "}
-                  <dd>
+                    <dl>
+                      {" "}
+                      <dt>원산지</dt>
+                      <dd>
+                        <span className="info03Img"></span> {wine.country},{" "}
+                        {wine.countrySub}{" "}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Grade</dt>{" "}
+                      <dd>
+                        <span className="info04Img"></span> {wine.grade}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  <div>
                     {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info02.jpg" alt="" />
-                    </span>
-                    {wine.winery}
-                  </dd>{" "}
-                </dl>{" "}
-              </div>
-              <div>
-                {" "}
-                <dl>
-                  {" "}
-                  <dt>원산지</dt>{" "}
-                  <dd>
-                    {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info03.jpg" alt="" />
-                    </span>{" "}
-                    {wine.country}, {wine.countrySub}{" "}
-                  </dd>{" "}
-                </dl>
-                <dl>
-                  {" "}
-                  <dt>Grade</dt>{" "}
-                  <dd>
-                    {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info04.jpg" alt="" />
-                    </span>{" "}
-                    {wine.grade}
-                  </dd>{" "}
-                </dl>{" "}
-              </div>
-              <div>
-                {" "}
-                <dl>
-                  {" "}
-                  <dt>Wine Use</dt>{" "}
-                  <dd>
-                    {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info05.jpg" alt="" />
-                    </span>{" "}
-                    {wine.whenUse}
-                  </dd>{" "}
-                </dl>
-                <dl>
-                  {" "}
-                  <dt>Food matching</dt>{" "}
-                  <dd>
-                    {" "}
-                    <span>
-                      <img src="/images/common/img_pro_info06.jpg" alt="" />
-                    </span>{" "}
-                    {wine.foodMatch}{" "}
-                  </dd>{" "}
-                </dl>{" "}
-              </div>
-              {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
+                    <dl>
+                      {" "}
+                      <dt>Wine Use</dt>{" "}
+                      <dd>
+                        <span className="info05Img"></span> {wine.whenUse}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Food matching</dt>{" "}
+                      <dd>
+                        <span className="info06Img"></span> {wine.foodMatch}{" "}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
                                   <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div>  */}
-            </div>{" "}
-            <div className="btn_area right">
-              <a href="#" className="btns btn_list">
-                목록 <span className="ico"></span>{" "}
-              </a>{" "}
+                </div>{" "}
+              </div>
             </div>
-            {/* Wiine Top 5 리뷰 */}​ ​<h2 className="tit_h2">Top 3 Review</h2>
+
+            <a href="/list">
+              <button className="btns btn_line_type blue">목록</button>
+            </a>
+
+            {/* Wiine Top 5 리뷰 */}
+
+            <h2 className="tit_h2">Top 3 Review</h2>
             <div className="product_info clfix">
               <Container className={classes.cardGrid} maxWidth="md">
-                ​ ​{/* End hero unit */}​ ​
+                {/* End hero unit */}
                 <Grid container spacing={4}>
                   {feedList.map(feed => (
                     <ReviewInfo
                       fid={feed.fid}
+                      title={feed.title}
                       nameEng={feed.wine.nameEng}
                       content={feed.content}
                       rating={feed.rating}

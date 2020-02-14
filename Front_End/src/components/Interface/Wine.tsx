@@ -13,7 +13,7 @@ import { Rating } from '@material-ui/lab';
 import Box from '@material-ui/core/Box';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
-
+import {Link} from "react-router-dom";
 import '../../index.css';
 
 
@@ -59,7 +59,9 @@ function WineInfo(wine: WineInfo) {
 
     return (
       <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
+       
         <Grid item xs={12} sm={6} md={4}>
+        <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
             <Card className={classes.card}>
                 <CardMedia
                     
@@ -88,7 +90,9 @@ function WineInfo(wine: WineInfo) {
     
               
             </Card>
+            </Link>
         </Grid>
+  
         </Slide>
     );
 }

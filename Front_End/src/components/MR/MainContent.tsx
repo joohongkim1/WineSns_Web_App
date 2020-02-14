@@ -3,6 +3,7 @@
 // about: Review page 중 위쪽 파트, 배경 사진, 프로필 사진, toolbar를 포함하고 있다.
 
 import * as React from 'react';
+import { Route } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import LeftSide from './LeftSide';

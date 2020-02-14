@@ -94,6 +94,7 @@ export default function Feed() {
         </div>
       </Modal>
       {/* 작성된 Post를 전부 모아두는 곳 */}
+    
       <PostList />
     </div>
   );
