@@ -22,7 +22,6 @@ class AppForm extends Component {
     const store = Object.assign({}, this.props);
     return configureStore(store);
   };
-
   public render(): JSX.Element {
     return (
       <Provider store={this.store() as any}>
@@ -44,5 +43,4 @@ class AppForm extends Component {
     );
   }
 }
-
 export default AppForm;

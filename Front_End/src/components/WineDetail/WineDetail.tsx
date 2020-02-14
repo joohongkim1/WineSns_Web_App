@@ -293,9 +293,10 @@ function WineDetail(props: MyComponentProps) {
                   </div>
                   {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
                                   <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div>  */}
-                </div>{" "}
-              </div>
-            </div>
+            </div> </div></div>
+            
+            <a href="/list" className="btns btn_line_type blue" style={{marginLeft: '97%'}}><button className="btns btn_line_type blue" >
+              <span style={{fontSize : '20px'}}>목록</span></button></a>
 
             <a href="/list">
               <button className="btns btn_line_type blue">목록</button>
