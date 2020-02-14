@@ -6,8 +6,8 @@ import App from "./src/App";
 import Navbar from "./src/components/App/Navbar";
 import Footer from "./src/components/App/Footer";
 import Section from "./src/components/App/Section";
-import { BrowserRouter, Route } from "react-router-dom";
-import MyReview from "./src/components/MyReview";
+import { HashRouter, BrowserRouter, Route } from "react-router-dom";
+import MyPage from "./src/components/MyPage";
 import List from "./src/components/List_page/List";
 import WineDetail from "./src/components/WineDetail/WineDetail";
 import Entrance from "./src/components/App/Entrance";
@@ -22,15 +22,14 @@ class AppForm extends Component {
     const store = Object.assign({}, this.props);
     return configureStore(store);
   };
-
   public render(): JSX.Element {
     return (
       <Provider store={this.store() as any}>
-        <BrowserRouter>
+        <HashRouter>
           <Navbar />
           <Route exact={true} path="/" component={Entrance} />
           <Route path="/ranking" component={App} />
-          <Route path="/myreview" component={MyReview} />
+          <Route path="/mypage" component={MyPage} />
           <Route path="/list" component={List} />
           <Route path="/detail/:wid" component={WineDetail} exact={true} />
           <Route path="/wineReview" component={WineReview} />
@@ -39,10 +38,9 @@ class AppForm extends Component {
           <Route path="/myAccount" component={MyAccount} />
           <Route path="/searchList" component={SmartList} />
           <Footer />
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     );
   }
 }
-
 export default AppForm;
