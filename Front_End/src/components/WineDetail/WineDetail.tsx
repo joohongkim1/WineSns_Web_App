@@ -255,8 +255,8 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
                                   <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div>  */}
             </div> </div></div>
             
-            <a href="/list"><button className="btns btn_line_type blue">
-              목록</button></a>
+            <a href="/list" className="btns btn_line_type blue" style={{marginLeft: '97%'}}><button className="btns btn_line_type blue" >
+              <span style={{fontSize : '20px'}}>목록</span></button></a>
 
 
             {/* Wiine Top 5 리뷰 */}
