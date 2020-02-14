@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-        "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
+      "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -171,7 +171,7 @@ export default function List() {
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center">
+          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
             Wine List
           </Typography>
         </Container>

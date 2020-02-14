@@ -9,6 +9,8 @@ export const actions = {
   SET_WINE_INFO_SUCCESS: 'SET_WINE_INFO_SUCCESS',
   SET_WINE_INFO_ERROR: 'SET_WINE_INFO_ERROR'
 }
+
+
 export function getWineListByType(type : string) {
   return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
    dispatch(setWinePending(true));

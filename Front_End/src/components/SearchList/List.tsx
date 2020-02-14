@@ -24,7 +24,7 @@ import { Pagination } from 'antd';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getSmartSearch } from '../../../stores/smartSearch/actions/wineInfo';
+import { getSmartSearch, getSmartSearchByName } from '../../../stores/smartSearch/actions/wineInfo';
 //antDesign
 import 'antd/dist/antd.css';
 import { Checkbox, Row, Col } from 'antd';
@@ -113,6 +113,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function List(props : any) {
 
   const { taste } = props.location.state
+  const {name} = props.location.state
+
+  
 
   const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
@@ -133,6 +136,12 @@ export default function List(props : any) {
     await dispatch(getSmartSearch(taste.alcohol, taste.country, taste.sparkling, taste.sweet, taste.type));
   }
 
+  const loadWineListByName = async () => {
+    console.log("on Smart Search List By Name");
+    console.log(taste);
+    await dispatch(getSmartSearchByName(name));
+  }
+
 
   const numEachPage: number = 30;
 ​
@@ -146,11 +155,16 @@ export default function List(props : any) {
   };
 
 
-  if (!isSmartSearchSucceess && !wineState) {
+  if (!isSmartSearchSucceess && !wineState && taste!=null) {
     loadWineList();
     setWineState(true);
+    console.log("taste is not null")
+  } else if(!isSmartSearchSucceess && !wineState && taste==null) {
+    console.log("taste is null")
+    loadWineListByName();
+    setWineState(true);
   } else {
-​
+    
   }
   return (
     <React.Fragment>

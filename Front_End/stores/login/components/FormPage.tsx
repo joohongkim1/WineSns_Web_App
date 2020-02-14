@@ -169,8 +169,8 @@ class FormPage extends React.Component<IProps, IState> {
         // //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
 
         <div>
-          <pre></pre>Welcome To Dionysos
-        </div>
+        <img src="https://1.bp.blogspot.com/-nF66cG_pBcI/W2cC6-vBoQI/AAAAAAApbw0/OM3urq7sYPoonAi8fxCW9s0fBZVHkSrAwCLcBGAs/s1600/AW1483012_00.gif" alt="WELCOME TO Dionysos" />
+      </div>
       );
     }
   }

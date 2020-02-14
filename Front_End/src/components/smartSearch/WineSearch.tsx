@@ -10,7 +10,7 @@ import SmartSearchList from "../SearchList/List";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getSmartSearch } from '../../../stores/smartSearch/actions/wineInfo';
+import { getSmartSearch, getSmartSearchByName} from '../../../stores/smartSearch/actions/wineInfo';
 
 
 import { Table } from 'antd';
@@ -395,7 +395,7 @@ export default function WineSearch() {
     }
     function handleClick(e: any) {
         e.preventDefault();
-   
+
         console.log(search);
     }
 
@@ -432,9 +432,17 @@ export default function WineSearch() {
                                                 
                                                 />
                                             </span> </div>
-                                        <button onClick={handleClick} className="btns btn_wine_search" id="expert-by-name">
+                                            
+                                        {/* <button onClick={handleClick} className="btns btn_wine_search" id="expert-by-name">
                                             <span className="ico glass"></span>와인명 검색
-                                        </button>
+                                        </button> */}
+                                                                                <Link to={{pathname: '/searchList',
+  state: {
+    name : search
+  }
+}} style={{marginLeft : '82%'}} className="btns btn_wine_search" id="expert-by-name">
+                                            <span className="ico glass"></span>와인명 검색
+                                        </Link>
                                         <p>* 하단 와인 속성 항목과 무관하게 와인명만 검색 가능합니다.</p>
                                     </div>
                                     {/* </form> */}
@@ -859,7 +867,7 @@ export default function WineSearch() {
     taste : state
   }
 }} style={{marginLeft : '82%'}} className="btns btn_wine_search" id="expert-by-name">
-                                            <span className="ico glass"></span>내게 맞는 와인 검색
+                                            <button><span className="ico glass"></span>내게 맞는 와인 검색</button>
                                         </Link>
                                     </div>
                                 </div>
