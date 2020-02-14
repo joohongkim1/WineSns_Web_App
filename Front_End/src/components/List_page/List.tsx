@@ -16,10 +16,8 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import Search from "./Search";
 import "antd/dist/antd.css";
 import { Pagination } from "antd";
-import Temp from "./temp";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
@@ -131,7 +129,6 @@ export default function List() {
     console.log("onWineList");
     await dispatch(getWineListByType("KOR_UP"));
   };
-
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
   };
@@ -173,9 +170,8 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-      ​
+      {/* <ReviewModal /> */}
       <div>
-        <Temp></Temp>
         <Link
           to={"/ranking"}
           className={classes.home}
@@ -201,7 +197,7 @@ export default function List() {
         </ButtonGroup>
       </div>
       <div className={classes.checkbox}>
-        {function() {
+        {(function() {
           if (btnNum == 1) {
             return (
               <Checkbox.Group
@@ -253,62 +249,62 @@ export default function List() {
               </Checkbox.Group>
             );
           }
-        }}
+        })()}
       </div>
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10} direction="row">
+        <Grid container spacing={10}>
           {wineList.slice(minValue, maxValue).map(wine => (
             <Grid item xs={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={wine.nameKor}
-                  subheader={wine.nameEng}
-                />
-                {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
-                <CardMedia
-                  className={classes.media}
-                  image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
-                  title={wine.nameEng}
-                />
-                {/* </Link> */}
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {wine.info.slice(0, 50)}...
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon color="secondary" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <div className={classes.more}>
-                    <Link
-                      to={`/detail/${wine.wid}`}
-                      style={{ textDecoration: "none" }}
+              <div className="wine_list">
+                <ul className="clifx">
+                  <li>
+                    <div className="tags">
+                      <em className="tag type white">White</em>
+                    </div>
+                    <div className="img">
+                      <img
+                        src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                        alt={wine.nameKor}
+                      />
+                    </div>
+                    <strong
+                      className="tit _dotdotdot"
+                      data-ellipse-height="70"
+                      style={{ overflowWrap: "break-word", width: 215 }}
                     >
-                      <Button variant="outlined">View More</Button>
-                    </Link>
-                  </div>
-                </CardActions>
-              </Card>
+                      {wine.nameEng}
+                    </strong>
+                    <span className="tit">{wine.info.slice(0, 50)}</span>
+                    <div className="hashtag">
+                      #유럽와인 #스페인 # White #Medium Dry
+                    </div>
+                    <div className="bx_over" style={{ opacity: 0 }}>
+                      <h5 className="hide_txt">와인정보</h5>
+                      <span className="tit">{wine.nameKor}</span>
+                      <div className="info">
+                        <p>품종 : 샤도네이</p>
+                        <p>제조사 : 코도르뉴</p>
+                        <p>원산지 : 스페인, 페네데스</p>
+                        <p>Color : 밝은 볕짚색</p>
+                      </div>
+                      <div className="btn_area">
+                        <Link
+                          to={`/detail/${wine.wid}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Button variant="outlined">View More</Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </Grid>
           ))}
-          ​
         </Grid>
         <div>
           <Pagination
