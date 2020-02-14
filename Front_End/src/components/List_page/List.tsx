@@ -12,27 +12,27 @@ import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-​
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+import Search from "./Search";
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
+import Temp from "./temp";
 // Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getWineListByType, getWineListByNameList } from '../../../stores/wine_info/actions/wineInfo';
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import {
+  getWineListByType,
+  getWineListByNameList
+} from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
-import 'antd/dist/antd.css';
-import { Checkbox, Row, Col } from 'antd';
+import "antd/dist/antd.css";
+import { Checkbox, Row, Col } from "antd";
 import { render } from "react-dom";
-​
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-​
     root: {
       display: "flex",
       flexDirection: "column",
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-      "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -58,15 +58,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      width: '70px',
+      width: "70px",
       //paddingTop: '56.25%', // 16:9
-      position: 'relative',
-      marginLeft: '40%',
-      height: '230px',
-​
-​
+      position: "relative",
+      marginLeft: "40%",
+      height: "230px"
     },
-​
     cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
@@ -111,13 +108,12 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1, 8)
       }
     },
-    checkbox : {
-      marginLeft: '30%',
-      marginTop : '3%'
+    checkbox: {
+      marginLeft: "30%",
+      marginTop: "3%"
     }
   })
 );
-​
 export default function List() {
   const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
@@ -129,30 +125,27 @@ export default function List() {
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
   );
-​
   let start: number = 0;
   let end: number = 0;
   const loadWineList = async () => {
     console.log("onWineList");
     await dispatch(getWineListByType("KOR_UP"));
-  }
+  };
 
   const loadWineListByChecked = async (checkedValues: any) => {
-  
     await dispatch(getWineListByNameList(checkedValues));
-  }
+  };
   const numEachPage: number = 30;
-​
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
-    setMaxValue((value) * numEachPage);
+    setMaxValue(value * numEachPage);
     // setState({
     //   minValue: (value - 1) * numEachPage,
     //   maxValue: value * numEachPage
     // });
   };
   async function onChangeCountryChk(checkedValues: any) {
-    console.log('checked = ', checkedValues);
+    console.log("checked = ", checkedValues);
     await loadWineListByChecked(checkedValues);
   }
   const handleEuropeBtn = () => {
@@ -165,20 +158,24 @@ export default function List() {
     loadWineList();
     setWineState(true);
   } else {
-​
   }
   return (
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
             Wine List
           </Typography>
         </Container>
       </div>
-​
-      {/* <ReviewModal /> */}
+      ​
       <div>
+        <Temp></Temp>
         <Link
           to={"/ranking"}
           className={classes.home}
@@ -195,49 +192,76 @@ export default function List() {
           size="large"
           aria-label="large outlined primary button group"
         >
-          <Button className={classes.btn} onClick={handleEuropeBtn}>유럽 와인</Button>
-          <Button className={classes.btn} onClick={handleAmericaBtn}>신대륙 와인</Button>
+          <Button className={classes.btn} onClick={handleEuropeBtn}>
+            유럽 와인
+          </Button>
+          <Button className={classes.btn} onClick={handleAmericaBtn}>
+            신대륙 와인
+          </Button>
         </ButtonGroup>
       </div>
       <div className={classes.checkbox}>
-        {function () {
+        {function() {
           if (btnNum == 1) {
             return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={4}>
-                  <Checkbox value="France"><span style={{fontSize : '22px'}}>France</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Germany"><span style={{fontSize : '22px'}}>Germany</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Italy"><span style={{fontSize : '22px'}}>Italy</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Spain"><span style={{fontSize : '22px'}}>Spain</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-          else if (btnNum == 2) {
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={4}>
+                    <Checkbox value="France">
+                      <span style={{ fontSize: "22px" }}>France</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Germany">
+                      <span style={{ fontSize: "22px" }}>Germany</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Italy">
+                      <span style={{ fontSize: "22px" }}>Italy</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Spain">
+                      <span style={{ fontSize: "22px" }}>Spain</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } else if (btnNum == 2) {
             return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={8}>
-                  <Checkbox value="USA"><span style={{fontSize : '22px'}}>USA</span></Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Chile"><span style={{fontSize : '22px'}}>Chile</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="USA">
+                      <span style={{ fontSize: "22px" }}>USA</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Chile">
+                      <span style={{ fontSize: "22px" }}>Chile</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
           }
-        }
-          ()}
+        }}
       </div>
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>
+          Total {wineList.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
+        <Grid container spacing={10} direction="row">
           {wineList.slice(minValue, maxValue).map(wine => (
-​
             <Grid item xs={4}>
               <Card className={classes.card}>
                 <CardHeader
@@ -273,7 +297,10 @@ export default function List() {
                     <ShareIcon />
                   </IconButton>
                   <div className={classes.more}>
-                    <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
+                    <Link
+                      to={`/detail/${wine.wid}`}
+                      style={{ textDecoration: "none" }}
+                    >
                       <Button variant="outlined">View More</Button>
                     </Link>
                   </div>
@@ -281,7 +308,7 @@ export default function List() {
               </Card>
             </Grid>
           ))}
-​
+          ​
         </Grid>
         <div>
           <Pagination
@@ -290,9 +317,10 @@ export default function List() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
-          /></div>
+          />
+        </div>
         {/* <ReviewModal /> */}
       </Container>
-    </React.Fragment >
+    </React.Fragment>
   );
 }
