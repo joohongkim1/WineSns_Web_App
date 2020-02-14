@@ -16,18 +16,41 @@ import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Button from "@material-ui/core/Button";
+
 import ReviewInfo from "../../../components/Interface/Review";
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 // Redux
-import { useSelector,  useDispatch} from 'react-redux';
+
 import { rootState } from '../../../../stores/login/store';
 import { getUserFeedList } from '../../../../stores/my_sns/actions/userFeed';
 
+
+import { useSelector, useDispatch } from 'react-redux';
+
+
+import Button from '@material-ui/core/Button';  
+import Modal from '@material-ui/core/Modal';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import TextField from '@material-ui/core/TextField';
+
+import WritePage from '../Posts/Editor/WirtePage';
+
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+    widContainer: {
+      marginBottom: '10px'
+    },
     root: {
       display: "flex",
       flexDirection: "column",
@@ -105,6 +128,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 export default function MyFeed() {
   const classes = useStyles();
@@ -138,7 +175,47 @@ export default function MyFeed() {
 
   }
 
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
+    <div>
+      <button type="button" onClick={handleOpen}>
+        게시글 작성
+      </button>
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">My Review</h2>
+          <div>
+            {/* 에디터 들어갈 공간 */}
+            <WritePage />
+
+          </div>
+          
+          {/* <div className={classes.widContainer}>
+            <TextField id="standard-basic" label="" />
+          </div>
+
+          <div className={classes.widContainer}>
+            <TextField id="standard-basic" label="" />
+          </div> */}
+          
+
+        </div>
+      </Modal>
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>Total {userFeed.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
@@ -167,5 +244,6 @@ export default function MyFeed() {
       defaultCurrent={1}
     /></div>
       </Container>
+    </div>
   );
 }
