@@ -41,7 +41,7 @@ const WriteActionButtonsContainer = ( {history}: Props ) => {
 
   // 취소
   const onCancel = () => {
-    history.goBack();
+    // history.goBack();
   };
 
   // 성공 혹은 실패시 할 작업

@@ -15,9 +15,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 );
 
+interface post {
+  content: string,
+  rating: number,
+  title: string,
+  wid:number,
+  onChangeField: any
+}
 
-
-export default function Editor(params: { content: string, rating: number, title: string, wid: number, onChangeField: any }){
+export default function Editor({ content, rating, title, wid, onChangeField}: post){
   const quillElement = useRef<any>();
   const quillInstance = useRef<any>();
   useEffect(() => {
@@ -41,13 +47,13 @@ export default function Editor(params: { content: string, rating: number, title:
     const quill = quillInstance.current;
     quill.on('text-change', (delta: any, oldDelta: any, source : any) => {
       if (source === 'user') {
-        params.onChangeField({ key: 'content', value: quill.root.innerHTML });
+        onChangeField({ key: 'content', value: quill.root.innerHTML });
       }
     });
-  }, [params.onChangeField]);
+  }, [onChangeField]);
 
   const onChangeTitle = (e: any) => {
-    params.onChangeField({ key: 'title', value: e.target.value });
+    onChangeField({ key: 'title', value: e.target.value });
   };
 
   return (
@@ -55,9 +61,9 @@ export default function Editor(params: { content: string, rating: number, title:
       <input
         placeholder="제목을 입력하세요"
         onChange={onChangeTitle}
-        value={params.title}
+        value={title}
       />
         <div ref={quillElement} />
-      </div>
+    </div>
   );
 };

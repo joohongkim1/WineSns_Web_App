@@ -4,8 +4,6 @@ import createRequestSaga, {
 } from '../lib/createRequestSaga';
 import * as postsAPI from '../lib/api/post';
 import { takeLatest } from 'redux-saga/effects';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import Post from '../../../src/components/MR/Posts/Post';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
@@ -33,8 +31,10 @@ export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}
 
 // saga 생성
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+// export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}: contents) => ({content, rating, title, wid}));
 
-
+// // saga 생성
+// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
 }
@@ -48,10 +48,10 @@ const initialState = {
   postError: null,
 };
 
-const write = handleActions<any, any>(
+const write = handleActions<contents, any>(
   { 
     [INITIALIZE]: state => initialState, // initialState를 넣으면 초기상태로 바뀜
-    [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
+    [CHANGE_FIELD]: (state, { payload: { key, value }}) => ({
       ...state,
       [key]: value, // 특정 key 값을 업데이트
     }),

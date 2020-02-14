@@ -19,7 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
     profileHeader: {
       borderBottom: "solid 1px #ddd",
       marginLeft: "10px",
-      display: "flex"
+      display: "flex",
+      padding: ""
+    },
+    profileHead: {
+      margin: "12px 0px",
+      fontSize: "20px",
+      fontWeight: "bold"
     },
     liCommon: {
       margin: "10px"
@@ -84,11 +90,21 @@ interface User {
 
 export default function Profile(profile: User) {
   const classes = useStyles();
+  const [edit, setEdit] = React.useState(false);
+  
+  const editOpen = () => {
+    setEdit(true);
+  };
+  const editClose = () => {
+    setEdit(false);
+  };
+
+  // onclick 함수?
   return (
     <ul className={classes.mrProfile}>
       <li className={classes.profileHeader}>
-        <h1>Profile</h1>
-        <Button size="small" className={classes.margin}><EditIcon fontSize="small" /></Button>
+        <div className={classes.profileHead}>Profile</div>
+        <Button size="small" className={classes.margin} onClick={editOpen}><EditIcon fontSize="small" /></Button>
         
       </li>
       <li className={classes.liCommon}>
