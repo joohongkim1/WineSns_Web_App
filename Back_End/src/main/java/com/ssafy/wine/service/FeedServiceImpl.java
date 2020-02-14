@@ -130,7 +130,9 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	@Transactional
 	public Integer update(Long fid, FeedInputDto feedInput) {
-		Wine wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
+		Wine wine = null;
+		if (feedInput.getWid() != null)
+			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
 		return feedRepository.updateFeed(fid, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent());
 	}
 
@@ -144,6 +146,12 @@ public class FeedServiceImpl implements FeedService {
 	@Transactional
 	public void delete(Long fid) {
 		feedRepository.deleteById(fid);
+	}
+
+	@Override
+	public FeedOutputDto findById(Long fid) {
+		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(feed, FeedOutputDto.class);
 	}
 
 }

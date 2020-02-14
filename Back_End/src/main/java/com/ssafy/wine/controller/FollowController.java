@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,16 +33,14 @@ public class FollowController {
 	@Autowired
 	private FollowService followService;
 
-	@Autowired
-	private UserController userController;
-
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "follow 추가")
 	@PostMapping("/create")
 	public ResponseEntity<Object> create(@RequestParam Long toUid) {
 		try {
-			Long fromUid = userController.findUserById().getData().getUid();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Long fromUid = Long.parseLong(authentication.getName());
 			if (fromUid.equals(toUid))
 				return new ResponseEntity<Object>("same email", HttpStatus.NOT_ACCEPTABLE);
 			Follow follow = followService.create(fromUid, toUid);
@@ -85,7 +85,8 @@ public class FollowController {
 	@DeleteMapping("/delete")
 	public ResponseEntity<Object> delete(@RequestParam Long toUid) {
 		try {
-			Long fromUid = userController.findUserById().getData().getUid();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Long fromUid = Long.parseLong(authentication.getName());
 			followService.delete(fromUid, toUid);
 			return new ResponseEntity<Object>("Follow를 삭제했습니다.", HttpStatus.OK);
 		} catch (Exception e) {

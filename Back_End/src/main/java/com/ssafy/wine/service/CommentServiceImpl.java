@@ -49,6 +49,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	public CommentDto findById(Long cid) {
+		Comment comment =  commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(comment, CommentDto.class);
+	}
+	
+	@Override
 	public List<CommentDto> findByFeed(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
 		Type typeToken = new TypeToken<List<CommentDto>>() {}.getType();

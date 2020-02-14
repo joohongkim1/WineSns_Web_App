@@ -13,13 +13,15 @@ public interface FeedService {
 	public Feed create(Long uid, FeedInputDto feedInput);
 
 	public List<FeedOutputDto> findAll(FeedReviewEnum type);
-	
+
+	public FeedOutputDto findById(Long fid);
+
 	public List<FeedOutputDto> findByWine(Long wid, FeedReviewEnum type);
 
 	public List<FeedOutputDto> findByUser(Long uid, FeedReviewEnum type);
-	
+
 	public List<FeedOutputDto> findRank(FeedRankEnum type);
-	
+
 	public Integer update(Long fid, FeedInputDto feedInput);
 
 	public Integer updateVisit(Long fid);

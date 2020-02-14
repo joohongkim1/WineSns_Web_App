@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,16 +35,15 @@ public class FeedLikeController {
 	@Autowired
 	private FeedLikeService feedLikeService;
 
-	@Autowired
-	private UserController userController;
-
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "좋아요 추가")
 	@PostMapping("/create")
 	public ResponseEntity<Object> create(@RequestParam Long fid) {
 		try {
-			Long uid = userController.findUserById().getData().getUid();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Long uid = Long.parseLong(authentication.getName());
+			
 			FeedLike like = feedLikeService.create(uid, fid);
 			feedLikeService.updateLikeNum(fid);
 			StringBuilder sb = new StringBuilder();
@@ -67,6 +68,8 @@ public class FeedLikeController {
 		}
 	}
 
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 피드 좋아요한 유저")
 	@GetMapping("/findByWine/{fid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long fid) {
@@ -84,7 +87,8 @@ public class FeedLikeController {
 	@DeleteMapping("/delete")
 	public ResponseEntity<Object> delete(@RequestParam Long fid) {
 		try {
-			Long uid = userController.findUserById().getData().getUid();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Long uid = Long.parseLong(authentication.getName());
 			feedLikeService.delete(uid, fid);
 			feedLikeService.updateLikeNum(fid);
 			return new ResponseEntity<Object>("FeedLike 삭제했습니다.", HttpStatus.OK);

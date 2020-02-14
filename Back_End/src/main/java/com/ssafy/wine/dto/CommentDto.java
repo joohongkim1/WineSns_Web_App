@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
 	private Long cid;
 	private String content;
-	protected LocalDateTime createdTimeAt;
-	protected LocalDateTime updateTimeAt;
+	private LocalDateTime createdTimeAt;
+	private LocalDateTime updateTimeAt;
 	private Long parentCid;
+	private UserDto user;
 }
