@@ -1,25 +1,68 @@
+
+import axios from "axios";
+import { Wine } from "../reducers/wine_reducer";
 export const wineService = {
-  //wineInfo
+  getWineListByType,
+  getWineListByNameList
+}
+
+async function getWineListByType(type: string): Promise<Response> {
+
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/fineAll/' + type, {
+    // params: {
+    //   type : type
+    // },
+    headers: {
+      'Access-Control-Allow-Origin': "*",
+    }
+  }
+  )
+    .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+
+      }
+
+      console.log("GET Wine List");
+
+      return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
 }
 
 
-// export async function http<T>(
-//   request: RequestInfo
-// ): Promise<T> {
-//   const response = await fetch(request);
-//   const body = await response.json();
-//   return body;
-// }
+async function getWineListByNameList(names : string[]): Promise<Response> {
+  let query = "country=" + names[0];
+  for(var i =1; i<names.length; i++){
+     query += "&country=" + names[i];                                      
+  }
 
+  return axios.get('http://54.180.9.92:8090/WineProject/wine/search?' + query, {
+    headers: {
+      'Access-Control-Allow-Origin': "*",
+    }
+  }
+  )
+    .then(function (response: Response | any) {
 
-// async function wineInfo() {
-//   const response = await http<Wine[]>(
-//     "http://70.12.246.40:9090/WineProject/wine/readAll/3"
-//   );
+      if (!response) {
+        return Promise.reject(response.statusText);
 
-//   console.log("와인 정보 확인")
-//   console.log(response);
+      }
+      console.log(query);
+      console.log("GET Wine List");
+      console.log(response.data);
 
-//   return response;
- 
-// }
+      return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}

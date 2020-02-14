@@ -8,7 +8,7 @@ import * as React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 
-import TimelineNavbar from './TimelineNavbar'
+// import TimelineNavbar from './TimelineNavbar'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +50,6 @@ export default function Timelinesection() {
 
         </div>
       </div>
-      <TimelineNavbar />
     </div>
   );
 }

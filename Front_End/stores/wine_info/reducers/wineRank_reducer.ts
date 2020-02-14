@@ -1,8 +1,8 @@
-import { actions } from '../actions/wineInfo'
+import { actions } from '../actions/mainRank';
 
 
 // example consuming code
-interface Wine {
+export interface Wine {
   wid: number;
   nameKor : string;
   nameEng: string;
@@ -25,52 +25,48 @@ interface Wine {
   likeNum: number
 }
 
-const initialState = { 
-  AllWine : [{ 
-    wid: 0,
-    nameKor : '',
-    nameEng: '',
-    type: '',
-    sparkling: false,
-    grape: '',
-    country: '',
-    countrySub: '',
-    winery: '',
-    alcohol: 0,
-    whenUse: '',
-    grade: '',
-    sweet: 0,
-    body: 0,
-    acid: 0,
-    tannin: 0,
-    foodMatch: '',
-    info: '',
-    visit : 0,
-    likeNum: 0}] as Wine[],
-    isWinePending : false,
-    isWineSucceess : false,
-    isWineError : false
-}
 
+export interface wineRankState  {
+  wineTop3 : Wine[],
+  wineTop10 : Wine[],
+  isWinePending : boolean,
+  isWineTop3Succeess : boolean,
+  isWineTop10Succeess : boolean,
+  isWineError : string
+
+}
+const initialState : wineRankState = { 
+  wineTop3 : [],
+    wineTop10 : [],
+    isWinePending : false,
+    isWineTop3Succeess : false,
+    isWineTop10Succeess : false,
+    isWineError : ''
+}
 
 export default function rootReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_WINE_INFO_PENDING:
-      return Object.assign({}, state, {
+      return {...state, 
         isLoginPending: action.isWinePending
-      });
+      }
 
-    case actions.SET_WINE_INFO_SUCCESS:
-      return Object.assign({}, state, {
+    case actions.SET_WINE_TOP3_SUCCESS:
+      return {...state,
         isLoginSuccess: action.isWineSuccess,
-        AllWine : action.AllWine
-      });
+        wineTop3 : action.wineTop3
+      }
+
+      case actions.SET_WINE_TOP10_SUCCESS:
+        return {...state,
+          isLoginSuccess: action.isWineSuccess,
+          wineTop10 : action.wineTop10
+        }
 
     case actions.SET_WINE_INFO_ERROR:
-      return Object.assign({}, state, {
+      return {...state,
         loginError: action.WineError
-      });
-
+      }
     default:
       return state;
   }

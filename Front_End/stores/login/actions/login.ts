@@ -14,15 +14,11 @@ export function login(email : string, password : string) {
     
     await loginService.login(email, password).then(
       
-      token => {
-        localStorage.setItem('token', <any>token);
-        console.log("hey");
-        console.log(localStorage.getItem('token'));
+      response => {
+
         dispatch(setLoginPending(false));
         dispatch(setLoginSuccess(true));
-        sessionStorage.setItem(
-          "userInfo", email
-        );
+    
       //  const history = createBrowserHistory();
       //   history.push('/ranking');
        
@@ -38,8 +34,6 @@ export function login(email : string, password : string) {
 }
 
 
-
-
 export function SNSLogin(id : string, nickname: string, provider : string) {
   return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
    dispatch(setLoginPending(true));
@@ -49,18 +43,17 @@ export function SNSLogin(id : string, nickname: string, provider : string) {
    console.log("come on");
    await loginService.SNSLogin(id, nickname, provider).then(
      
-     token => {
-       localStorage.setItem('token', <any>token);
-       console.log("hey");
-       console.log(localStorage.getItem('token'));
+    response => {
+ 
+  
+      //  console.log(localStorage.getItem('token'));
        dispatch(setLoginPending(false));
        dispatch(setLoginSuccess(true));
-       sessionStorage.setItem(
-         "userInfo", id
-       );
+      
      //  const history = createBrowserHistory();
      //   history.push('/ranking');
-      
+     console.log("token");
+     console.log(localStorage.getItem('token'));
      
       
      },

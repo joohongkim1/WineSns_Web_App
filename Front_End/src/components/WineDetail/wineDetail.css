@@ -124,8 +124,8 @@ p {
 }
 
 .sz619 {
-    margin : 30px;
-    height: 500px;
+
+    height: 400px;
 }
 
 
@@ -255,4 +255,26 @@ button:hover:before,button:hover:after{
   width:100%;
   transition:800ms ease all;
 }
+.wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineAlcohol {width: 45px; height: 54px;display:block;background: url(images/common/img_wine_alcohol.png)no-repeat}
+.wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineKind {width: 45px; height: 54px;display:block;background: url(images/common/img_wine_kind.png)no-repeat}
+.wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineSparkling {width: 45px; height: 54px;display:block;background: url(images/common/img_wine_sparkling.png)no-repeat}
+.wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineSugar {width: 45px; height: 54px;display:block;background: url(images/common/img_wine_sugar.png)no-repeat}
+.wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineBody {width: 45px; height: 54px;display:block;background: url(images/common/img_wine_volume.png)no-repeat}
 
+
+
+.wrap .detail_wine .product_info.clfix .info01Img {background:url(images/common/img_pro_info01.jpg) no-repeat}
+.wrap .detail_wine .product_info.clfix .info02Img {background:url(images/common/img_pro_info02.jpg) no-repeat}
+.wrap .detail_wine .product_info.clfix .info03Img {background:url(images/common/img_pro_info03.jpg) no-repeat}
+.wrap .detail_wine .product_info.clfix .info04Img {background:url(images/common/img_pro_info04.jpg) no-repeat}
+.wrap .detail_wine .product_info.clfix .info05Img {background:url(images/common/img_pro_info05.jpg) no-repeat}
+.wrap .detail_wine .product_info.clfix .info06Img {background:url(images/common/img_pro_info06.jpg) no-repeat}
+
+.wineInfo {
+    display: table-cell;
+
+   
+    margin-left : 30%;
+
+
+}

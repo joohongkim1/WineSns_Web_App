@@ -1,12 +1,31 @@
-import React from 'react';
+import * as React from 'react';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import {BrowserRouter, Route, Link} from 'react-router-dom';
+import TimelineSection from './MR/TimelineSection';
+import MainContent from './MR/MainContent';
+import MyPageList from './MR/MyPageList';
+
+// import CssBaseline from '@material-ui/core/CssBaseline';
+// import { Container } from '@material-ui/core';
+// import Grid from '@material-ui/core/Grid';
+
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { ButtonGroup } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+
+
+
+const buttons = [
+  { title: 'My Review', url: '/mypage' },
+  { title: 'My Likes', url: '/mypage/mylikes' },
+  { title: 'My Friends', url: '/mypage/myfriends' }, 
+];
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,29 +44,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
     }
   })
-)
+);
 
-const buttons = [
-  { title: 'My Review', url: 'myreview' },
-  { title: 'My Page', url: 'mypage' },
-  { title: 'My Likes', url: 'mylikes' },
-  { title: 'My Friends', url: 'myfriends' },
-];
-
-export default function TimelineNavbar() {
+export default function MyPage() {
   const classes = useStyles();
+
   return (
-    <div className={classes.mrNavbar}>
+    <div id="globalContainer">
+      <div>
+      {/* 프로필 사진 단 */}
+        
+
+      {/* main contents 단 */}
+      <TimelineSection />
+      <div className={classes.mrNavbar}>
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <ButtonGroup className={classes.mrTimelineButton}>
             {buttons.map(button => (
               <Link
                 color="inherit"
-                noWrap
+                // noWrap
                 key={button.title}
-                variant="body2"
-                href={button.url}
+                // variant="body2"
+                to={button.url}
               >
                 <Button>
                   {button.title}
@@ -58,6 +78,10 @@ export default function TimelineNavbar() {
         </Toolbar>
       </AppBar>
     </div>
-  );
+      <Route path="/mypage" exact component={MainContent} />
+      <Route path="/mypage/:title" component={MyPageList} />
 
+      </div>
+    </div>
+  );
 }
