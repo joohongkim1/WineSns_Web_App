@@ -16,18 +16,21 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import Search from "./Search";
 import "antd/dist/antd.css";
 import { Pagination } from "antd";
+import Temp from "./temp";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
-import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
+import {
+  getWineListByType,
+  getWineListByNameList
+} from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
-import Search from "./Search";
-import Temp from "./temp";
-
+import { render } from "react-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -124,6 +127,10 @@ export default function List() {
     console.log("onWineList");
     await dispatch(getWineListByType("KOR_UP"));
   };
+
+  const loadWineListByChecked = async (checkedValues: any) => {
+    await dispatch(getWineListByNameList(checkedValues));
+  };
   const numEachPage: number = 30;
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
@@ -133,8 +140,9 @@ export default function List() {
     //   maxValue: value * numEachPage
     // });
   };
-  function onChangeCountryChk(checkedValues: any) {
+  async function onChangeCountryChk(checkedValues: any) {
     console.log("checked = ", checkedValues);
+    await loadWineListByChecked(checkedValues);
   }
   const handleEuropeBtn = () => {
     setBtnNum(1);
@@ -156,8 +164,9 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-      ​{/* <ReviewModal /> */}
+      ​
       <div>
+        <Temp></Temp>
         <Link
           to={"/ranking"}
           className={classes.home}
@@ -225,8 +234,6 @@ export default function List() {
           }
         })()}
       </div>
-      <Search />
-      {/* <Temp /> */}
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>
           Total {wineList.length}

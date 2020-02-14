@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
-import Editor from "./Editor";
+import Editor from "../Editor";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }

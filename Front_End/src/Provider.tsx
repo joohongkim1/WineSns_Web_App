@@ -12,9 +12,11 @@ import WineDetail from "./components/WineDetail/WineDetail";
 import Entrance from "./components/App/Entrance";
 import WineReview from "./components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
+import ReviewList from "./components/Review_Page/ReviewCRUD/ReviewList";
 import SignUp from "./components/App/SignUp";
+import MyAccount from "./components/App/MyAccount";
 import SmartSearch from "./components/smartSearch/WineSearch";
-import ReviewDetail from "./components/Review_Page/ReviewDetail";
+import ReviewDetail from "./components/Review_Page/ReviewCRUD/ReviewDetail";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -26,14 +28,18 @@ class AppForm extends Component {
       <Provider store={this.store() as any}>
         <BrowserRouter>
           <Navbar />
-          <Route exact={true} path="/" component={Entrance} />
-          <Route path="/ranking" component={App} />
-          <Route path="/list" component={List} />
-          <Route path="/detail/:wid" component={WineDetail} exact={true} />
-          <Route path="/reviewDetail" component={ReviewDetail} />
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/smartSearch" component={SmartSearch} />
-          <Footer />
+          <div>
+            <Route exact={true} path="/" component={Entrance} />
+            <Route path="/ranking" component={App} />
+            <Route path="/list" component={List} />
+            <Route path="/detail/:wid" component={WineDetail} exact={true} />
+            <Route path="/reviewList" component={ReviewList} />
+            <Route path="/reviewDetail" component={ReviewDetail} />
+            <Route path="/signUp" component={SignUp} />
+            <Route path="/smartSearch" component={SmartSearch} />
+            <Route path="/myAccount" component={MyAccount} />
+            <Footer />
+          </div>
         </BrowserRouter>
       </Provider>
     );

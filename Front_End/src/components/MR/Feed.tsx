@@ -1,16 +1,14 @@
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import React, {useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles, Theme, createStyles } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TextField from "@material-ui/core/TextField";
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';  
-import Modal from '@material-ui/core/Modal';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import TextField from '@material-ui/core/TextField';
-
-import PostList from './Posts/PostList';
-import WritePage from './Posts/Editor/WirtePage';
-
+import PostList from "./Posts/PostList";
+import WritePage from "./Posts/Editor/WirtePage";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -23,7 +21,7 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(-${top}%, -${left}%)`
   };
 }
 
@@ -41,19 +39,17 @@ const useStyles = makeStyles((theme: Theme) =>
     //   marginRight: "15px",
     // },
     paper: {
-      position: 'absolute',
+      position: "absolute",
       width: 400,
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
+      border: "2px solid #000",
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      padding: theme.spacing(2, 4, 3)
     },
     widContainer: {
-      marginBottom: '10px'
+      marginBottom: "10px"
     }
-
-  }),
-
+  })
 );
 
 export default function Feed() {
@@ -61,7 +57,7 @@ export default function Feed() {
 
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -70,10 +66,7 @@ export default function Feed() {
     setOpen(false);
   };
 
-
   return (
-
-
     <div>
       <button type="button" onClick={handleOpen}>
         게시글 작성
@@ -89,9 +82,8 @@ export default function Feed() {
           <div>
             {/* 에디터 들어갈 공간 */}
             <WritePage />
-
           </div>
-          
+
           {/* <div className={classes.widContainer}>
             <TextField id="standard-basic" label="" />
           </div>
@@ -99,8 +91,6 @@ export default function Feed() {
           <div className={classes.widContainer}>
             <TextField id="standard-basic" label="" />
           </div> */}
-          
-
         </div>
       </Modal>
       {/* 작성된 Post를 전부 모아두는 곳 */}

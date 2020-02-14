@@ -7,6 +7,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+import ReviewDetail from "./ReviewDetail";
 // import tileData from "./tileData";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,24 +63,26 @@ const tileData = [
   }
 ];
 
-export default function ReviewDetail() {
+export default function ReviewList() {
   const classes = useStyles();
 
   return (
     <div>
-      <Link to={"/detail/1"} className={classes.wineimg}>
+      <Link to={"/reviewDetail"}>
+        <button>상세보기</button>
+      </Link>
+      {/* <Link to={"/detail/1"} className={classes.wineimg}>
         <img
           src="https://material-ui.com/static/images/grid-list/burgers.jpg"
           alt=""
         />
-      </Link>
+      </Link> */}
       <div className={classes.root}>
         <GridList cellHeight={400} className={classes.gridList}>
           {tileData.map(tile => (
             <GridListTile key={tile.img}>
               <img src={tile.img} alt={tile.title} />
               <GridListTileBar
-                actionPosition="right"
                 title={tile.title}
                 subtitle={<span>by: {tile.author}</span>}
                 actionIcon={

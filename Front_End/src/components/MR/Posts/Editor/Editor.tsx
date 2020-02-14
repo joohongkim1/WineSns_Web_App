@@ -1,6 +1,8 @@
 import React, {useRef, useEffect} from 'react';
 // import * as Quill from 'quill';
 import * as Q from 'quill';
+import Button from '@material-ui/core/Button';
+
 const Quill: any = Q;
 // import styled from 'styled-components'
 import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/styles';
@@ -17,6 +19,11 @@ export default function Editor() {
   const quillElement = useRef<any>();
   const quillInstance = useRef<any>();
   const [contents, setContents] = React.useState('');
+
+  const sendFeed = async () => {
+    console.log(quillInstance);
+  }
+  
   
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
@@ -35,9 +42,14 @@ export default function Editor() {
   return (
     <div>
       <div ref={quillElement}/>
-      <button type="button" onClick={() => setContents(contents + quillElement.current)}>
-              업로드
-      </button>
+      <div>
+      <Button onClick={sendFeed}>
+        포스트 등록
+      </Button>
+      <Button>
+        취소
+      </Button>
+      </div>
     </div>
 )
 }

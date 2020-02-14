@@ -79,9 +79,9 @@ export default function Ranking() {
                                     <li>
                                     <a href="#">
                                             <div> <div className="img">
-                                                <span className="ctype red"> <span className="hide_txt">Red</span> </span>
+                                                <span > <span className="hide_txt">Red</span> </span>
                                                 <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
-                                                    <span className="shadow"></span> 
+                                                   
                                  </div>
                                                 <strong className="tit">{wine.nameKor}</strong> </div> </a>
                                   </li>   ))}
@@ -108,9 +108,9 @@ export default function Ranking() {
                            <li>
                            <a href="#">
                                    <div> <div className="img">
-                                       <span className="ctype red"> <span className="hide_txt">Red</span> </span>
+                                       <span> <span className="hide_txt">Red</span> </span>
                                        <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
-                                           <span className="shadow"></span> 
+                                           
                         </div>
                                        <strong className="tit">{wine.nameKor}</strong> </div> </a>
                          </li>   ))}

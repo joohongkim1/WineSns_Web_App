@@ -27,7 +27,7 @@ import Login from "../../../stores/login/components/FormPage";
 import Section from "./Section";
 import { logout } from "../../../stores/login/actions/login";
 import { Link } from "react-router-dom";
-
+import { Redirect } from "react-router-dom";
 import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -130,6 +130,7 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const menuId = "primary-search-account-menu";
@@ -144,8 +145,15 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+   
+      <MenuItem>
+      <Link
+                      to="/myAccount"
+                      className={classes.link}
+                      style={{ textDecoration: "none", color: "#000000" }}
+                    >
+                      My Account</Link>
+      </MenuItem>
     </Menu>
   );
 
@@ -224,40 +232,8 @@ export default function Navbar() {
           </div> */}
           <Section />
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {/* 메일 및 쪽지 알림참 */}
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={8} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+        
+
           {(function() {
             if (!sessionStorage.getItem("userInfo")) {
               return (
@@ -296,9 +272,47 @@ export default function Navbar() {
               );
             } else {
               return (
+                <div>
+                    <div className={classes.sectionDesktop}>
+            {/* 메일 및 쪽지 알림참 */}
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={8} color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+
+                {/* <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div> */}
+              
                 <Button onClick={logoutFunction} className={classes.link}>
                   Logout{" "}
                 </Button>
+                </div>
+                </div>
               );
             }
           })()}

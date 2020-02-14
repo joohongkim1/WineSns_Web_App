@@ -7,9 +7,15 @@ import './css/font.css';
 
 export default function WineSearch(){
 
+     
         function handleClick(e : any) {
             e.preventDefault();
             console.log('The link was clicked.');
+        }
+
+        function flagClick(e : any) {
+            e.preventDefault();
+            console.log("프랑스 클릭");
         }
         
         return (
@@ -36,7 +42,7 @@ export default function WineSearch(){
                                             </div>
                                         </form>
                                         <div className="expert_wrap">
-                                            <div className="step pdt0">
+                                            {/* <div className="step pdt0">
                                                 <h3>Price <span role="text">* 판매처에 따라 와인 가격이 상이할 수 있습니다. 참고 바랍니다.</span> </h3>
                                                 <div className="price_radio_wrap">
                                                     <div className="step_bar step01 _default-option"></div>
@@ -52,7 +58,7 @@ export default function WineSearch(){
                           (9~15만원)</label> <input type="radio" id="pr05" name="e_price" className="pointer05 " value="15" />
                                                         <label htmlFor="pr05" className="">15만원 이상</label> </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="step clfix pdb15">
                                                 <div className="country_radio_wrap">
                                                     <h3>Country</h3>
@@ -61,7 +67,7 @@ export default function WineSearch(){
                                                         <label htmlFor="ct00" className="ct01"> <span className="radio_checked"></span> <em>전체</em> </label>
                                                     </span> <span className="input_radio ui_complete"> <input type="radio" id="ct01" name="e_country"
                                                         className=" " value="france" />
-                                                            <label htmlFor="ct01" className="ct02"> <span className="radio_basic"></span>
+                                                            <label htmlFor="ct01" className="ct02"> <span className="radio_basic" onClick={flagClick}></span>
                                                                 <em>프랑스</em> </label> </span> <span className="input_radio ui_complete"> <input type="radio"
                                                                     id="ct02" name="e_country" className=" " value="italy" /> <label htmlFor="ct02" className="ct03"> <span
                                                                         className="radio_basic"></span> <em>이탈리아</em> </label> </span> <span

@@ -1,19 +1,28 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, fade } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import "./wineDetail.css";
 import ReviewInfo from "../Interface/Review";
-import ReviewPost from "../Review_Page/ReviewPost";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-
+import IconButton from "@material-ui/core/IconButton";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
-import { getWineDetail } from "../../../stores/wine_info/actions/wineDetail";
+import {
+  getWineDetail,
+  createWineLike,
+  deleteWineLike
+} from "../../../stores/wine_info/actions/wineDetail";
 import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
-
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
@@ -24,45 +33,15 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: "center",
     color: "#ffffff"
   },
-
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
   }
 }));
-
-const wines = [
-  {
-    wid: 1,
-    nameKor: "와인의 최고봉",
-    nameEng: "Good Good",
-    info: "너무너무 맛있어요...",
-    type: "Red",
-    rating: 5
-  },
-  {
-    wid: 2,
-    nameKor: "이 와인 추천 합니다.",
-    nameEng: "Recommend",
-    info: "과일향이 너무 좋아요...",
-    type: "Red",
-    rating: 4
-  },
-  {
-    wid: 3,
-    nameKor: "요새 마신 와인 중 최고",
-    nameEng: "Best",
-    info: "요새 마신 와인들 중에 제일 맛있었습니다....",
-    type: "White",
-    rating: 5
-  }
-];
-
 interface RouterProps {
   // type for `match.params`
   wid: string; // must be type `string` since value comes from the URL
 }
-
 interface MyComponentProps extends RouteComponentProps<RouterProps> {
   wid: number;
 }
@@ -72,8 +51,8 @@ function WineDetail(props: MyComponentProps) {
   console.log(props);
   const wid = +props.match.params.wid;
   console.log(wid);
-
   const [wineState, setWineState] = React.useState(false);
+  const [likeState, setLikeState] = React.useState(false);
   const dispatch = useDispatch();
   const {
     wine,
@@ -81,26 +60,36 @@ function WineDetail(props: MyComponentProps) {
     isWineDetailSucceess,
     WineDetailError
   } = useSelector((state: rootState) => state.wineDetailReducer);
-
   const { feedList, isFeedPending, isFeedSucceess, isFeedError } = useSelector(
     (state: rootState) => state.feedReducer
   );
-
   // console.log("wine initialState");
   // console.log(wine);
-
   const loadWineDetail = async () => {
+    let userLike = JSON.parse(sessionStorage.getItem("userLike") || "{}");
+    for (var i = 0; i < userLike.length; i++) {
+      if (userLike[i].wid == wid) {
+        setLikeState(true);
+        break;
+      }
+    }
     // console.log("onWine");
     await dispatch(getWineDetail(wid));
-    await dispatch(getFeedListByWID(3, "REVIEW"));
+    await dispatch(getFeedListByWID(wid, "REVIEW"));
     console.log("this is wine State");
     console.log(wine);
   };
-
-  if (!isWineDetailSucceess && !wineState) {
+  const likeThis = async () => {
+    await dispatch(createWineLike(wid));
+    setLikeState(true);
+  };
+  const hateThis = async () => {
+    await dispatch(deleteWineLike(wid));
+    setLikeState(false);
+  };
+  if (!wineState) {
     loadWineDetail();
     setWineState(true);
-  } else {
   }
   return (
     <React.Fragment>
@@ -113,8 +102,7 @@ function WineDetail(props: MyComponentProps) {
             </Typography>
           </Container>
         </div>
-
-        {/* Wiine 제품 이미지 및 정보 */}
+        ​ ​{/* Wiine 제품 이미지 및 정보 */}
         <div id="wrap" className="wrap">
           <section className="detail_wine">
             <div className="product_wine clfix">
@@ -133,6 +121,7 @@ function WineDetail(props: MyComponentProps) {
               </div>
 
               <div className="bxr">
+                ​ ​
                 <h1 className="tit">
                   {wine.nameEng}
                   <span id="wineKorName">{wine.nameKor}</span>{" "}
@@ -219,8 +208,34 @@ function WineDetail(props: MyComponentProps) {
                 </div>
               </div>
             </div>
-            <ReviewPost />
-            {/* Wiine 제품 정보 */}
+            ​ ​ ​
+            <div className="btn_area right">
+              {(function() {
+                if (likeState) {
+                  return (
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={hateThis}
+                    >
+                      <FavoriteIcon color="secondary" />
+                    </IconButton>
+                  );
+                } else {
+                  return (
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={likeThis}
+                    >
+                      <FavoriteIcon color="inherit" />
+                    </IconButton>
+                  );
+                }
+              })()}
+              <button className="btns btn_line_type blue">
+                <span className="ico fb"></span>리뷰작성
+              </button>
+              ​{/* Wiine 제품 정보 */}​
+            </div>
             <h2 className="tit_h2">와인 제품 정보</h2>
             <div className="product_info clfix">
               {" "}
@@ -307,8 +322,7 @@ function WineDetail(props: MyComponentProps) {
                 목록 <span className="ico"></span>{" "}
               </a>{" "}
             </div>
-            {/* Wiine Top 5 리뷰 */}
-            <h2 className="tit_h2">Top 3 Review</h2>
+            {/* Wiine Top 5 리뷰 */}​ ​<h2 className="tit_h2">Top 3 Review</h2>
             <div className="product_info clfix">
               <Container className={classes.cardGrid} maxWidth="md">
                 ​ ​{/* End hero unit */}​ ​
@@ -330,5 +344,4 @@ function WineDetail(props: MyComponentProps) {
     </React.Fragment>
   );
 }
-
 export default withRouter(WineDetail);

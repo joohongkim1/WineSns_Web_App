@@ -7,7 +7,6 @@ import {
   makeStyles
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import brown from "@material-ui/core/colors/brown";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,15 +14,12 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       flexDirection: "column",
-      minHeight: "100%"
-    },
-    main: {
-      marginTop: theme.spacing(8),
-      marginBottom: theme.spacing(2)
+      minHeight: "100%vh"
     },
     footer: {
       padding: theme.spacing(3, 2),
-      marginTop: "auto",
+      flex: 1,
+      // marginTop: "auto",
       backgroundColor: brown["50"]
     }
   })
