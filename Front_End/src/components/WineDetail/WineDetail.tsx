@@ -225,6 +225,7 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
 
             </div>
             <div className="product_wine clfix">
+<<<<<<< HEAD
             <div className="wineInfo">
             <h2 className="tit_h2">와인 제품 정보</h2>
             <div className="product_info clfix"> <div>
@@ -252,6 +253,64 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
                 <dl> <dt>Food matching</dt> <dd>
                   <span className="info06Img"></span> {wine.foodMatch} </dd> </dl> </div>
               {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
+=======
+              <div className="wineInfo">
+                <h2 className="tit_h2">와인 제품 정보</h2>
+                <div className="product_info clfix">
+                  {" "}
+                  <div>
+                    <dl>
+                      <dt>포도 품종</dt>
+                      <dd>
+                        <span className="info01Img"></span>
+                        {wine.grape}
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>제조사</dt>
+                      <dd>
+                        <span className="info02Img"></span>
+                        {wine.winery}
+                      </dd>
+                    </dl>
+                  </div>
+                  <div>
+                    {" "}
+                    <dl>
+                      {" "}
+                      <dt>원산지</dt>
+                      <dd>
+                        <span className="info03Img"></span> {wine.country},{" "}
+                        {wine.countrySub}{" "}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Grade</dt>{" "}
+                      <dd>
+                        <span className="info04Img"></span> {wine.grade}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  <div>
+                    {" "}
+                    <dl>
+                      {" "}
+                      <dt>Wine Use</dt>{" "}
+                      <dd>
+                        <span className="info05Img"></span> {wine.whenUse}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Food matching</dt>{" "}
+                      <dd>
+                        <span className="info06Img"></span> {wine.foodMatch}{" "}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
+>>>>>>> df6c28534790c0a25cddfa030672915a0c557bfb
                                   <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div>  */}
             </div> </div></div>
             
@@ -289,6 +348,9 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
   );
 
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> df6c28534790c0a25cddfa030672915a0c557bfb
 export default withRouter(WineDetail);
