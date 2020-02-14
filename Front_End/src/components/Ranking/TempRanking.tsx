@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Grid from '@material-ui/core/Grid';
 import "./TempRanking.css";
-
+import { Link } from "react-router-dom";
 
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
@@ -20,15 +20,13 @@ import { getWineTop10 } from '../../../stores/wine_info/actions/mainRank';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-         
             width : '1200px',
         },
-
         gridContainer: {
             width: '',
             height: '100%',
             // paddingTop: theme.spacing(6),
-            paddingLeft: '18%'
+            paddingLeft: '25%'
         },
 
         listFont: {
@@ -77,14 +75,16 @@ export default function Ranking() {
                                 <div className="monthly_products"> <ul className="clfix" id="monthly-detail-nav">
                                 {wineTop10.map(wine => (
                                     <li>
-                                    <a href="#">
-                                            <div> <div className="img">
-                                                <span > <span className="hide_txt">Red</span> </span>
-                                                <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
-                                                   
-                                 </div>
-                                                <strong className="tit">{wine.nameKor}</strong> </div> </a>
-                                  </li>   ))}
+                                    <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
+                     
+                    
+                     <div> <div className="img">
+                         <span> <span className="hide_txt">Red</span> </span>
+                         <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
+                             
+          </div>
+                         <strong className="tit">{wine.nameKor}</strong> </div> </Link>
+           </li>    ))}
                                   
                                 
 
@@ -106,13 +106,15 @@ export default function Ranking() {
                        <div className="monthly_products"> <ul className="clfix" id="monthly-detail-nav">
                        {wineTop10.map(wine => (
                            <li>
-                           <a href="#">
+                                              <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
+                     
+                    
                                    <div> <div className="img">
                                        <span> <span className="hide_txt">Red</span> </span>
                                        <img src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`} alt="" />
                                            
                         </div>
-                                       <strong className="tit">{wine.nameKor}</strong> </div> </a>
+                                       <strong className="tit">{wine.nameKor}</strong> </div> </Link>
                          </li>   ))}
                          
                        

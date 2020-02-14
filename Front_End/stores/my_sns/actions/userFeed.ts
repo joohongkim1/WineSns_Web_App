@@ -7,14 +7,14 @@ export const actions = {
   SET_USER_FEED_INFO_SUCCESS: 'SET_USER_FEED_INFO_SUCCESS',
   SET_USER_FEED_INFO_ERROR: 'SET_USER_FEED_INFO_ERROR'
 }
-export function getUserFeedList(type : string) {
+export async function getUserFeedList() {
   return async (dispatch: (arg0: { type: string; isFeedPending?: boolean; isFeedSuccess?: boolean; FeedError?: string; }) => void) => {
    dispatch(setUserFeedPending(true));
 
    dispatch(setUserFeedError("not yet"));
  
    
-   await userFeedService.getUserFeedList(type).then(
+   await userFeedService.getUserFeedList("REVIEW").then(
      (response : any) => {
       dispatch(setUserFeedPending(false));
       console.log("this wine response");

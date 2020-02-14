@@ -14,6 +14,7 @@ export interface User {
 
 export interface Feed {
     fid: number,
+    title : string,
     content: string,
     // createdTimeAt: string,
     // updateTimeAt: string,

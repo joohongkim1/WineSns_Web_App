@@ -10,7 +10,7 @@ import wineDetailReducer from "../../wine_info/reducers/wineDetail_reducer";
 import feedReducer from "../../feed/reducers/feed_reducer";
 import feedAllReducer from "../../feed/reducers/feed_all_reducer";
 import SmartSearchReducer from "../../smartSearch/reducers/wine_reducer";
-
+import MyFeedReducer from "../../my_sns/reducers/userFeed_reducer";
 
 import {loginState} from "../reducers/login_reducer";
 import {registerState} from "../../register/reducers/register_reducer";
@@ -20,6 +20,7 @@ import {wineDetailState} from "../../wine_info/reducers/wineDetail_reducer";
 import {feedState} from "../../feed/reducers/feed_reducer";
 import {feedAll} from "../../feed/reducers/feed_all_reducer";
 import {smartSearch} from "../../smartSearch/reducers/wine_reducer";
+import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
 
 const middlewares: any[] = [];
 
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   wineDetailReducer,
   feedReducer,
   feedAllReducer,
-  SmartSearchReducer
+  SmartSearchReducer,
+  MyFeedReducer
 });
 
 export interface rootState {
@@ -46,6 +48,7 @@ export interface rootState {
   feedReducer : feedState,
   feedAllReducer : feedAll,
   SmartSearchReducer : smartSearch
+  MyFeedReducer : userFeedState
 }
 
 
