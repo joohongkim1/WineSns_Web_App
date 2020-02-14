@@ -112,7 +112,9 @@ export default function TempTop3() {
       <main>
         {/* Hero unit */}
         <img
-          src="https://smithandhook.com/wp-content/uploads/2015/04/Img43408-1-1900x600.jpg"
+        style={{width:'100%', height:'380px'}}
+           src="https://images.squarespace-cdn.com/content/v1/537389d2e4b07f58912b984c/1526416085429-D2H95FD5WEM6NZQGIO7W/ke17ZwdGBToddI8pDm48kIdjNHBVPtCPmDHS5OrNq_pZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIQzMTntcupKyj55gjnAg9F4yZODDO3HH_T7LbRYIUQtA/anniv.gif?format=1500w"
+          // src="https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif"
           className={classes.heroContent}
         >
           ​

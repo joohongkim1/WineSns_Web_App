@@ -10,7 +10,7 @@ async function getFeedListByWID(wid: number, type : string): Promise<Response> {
   return axios.get('http://54.180.9.92:8090/WineProject/feed/findByWine/' + wid, {
     
     params: {
-      type : type,
+      type : "REVIEW",
       wid : wid
     },
     headers: {

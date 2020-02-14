@@ -252,7 +252,8 @@ function WineDetail(props: MyComponentProps) { // wid url parameter로 넘어옴
               {feedList.map(feed => (
                            <ReviewInfo
                             fid={feed.fid}
-                           nameEng={feed.wine.nameEng}
+                            title={feed.title}
+                           nameEng = {feed.wine.nameEng}
                            content={feed.content}
                            rating={feed.rating}
                           

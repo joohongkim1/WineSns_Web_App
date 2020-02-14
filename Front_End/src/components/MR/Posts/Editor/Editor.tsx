@@ -22,7 +22,7 @@ export default function Editor(params: { content: string, rating: number, title:
   const quillInstance = useRef<any>();
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
-      theme: 'bubble',
+      theme: 'snow',
       placeholder: '내용을 작성하세요...',
       modules: {
         // 더 많은 옵션

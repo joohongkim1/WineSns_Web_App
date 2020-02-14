@@ -20,6 +20,7 @@ import '../../index.css';
 
 interface ReviewInfo {
     fid : number; 
+    title : string;
     nameEng : string;
     content: string;
     rating : number;
@@ -65,6 +66,7 @@ function ReviewInfo(review: ReviewInfo) {
     return (
       <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
         {/* <Grid item xs={12} sm={6} md={4}> */}
+        <Grid item xs={4}>
             <Card className={classes.card}>
                 <CardMedia
                     
@@ -89,6 +91,7 @@ function ReviewInfo(review: ReviewInfo) {
                   </div>
               
             </Card>
+            </Grid>
         {/* </Grid> */}
         </Slide>
     );

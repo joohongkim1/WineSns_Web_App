@@ -1,20 +1,20 @@
 
 import axios from "axios";
 // import { Wine } from "../reducers/feed_reducer";
-export const feedService = {
-  getFeedListByWID
+export const userFeedService = {
+  getUserFeedList
 }
 
-async function getFeedListByWID(wid: number, type : string): Promise<Response> {
+async function getUserFeedList(type : string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/feed/findByWine/' + wid, {
+  return axios.get('http://54.180.9.92:8090/WineProject/feed/findByUser', {
     
     params: {
       type : type,
-      wid : wid
+      uid : sessionStorage.getItem('uid')
     },
     headers: {
-      'Access-Control-Allow-Origin': "*",
+      'TOKEN' : localStorage.getItem('token'),
     }
   }
   )
@@ -25,7 +25,7 @@ async function getFeedListByWID(wid: number, type : string): Promise<Response> {
 
       }
 
-      console.log("GET Feed List");
+      console.log("GET User Feed List");
 
       return response.data as any;
     })
