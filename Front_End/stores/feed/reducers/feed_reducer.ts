@@ -13,14 +13,15 @@ export interface User {
 }
 
 export interface Feed {
-    fid: number,
+    fid : number,
+    title : string,
     content: string,
     // createdTimeAt: string,
     // updateTimeAt: string,
     visit: number,
     likeNum: number,
-    rating: number,
-    wine: Wine,
+    rating : number,
+    wine : Wine,
     user: User
   }
 

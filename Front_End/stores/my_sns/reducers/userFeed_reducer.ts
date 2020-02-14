@@ -20,7 +20,7 @@ export interface Feed {
     visit: number,
     likeNum: number,
     rating: number,
-    wine: Wine,
+    wine: any,
     user: User
   }
 

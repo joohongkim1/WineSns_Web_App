@@ -8,7 +8,7 @@ interface contents {
 }
 export const writePost = ({content, rating, title, wid}: contents) => {
 
-
+  
   return axios.post('http://54.180.9.92:8090/WineProject/feed/create', null, {
     params: {
       content: content,

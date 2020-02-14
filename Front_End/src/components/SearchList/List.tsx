@@ -32,7 +32,6 @@ import { render } from "react-dom";
 ​
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-​
     root: {
       display: "flex",
       flexDirection: "column",
@@ -63,11 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       marginLeft: '40%',
       height: '230px',
-​
-​
     },
-​
-    cardGrid: {
+​    cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
     },
@@ -114,14 +110,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 ​
-interface WineTaste {
-
-  country? : string;
-  type? : string;
-  sparkling? : boolean;
-  sweet? : number;
-  alcohol? : number;
-}
 export default function List(props : any) {
 
   const { taste } = props.location.state
@@ -169,7 +157,7 @@ export default function List(props : any) {
       <div className={classes.heroContent}>
         <Container>
           <Typography component="h1" variant="h1" align="center">
-            Wine List
+            Smart Search List
           </Typography>
         </Container>
       </div>

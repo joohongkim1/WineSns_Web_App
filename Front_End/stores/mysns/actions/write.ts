@@ -5,6 +5,7 @@ import createRequestSaga, {
 import * as postsAPI from '../lib/api/post';
 import { takeLatest } from 'redux-saga/effects';
 import { Action } from 'rxjs/internal/scheduler/Action';
+import Post from '../../../src/components/MR/Posts/Post';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
@@ -32,6 +33,8 @@ export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}
 
 // saga 생성
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+
+
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
 }
@@ -61,7 +64,7 @@ const write = handleActions<any, any>(
     // 포스트 작성 성공
     [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
-      post,
+      post
     }),
     // 포스트 작성 실패
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({

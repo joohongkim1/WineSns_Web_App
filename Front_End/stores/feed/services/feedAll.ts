@@ -7,7 +7,7 @@ export const feedAllService = {
 
 async function getFeedAll(): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/feed/findAll', {
+  return axios.get('http://54.180.9.92:8090/WineProject/feed/findAll?type=REVIEW', {
 
     headers: {
       'Access-Control-Allow-Origin': "*",

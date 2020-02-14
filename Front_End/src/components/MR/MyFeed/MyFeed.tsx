@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default function List() {
+export default function MyFeed() {
   const classes = useStyles();
   const [reviewState, setReviewState] = useState(false);
   const [minValue, setMinValue] = useState(0);
