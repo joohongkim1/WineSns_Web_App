@@ -24,7 +24,7 @@ import { Pagination } from 'antd';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../stores/login/store';
-import { getWineListByType, getWineListByNameList } from '../../../stores/wine_info/actions/wineInfo';
+import { getSmartSearch, getSmartSearchByName } from '../../../stores/smartSearch/actions/wineInfo';
 //antDesign
 import 'antd/dist/antd.css';
 import { Checkbox, Row, Col } from 'antd';
@@ -32,7 +32,6 @@ import { render } from "react-dom";
 ​
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-​
     root: {
       display: "flex",
       flexDirection: "column",
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-      "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -63,11 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       marginLeft: '40%',
       height: '230px',
-​
-​
     },
-​
-    cardGrid: {
+​    cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
     },
@@ -110,15 +106,17 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-    },
-    checkbox : {
-      marginLeft: '30%',
-      marginTop : '3%'
     }
   })
 );
 ​
-export default function List() {
+export default function List(props : any) {
+
+  const { taste } = props.location.state
+  const {name} = props.location.state
+
+  
+
   const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
@@ -126,21 +124,25 @@ export default function List() {
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
-    (state: rootState) => state.wineReducer
+  const { searchList, isSmartSearchPending, isSmartSearchSucceess, isSmartSearchError } = useSelector(
+    (state: rootState) => state.SmartSearchReducer
   );
 ​
   let start: number = 0;
   let end: number = 0;
   const loadWineList = async () => {
-    console.log("onWineList");
-    await dispatch(getWineListByType("KOR_UP"));
+    console.log("on Smart Search List");
+    console.log(taste);
+    await dispatch(getSmartSearch(taste.alcohol, taste.country, taste.sparkling, taste.sweet, taste.type));
   }
 
-  const loadWineListByChecked = async (checkedValues: any) => {
-  
-    await dispatch(getWineListByNameList(checkedValues));
+  const loadWineListByName = async () => {
+    console.log("on Smart Search List By Name");
+    console.log(taste);
+    await dispatch(getSmartSearchByName(name));
   }
+
+
   const numEachPage: number = 30;
 ​
   const handleChange = (value: number) => {
@@ -151,28 +153,25 @@ export default function List() {
     //   maxValue: value * numEachPage
     // });
   };
-  async function onChangeCountryChk(checkedValues: any) {
-    console.log('checked = ', checkedValues);
-    await loadWineListByChecked(checkedValues);
-  }
-  const handleEuropeBtn = () => {
-    setBtnNum(1);
-  };
-  const handleAmericaBtn = () => {
-    setBtnNum(2);
-  };
-  if (!isWineSucceess && !wineState) {
+
+
+  if (!isSmartSearchSucceess && !wineState && taste!=null) {
     loadWineList();
     setWineState(true);
+    console.log("taste is not null")
+  } else if(!isSmartSearchSucceess && !wineState && taste==null) {
+    console.log("taste is null")
+    loadWineListByName();
+    setWineState(true);
   } else {
-​
+    
   }
   return (
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
-            Wine List
+          <Typography component="h1" variant="h1" align="center">
+            Smart Search List
           </Typography>
         </Container>
       </div>
@@ -191,52 +190,14 @@ export default function List() {
         <Divider variant="middle" />
       </div>
       <div className={classes.btnGroup}>
-        <ButtonGroup
-          size="large"
-          aria-label="large outlined primary button group"
-        >
-          <Button className={classes.btn} onClick={handleEuropeBtn}>유럽 와인</Button>
-          <Button className={classes.btn} onClick={handleAmericaBtn}>신대륙 와인</Button>
-        </ButtonGroup>
+          <h2>Smart Search</h2>
       </div>
-      <div className={classes.checkbox}>
-        {function () {
-          if (btnNum == 1) {
-            return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={4}>
-                  <Checkbox value="France"><span style={{fontSize : '22px'}}>France</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Germany"><span style={{fontSize : '22px'}}>Germany</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Italy"><span style={{fontSize : '22px'}}>Italy</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Spain"><span style={{fontSize : '22px'}}>Spain</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-          else if (btnNum == 2) {
-            return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={8}>
-                  <Checkbox value="USA"><span style={{fontSize : '22px'}}>USA</span></Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Chile"><span style={{fontSize : '22px'}}>Chile</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-        }
-          ()}
-      </div>
+  
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>Total {searchList.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
-          {wineList.slice(minValue, maxValue).map(wine => (
+          {searchList.slice(minValue, maxValue).map(wine => (
 ​
             <Grid item xs={4}>
               <Card className={classes.card}>
@@ -285,7 +246,7 @@ export default function List() {
         </Grid>
         <div>
           <Pagination
-            total={wineList.length}
+            total={searchList.length}
             // showTotal={total => `Total ${total} items`}
             onChange={handleChange}
             pageSize={numEachPage}

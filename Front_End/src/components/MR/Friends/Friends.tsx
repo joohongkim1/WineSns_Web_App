@@ -11,7 +11,6 @@ createStyles({
     // borderRadius: "3px",
     border: "solid 1px #ddd",
     fontSize: "12px",
-
   }
 })
 );

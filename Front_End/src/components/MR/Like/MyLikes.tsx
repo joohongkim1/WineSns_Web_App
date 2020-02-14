@@ -12,8 +12,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
+
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -21,14 +20,13 @@ import Button from "@material-ui/core/Button";
 ​
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
-// Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getWineListByType, getWineListByNameList } from '../../../stores/wine_info/actions/wineInfo';
-//antDesign
-import 'antd/dist/antd.css';
-import { Checkbox, Row, Col } from 'antd';
-import { render } from "react-dom";
+
+​interface WineLike {
+    wid : number; 
+    nameKor: string;
+    nameEng : string;
+}
+
 ​
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-      "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -118,125 +116,35 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 ​
-export default function List() {
+export default function MyLikes() {
   const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
-  const [wineState, setWineState] = useState(false);
+  const userLike = JSON.parse(sessionStorage.getItem('userLike') || '{}');
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
-  const dispatch = useDispatch();
-  //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
-    (state: rootState) => state.wineReducer
-  );
-​
-  let start: number = 0;
-  let end: number = 0;
-  const loadWineList = async () => {
-    console.log("onWineList");
-    await dispatch(getWineListByType("KOR_UP"));
-  }
 
-  const loadWineListByChecked = async (checkedValues: any) => {
-  
-    await dispatch(getWineListByNameList(checkedValues));
-  }
+ 
   const numEachPage: number = 30;
 ​
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
     setMaxValue((value) * numEachPage);
-    // setState({
-    //   minValue: (value - 1) * numEachPage,
-    //   maxValue: value * numEachPage
-    // });
   };
-  async function onChangeCountryChk(checkedValues: any) {
-    console.log('checked = ', checkedValues);
-    await loadWineListByChecked(checkedValues);
-  }
+
   const handleEuropeBtn = () => {
     setBtnNum(1);
   };
   const handleAmericaBtn = () => {
     setBtnNum(2);
   };
-  if (!isWineSucceess && !wineState) {
-    loadWineList();
-    setWineState(true);
-  } else {
-​
-  }
+
   return (
-    <React.Fragment>
-      <div className={classes.heroContent}>
-        <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
-            Wine List
-          </Typography>
-        </Container>
-      </div>
-​
-      {/* <ReviewModal /> */}
-      <div>
-        <Link
-          to={"/ranking"}
-          className={classes.home}
-          style={{ textDecoration: "none" }}
-        >
-          <Typography>Home > 와인 list</Typography>
-        </Link>
-      </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
-      <div className={classes.btnGroup}>
-        <ButtonGroup
-          size="large"
-          aria-label="large outlined primary button group"
-        >
-          <Button className={classes.btn} onClick={handleEuropeBtn}>유럽 와인</Button>
-          <Button className={classes.btn} onClick={handleAmericaBtn}>신대륙 와인</Button>
-        </ButtonGroup>
-      </div>
-      <div className={classes.checkbox}>
-        {function () {
-          if (btnNum == 1) {
-            return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={4}>
-                  <Checkbox value="France"><span style={{fontSize : '22px'}}>France</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Germany"><span style={{fontSize : '22px'}}>Germany</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Italy"><span style={{fontSize : '22px'}}>Italy</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Spain"><span style={{fontSize : '22px'}}>Spain</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-          else if (btnNum == 2) {
-            return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={8}>
-                  <Checkbox value="USA"><span style={{fontSize : '22px'}}>USA</span></Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Chile"><span style={{fontSize : '22px'}}>Chile</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-        }
-          ()}
-      </div>
+     
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>Total {userLike.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
-          {wineList.slice(minValue, maxValue).map(wine => (
+          {userLike.slice(minValue, maxValue).map((wine: WineLike) => (
 ​
             <Grid item xs={4}>
               <Card className={classes.card}>
@@ -256,7 +164,7 @@ export default function List() {
                   title={wine.nameEng}
                 />
                 {/* </Link> */}
-                <CardContent>
+                {/* <CardContent>
                   <Typography
                     variant="body2"
                     color="textSecondary"
@@ -264,7 +172,7 @@ export default function List() {
                   >
                     {wine.info.slice(0, 50)}...
                   </Typography>
-                </CardContent>
+                </CardContent> */}
                 <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">
                     <FavoriteIcon color="secondary" />
@@ -285,7 +193,7 @@ export default function List() {
         </Grid>
         <div>
           <Pagination
-            total={wineList.length}
+            total={userLike.length}
             // showTotal={total => `Total ${total} items`}
             onChange={handleChange}
             pageSize={numEachPage}
@@ -293,6 +201,6 @@ export default function List() {
           /></div>
         {/* <ReviewModal /> */}
       </Container>
-    </React.Fragment >
+
   );
 }

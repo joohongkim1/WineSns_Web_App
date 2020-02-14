@@ -12,19 +12,18 @@ import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
+
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import ReviewInfo from "../../components/Interface/Review";
+import ReviewInfo from "../../../components/Interface/Review";
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 // Redux
 import { useSelector,  useDispatch} from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getFeedAll } from '../../../stores/feed/actions/feedAll';
+import { rootState } from '../../../../stores/login/store';
+import { getUserFeedList } from '../../../../stores/my_sns/actions/userFeed';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -107,24 +106,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default function List() {
+export default function MyFeed() {
   const classes = useStyles();
   const [reviewState, setReviewState] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { feedAll, isFeedAllPending, isFeedAllSucceess, isFeedAllError} = useSelector(
-    (state: rootState) => state.feedAllReducer
+  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed} = useSelector(
+    (state: rootState) => state.MyFeedReducer
   );
 
   let start : number = 0;
   let end : number = 0;
 
-  const loadReviewList = async () => {
-    console.log("onReviewList");
-    await dispatch(getFeedAll());
-  }
   const numEachPage : number = 30;
 
   const handleChange = (value : number) => {
@@ -136,53 +131,20 @@ export default function List() {
     // });
   };
 
-  if(!isFeedAllSucceess && !reviewState) {
-    loadReviewList();
+  if(!isUserFeedSucceess && !reviewState) {
+    dispatch(getUserFeedList());
     setReviewState(true);
   } else {
 
   }
 
   return (
-    <React.Fragment>
-      <div className={classes.heroContent}>
-        <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
-            Review List
-          </Typography>
-        </Container>
-      </div>
-
-      {/* <ReviewModal /> */}
-      <div>
-        <Link
-          to={"/ranking"}
-          className={classes.home}
-          style={{ textDecoration: "none" }}
-        >
-          <Typography>Home > 리뷰 list</Typography>
-        </Link>
-      </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
-      <div className={classes.btnGroup}>
-        <ButtonGroup
-          size="large"
-          aria-label="large outlined primary button group"
-        >
-          <Button className={classes.btn}>유럽 와인</Button>
-          <Button className={classes.btn}>신대륙 와인</Button>
-          <Button className={classes.btn}>한국 와인</Button>
-        </ButtonGroup>
-      </div>
-
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {feedAll.length}</Typography>
+        <Typography className={classes.total}>Total {userFeed.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
      
         <Grid container spacing={10}>
-          {feedAll.slice(minValue, maxValue).map(feed => (
+          {userFeed.slice(minValue, maxValue).map(feed => (
           
              <ReviewInfo
              fid={feed.fid}
@@ -198,13 +160,12 @@ export default function List() {
         </Grid>
         <div>
         <Pagination
-      total={feedAll.length}
+      total={userFeed.length}
       // showTotal={total => `Total ${total} items`}
       onChange={handleChange}
       pageSize={numEachPage}
       defaultCurrent={1}
     /></div>
       </Container>
-    </React.Fragment>
   );
 }
