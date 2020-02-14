@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const sections = [
   { title: "랭킹", url: "/ranking" },
   { title: "와인 리스트", url: "/list" },
-  { title: "와인 리뷰", url: "/wineReview" },
+  { title: "와인 리뷰", url: "/reviewList" },
   { title: "My SNS", url: "/mypage" },
-  {title : "Smart Search", url: "/smartSearch"}
+  { title: "Smart Search", url: "/smartSearch" }
 ];
 
 export default function Section() {
@@ -51,7 +51,7 @@ export default function Section() {
           <Link
             color="inherit"
             key={section.title}
-            to= {section.url}
+            to={section.url}
             // onClick={onWineList}
             className={classes.toolbarLink}
             style={{ textDecoration: "none", color: "#000000" }}

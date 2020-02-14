@@ -9,6 +9,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide'
 import Feed from './Feed';
+import MyFeed from './MyFeed/MyFeed';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,8 +37,8 @@ export default function Timelinesection() {
       <div>
         <LeftSide />
         <div className={classes.mrFeed}>
+          <MyFeed />
           
-          <Feed />
         </div>
         {/* <RightSide /> */}
       </div>
