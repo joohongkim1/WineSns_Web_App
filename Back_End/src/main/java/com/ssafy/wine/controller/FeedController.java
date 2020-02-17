@@ -47,12 +47,9 @@ public class FeedController {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
-			
+
 			Feed feed = feedService.create(uid, feedInput);
 			StringBuilder result = new StringBuilder();
-			
-			
-			
 			result.append("User: ").append(feed.getUser().getEmail()).append("\n").append("Feed_Id: ")
 					.append(feed.getFid()).append("\nFeed 작성완료");
 			return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -72,8 +69,6 @@ public class FeedController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 유저 Feed 불러오기")
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid, @RequestParam FeedReviewEnum type) {
@@ -107,25 +102,12 @@ public class FeedController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "Feed 단일 가져오기")
 	@GetMapping("/findById")
 	public ResponseEntity<Object> findById(@RequestParam Long fid) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String uid = authentication.getName();
 			FeedOutputDto feed = feedService.findById(fid);
-
-			StringBuilder result = new StringBuilder();
-			result.append("Request User: ").append(uid).append("\nFeed UID: ").append(feed.getUser().getUid());
-
-			if (uid.equals(feed.getUser().getUid().toString())) {
-				return new ResponseEntity<Object>(feed, HttpStatus.OK);
-			} else {
-				result.append("\n검색 실패: 검색을 요청한 유저와 게시글 작성자와 다릅니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
-			}
+			return new ResponseEntity<Object>(feed, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

@@ -141,6 +141,7 @@ public class SignController {
 		}
 		List<String> result = new ArrayList<String>();
 		result.add(jwtService.createToken(user.getUsername(), user.getRoles()));
+		result.add(user.getUid().toString());
 		result.add(user.getNickName());
 		return responseService.getListResult(result);
 	}

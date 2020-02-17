@@ -44,12 +44,11 @@ public class CommentController {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
-			
+
 			Comment comment = commentService.create(fid, uid, cid, content);
 			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(comment.getUser().getEmail()).append("\n")
-			.append("Comment_ID: ").append(comment.getCid()).append("\n")
-			.append("Comment가 추가되었습니다.");
+			sb.append("User: ").append(comment.getUser().getEmail()).append("\n").append("Comment_ID: ")
+					.append(comment.getCid()).append("\n").append("Comment가 추가되었습니다.");
 			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -66,31 +65,17 @@ public class CommentController {
 			throw e;
 		}
 	}
-	
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+
 	@ApiOperation(value = "comment 단일 불러오기")
 	@GetMapping("/findById")
 	public ResponseEntity<Object> findById(@PathVariable Long cid) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String uid = authentication.getName();
 			CommentDto comment = commentService.findById(cid);
-
-			StringBuilder result = new StringBuilder();
-			result.append("Request User: ").append(uid).append("\nFeed UID: ").append(comment.getUser().getUid());
-
-			if (uid.equals(comment.getUser().getUid().toString())) {
-				return new ResponseEntity<Object>(comment, HttpStatus.OK);
-			} else {
-				result.append("\n검색 실패: 검색을 요청한 유저와 게시글 작성자와 다릅니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
-			}
+			return new ResponseEntity<Object>(comment, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
 
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
@@ -101,7 +86,7 @@ public class CommentController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uid = authentication.getName();
 			CommentDto comment = commentService.findById(cid);
-			
+
 			StringBuilder result = new StringBuilder();
 			result.append("Request User: ").append(uid).append("\nComment UID: ").append(comment.getUser().getUid());
 
@@ -127,7 +112,7 @@ public class CommentController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uid = authentication.getName();
 			CommentDto comment = commentService.findById(cid);
-			
+
 			StringBuilder result = new StringBuilder();
 			result.append("Request User: ").append(uid).append("\nComment UID: ").append(comment.getUser().getUid());
 
@@ -139,7 +124,7 @@ public class CommentController {
 				result.append("\n삭제 실패: 삭제을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
 				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
 			}
-			
+
 		} catch (Exception e) {
 			throw e;
 		}

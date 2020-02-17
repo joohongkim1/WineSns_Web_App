@@ -49,11 +49,14 @@ server:
   servlet:
     context-path: /WineProject
   port: 8090
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-store-password: 1q2w3e4r
 logging:
   level:
     com:
       andy: trace
-
 file:
   img-wine: Img/Wine
   img-feed: Img/Feed
