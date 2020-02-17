@@ -20,9 +20,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
-import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike } from '../../../../stores/feed/actions/feedDetail';
+import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike 
+,deleteCommentAndUpdate} from '../../../../stores/feed/actions/feedDetail';
 
-
+import { Comment, Form, Header } from 'semantic-ui-react'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -126,6 +127,25 @@ export default function ReviewDetail(props: MyComponentProps) {
   };
 
 
+  
+  const deleteCommentByUser = async (cid : any) => {
+    await dispatch(deleteCommentAndUpdate(fid, cid));
+    dispatch(getFeedDetailByFID(fid));
+    setFeedState(true);
+
+    
+    let userLikeFeed = JSON.parse(sessionStorage.getItem('userLikeFeed') || '{}');
+
+
+    for (var i = 0; i < userLikeFeed.length; i++) {
+      if (userLikeFeed[i].fid == fid) {
+        setLikeState(true)
+        break
+      }
+    }
+ };
+
+
 
   if (!feedState) {
     dispatch(getFeedDetailByFID(fid));
@@ -142,8 +162,7 @@ export default function ReviewDetail(props: MyComponentProps) {
       }
     }
   } else {
-    console.log("코멘트들")
-    console.log(feedDetail);
+
   }
   return (
 
@@ -235,6 +254,7 @@ if (likeState) {
             </Typography>
           </CardContent>
         </Card>
+
         <CommentIcon className={classes.commentIcon} />
         <Typography className={classes.commentIcon}>
           {" "}
@@ -255,7 +275,13 @@ if (likeState) {
             variant="caption"
           >
             {comment.content} 작성자 : {comment.user.nickName} : {comment.createdTimeAt}
+
+            {comment.user.uid == sessionStorage.getItem("uid") ?
+                (<Button onClick={() => deleteCommentByUser(comment.cid)}>댓글삭제</Button>)
+                  : (<span></span>)
+        }
           </Typography>
+         
           ))}
         </CardContent>
       </Card>
