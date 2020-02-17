@@ -10,7 +10,6 @@ body {
   background-color: #fff;
   color: #444;
   font-size: 14px;
-  font-family: "S-CoreDream-8Heavy";
   line-height: 2;
 }
 
@@ -137,6 +136,7 @@ strong {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.4;
+  font-family: "S-CoreDream-8Heavy";
 }
 .wine_list li span.tit:after {
   display: block;
@@ -216,3 +216,20 @@ strong {
   display: block;
   background: url(images/Spain.png) no-repeat;
 }
+
+.pagination {
+  text-align: center;
+}
+
+.checkbox {
+  margin-left: 30%;
+  margin-top: 3%;
+}
+
+.checkbox span {
+  margin-left: 30px;
+}
+
+/* .checkbox span .USA:hover {
+  border-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1024px-Flag_of_the_United_States.svg.png");
+} */

@@ -1,20 +1,14 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, fade } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import "./wineDetail.css";
 import ReviewInfo from "../Interface/Review";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
-
+import { Link } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
@@ -113,7 +107,7 @@ function WineDetail(props: MyComponentProps) {
         <div className={classes.heroContent}>
           <Container>
             <Typography component="h1" variant="h1" align="center">
-              Wine List
+              Wine Detail
             </Typography>
           </Container>
         </div>
@@ -152,7 +146,7 @@ function WineDetail(props: MyComponentProps) {
                       {" "}
                       <img className="imgWineAlcohol" />
                       <strong>
-                        알코올 <span>{wine.alcohol}</span>{" "}
+                        알코올 <span>{wine.alcohol} %</span>{" "}
                       </strong>{" "}
                     </li>
                     <li>
@@ -305,15 +299,15 @@ function WineDetail(props: MyComponentProps) {
               </div>
             </div>
 
-            <a
-              href="/list"
+            <Link
+              to="/list"
               className="btns btn_line_type blue"
               style={{ marginLeft: "97%" }}
             >
               <button className="btns btn_line_type blue">
                 <span style={{ fontSize: "20px" }}>목록</span>
               </button>
-            </a>
+            </Link>
 
             {/* Wiine Top 5 리뷰 */}
 
