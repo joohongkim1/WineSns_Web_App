@@ -49,15 +49,11 @@ export function SNSLogin(id : string, nickname: string, provider : string) {
       //  console.log(localStorage.getItem('token'));
        dispatch(setLoginPending(false));
        dispatch(setLoginSuccess(true));
-      
-     //  const history = createBrowserHistory();
-     //   history.push('/ranking');
-     console.log("token");
-     console.log(localStorage.getItem('token'));
-     
-      
+      console.log("hey");
+
      },
      error => {
+       console.log(error);
        dispatch(setLoginPending(false));
        dispatch(setLoginError("login error"));
      }
@@ -71,6 +67,8 @@ export function logout() {
     dispatch(setLoginSuccess(false));
   }
 }
+
+
 function setLoginPending(isLoginPending : boolean) {
   return {
     type: actions.SET_LOGIN_PENDING,

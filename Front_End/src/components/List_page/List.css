@@ -10,15 +10,8 @@ body {
   background-color: #fff;
   color: #444;
   font-size: 14px;
-
+  font-family: "S-CoreDream-8Heavy";
   line-height: 2;
-}
-html {
-  background: #fff;
-  color: #000;
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
 }
 
 .wine_list li {
@@ -160,11 +153,20 @@ strong {
 .view {
   width: 80px;
   height: 30px;
+  color: rgba(116, 4, 4, 0.87);
 }
 
 .btn_right {
   float: right;
   margin-right: 10px;
+  color: rgba(116, 4, 4, 0.87);
+}
+
+.button {
+  display: flex;
+  float: right;
+  margin-top: 30px;
+  margin-right: 20px;
 }
 
 /* .wine_list li:hover {
@@ -172,29 +174,45 @@ strong {
   opacity: 0.9;
 } */
 
-.wine_list li .tags .flag .USA {
+.wine_list .tags .flag.s32 .USA {
+  background-size: cover;
   display: block;
   background: url(./images/USA.png) no-repeat;
 }
 
-.Argentina {
+.wine_list .tags .flag.s32 .Argentina {
+  background-size: cover;
+  display: block;
   background: url(images/Argentina.png) no-repeat;
 }
-.Australia {
+.wine_list .tags .flag.s32 .Australia {
+  background-size: cover;
+  display: block;
   background: url(images/Australia.png) no-repeat;
 }
-.Chile {
+.wine_list .tags .flag.s32 .Chile {
+  background-size: cover;
+  display: block;
   background: url(images/Chile.png) no-repeat;
+  height: 21px;
 }
-.France {
+.wine_list .tags .flag.s32 .France {
+  background-size: cover;
+  display: block;
   background: url(images/France.png) no-repeat;
 }
-.Germany {
+.wine_list .tags .flag.s32 .Germany {
+  background-size: cover;
+  display: block;
   background: url(images/Germany.png) no-repeat;
 }
-.Italy {
+.wine_list .tags .flag.s32 .Italy {
+  display: block;
   background: url(images/Italy.png) no-repeat;
+  background-size: cover;
 }
-.Spain {
+.wine_list .tags .flag.s32 .Spain {
+  background-size: cover;
+  display: block;
   background: url(images/Spain.png) no-repeat;
 }

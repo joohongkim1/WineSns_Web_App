@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { Wine } from "../reducers/wine_reducer";
+import HTTPS from '../../api';
 import {loginService} from "../../login/services/login"
 export const wineDetailService = {
   getWineDetail,
@@ -10,7 +11,7 @@ export const wineDetailService = {
 
 async function getWineDetail(wid : number): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/findByWid/' + wid, {
+  return HTTPS.get('/wine/findByWid/' + wid, {
     
     // params: {
     //   type : type
@@ -39,7 +40,7 @@ async function getWineDetail(wid : number): Promise<Response> {
 
 async function createWineLike(wid : number): Promise<Response> {
 
-  return axios.post('http://54.180.9.92:8090/WineProject/winelike/create', null, {
+  return HTTPS.post('/winelike/create', null, {
   params: {
     wid : wid
   },
@@ -70,7 +71,7 @@ async function createWineLike(wid : number): Promise<Response> {
 
 async function deleteWineLike(wid : number): Promise<Response> {
 
-  return axios.delete('http://54.180.9.92:8090/WineProject/winelike/delete', {
+  return HTTPS.delete('/winelike/delete', {
     params: {
       wid : wid
     },

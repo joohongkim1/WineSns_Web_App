@@ -3,6 +3,7 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -101,6 +102,9 @@ const useStyles = makeStyles((theme: Theme) =>
     checkbox: {
       marginLeft: "30%",
       marginTop: "3%"
+    },
+    grid: {
+      width: 1500
     }
   })
 );
@@ -256,16 +260,17 @@ export default function List() {
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
+        <Grid container className={classes.grid}>
           {wineList.slice(minValue, maxValue).map(wine => (
-            <Grid item xs={4}>
+            <Grid item xs={4} className={classes.grid}>
               <div className="wine_list">
                 <li>
                   <div className="tags">
                     <span className="flag s32">
                       <img
-                        src={`../../assets/images/${wine.country}.png`}
-                        alt={wine.country}
+                        className={wine.country}
+                        // src={`images/${wine.country}.png`}
+                        // alt={wine.country}
                       ></img>
                     </span>
                     <em className={`tag type ${wine.type}`}>{wine.type}</em>
@@ -304,10 +309,8 @@ export default function List() {
                   <div className="hashtag">
                     #{wine.country} #{wine.type}
                   </div>
-                  <Link to={`/detail/${wine.wid}`}>
-                    <div className="btn_right">
-                      <Button className="view">View More</Button>
-                    </div>
+                  <Link to={`/detail/${wine.wid}`} className="button">
+                    <Button>View More</Button>
                   </Link>
                 </li>
               </div>

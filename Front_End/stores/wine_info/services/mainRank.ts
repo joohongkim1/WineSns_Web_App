@@ -1,14 +1,16 @@
 
 import axios from "axios";
+import HTTPS from '../../api';
 export const wineMainService = {
-    getWineTop10,
+    getWineTop5,
+    getReviewTop5,
     getWineTop3
 }
 
 
 async function getWineTop3(type: string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/findRank/VISIT_3', {
+  return HTTPS.get('/wine/findRank/LIKE_3', {
   
     headers: {
       'Access-Control-Allow-Origin': "*",
@@ -34,10 +36,38 @@ async function getWineTop3(type: string): Promise<Response> {
 }
 
 
-async function getWineTop10(type : string): Promise<Response> {
+async function getWineTop5(type : string): Promise<Response> {
   
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/findRank/VISIT_5', {
+  return HTTPS.get('/wine/findRank/VISIT_5', {
   
+    headers: {
+      'Access-Control-Allow-Origin': "*",
+    }
+  }
+  )
+    .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+
+      }
+      console.log(response.data);
+      console.log("GET TOP 5 Review List");
+
+      return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
+
+async function getReviewTop5(type : string): Promise<Response> {
+  
+  return HTTPS.get('/feed/ReviewRank/LIKE_5', {
+ 
     headers: {
       'Access-Control-Allow-Origin': "*",
     }

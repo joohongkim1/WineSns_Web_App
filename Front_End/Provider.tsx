@@ -33,14 +33,13 @@ class AppForm extends Component {
           <Route path="/ranking" component={App} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/list" component={List} />
-          <Route path="/detail/:wid" component={WineDetail} exact={true} />
+          <Route path="/detail/:wid" component={WineDetail} />
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
           {/* <Route path="/smartSearch" component={SmartSearch} /> */}
           <Route path="/myAccount" component={MyAccount} />
           {/* <Route path="/searchList" component={SmartList} /> */}
-          <Route path="/reviewList" component={ReviewList} />
-          <Route path="/reviewDetail" component={ReviewDetail} />
+          <Route path="/review/:fid" component={ReviewDetail} />
           <Footer />
         </BrowserRouter>
       </Provider>
