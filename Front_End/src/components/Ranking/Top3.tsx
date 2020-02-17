@@ -92,7 +92,7 @@ export default function TempTop3() {
   const {
     wineTop3,
     isWinePending,
-    isWineTop3Succeess,
+    isWineTop3Success,
     isWineError
   } = useSelector((state: rootState) => state.wineRankReducer);
 
@@ -101,7 +101,7 @@ export default function TempTop3() {
     await dispatch(getWineTop3("VISIT_3"));
   };
 
-  if (!isWineTop3Succeess && !wineState) {
+  if (!isWineTop3Success && !wineState) {
     loadWineTop3();
     setWineState(true);
   } else {

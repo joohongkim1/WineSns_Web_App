@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import HTTPS from '../../api';
 import { Wine } from "../reducers/wine_reducer";
 export const wineService = {
   getWineListByType,
@@ -8,7 +9,7 @@ export const wineService = {
 
 async function getWineListByType(type: string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/fineAll/' + type, {
+  return HTTPS.get('/wine/fineAll/' + type, {
     // params: {
     //   type : type
     // },
@@ -42,7 +43,7 @@ async function getWineListByNameList(names : string[]): Promise<Response> {
      query += "&country=" + names[i];                                      
   }
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/search?' + query, {
+  return HTTPS.get('/wine/search?' + query, {
     headers: {
       'Access-Control-Allow-Origin': "*",
     }

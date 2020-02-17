@@ -71,7 +71,7 @@ export default function wineDetailReducer(state = initialState, action : any) {
         isWineDetailSucceess: action.isWineDetailSuccess,
         wine : action.wine
       }
-
+      
     case actions.SET_WINE_DETAIL_ERROR:
       return {...state,
         WineDetailError : action.WineDetailError

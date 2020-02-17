@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import HTTPS from '../../api';
 import { Wine } from "../reducers/wine_reducer";
 export const wineService = {
   getSmartSearch,
@@ -8,7 +9,7 @@ export const wineService = {
 
 async function getSmartSearch(alcohol : number, country : string, sparkling : boolean, sweet : number, type: string): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/search', {
+  return HTTPS.get('/wine/search', {
     params: {
       alcohol : alcohol,
       country : country,
@@ -39,7 +40,7 @@ async function getSmartSearch(alcohol : number, country : string, sparkling : bo
 async function getSmartSearchByName(name : string): Promise<Response> {
   console.log("this is name")
  console.log(name)
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/findByName/' + name
+  return HTTPS.get('/wine/findByName/' + name
   )
   .then(function (response: Response | any) {
 
