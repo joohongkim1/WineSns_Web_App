@@ -2,6 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { combineReducers } from 'redux';
 import { logger } from 'redux-logger';
 import thunk from 'redux-thunk';
+import { all } from 'redux-saga/effects';
 import loginReducer from '../reducers/login_reducer';
 import registerReducer from "../../register/reducers/register_reducer";
 import wineReducer from "../../wine_info/reducers/wine_reducer";
@@ -21,6 +22,10 @@ import {feedState} from "../../feed/reducers/feed_reducer";
 import {feedAll} from "../../feed/reducers/feed_all_reducer";
 import {smartSearch} from "../../smartSearch/reducers/wine_reducer";
 import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
+import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
+// import write, {ContentsState} from "../../mysns/actions/write"
+import loading, {ILoadingState} from '../../mysns/lib/loading';
+
 
 const middlewares: any[] = [];
 
@@ -36,7 +41,9 @@ const rootReducer = combineReducers({
   feedReducer,
   feedAllReducer,
   SmartSearchReducer,
-  MyFeedReducer
+  MyFeedReducer,
+  write,
+  loading,
 });
 
 export interface rootState {
@@ -48,9 +55,14 @@ export interface rootState {
   feedReducer : feedState,
   feedAllReducer : feedAll,
   SmartSearchReducer : smartSearch
-  MyFeedReducer : userFeedState
+  MyFeedReducer : userFeedState,
+  write: ContentsState,
+  loading: ILoadingState,
 }
 
+export function* rootSaga() {
+  yield all([writeSaga()]);
+}
 
 export default function configureStore(initialState : any) {
   return createStore(
