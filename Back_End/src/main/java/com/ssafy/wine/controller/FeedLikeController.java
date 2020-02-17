@@ -55,8 +55,6 @@ public class FeedLikeController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 유저가 좋아요한 피드")
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
@@ -68,8 +66,6 @@ public class FeedLikeController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 피드 좋아요한 유저")
 	@GetMapping("/findByWine/{fid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long fid) {

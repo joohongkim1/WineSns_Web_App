@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.ssafy.wine.dto.FeedInputDto;
 import com.ssafy.wine.dto.FeedOutputDto;
+import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.entity.Wine;

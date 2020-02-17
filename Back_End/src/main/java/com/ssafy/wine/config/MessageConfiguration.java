@@ -42,7 +42,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	@Bean // yml 파일을 참조하는 MessageSource 선언
 	public MessageSource messageSource(@Value("${spring.messages.basename}") String basename,
 			@Value("${spring.messages.encoding}") String encoding) {
-		YamlMessageSource ms = new YamlMessageSource();
+		YmlMessageSource ms = new YmlMessageSource();
 		ms.setBasename(basename);
 		ms.setDefaultEncoding(encoding);
 		ms.setAlwaysUseMessageFormat(true);
@@ -52,7 +52,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	}
 
 	// locale 정보에 따라 다른 yml 파일을 읽도록 처리
-	private static class YamlMessageSource extends ResourceBundleMessageSource {
+	private static class YmlMessageSource extends ResourceBundleMessageSource {
 		@Override
 		protected ResourceBundle doGetBundle(String basename, Locale locale) throws MissingResourceException {
 			return ResourceBundle.getBundle(basename, locale, YamlResourceBundle.Control.INSTANCE);

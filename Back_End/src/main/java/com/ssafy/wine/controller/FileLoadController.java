@@ -54,8 +54,6 @@ public class FileLoadController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "파일 불러오기 - id는 uid or fid, 값이 잘못되면 경로가 이상할 수 있어서 정확해야 됩니다.")
 	@GetMapping("/downloadFile")
 	public ResponseEntity<Object> downloadFile(@RequestParam FileLoadEnum type, @RequestParam Long id,
