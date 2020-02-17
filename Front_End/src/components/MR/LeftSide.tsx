@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     left: "auto",
     // zIndex: "0",
     // position: "absolute",
-    // display: "inline",
+    display: "inline",
     // position: "relative",
     top: "400px", // need to change
     width: "323px",

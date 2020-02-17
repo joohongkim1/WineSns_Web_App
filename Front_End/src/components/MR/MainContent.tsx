@@ -14,6 +14,7 @@ import MyFeed from './MyFeed/MyFeed';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mrMainContents: {
+      display: "flex",
       paddingTop: "42px",
       width: "980px",
       margin: "0",
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     mrFeed: {
-      // marginLeft: "354px",
+      marginLeft: "20px",
       width: "600px",
       display: "inline-block",
     },
@@ -34,14 +35,14 @@ export default function Timelinesection() {
 
   return (
     <div id="mrMainContents" className={classes.mrMainContents}>
-      <div>
-        <LeftSide />
-        <div className={classes.mrFeed}>
-          <MyFeed />
-          
-        </div>
-        {/* <RightSide /> */}
+
+      <LeftSide />
+      <div className={classes.mrFeed}>
+        <MyFeed />
+
       </div>
+      {/* <RightSide /> */}
     </div>
+
   );
 }
