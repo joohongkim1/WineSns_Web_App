@@ -98,13 +98,6 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-    },
-    checkbox: {
-      marginLeft: "30%",
-      marginTop: "3%"
-    },
-    grid: {
-      width: 1500
     }
   })
 );
@@ -129,7 +122,7 @@ export default function List() {
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
   };
-  const numEachPage: number = 30;
+  const numEachPage: number = 15;
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
     setMaxValue(value * numEachPage);
@@ -190,7 +183,7 @@ export default function List() {
           </Button>
         </ButtonGroup>
       </div>
-      <div className={classes.checkbox}>
+      <div className="checkbox">
         {(function() {
           if (btnNum == 1) {
             return (
@@ -260,9 +253,9 @@ export default function List() {
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container className={classes.grid}>
+        <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
-            <Grid item xs={4} className={classes.grid}>
+            <Grid item xs={4}>
               <div className="wine_list">
                 <li>
                   <div className="tags">
@@ -317,7 +310,7 @@ export default function List() {
             </Grid>
           ))}
         </Grid>
-        <div>
+        <div className="pagination">
           <Pagination
             total={wineList.length}
             // showTotal={total => `Total ${total} items`}
