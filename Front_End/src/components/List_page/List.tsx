@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
@@ -28,7 +19,8 @@ import {
 //antDesign
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
-import { render } from "react-dom";
+import "./List.css";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -85,8 +77,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       zIndex: 5,
-      position: "relative"
-      // marginTop: "20px",
+      position: "relative",
+      marginTop: "20px"
     },
     total: {
       display: "inline-block",
@@ -117,8 +109,9 @@ export default function List() {
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(30);
+  const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
+
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
@@ -136,10 +129,6 @@ export default function List() {
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
     setMaxValue(value * numEachPage);
-    // setState({
-    //   minValue: (value - 1) * numEachPage,
-    //   maxValue: value * numEachPage
-    // });
   };
   async function onChangeCountryChk(checkedValues: any) {
     console.log("checked = ", checkedValues);
@@ -151,6 +140,7 @@ export default function List() {
   const handleAmericaBtn = () => {
     setBtnNum(2);
   };
+
   if (!isWineSucceess && !wineState) {
     loadWineList();
     setWineState(true);
@@ -245,6 +235,16 @@ export default function List() {
                       <span style={{ fontSize: "22px" }}>Chile</span>
                     </Checkbox>
                   </Col>
+                  <Col span={8}>
+                    <Checkbox value="Australia">
+                      <span style={{ fontSize: "22px" }}>Australia</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Argentina">
+                      <span style={{ fontSize: "22px" }}>Argentina</span>
+                    </Checkbox>
+                  </Col>
                 </Row>
               </Checkbox.Group>
             );
@@ -260,48 +260,56 @@ export default function List() {
           {wineList.slice(minValue, maxValue).map(wine => (
             <Grid item xs={4}>
               <div className="wine_list">
-                <ul className="clifx">
-                  <li>
-                    <div className="tags">
-                      <em className="tag type white">White</em>
-                    </div>
+                <li>
+                  <div className="tags">
+                    <span className="flag s32">
+                      <img
+                        src={`../../assets/images/${wine.country}.png`}
+                        alt={wine.country}
+                      ></img>
+                    </span>
+                    <em className={`tag type ${wine.type}`}>{wine.type}</em>
+                  </div>
+                  <Link
+                    to={`/detail/${wine.wid}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <div className="img">
                       <img
                         src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
                         alt={wine.nameKor}
                       />
                     </div>
-                    <strong
-                      className="tit _dotdotdot"
-                      data-ellipse-height="70"
-                      style={{ overflowWrap: "break-word", width: 215 }}
-                    >
-                      {wine.nameEng}
-                    </strong>
-                    <span className="tit">{wine.info.slice(0, 50)}</span>
-                    <div className="hashtag">
-                      #유럽와인 #스페인 # White #Medium Dry
+                  </Link>
+                  <strong
+                    className="tit _dotdotdot is-truncated"
+                    // data-ellipse-height="70"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px"
+                    }}
+                  >
+                    {wine.nameEng}
+                  </strong>
+                  <span
+                    className="tit"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px",
+                      overflow: "hidden"
+                    }}
+                  >
+                    {wine.nameKor}
+                  </span>
+                  <div className="hashtag">
+                    #{wine.country} #{wine.type}
+                  </div>
+                  <Link to={`/detail/${wine.wid}`}>
+                    <div className="btn_right">
+                      <Button className="view">View More</Button>
                     </div>
-                    <div className="bx_over" style={{ opacity: 0 }}>
-                      <h5 className="hide_txt">와인정보</h5>
-                      <span className="tit">{wine.nameKor}</span>
-                      <div className="info">
-                        <p>품종 : 샤도네이</p>
-                        <p>제조사 : 코도르뉴</p>
-                        <p>원산지 : 스페인, 페네데스</p>
-                        <p>Color : 밝은 볕짚색</p>
-                      </div>
-                      <div className="btn_area">
-                        <Link
-                          to={`/detail/${wine.wid}`}
-                          style={{ textDecoration: "none" }}
-                        >
-                          <Button variant="outlined">View More</Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                  </Link>
+                </li>
               </div>
             </Grid>
           ))}
