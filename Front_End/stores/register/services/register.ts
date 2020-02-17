@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import HTTPS from '../../api';
 export const registerService = {
   register,
   emailCheck,
@@ -9,7 +10,7 @@ export const registerService = {
 // 회원 가입 함수
 async function register(nickname : string, email : string, password: string): Promise<Response> {
 
-    return axios.post('http://54.180.9.92:8090/WineProject/user/signup',null, {
+    return HTTPS.post('/user/signup',null, {
       params :{ 
               email : email,
               nickName : nickname,
@@ -41,12 +42,12 @@ async function register(nickname : string, email : string, password: string): Pr
 
 async function SNSRegister(nickname : string, id : string, provider : string): Promise<Response> {
 
-  return axios.post('http://54.180.9.92:8090/WineProject/user/sns/signup',null, {
+  return HTTPS.post('/user/sns/signup',null, {
     params : {
+      nickName : "Hello",
       sns_id : id,
-      nickName : nickname,
       snsType : provider
-    }
+    },
   }
   )
   .then(function (response: Response | any) {
@@ -73,9 +74,9 @@ async function SNSRegister(nickname : string, id : string, provider : string): P
 // 이메일 중복 체크 함수
 async function emailCheck(email : string): Promise<Response> {
   console.log("what")
-  return axios.post('http://54.180.9.92:8090/WineProject/user/checkEmail',null, {
+  return HTTPS.post('/user/checkEmail',null, {
     params :{ 
-            email : email
+       email : email
     }
   }
 )

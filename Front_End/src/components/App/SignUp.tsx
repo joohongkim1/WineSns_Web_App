@@ -116,13 +116,14 @@ function SignUp() {
   const responseGoogle = async (res: any) => {
     console.log("success");
     console.log(res);
-    console.log(res.w3.ofa);
+    // console.log(res.w3.ofa);
     console.log(res.googleId);
     setState({
       email: "",
       password: "",
       id: res.googleId,
-      nickname: res.w3.ofa,
+
+      nickname : "Hello",
       provider: "GOOGLE"
     });
 

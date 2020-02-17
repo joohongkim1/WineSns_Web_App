@@ -17,6 +17,8 @@ import SignUp from "./src/components/App/SignUp";
 import MyAccount from "./src/components/App/MyAccount";
 import SmartSearch from "./src/components/smartSearch/WineSearch";
 import SmartList from "./src/components/SearchList/List";
+import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail"
+
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -31,12 +33,13 @@ class AppForm extends Component {
           <Route path="/ranking" component={App} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/list" component={List} />
-          <Route path="/detail/:wid" component={WineDetail} exact={true} />
+          <Route path="/detail/:wid" component={WineDetail}/>
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
           <Route path="/smartSearch" component={SmartSearch} />
           <Route path="/myAccount" component={MyAccount} />
           <Route path="/searchList" component={SmartList} />
+          <Route path="/review/:fid" component={ReviewDetail} />
           <Footer />
         </BrowserRouter>
       </Provider>
