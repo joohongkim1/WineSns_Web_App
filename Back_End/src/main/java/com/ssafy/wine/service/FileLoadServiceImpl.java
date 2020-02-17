@@ -31,7 +31,6 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 		this.profileLocation = Paths.get(prop.getImgProfile()).toAbsolutePath().normalize();
 		this.backgroundLocation = Paths.get(prop.getImgBackground()).toAbsolutePath().normalize();
 		this.feedLocation = Paths.get(prop.getImgFeed()).toAbsolutePath().normalize();
-
 		try {
 			Files.createDirectories(this.profileLocation);
 			Files.createDirectories(this.backgroundLocation);
@@ -66,11 +65,9 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 			default:
 				throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 잘못된 type 값 입니다.");
 			}
-
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 			return new FileUpLoadDto(targetLocation.toString(), fileName, changeName, file.getContentType(),
 					file.getSize());
-
 		} catch (Exception e) {
 			throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
 		}
@@ -102,7 +99,6 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 				fileDownLoads.add(new FileDownLoadDto(fileUrl, file.getName(), file.length()));
 			}
 			return fileDownLoads;
-
 		} catch (Exception e) {
 			throw new FileUploadException("파일 다운로드 실패하였습니다.", e);
 		}
@@ -114,7 +110,6 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 			Path targetPath;
 			StringBuilder addPath = new StringBuilder();
 			addPath.append(id).append("/").append(name);
-
 			switch (type) {
 			case PROFILE:
 				targetPath = this.profileLocation.resolve(addPath.toString()).normalize();
@@ -128,10 +123,8 @@ public class FileLoadServiceImpl implements FileLoadSerivce {
 			default:
 				throw new FileUploadException("파일 삭제에 실패했습니다. 잘못된 type 값 입니다.");
 			}
-
 			Files.delete(targetPath);
 			return targetPath.toString();
-
 		} catch (Exception e) {
 			throw new FileUploadException("파일 삭제에 실패하였습니다.", e);
 		}

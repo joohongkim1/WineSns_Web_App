@@ -38,23 +38,14 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	@Transactional
-	public void delete(Long fromUid, Long toUid) {
-		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
-		User to = userRepository.findById(toUid).orElseThrow(NoSuchElementException::new);
-		followRepository.delete(new Follow(from, to));
-	}
-
-	@Override
 	public List<UserDto> findByFollowing(Long fromUid) {
 		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
 		List<User> following = new ArrayList<>();
 		for (Follow follow : from.getFollowing()) {
 			following.add(follow.getTo());
-		}		
+		}	
 		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
-		List<UserDto> userDtos = modelMapper.map(following, typeToken);
-		return userDtos;
+		return modelMapper.map(following, typeToken);
 	}
 
 	@Override
@@ -65,8 +56,15 @@ public class FollowServiceImpl implements FollowService {
 			follower.add(follow.getFrom());
 		}
 		Type typeToken =  new TypeToken<List<UserDto>>() {}.getType();
-		List<UserDto> userDtos = modelMapper.map(follower, typeToken);
-		return userDtos;
+		return modelMapper.map(follower, typeToken);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long fromUid, Long toUid) {
+		User from = userRepository.findById(fromUid).orElseThrow(NoSuchElementException::new);
+		User to = userRepository.findById(toUid).orElseThrow(NoSuchElementException::new);
+		followRepository.delete(new Follow(from, to));
 	}
 
 }

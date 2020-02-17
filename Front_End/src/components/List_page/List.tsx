@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import OutlinedButtons from "./ViewMore";
@@ -17,16 +8,20 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
 // Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getWineListByType, getWineListByNameList } from '../../../stores/wine_info/actions/wineInfo';
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import {
+  getWineListByType,
+  getWineListByNameList
+} from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
-import 'antd/dist/antd.css';
-import { Checkbox, Row, Col } from 'antd';
-import { render } from "react-dom";
+import "antd/dist/antd.css";
+import { Checkbox, Row, Col } from "antd";
+import "./List.css";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -40,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-      "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -54,11 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      width: '70px',
+      width: "70px",
       //paddingTop: '56.25%', // 16:9
-      position: 'relative',
-      marginLeft: '40%',
-      height: '230px',
+      position: "relative",
+      marginLeft: "40%",
+      height: "230px"
     },
     cardGrid: {
       paddingTop: theme.spacing(20),
@@ -83,8 +78,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       zIndex: 5,
-      position: "relative"
-      // marginTop: "20px",
+      position: "relative",
+      marginTop: "20px"
     },
     total: {
       display: "inline-block",
@@ -103,11 +98,13 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-            
     },
-    checkbox : {
-      marginLeft: '30%',
-      marginTop : '3%'
+    checkbox: {
+      marginLeft: "30%",
+      marginTop: "3%"
+    },
+    grid: {
+      width: 1500
     }
   })
 );
@@ -116,8 +113,9 @@ export default function List() {
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(30);
+  const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
+
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
@@ -127,21 +125,17 @@ export default function List() {
   const loadWineList = async () => {
     console.log("onWineList");
     await dispatch(getWineListByType("KOR_UP"));
-  }
+  };
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
-  }
+  };
   const numEachPage: number = 30;
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
-    setMaxValue((value) * numEachPage);
-    // setState({
-    //   minValue: (value - 1) * numEachPage,
-    //   maxValue: value * numEachPage
-    // });
+    setMaxValue(value * numEachPage);
   };
   async function onChangeCountryChk(checkedValues: any) {
-    console.log('checked = ', checkedValues);
+    console.log("checked = ", checkedValues);
     await loadWineListByChecked(checkedValues);
   }
   const handleEuropeBtn = () => {
@@ -150,6 +144,7 @@ export default function List() {
   const handleAmericaBtn = () => {
     setBtnNum(2);
   };
+
   if (!isWineSucceess && !wineState) {
     loadWineList();
     setWineState(true);
@@ -159,7 +154,12 @@ export default function List() {
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
             Wine List
           </Typography>
         </Container>
@@ -182,89 +182,138 @@ export default function List() {
           size="large"
           aria-label="large outlined primary button group"
         >
-          <Button className={classes.btn} onClick={handleEuropeBtn}>유럽 와인</Button>
-          <Button className={classes.btn} onClick={handleAmericaBtn}>신대륙 와인</Button>
+          <Button className={classes.btn} onClick={handleEuropeBtn}>
+            유럽 와인
+          </Button>
+          <Button className={classes.btn} onClick={handleAmericaBtn}>
+            신대륙 와인
+          </Button>
         </ButtonGroup>
       </div>
       <div className={classes.checkbox}>
-        {function () {
+        {(function() {
           if (btnNum == 1) {
             return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={4}>
-                  <Checkbox value="France"><span style={{fontSize : '22px'}}>France</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Germany"><span style={{fontSize : '22px'}}>Germany</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Italy"><span style={{fontSize : '22px'}}>Italy</span></Checkbox>
-                </Col>
-                <Col span={4}>
-                  <Checkbox value="Spain"><span style={{fontSize : '22px'}}>Spain</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
-          }
-          else if (btnNum == 2) {
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={4}>
+                    <Checkbox value="France">
+                      <span style={{ fontSize: "22px" }}>France</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Germany">
+                      <span style={{ fontSize: "22px" }}>Germany</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Italy">
+                      <span style={{ fontSize: "22px" }}>Italy</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <Checkbox value="Spain">
+                      <span style={{ fontSize: "22px" }}>Spain</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } else if (btnNum == 2) {
             return (
-              <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCountryChk}><Row>
-                <Col span={8}>
-                  <Checkbox value="USA"><span style={{fontSize : '22px'}}>USA</span></Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Chile"><span style={{fontSize : '22px'}}>Chile</span></Checkbox>
-                </Col>
-              </Row></Checkbox.Group>);
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="USA">
+                      <span style={{ fontSize: "22px" }}>USA</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Chile">
+                      <span style={{ fontSize: "22px" }}>Chile</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Australia">
+                      <span style={{ fontSize: "22px" }}>Australia</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="Argentina">
+                      <span style={{ fontSize: "22px" }}>Argentina</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
           }
-        }
-          ()}
+        })()}
       </div>
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {wineList.length}</Typography>
+        <Typography className={classes.total}>
+          Total {wineList.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
+        <Grid container className={classes.grid}>
           {wineList.slice(minValue, maxValue).map(wine => (
-            <Grid item xs={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={wine.nameKor}
-                  subheader={wine.nameEng}
-                />
-                {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
-                <CardMedia
-                  className={classes.media}
-                  image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
-                  title={wine.nameEng}
-                />
-                {/* </Link> */}
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {wine.info.slice(0, 50)}...
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon color="secondary" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <div className={classes.more}>
-                    <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
-                      <Button variant="outlined">View More</Button>
-                    </Link>
+            <Grid item xs={4} className={classes.grid}>
+              <div className="wine_list">
+                <li>
+                  <div className="tags">
+                    <span className="flag s32">
+                      <img
+                        className={wine.country}
+                        // src={`images/${wine.country}.png`}
+                        // alt={wine.country}
+                      ></img>
+                    </span>
+                    <em className={`tag type ${wine.type}`}>{wine.type}</em>
                   </div>
-                </CardActions>
-              </Card>
+                  <Link
+                    to={`/detail/${wine.wid}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="img">
+                      <img
+                        src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                        alt={wine.nameKor}
+                      />
+                    </div>
+                  </Link>
+                  <strong
+                    className="tit _dotdotdot is-truncated"
+                    // data-ellipse-height="70"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px"
+                    }}
+                  >
+                    {wine.nameEng}
+                  </strong>
+                  <span
+                    className="tit"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px",
+                      overflow: "hidden"
+                    }}
+                  >
+                    {wine.nameKor}
+                  </span>
+                  <div className="hashtag">
+                    #{wine.country} #{wine.type}
+                  </div>
+                  <Link to={`/detail/${wine.wid}`} className="button">
+                    <Button>View More</Button>
+                  </Link>
+                </li>
+              </div>
             </Grid>
           ))}
         </Grid>
@@ -275,9 +324,10 @@ export default function List() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
-          /></div>
+          />
+        </div>
         {/* <ReviewModal /> */}
       </Container>
-    </React.Fragment >
+    </React.Fragment>
   );
 }

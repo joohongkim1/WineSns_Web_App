@@ -14,6 +14,10 @@ import com.ssafy.wine.entity.Wine;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
 
+	List<Feed> findByRatingNull();
+
+	List<Feed> findByRatingNotNull();
+	
 	List<Feed> findByWineAndRatingNull(Wine wine);
 
 	List<Feed> findByWineAndRatingNotNull(Wine wine);
@@ -27,8 +31,8 @@ public interface FeedRepository extends CrudRepository<Feed, Long> {
 	List<Feed> findTop5ByRatingNotNullOrderByLikeNumDesc();
 
 	@Modifying
-	@Query(value = "UPDATE feed f set f.content = :content, f.wine_id = :wid, f.rating = :rating, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)
-	Integer updateFeed(@Param("fid") Long fid, @Param("wid") Wine wine, @Param("rating") BigDecimal rating, @Param("content") String content);
+	@Query(value = "UPDATE feed f set f.title = :title, f.content = :content, f.wine_id = :wid, f.rating = :rating, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)
+	Integer updateFeed(@Param("fid") Long fid, @Param("wid") Wine wine, @Param("rating") BigDecimal rating, @Param("title") String title, @Param("content") String content);
 
 	@Modifying
 	@Query(value = "UPDATE feed f set f.visit = f.visit + 1 where f.fid = :fid", nativeQuery = true)

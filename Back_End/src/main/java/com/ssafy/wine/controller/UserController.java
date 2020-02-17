@@ -1,6 +1,12 @@
 package com.ssafy.wine.controller;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,7 +50,7 @@ public class UserController {
 	private ModelMapper modelMapper;
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 단건 조회(FrontEnd에서 사용 금지)", notes = "access_token으로 회원을 조회한다")
 	@GetMapping(value = "/")
 	public SingleResult<UserDto> findUserById() {
@@ -57,7 +63,22 @@ public class UserController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "회원 전체 목록", notes = "access_token으로 회원을 조회한다")
+	@GetMapping(value = "/findByName")
+	public SingleResult<List<UserDto>> findByName(@RequestParam(required = false) String name) {
+		List<User> users = new ArrayList<>();
+		if (name == null)
+			users = userRepository.findAll();
+		else
+			users = userRepository.findByNickNameLike("%" + name + "%");
+		Type typeToken = new TypeToken<List<UserDto>>() {}.getType();
+		List<UserDto> userDtos = modelMapper.map(users, typeToken);
+		return responseService.getSingleResult(userDtos);
+	}
+
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 수정", notes = "회원정보를 수정한다")
 	@PutMapping(value = "/")
 	public CommonResult modify(@ApiParam(value = "이메일") @RequestParam String email,
@@ -70,7 +91,7 @@ public class UserController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "SNS 회원 수정", notes = "SNS 회원정보를 수정한다")
 	@PutMapping(value = "/sns/")
 	public CommonResult SNSmodify(@ApiParam(value = "닉네임") @RequestParam String nickName) {
@@ -81,7 +102,7 @@ public class UserController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "회원 삭제")
 	@DeleteMapping(value = "/")
 	public CommonResult delete() {

@@ -1,5 +1,6 @@
 package com.ssafy.wine.repo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -36,6 +37,9 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 
 	List<Wine> findByNameKorLike(String name);
 
+	@Query(value = "select DISTINCT w.country from wine w", nativeQuery = true)
+	List<String> findDistinctCountryAll();
+
 	@Query(value = "select DISTINCT if(w.winery like \"Chateau%\", \"Chateau\", w.winery) from wine w where w.country = :country", nativeQuery = true)
 	List<String> findDistinctWineryByCountry(@Param("country") String country);
 
@@ -50,26 +54,23 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 	@Query(value = "UPDATE wine w set w.like_num = :num where w.wid = :wid", nativeQuery = true)
 	Integer updateLikeNum(@Param("wid") Long wid, @Param("num") Integer num);
 
-	public default Predicate search(String type, Boolean sparkling, WineCountryEnum[] country, String[] winery,
-			Integer sweet) {
+	public default Predicate search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet,
+			BigDecimal alcohol) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QWine wine = QWine.wine;
-		if (winery != null) {
-			for (int i = 0; i < winery.length; i++) {
-				builder.or(wine.winery.contains(winery[i]));
-			}
-		} else if (country != null) {
+		if (country != null) {
 			for (int i = 0; i < country.length; i++) {
 				builder.or(wine.country.eq(country[i].toString()));
 			}
 		}
-
 		if (type != null)
 			builder.and(wine.type.eq(type));
 		if (sparkling != null)
 			builder.and(wine.sparkling.eq(sparkling));
 		if (sweet != null)
 			builder.and(wine.sweet.eq(sweet));
+		if (alcohol != null)
+			builder.and(wine.alcohol.loe(alcohol));
 
 		return builder;
 	}
