@@ -1,3 +1,21 @@
 @charset "utf-8";
-@font-face{font-weight:400;font-style:normal;font-family:"Malgun Gothic";src:url(/font/MalgunGothic.eot);src:url(/font/MalgunGothic.eot?#iefix) format("embedded-opentype"),url(/font/MalgunGothic.woff2) format("woff2"),url(/font/MalgunGothic.woff) format("woff"),url(/font/MalgunGothic.ttf) format("truetype")}
-@font-face{font-weight:400;font-style:normal;font-family:didot;src:url(/font/TheanoDidot-Regular.eot);src:url(/font/TheanoDidot-Regular.eot?#iefix) format("embedded-opentype"),url(/font/TheanoDidot-Regular.woff) format("woff"),url(/font/TheanoDidot-Regular.woff2) format("woff2"),url(/font/TheanoDidot-Regular.ttf) format("truetype")}
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Malgun Gothic";
+  src: url(/font/MalgunGothic.eot);
+  src: url(/font/MalgunGothic.eot?#iefix) format("embedded-opentype"),
+    url(/font/MalgunGothic.woff2) format("woff2"),
+    url(/font/MalgunGothic.woff) format("woff"),
+    url(/font/MalgunGothic.ttf) format("truetype");
+}
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: didot;
+  src: url(/font/TheanoDidot-Regular.eot);
+  src: url(/font/TheanoDidot-Regular.eot?#iefix) format("embedded-opentype"),
+    url(/font/TheanoDidot-Regular.woff) format("woff"),
+    url(/font/TheanoDidot-Regular.woff2) format("woff2"),
+    url(/font/TheanoDidot-Regular.ttf) format("truetype");
+}

@@ -175,36 +175,35 @@ strong {
 } */
 
 .wine_list .tags .flag.s32 .USA {
-  background-size: cover;
   display: block;
   background: url(./images/USA.png) no-repeat;
+  background-size: cover;
 }
 
 .wine_list .tags .flag.s32 .Argentina {
-  background-size: cover;
   display: block;
   background: url(images/Argentina.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Australia {
-  background-size: cover;
   display: block;
   background: url(images/Australia.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Chile {
-  background-size: cover;
   display: block;
   background: url(images/Chile.png) no-repeat;
-  height: 21px;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .France {
-  background-size: cover;
   display: block;
   background: url(images/France.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Germany {
-  background-size: cover;
   display: block;
   background: url(images/Germany.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Italy {
   display: block;
@@ -212,9 +211,9 @@ strong {
   background-size: cover;
 }
 .wine_list .tags .flag.s32 .Spain {
-  background-size: cover;
   display: block;
   background: url(images/Spain.png) no-repeat;
+  background-size: cover;
 }
 
 .pagination {
@@ -225,11 +224,3 @@ strong {
   margin-left: 30%;
   margin-top: 3%;
 }
-
-.checkbox span {
-  margin-left: 30px;
-}
-
-/* .checkbox span .USA:hover {
-  border-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1024px-Flag_of_the_United_States.svg.png");
-} */
