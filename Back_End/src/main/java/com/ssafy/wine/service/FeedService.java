@@ -1,27 +1,30 @@
 package com.ssafy.wine.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import com.ssafy.wine.dto.FeedDto;
+import com.ssafy.wine.dto.FeedInputDto;
+import com.ssafy.wine.dto.FeedOutputDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.enums.FeedRankEnum;
 import com.ssafy.wine.enums.FeedReviewEnum;
 
 public interface FeedService {
 
-	public Feed create(Long uid, Long wid, BigDecimal rating, String content);
+	public Feed create(Long uid, FeedInputDto feedInput);
 
-	public void delete(Long fid);
+	public List<FeedOutputDto> findAll(FeedReviewEnum type);
 
-	public Integer update(Long fid, Long wid, BigDecimal rating, String content);
-	
-	public List<FeedDto> findByWine(Long wid, FeedReviewEnum type);
+	public FeedOutputDto findById(Long fid);
 
-	public List<FeedDto> findByUser(Long uid, FeedReviewEnum type);
-	
-	public List<FeedDto> findRank(FeedRankEnum type);
+	public List<FeedOutputDto> findByWine(Long wid, FeedReviewEnum type);
+
+	public List<FeedOutputDto> findByUser(Long uid, FeedReviewEnum type);
+
+	public List<FeedOutputDto> findRank(FeedRankEnum type);
+
+	public Integer update(Long fid, FeedInputDto feedInput);
 
 	public Integer updateVisit(Long fid);
 
+	public void delete(Long fid);
 }

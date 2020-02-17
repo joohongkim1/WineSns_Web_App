@@ -12,6 +12,7 @@ export interface User {
   nickName: string,
 }
 
+
 export interface Feed {
     fid : number,
     title : string,

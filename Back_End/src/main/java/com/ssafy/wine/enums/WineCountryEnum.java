@@ -7,4 +7,6 @@ public enum WineCountryEnum {
 	Spain,
 	Germany,
 	Chile,
+	Australia,
+	Argentina
 }

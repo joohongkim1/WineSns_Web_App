@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import HTTPS from '../../api';
 // import { Wine } from "../reducers/feed_reducer";
 export const feedAllService = {
   getFeedAll
@@ -7,7 +8,7 @@ export const feedAllService = {
 
 async function getFeedAll(): Promise<Response> {
 
-  return axios.get('http://54.180.9.92:8090/WineProject/feed/findAll?type=REVIEW', {
+  return HTTPS.get('/feed/findAll?type=REVIEW', {
 
     headers: {
       'Access-Control-Allow-Origin': "*",
@@ -34,7 +35,7 @@ async function getFeedAll(): Promise<Response> {
 
 
 async function getWineListByName(name : string): Promise<Response> {
-  return axios.get('http://54.180.9.92:8090/WineProject/wine/readByName', {
+  return HTTPS.get('/wine/readByName', {
     params: {
       name : name
     },

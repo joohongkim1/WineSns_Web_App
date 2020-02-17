@@ -1,7 +1,6 @@
 package com.ssafy.wine.service;
 
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,7 +12,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.wine.dto.FeedDto;
+import com.google.common.collect.Lists;
+import com.ssafy.wine.dto.FeedInputDto;
+import com.ssafy.wine.dto.FeedOutputDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.entity.Wine;
@@ -39,21 +40,36 @@ public class FeedServiceImpl implements FeedService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Feed create(Long uid, Long wid, BigDecimal rating, String content) {
+	public Feed create(Long uid, FeedInputDto feedInput) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-		Feed feed = feedRepository.save(new Feed(user, wine, rating, content));
-		return feed;
+		Wine wine = null;
+		if (feedInput.getWid() != null)
+			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
+		return feedRepository.save(new Feed(user, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent()));
 	}
 
 	@Override
-	@Transactional
-	public void delete(Long fid) {
-		feedRepository.deleteById(fid);
+	public List<FeedOutputDto> findAll(FeedReviewEnum type){
+		List<Feed> feeds = new ArrayList<>();
+		switch (type) {
+		case ALL:
+			feeds = Lists.newArrayList(feedRepository.findAll());
+			break;
+		case FEED:
+			feeds = feedRepository.findByRatingNull();
+			break;
+		case REVIEW:
+			feeds = feedRepository.findByRatingNotNull();
+			break;
+		default:
+			break;
+		}
+		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(feeds, typeToken);
 	}
 
 	@Override
-	public List<FeedDto> findByWine(Long wid, FeedReviewEnum type) {
+	public List<FeedOutputDto> findByWine(Long wid, FeedReviewEnum type) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
@@ -69,14 +85,12 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedDto>>() {
-		}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
+		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(feeds, typeToken);
 	}
 
 	@Override
-	public List<FeedDto> findByUser(Long uid, FeedReviewEnum type) {
+	public List<FeedOutputDto> findByUser(Long uid, FeedReviewEnum type) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
@@ -92,14 +106,12 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedDto>>() {
-		}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
+		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(feeds, typeToken);
 	}
 
 	@Override
-	public List<FeedDto> findRank(FeedRankEnum type) {
+	public List<FeedOutputDto> findRank(FeedRankEnum type) {
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
 		case LIKE_5:
@@ -111,23 +123,35 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedDto>>() {
-		}.getType();
-		List<FeedDto> feedDtos = modelMapper.map(feeds, typeToken);
-		return feedDtos;
+		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(feeds, typeToken);
 	}
 
 	@Override
 	@Transactional
-	public Integer update(Long fid, Long wid, BigDecimal rating, String content) {
-		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-		return feedRepository.updateFeed(fid, wine, rating, content);
+	public Integer update(Long fid, FeedInputDto feedInput) {
+		Wine wine = null;
+		if (feedInput.getWid() != null)
+			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
+		return feedRepository.updateFeed(fid, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent());
 	}
 
 	@Override
 	@Transactional
 	public Integer updateVisit(Long fid) {
 		return feedRepository.updateVisit(fid);
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Long fid) {
+		feedRepository.deleteById(fid);
+	}
+
+	@Override
+	public FeedOutputDto findById(Long fid) {
+		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(feed, FeedOutputDto.class);
 	}
 
 }

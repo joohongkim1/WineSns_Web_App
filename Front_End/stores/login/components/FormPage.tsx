@@ -50,7 +50,7 @@ class FormPage extends React.Component<IProps, IState> {
     
     this.setState({
       id: res.googleId,
-      nickname: "temp",
+      nickname: "HELLO",
       provider: "GOOGLE"
     });
 
@@ -65,7 +65,7 @@ class FormPage extends React.Component<IProps, IState> {
     // console.log(res.profile.properties.nickname);
     this.setState({
       id: res.profile.id,
-      nickname: res.profile.properties.nickname,
+      nickname: "HELLO",
       provider: "KAKAO"
     });
 

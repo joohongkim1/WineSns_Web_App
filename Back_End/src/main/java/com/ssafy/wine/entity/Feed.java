@@ -44,6 +44,9 @@ public class Feed {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column
+	private String title;
+	
 	@Column(length = 4000)
 	private String content;
 
@@ -77,15 +80,17 @@ public class Feed {
 	private List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Feed(User user, String content) {
+	public Feed(User user, String title, String content) {
 		this.user = user;
+		this.title = title;
 		this.content = content;
 	}
 
 	@Builder
-	public Feed(User user, Wine wine, BigDecimal rating, String content) {
+	public Feed(User user, Wine wine, BigDecimal rating, String title, String content) {
 		this.user = user;
 		this.wine = wine;
+		this.title = title;
 		this.rating = rating;
 		this.content = content;
 	}

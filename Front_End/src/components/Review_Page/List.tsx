@@ -1,34 +1,22 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import ReviewInfo from "../../components/Interface/Review";
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
 // Redux
-import { useSelector,  useDispatch} from 'react-redux';
-import { rootState } from '../../../stores/login/store';
-import { getFeedAll } from '../../../stores/feed/actions/feedAll';
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import { getFeedAll } from "../../../stores/feed/actions/feedAll";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
     root: {
       display: "flex",
       flexDirection: "column",
@@ -43,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
         "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      
+
       backgroundPosition: "left",
       color: "#ffffff"
     },
@@ -98,14 +86,13 @@ const useStyles = makeStyles((theme: Theme) =>
       float: "right",
       marginRight: "20px"
     },
-    more : {
+    more: {
       "& > *": {
         margin: theme.spacing(1, 8)
       }
     }
   })
 );
-
 
 export default function List() {
   const classes = useStyles();
@@ -114,40 +101,47 @@ export default function List() {
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { feedAll, isFeedAllPending, isFeedAllSucceess, isFeedAllError} = useSelector(
-    (state: rootState) => state.feedAllReducer
-  );
+  const {
+    feedAll,
+    isFeedAllPending,
+    isFeedAllSucceess,
+    isFeedAllError
+  } = useSelector((state: rootState) => state.feedAllReducer);
 
-  let start : number = 0;
-  let end : number = 0;
+  let start: number = 0;
+  let end: number = 0;
 
   const loadReviewList = async () => {
     console.log("onReviewList");
     await dispatch(getFeedAll());
-  }
-  const numEachPage : number = 30;
+  };
+  const numEachPage: number = 30;
 
-  const handleChange = (value : number) => {
-    setMinValue((value-1) * numEachPage);
-    setMaxValue((value) * numEachPage);
+  const handleChange = (value: number) => {
+    setMinValue((value - 1) * numEachPage);
+    setMaxValue(value * numEachPage);
     // setState({
     //   minValue: (value - 1) * numEachPage,
     //   maxValue: value * numEachPage
     // });
   };
 
-  if(!isFeedAllSucceess && !reviewState) {
+  if (!isFeedAllSucceess && !reviewState) {
     loadReviewList();
     setReviewState(true);
   } else {
-
   }
 
   return (
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
             Review List
           </Typography>
         </Container>
@@ -178,32 +172,31 @@ export default function List() {
       </div>
 
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {feedAll.length}</Typography>
+        <Typography className={classes.total}>
+          Total {feedAll.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
-     
+
         <Grid container spacing={10}>
           {feedAll.slice(minValue, maxValue).map(feed => (
-          
-             <ReviewInfo
-             fid={feed.fid}
-             title={feed.title}
-            nameEng={feed.wine.nameEng}
-            content={feed.content}
-            rating={feed.rating}
-           
-          />
-     
+            <ReviewInfo
+              fid={feed.fid}
+              title={feed.title}
+              nameEng={feed.wine.nameEng}
+              content={feed.content}
+              rating={feed.rating}
+            />
           ))}
-
         </Grid>
         <div>
-        <Pagination
-      total={feedAll.length}
-      // showTotal={total => `Total ${total} items`}
-      onChange={handleChange}
-      pageSize={numEachPage}
-      defaultCurrent={1}
-    /></div>
+          <Pagination
+            total={feedAll.length}
+            // showTotal={total => `Total ${total} items`}
+            onChange={handleChange}
+            pageSize={numEachPage}
+            defaultCurrent={1}
+          />
+        </div>
       </Container>
     </React.Fragment>
   );

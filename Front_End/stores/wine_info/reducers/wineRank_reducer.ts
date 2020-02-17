@@ -1,5 +1,5 @@
 import { actions } from '../actions/mainRank';
-
+import {Feed} from "../../feed/reducers/feed_detail_reducer";
 
 // example consuming code
 export interface Wine {
@@ -28,19 +28,23 @@ export interface Wine {
 
 export interface wineRankState  {
   wineTop3 : Wine[],
-  wineTop10 : Wine[],
+  wineTop5 : Wine[],
+  reviewTop5 : Feed[],
   isWinePending : boolean,
-  isWineTop3Succeess : boolean,
-  isWineTop10Succeess : boolean,
+  isWineTop3Success : boolean,
+  isReviewTop5Success : boolean,
+  isWineTop5Success : boolean,
   isWineError : string
 
 }
 const initialState : wineRankState = { 
   wineTop3 : [],
-    wineTop10 : [],
+    wineTop5 : [],
+    reviewTop5 : [],
     isWinePending : false,
-    isWineTop3Succeess : false,
-    isWineTop10Succeess : false,
+    isWineTop3Success : false,
+    isWineTop5Success : false,
+    isReviewTop5Success : false,
     isWineError : ''
 }
 
@@ -48,24 +52,30 @@ export default function rootReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_WINE_INFO_PENDING:
       return {...state, 
-        isLoginPending: action.isWinePending
+        isWinePending: action.isWinePending
       }
 
     case actions.SET_WINE_TOP3_SUCCESS:
       return {...state,
-        isLoginSuccess: action.isWineSuccess,
+        isWineTop3Success: action.isWineTop3Success,
         wineTop3 : action.wineTop3
       }
 
-      case actions.SET_WINE_TOP10_SUCCESS:
+      case actions.SET_WINE_TOP5_SUCCESS:
         return {...state,
-          isLoginSuccess: action.isWineSuccess,
-          wineTop10 : action.wineTop10
+          isWineTop5Success: action.isWineTop5Succeess,
+          wineTop5 : action.wineTop5
+        }
+
+      case actions.SET_REVIEW_TOP5_SUCCESS:
+        return {...state,
+          isReviewTop5Success: action.isReviewTop5Success,
+          reviewTop5 : action.reviewTop5
         }
 
     case actions.SET_WINE_INFO_ERROR:
       return {...state,
-        loginError: action.WineError
+        isWineError: action.WineError
       }
     default:
       return state;

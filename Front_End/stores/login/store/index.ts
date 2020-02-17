@@ -12,6 +12,7 @@ import feedReducer from "../../feed/reducers/feed_reducer";
 import feedAllReducer from "../../feed/reducers/feed_all_reducer";
 import SmartSearchReducer from "../../smartSearch/reducers/wine_reducer";
 import MyFeedReducer from "../../my_sns/reducers/userFeed_reducer";
+import FeedDetailReducer from "../../feed/reducers/feed_detail_reducer";
 
 import {loginState} from "../reducers/login_reducer";
 import {registerState} from "../../register/reducers/register_reducer";
@@ -26,6 +27,7 @@ import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
 // import write, {ContentsState} from "../../mysns/actions/write"
 import loading, {ILoadingState} from '../../mysns/lib/loading';
 
+import {feedDetail} from "../../feed/reducers/feed_detail_reducer";
 
 const middlewares: any[] = [];
 
@@ -44,6 +46,7 @@ const rootReducer = combineReducers({
   MyFeedReducer,
   write,
   loading,
+  FeedDetailReducer
 });
 
 export interface rootState {
@@ -58,6 +61,7 @@ export interface rootState {
   MyFeedReducer : userFeedState,
   write: ContentsState,
   loading: ILoadingState,
+  FeedDetailReducer : feedDetail,
 }
 
 export function* rootSaga() {
