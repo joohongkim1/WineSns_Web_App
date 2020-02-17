@@ -4,6 +4,7 @@ import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import { Typography, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -24,12 +25,29 @@ import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, cr
 ,deleteCommentAndUpdate} from '../../../../stores/feed/actions/feedDetail';
 
 import { Comment, Form, Header } from 'semantic-ui-react'
+
+
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
       maxWidth: 360,
-      backgroundColor: theme.palette.background.paper
+      backgroundColor: theme.palette.background.paper,
+  
+    },
+
+    table: {
+      maxHeight : "100px",
+      overflowY: "auto"
     },
 
     back: {
@@ -41,8 +59,8 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center"
     },
     dividerFullWidth: {
-      fontSize: 24,
-      marginTop: 50
+      fontSize: 20,
+      marginTop: 20
     },
     avatar: {
       display: "inline-block"
@@ -165,8 +183,8 @@ export default function ReviewDetail(props: MyComponentProps) {
 
   }
   return (
-
-    <Container fixed style={{ height: 1000 }}>
+ 
+    <Container>
       <div style={{ height: 100 }}></div>
       <Box color="text.primary">
         <Link
@@ -194,7 +212,7 @@ export default function ReviewDetail(props: MyComponentProps) {
 if (likeState) {
 
   return (
-    <IconButton aria-label="add to favorites" onClick={hateThis}>
+    <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
       <FavoriteIcon color="secondary" />
 
     </IconButton>
@@ -202,7 +220,7 @@ if (likeState) {
 } else {
   return (
 
-    <IconButton aria-label="add to favorites" onClick={likeThis}>
+    <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
       <FavoriteIcon color="inherit" />
     </IconButton>
   );
@@ -242,6 +260,7 @@ if (likeState) {
         </Box>
         <Divider className={classes.divider} />
 
+
         <Card variant="outlined">
           <CardContent>
             <Typography
@@ -263,28 +282,27 @@ if (likeState) {
     
 
       </Box>
+      <Box style={{overflow:"auto"}}> 
       <Divider component="li" />
-      <Card variant="outlined" style={{ marginTop: 40 }}>
-        <CardContent>
+      <Table className={classes.table}>
+        
         {commentList.map((comment: any) => (
    
-          <Typography
-            className={classes.dividerFullWidth}
-            color="initial"
-            display="block"
-            variant="caption"
-          >
+   <TableRow key={comment.cid}>
+   <TableCell component="th" scope="row">
             {comment.content} 작성자 : {comment.user.nickName} : {comment.createdTimeAt}
 
             {comment.user.uid == sessionStorage.getItem("uid") ?
                 (<Button onClick={() => deleteCommentByUser(comment.cid)}>댓글삭제</Button>)
                   : (<span></span>)
         }
-          </Typography>
+          </TableCell>
+          </TableRow>
          
           ))}
-        </CardContent>
-      </Card>
+        
+     </Table>
+      </Box>
 
       <TextField style={{ width: "100%", marginTop: 20 }}onChange={e =>
                                                                     setComment(e.target.value)
@@ -296,7 +314,7 @@ if (likeState) {
       <Button style={{ display: "inline-block", float: "right" }} onClick={userComment}>
         댓글 작성
       </Button>
-
+    
     </Container>
   );
 }

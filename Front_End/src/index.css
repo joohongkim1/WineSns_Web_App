@@ -1,18 +1,4 @@
 @font-face {
-  font-family: "Recipekorea";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "NIXGONL-Vb";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONL-Vb.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
   font-family: "S-CoreDream-8Heavy";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff")
     format("woff");
@@ -26,4 +12,8 @@ body {
 
 .MuiInputBase-input {
   color: black;
+}
+
+.MuiButtonBase-root .MuiButton-root .MuiButton-text {
+  color: rgba(116, 4, 4, 0.87);
 }

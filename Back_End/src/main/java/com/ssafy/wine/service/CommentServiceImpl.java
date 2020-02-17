@@ -49,24 +49,28 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	@Transactional
-	public void delete(Long cid) {
-		commentRepository.deleteById(cid);
+	public CommentDto findById(Long cid) {
+		Comment comment =  commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(comment, CommentDto.class);
 	}
-
+	
 	@Override
 	public List<CommentDto> findByFeed(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
-		Type typeToken = new TypeToken<List<CommentDto>>() {
-		}.getType();
-		List<CommentDto> commentDtos = modelMapper.map(feed.getComments(), typeToken);
-		return commentDtos;
+		Type typeToken = new TypeToken<List<CommentDto>>() {}.getType();
+		return modelMapper.map(feed.getComments(), typeToken);
 	}
 
 	@Override
 	@Transactional
 	public Integer update(Long cid, String content) {
 		return commentRepository.updateFeed(cid, content);
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Long cid) {
+		commentRepository.deleteById(cid);
 	}
 
 }
