@@ -2,7 +2,7 @@ import React from "react";
 import "./Search.css";
 export default function Search() {
   return (
-    <div className="fieldcontainer">
+    <div>
       <input type="submit" name="searchbtn" id="searchbtn" value="" />
       <input
         type="text"
