@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import './css/common.css';
-import './css/contents.css';
-import './css/jquery.jscrollpane.css';
 import './css/reset.css';
-import './css/font.css';
 import {Link} from "react-router-dom";
 import SmartSearchList from "../SearchList/List";
 
