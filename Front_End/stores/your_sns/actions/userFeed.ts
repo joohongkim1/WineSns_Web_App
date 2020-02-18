@@ -1,6 +1,6 @@
 import { userFeedService } from '../services/userFeed';
 import { createBrowserHistory } from 'history';
-import {userFeedState} from "../reducers/userFeed_reducer";
+import {friendFeedState} from "../reducers/userFeed_reducer";
 
 export const actions = {
   SET_USER_FEED_INFO_PENDING: 'SET_USER_FEED_INFO_PENDING',
@@ -21,7 +21,7 @@ export function getUserFeedList(type: string, uid : number) {
       console.log(response);
       console.log("success");
 
-      let userFeed : userFeedState[] = response;
+      let userFeed : friendFeedState[] = response;
 
       // let wineList : Wine[] = response.map((item: Wine) => {
       //   console.log(item);
@@ -48,7 +48,7 @@ function setUserFeedPending(isUserFeedPending : boolean) {
   };
 }
 
-function setUserFeedSuccess(isUserFeedSuccess : boolean, userFeed : userFeedState[]) {
+function setUserFeedSuccess(isUserFeedSuccess : boolean, userFeed : friendFeedState[]) {
   return {
     type: actions.SET_USER_FEED_INFO_SUCCESS,
     isUserFeedSuccess,

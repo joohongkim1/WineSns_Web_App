@@ -1,6 +1,6 @@
 import { userFollowService } from '../services/follow';
 import { createBrowserHistory } from 'history';
-import {userFollow} from "../reducers/follow_reducer";
+import {friendFollow} from "../reducers/follow_reducer";
 import {User} from "../reducers/userFeed_reducer";
 
 export const actions = {
@@ -46,7 +46,7 @@ export function getUserFollowList(uid : number) {
 //    dispatch(setUserFollowError("not yet"));
  
    
-   await userFollowService.getUserFollowerList(uid).then(
+   await userFollowService.getUserFollowList(uid).then(
      (response : any) => {
       dispatch(setUserFollowPending(false));
   
@@ -71,7 +71,6 @@ export function getUserFollowList(uid : number) {
      await userFollowService.UnfollowUser(uid).then(
        async (response : any) => {
         dispatch(setUserFollowPending(true));
-        userFollowService.getUserFollowList();
  
        },
        error => {
@@ -90,7 +89,7 @@ export function getUserFollowList(uid : number) {
      await userFollowService.followUser(uid).then(
        async (response : any) => {
         dispatch(setUserFollowPending(true));
-        userFollowService.getUserFollowList();
+      
  
        },
        error => {

@@ -2,7 +2,7 @@ import { actions } from '../actions/follow'
 import {User} from "../reducers/userFeed_reducer";
 
 
-  export interface userFollow {
+  export interface friendFollow {
     follow : User[],
     follower : User[],
     isUserFoolowPending : boolean,
@@ -11,7 +11,7 @@ import {User} from "../reducers/userFeed_reducer";
   }
 
 
-const initialState : userFollow = { 
+const initialState : friendFollow = { 
 
     follow : [],
     follower :[],

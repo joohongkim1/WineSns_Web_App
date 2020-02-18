@@ -25,7 +25,7 @@ export interface Feed {
     user: User
   }
 
-  export interface userFeedState {
+  export interface friendFeedState {
     userFeed : Feed[],
     isUserFeedPending : boolean,
     isUserFeedSucceess : boolean,
@@ -35,7 +35,7 @@ export interface Feed {
 
 
 
-const initialState : userFeedState = { 
+const initialState : friendFeedState = { 
 
   // fid: 0,
   // content: '',
