@@ -13,20 +13,19 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
   console.log('publish 받음')
   let data = JSON.stringify({
     content: content,
-      rating: rating,
+      rating: 10,
       title: title,
-      wid: wid
+      wid: 10
   })
-  return HTTPS.post('/feed/create',data, {
-    
+  let url = '/feed/create'
+  return HTTPS.post(url, data, {
     headers : { 
-      TOKEN : localStorage.getItem('token'),
-      'Content-Type': 'application/json',
-    }
-    }
-  )
+      'TOKEN' : localStorage.getItem('token'),
+      'Content-Type': 'application/json; charset=utf-8'
+      }
+  })
+
     .then(function (response: Response | any) {
-      console.log('then')
       if (!response) {
         return Promise.reject(response.statusText);
 
@@ -34,8 +33,6 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
       return response.data as any;
     })
     .catch((e) => {
-      console.log('catch8789')
-      console.log(e);
       return Promise.reject('Backend not reachable');
 
     })
