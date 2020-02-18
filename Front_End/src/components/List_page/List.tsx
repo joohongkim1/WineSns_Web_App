@@ -3,13 +3,13 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import "antd/dist/antd.css";
 import { Pagination } from "antd";
+
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
@@ -21,6 +21,7 @@ import {
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
 import "./List.css";
+import Search from "./Search";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -252,7 +253,9 @@ export default function List() {
         <Typography className={classes.total}>
           Total {wineList.length}
         </Typography>
+        <Search />
         <Divider variant="middle" className={classes.divider} />
+
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
             <Grid item xs={4}>

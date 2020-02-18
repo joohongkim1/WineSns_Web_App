@@ -114,7 +114,7 @@ p {
 }
 
 .sz619 {
-  height: 400px;
+  height: 600px;
 }
 
 .product_wine + .btn_area {
@@ -309,4 +309,5 @@ button:hover:after {
 
 #wineKorName {
   font-family: "S-CoreDream-8Heavy";
+  font-size: 32px;
 }
