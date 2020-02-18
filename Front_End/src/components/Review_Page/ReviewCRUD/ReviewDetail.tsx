@@ -19,7 +19,6 @@ import IconButton from "@material-ui/core/IconButton";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 // Redux
-<<<<<<< HEAD
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
 import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike 
@@ -36,18 +35,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-=======
-import { useSelector, useDispatch } from "react-redux";
-import { rootState } from "../../../../stores/login/store";
-import {
-  getFeedDetailByFID,
-  postComment,
-  followUserByUID,
-  UnfollowUserByUID,
-  createFeedLike,
-  deleteFeedLike
-} from "../../../../stores/feed/actions/feedDetail";
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -162,7 +149,6 @@ export default function ReviewDetail(props: MyComponentProps) {
     setLikeState(false);
   };
 
-<<<<<<< HEAD
 
   
   const deleteCommentByUser = async (cid : any) => {
@@ -184,8 +170,6 @@ export default function ReviewDetail(props: MyComponentProps) {
 
 
 
-=======
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
   if (!feedState) {
     dispatch(getFeedDetailByFID(fid));
     setFeedState(true);
@@ -200,20 +184,25 @@ export default function ReviewDetail(props: MyComponentProps) {
         break;
       }
     }
+
+
+    
+    let userFollow = JSON.parse(
+      sessionStorage.getItem("userFollow") || "{}"
+    );
+
+    for (var i = 0; i < userFollow.length; i++) {
+      if (userFollow[i].uid == feedDetail.user.uid) {
+        setFollowState(true);
+        break;
+      }
+    }
   } else {
-<<<<<<< HEAD
 
   }
   return (
  
     <Container>
-=======
-    console.log("코멘트들");
-    console.log(feedDetail);
-  }
-  return (
-    <Container fixed style={{ height: 1000 }}>
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
       <div style={{ height: 100 }}></div>
       <Box color="text.primary">
         <Link
@@ -234,7 +223,6 @@ export default function ReviewDetail(props: MyComponentProps) {
         <br />
         {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
         <span>
-<<<<<<< HEAD
           <Typography className={classes.visit}>[방문자수] {feedDetail.visit}</Typography>
           <Typography className={classes.visit}>[좋아요수] {feedDetail.likeNum}</Typography>
           {(function () {
@@ -256,29 +244,6 @@ if (likeState) {
   );
 }
 })()}
-=======
-          <Typography className={classes.visit}>
-            [방문자수] {feedDetail.visit}
-          </Typography>
-          <Typography className={classes.visit}>
-            [좋아요수] {feedDetail.likeNum}
-          </Typography>
-          {(function() {
-            if (likeState) {
-              return (
-                <IconButton aria-label="add to favorites" onClick={hateThis}>
-                  <FavoriteIcon color="secondary" />
-                </IconButton>
-              );
-            } else {
-              return (
-                <IconButton aria-label="add to favorites" onClick={likeThis}>
-                  <FavoriteIcon color="inherit" />
-                </IconButton>
-              );
-            }
-          })()}
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
           {(function() {
             if (!followState) {
               return (
@@ -336,7 +301,6 @@ if (likeState) {
       </Box>
       <Box style={{overflow:"auto"}}> 
       <Divider component="li" />
-<<<<<<< HEAD
       <Table className={classes.table}>
         
         {commentList.map((comment: any) => (
@@ -352,22 +316,6 @@ if (likeState) {
           </TableCell>
           </TableRow>
          
-=======
-      <Card variant="outlined" style={{ marginTop: 40 }}>
-        <CardContent>
-          {commentList.map((comment: any) => (
-            <div>
-              <Typography
-                className={classes.dividerFullWidth}
-                color="initial"
-                display="block"
-                variant="caption"
-              >
-                {comment.content} 작성자 : {comment.user.nickName} :{" "}
-                {comment.createdTimeAt}
-              </Typography>
-            </div>
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
           ))}
         
      </Table>
@@ -387,10 +335,7 @@ if (likeState) {
       >
         댓글 작성
       </Button>
-<<<<<<< HEAD
     
-=======
->>>>>>> 2154ead49415719006250c3762694eb979d20a84
     </Container>
   );
 }

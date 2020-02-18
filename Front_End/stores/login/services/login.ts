@@ -112,17 +112,16 @@ async function likeFeedByUser(): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-      console.log(response);
-      console.log(response.data);
+
       sessionStorage.setItem(
         "userLikeFeed", JSON.stringify(response.data)
       );
       
-      console.log("user Feed Like");
+
 
       let userLikeFeed = JSON.parse(sessionStorage.getItem('userLikeFeed') || '{}');
       
-      console.log(userLikeFeed);
+    
       
       return response;
     })
@@ -132,6 +131,47 @@ async function likeFeedByUser(): Promise<Response> {
     })
 
 }
+
+
+
+
+async function getUserFollowList(): Promise<Response> {
+
+  return HTTPS.get('/follow/findByFollowing', {
+    params: {
+      fromUid : sessionStorage.getItem('uid')
+    },
+    headers: {
+      'TOKEN' : localStorage.getItem('token'),
+    }
+  }
+  )
+    .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+
+      }
+
+      sessionStorage.setItem(
+        "userFollow", JSON.stringify(response.data)
+      );
+      
+
+
+      //let userFollow = JSON.parse(sessionStorage.getItem('userFollow') || '{}');
+      
+    
+      
+      return response;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
 
 
 
