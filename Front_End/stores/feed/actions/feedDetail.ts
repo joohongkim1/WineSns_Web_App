@@ -83,6 +83,7 @@ export function followUserByUID(uid : number) {
    await feedService.followUser(uid).then(
      async (response : any) => {
       dispatch(setFeedDetailPending(false));
+      feedService.getUserFollowList();
      },
      error => {
       dispatch(setFeedDetailPending(false));
@@ -97,6 +98,7 @@ export function UnfollowUserByUID(uid : number) {
    await feedService.UnfollowUser(uid).then(
      async (response : any) => {
       dispatch(setFeedDetailPending(false));
+      feedService.getUserFollowList();
      },
      error => {
       dispatch(setFeedDetailPending(false));
