@@ -10,7 +10,7 @@ export const actions = {
 }
 
 export function getUserFollowList() {
-  return async (dispatch: (arg0: { type: string; isFeedPending?: boolean; isFeedSuccess?: boolean; FeedError?: string; }) => void) => {
+  return async (dispatch: (arg0: { type: string; isUserFollowPending?: boolean; isUserFollowSuccess?: boolean; UserFollowError?: string; }) => void) => {
    dispatch(setUserFollowPending(true));
 
 //    dispatch(setUserFollowError("not yet"));
@@ -38,30 +38,14 @@ export function getUserFollowList() {
 
 
 
-export function followUserByUID(uid : number) {
-    return async (dispatch: (arg0: { type: string; isFeedDetailPending?: boolean; isFeedDetailSuccess?: boolean; FeedDetailError?: string; }) => void) => {
-     dispatch(setUserFollowPending(true));
-     await userFollowService.followUser(uid).then(
-       async (response : any) => {
-        dispatch(setUserFollowPending(false));
-       },
-       error => {
-        dispatch(setUserFollowPending(false));
-        dispatch(setUserFollowError("user follow error"));
-       }
-     );
-   }
-  }
-  
   export function UnfollowUserByUID(uid : number) {
-    return async (dispatch: (arg0: { type: string; isFeedDetailPending?: boolean; isFeedDetailSuccess?: boolean; FeedDetailError?: string; }) => void) => {
+    return async (dispatch: (arg0: { type: string; isUserFollowPending?: boolean; isUserFollowSuccess?: boolean; UserFollowError?: string; }) => void) => {
      dispatch(setUserFollowPending(true));
      await userFollowService.UnfollowUser(uid).then(
        async (response : any) => {
-        dispatch(setUserFollowPending(false));
-        
-
+        dispatch(setUserFollowPending(true));
         userFollowService.getUserFollowList();
+ 
        },
        error => {
         dispatch(setUserFollowPending(false));
@@ -72,7 +56,7 @@ export function followUserByUID(uid : number) {
   }
   
 
-function setUserFollowPending(isUserFollowPending : boolean) {
+export function setUserFollowPending(isUserFollowPending : boolean) {
   return {
     type: actions.SET_USER_FOLLOW_PENDING,
     isUserFollowPending

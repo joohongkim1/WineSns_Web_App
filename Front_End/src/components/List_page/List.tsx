@@ -15,13 +15,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
 import {
   getWineListByType,
-  getWineListByNameList
+  getWineListByNameList,
+  searchWineByName
 } from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
 import "./List.css";
 import Search from "./Search";
+
+
+import "./Search.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -110,7 +114,7 @@ export default function List() {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
-
+  const[search, setSearch] = useState('');
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
@@ -118,11 +122,17 @@ export default function List() {
   let start: number = 0;
   let end: number = 0;
   const loadWineList = async () => {
-    console.log("onWineList");
+   
     await dispatch(getWineListByType("KOR_UP"));
   };
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
+  };
+
+
+  const submitSearch = async () => {
+  
+    await dispatch(searchWineByName(search));
   };
   const numEachPage: number = 15;
   const handleChange = (value: number) => {
@@ -165,7 +175,7 @@ export default function List() {
           className={classes.home}
           style={{ textDecoration: "none" }}
         >
-          <Typography>Home > 와인 list</Typography>
+          <Typography>Home > 와인 list</Typography>ㄹ
         </Link>
       </div>
       <div className={classes.divider2}>
@@ -254,7 +264,22 @@ export default function List() {
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Search />
+        <div>
+        <button name="searchbtn" id="searchbtn" value="" onClick={submitSearch}></button>
+      <input
+        type="text"
+        name="s"
+        id="s"
+        className="searchfield"
+        placeholder="와인명 입력"
+        onChange={e =>
+          setSearch(e.target.value)
+        }
+        value={search}
+      />
+
+                                                
+</div>
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
