@@ -28,7 +28,7 @@ const ContentsStateRecord = Record({
   wid: 0,
   post: null,
   postError: null,
-});
+}); 
 
 interface params {
   key:number,
@@ -100,23 +100,30 @@ const write = handleActions<ContentsStateParams, any>(
         return state;
       }
     },
-    [WRITE_POST]: (state)=> ({
+    [WRITE_POST]: (state:any, action:any) => ({
       ...state,
-      // post와 postError를 초기화
       post: null,
-      postError: null
+      postError: null,
+      [action.payload]: state,
+    }),
 
-    }),   
+    //   ...state,
+    //   // post와 postError를 초기화
+    //   post: null,
+    //   postError: null,
+      
+
+    // }),   
     // 포스트 작성 성공
-    [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
-      ...state,
-      post
-    }),
+    [WRITE_POST_SUCCESS]: (state, { payload: post }) => {
+      state.post = post
+      return state;
+    },
     // 포스트 작성 실패
-    [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
-      ...state,
-      postError,
-    }),
+    [WRITE_POST_FAILURE]: (state, { payload: postError }) => {
+      state.postError = postError;
+      return state;
+    },
   },
   initialState,
 );

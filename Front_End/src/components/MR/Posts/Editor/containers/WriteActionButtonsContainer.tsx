@@ -39,14 +39,6 @@ const WriteActionButtonsContainer = ( {history}: Props ) => {
         wid,
       }),
     );
-    dispatch(
-      postsAPI.writePost({
-        content,
-        rating,
-        title,
-        wid,
-      })
-    )
     // dispatch(
     //   writeSaga()
     // )

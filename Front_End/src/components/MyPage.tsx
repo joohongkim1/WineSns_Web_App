@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import TimelineSection from './MR/TimelineSection';
 import MainContent from './MR/MainContent';
-import MyPageList from './MR/MyPageList';
+
 
 // import CssBaseline from '@material-ui/core/CssBaseline';
 // import { Container } from '@material-ui/core';
@@ -78,9 +78,7 @@ export default function MyPage() {
         </Toolbar>
       </AppBar>
     </div>
-      <Route path="/mypage" exact component={MainContent} />
-      <Route path="/mypage/:title" component={MyPageList} />
-
+      <MainContent />
       </div>
     </div>
   );
