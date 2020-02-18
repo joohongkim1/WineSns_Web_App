@@ -3,13 +3,13 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import "antd/dist/antd.css";
 import { Pagination } from "antd";
+
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
@@ -21,6 +21,7 @@ import {
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
 import "./List.css";
+import Search from "./Search";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       backgroundColor: "#36342f",
-      marginBottom: "80px"
+      marginBottom: "80px",
+      height: 10
     },
     divider2: {
       backgroundColor: "#36342f",
@@ -98,13 +100,6 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-    },
-    checkbox: {
-      marginLeft: "30%",
-      marginTop: "3%"
-    },
-    grid: {
-      width: 1500
     }
   })
 );
@@ -129,7 +124,7 @@ export default function List() {
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
   };
-  const numEachPage: number = 30;
+  const numEachPage: number = 15;
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
     setMaxValue(value * numEachPage);
@@ -164,7 +159,6 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-      {/* <ReviewModal /> */}
       <div>
         <Link
           to={"/ranking"}
@@ -190,7 +184,7 @@ export default function List() {
           </Button>
         </ButtonGroup>
       </div>
-      <div className={classes.checkbox}>
+      <div className="checkbox">
         {(function() {
           if (btnNum == 1) {
             return (
@@ -260,9 +254,11 @@ export default function List() {
           Total {wineList.length}
         </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container className={classes.grid}>
+        <Search />
+
+        <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
-            <Grid item xs={4} className={classes.grid}>
+            <Grid item xs={4}>
               <div className="wine_list">
                 <li>
                   <div className="tags">
@@ -317,7 +313,7 @@ export default function List() {
             </Grid>
           ))}
         </Grid>
-        <div>
+        <div className="pagination">
           <Pagination
             total={wineList.length}
             // showTotal={total => `Total ${total} items`}

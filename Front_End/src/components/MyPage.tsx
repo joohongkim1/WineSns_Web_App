@@ -9,40 +9,32 @@ import MainContent from './MR/MainContent';
 // import { Container } from '@material-ui/core';
 // import Grid from '@material-ui/core/Grid';
 
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { ButtonGroup } from '@material-ui/core';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import { ButtonGroup } from "@material-ui/core";
 // import Link from '@material-ui/core/Link';
 
-
-
 const buttons = [
-  { title: 'My Review', url: '/mypage' },
-  { title: 'My Likes', url: '/mypage/mylikes' },
-  { title: 'My Friends', url: '/mypage/myfriends' }, 
+  { title: "My Review", url: "/mypage" },
+  { title: "My Likes", url: "/mypage/mylikes" },
+  { title: "My Friends", url: "/mypage/myfriends" }
 ];
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mrNavbar: {
-      minHeight: '41px',
-      width: '100%',
+      minHeight: "41px",
+      width: "100%"
     },
     appBar: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      borderBottom: `1px solid ${theme.palette.divider}`
     },
     toolbar: {
-      minHeight: '41px',
-      flexWrap: 'wrap',
+      minHeight: "41px",
+      flexWrap: "wrap"
     },
-    mrTimelineButton: {
-
-    }
+    mrTimelineButton: {}
   })
 );
 

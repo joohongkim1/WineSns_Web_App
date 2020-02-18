@@ -10,7 +10,6 @@ body {
   background-color: #fff;
   color: #444;
   font-size: 14px;
-  font-family: "S-CoreDream-8Heavy";
   line-height: 2;
 }
 
@@ -71,6 +70,7 @@ img {
   color: #483e1c;
 }
 .wine_list li .tags em {
+  display: inline-block;
   margin-right: 5px;
 }
 .tag.type {
@@ -85,6 +85,7 @@ img {
   display: inline-block;
   vertical-align: top;
 }
+
 .wine_list li .img {
   position: absolute;
   top: 0;
@@ -137,6 +138,7 @@ strong {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.4;
+  font-family: "S-CoreDream-8Heavy";
 }
 .wine_list li span.tit:after {
   display: block;
@@ -175,44 +177,52 @@ strong {
 } */
 
 .wine_list .tags .flag.s32 .USA {
-  background-size: cover;
   display: block;
   background: url(./images/USA.png) no-repeat;
+  background-size: cover;
 }
 
 .wine_list .tags .flag.s32 .Argentina {
-  background-size: cover;
   display: block;
   background: url(images/Argentina.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Australia {
-  background-size: cover;
   display: block;
   background: url(images/Australia.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Chile {
-  background-size: cover;
   display: block;
   background: url(images/Chile.png) no-repeat;
-  height: 21px;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .France {
-  background-size: cover;
   display: block;
   background: url(images/France.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Germany {
-  background-size: cover;
   display: block;
   background: url(images/Germany.png) no-repeat;
+  background-size: cover;
 }
 .wine_list .tags .flag.s32 .Italy {
-  display: block;
+  display: inline-block;
   background: url(images/Italy.png) no-repeat;
   background-size: cover;
 }
 .wine_list .tags .flag.s32 .Spain {
-  background-size: cover;
   display: block;
   background: url(images/Spain.png) no-repeat;
+  background-size: cover;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.checkbox {
+  margin-left: 30%;
+  margin-top: 3%;
 }

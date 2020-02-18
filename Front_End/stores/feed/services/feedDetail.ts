@@ -11,7 +11,9 @@ export const feedService = {
     followUser,
     UnfollowUser,
     createFeedLike,
-    deleteFeedLike
+    deleteFeedLike,
+    deleteComment,
+    getUserFollowList,
 }
 
 async function getFeedDetailByFID(fid : number): Promise<Response> {
@@ -231,6 +233,67 @@ async function deleteFeedLike(fid : number): Promise<Response> {
         loginService.likeFeedByUser();
 
       return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
+
+
+
+
+async function deleteComment(cid : number): Promise<Response> {
+
+  return HTTPS.delete('/comment/delete', {
+    params: {
+      cid : cid
+    },
+    headers: {
+      'TOKEN' : localStorage.getItem('token'),
+    }
+  }
+  )
+    .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+      }
+
+      return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
+
+
+async function getUserFollowList(): Promise<Response> {
+
+  return HTTPS.get('/follow/findByFollowing', {
+    params: {
+      fromUid : sessionStorage.getItem('uid')
+    },
+    headers: {
+      'TOKEN' : localStorage.getItem('token'),
+    }
+  }
+  )
+    .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+      }
+      sessionStorage.setItem(
+        "userFollow", JSON.stringify(response.data)
+      );
+      
+      return response;
     })
     .catch(() => {
       return Promise.reject('Backend not reachable');

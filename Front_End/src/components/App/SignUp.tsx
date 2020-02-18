@@ -229,7 +229,12 @@ function SignUp() {
               </Button>
               {(function() {
                 if (emailState != "not yet") {
-                  return <span>{emailState}</span>;
+                  return (
+                    <Typography style={{ fontSize : '18px', display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'}}>{emailState}
+                    </Typography>
+                  );
                 }
               })()}
               <TextField
@@ -237,8 +242,8 @@ function SignUp() {
                 required
                 fullWidth
                 className={classes.font}
-                name="비밀번호"
-                label="비밀번호"
+                name="password"
+                label="password"
                 type="password"
                 id="password"
                 // value={password}
@@ -285,17 +290,23 @@ function SignUp() {
               }
             }}
           </div>
-          <div>
+          <div style={{display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'}}>
             <GoogleLogin
               clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-              render={props => (
-                <button
-                  className="login100-social-item bg1"
-                  onClick={props.onClick}
-                >
-                  <i className="fa fa-google"></i>
-                </button>
-              )}
+              // render={props => (
+              //   // <button
+              //   //   className="login100-social-item bg1"
+              //   //   onClick={props.onClick}
+              //   // >
+              //   //   <i className="fa fa-google"></i>
+              //   // </button>
+              //   // <button className="loginBtn loginBtn--google">
+              //   //   Login with Google
+              //   // </button>
+
+              // )}
               buttonText="Google"
               onSuccess={responseGoogle}
               onFailure={responseFail}
@@ -304,14 +315,16 @@ function SignUp() {
 
             <KakaoLogin
               jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-              render={(props: any) => (
-                <button
-                  className="login100-social-item bg2"
-                  onClick={props.onClick}
-                >
-                  <i className="fa fa-kakao"></i>
-                </button>
-              )}
+              // render={(props: any) => (
+              //   // <button
+              //   //   className="login100-social-item bg2"
+              //   //   onClick={props.onClick}
+              //   // >
+              //   //   <i className="fa fa-kakao"></i>
+              //   // </button>
+              //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
+              // )}
+              buttonText="KaKao"
               onSuccess={responseKakao}
               onFailure={responseFail}
               throughTalk={true} // If true, Open Kakao Talk instead of new browser tab

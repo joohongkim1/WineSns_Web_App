@@ -68,6 +68,7 @@ export default function ReviewList() {
 
   return (
     <div>
+    <div>
       <Link to={"/reviewDetail"}>
         <button>상세보기</button>
       </Link>
@@ -98,6 +99,7 @@ export default function ReviewList() {
           ))}
         </GridList>
       </div>
+    </div>
     </div>
   );
 }
