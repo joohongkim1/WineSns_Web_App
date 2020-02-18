@@ -27,6 +27,9 @@ import {
 } from "../../../stores/wine_info/actions/wineDetail";
 import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
 
+// component
+import WritePage from './Posts/Editor/WirtePage';
+
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
@@ -41,7 +44,16 @@ const useStyles = makeStyles(theme => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
-  }
+  },
+  // 모달 css
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
 }));
 
 // 모달 사이즈 조절
@@ -199,7 +211,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineSparkling" />
                       <strong>
                         탄산 분류
-                        {(function () {
+                        {(function() {
                           if (wine.sparkling) {
                             return <span>Sparkling</span>;
                           } else {
@@ -212,7 +224,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineSugar" />
                       <strong>
                         당도
-                        {(function () {
+                        {(function() {
                           if (wine.sweet == 5) {
                             return <span>Sweet</span>;
                           } else if (wine.sweet == 4) {
@@ -232,7 +244,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineBody" />
                       <strong>
                         바디
-                        {(function () {
+                        {(function() {
                           if (wine.body >= 4) {
                             return <span>Full Bodied</span>;
                           } else if (wine.body >= 2) {
@@ -249,7 +261,7 @@ function WineDetail(props: MyComponentProps) {
             </div>
 
             <div className="btn_area right">
-              {(function () {
+              {(function() {
                 if (likeState) {
                   return (
                     <IconButton
@@ -273,19 +285,21 @@ function WineDetail(props: MyComponentProps) {
 
               <button className="btns btn_line_type blue" onClick={handleOpen}>리뷰작성</button>
               <Modal
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={open}
-                onClose={handleClose}
-              >
-                <div style={modalStyle}>
-                  <h2 id="simple-modal-title">My Review</h2>
-                  <div>
-                    {/* 에디터 들어갈 공간 */}
-                    {/* <WritePage /> */}
-                  </div>
-                </div>
-              </Modal>
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">My Review</h2>
+          <div>
+            {/* 에디터 들어갈 공간 */}
+            <WritePage />
+          </div>
+
+
+        </div>
+      </Modal>
 
               {/* Wiine 제품 정보 */}
             </div>
