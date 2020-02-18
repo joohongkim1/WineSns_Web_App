@@ -19,6 +19,7 @@ import SmartSearch from "./src/components/smartSearch/WineSearch";
 import SmartList from "./src/components/SearchList/List";
 import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
 import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
+import WineSearch from "./src/components/smartSearch/WineSearch";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -36,9 +37,9 @@ class AppForm extends Component {
           <Route path="/detail/:wid" component={WineDetail} />
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
-          {/* <Route path="/smartSearch" component={SmartSearch} /> */}
+          <Route path="/smartSearch" component={WineSearch} />
           <Route path="/myAccount" component={MyAccount} />
-          {/* <Route path="/searchList" component={SmartList} /> */}
+          <Route path="/searchList" component={SmartList} />
           <Route path="/review/:fid" component={ReviewDetail} />
           <Footer />
         </BrowserRouter>

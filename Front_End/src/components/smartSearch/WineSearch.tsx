@@ -417,7 +417,12 @@ export default function WineSearch() {
                         <div className="smart_cont_wrap">
                             <div id="expert" className="bx_cont" style={{ display: "block" }}>
                                 <div className="smart_tit">
-                                    <h2 style={{color : 'white'}}>A Guide to Wine Tasting</h2> <span>와인 취향 찾기</span>
+                                    <Link to="/ranking">
+                                    <span style={{display:"inline-block" }} id="home2">
+                                    <img src="https://image.flaticon.com/icons/svg/834/834179.svg" alt="" />
+                                    </span>
+                                    </Link>
+                                    <h2 style={{color : 'white', display:"inline-block"}}>A Guide to Wine Tasting</h2> <span>와인 취향 찾기</span>
                                 </div>
                                 <div className="smart_cont">
                                     {/* <form action="/wine/mine" method="post"> */}
@@ -432,16 +437,14 @@ export default function WineSearch() {
                                                 
                                                 />
                                             </span> </div>
-                                            
-                                        {/* <button onClick={handleClick} className="btns btn_wine_search" id="expert-by-name">
-                                            <span className="ico glass"></span>와인명 검색
-                                        </button> */}
+                                      
                                                                                 <Link to={{pathname: '/searchList',
   state: {
     name : search
   }
-}} style={{marginLeft : '82%'}} className="btns btn_wine_search" id="expert-by-name">
-                                            <span className="ico glass"></span>와인명 검색
+}}  className="btns btn_wine_search" id="expert-by-name">
+                                            <span className="ico glass"></span>
+                                            와인명 검색
                                         </Link>
                                         <p>* 하단 와인 속성 항목과 무관하게 와인명만 검색 가능합니다.</p>
                                     </div>
@@ -654,7 +657,7 @@ export default function WineSearch() {
                                         <div className="step clfix">
                                             <h3 style={{color : 'white'}}>Wine Type</h3>
                                             <div className="wine_radio_wrap wrap01">
-                                                <h4>와인 종류</h4>
+                                                <h4 id="id_color">와인 종류</h4>
                                                 <div>
                                                     <span className="input_radio ui_complete">
                                                         <input type="radio" id="wt00" name="e_color" className=" " value="red" onChange={handleColorRadio01} />
@@ -707,7 +710,7 @@ export default function WineSearch() {
                                             </div>
 
                                             <div className="wine_radio_wrap wrap02">
-                                                <h4>탄산 종류</h4>
+                                                <h4 id="id_color">탄산 종류</h4>
                                                 <div> <span className="input_radio ui_complete">
                                                     <input type="radio" id="sp00" name="e_sparkling" className=" " value="still" onChange={handleSparklingRadio01} />
                                                     {
@@ -742,7 +745,7 @@ export default function WineSearch() {
                                             </div>
 
                                             <div className="wine_radio_wrap wrap03">
-                                                <h4>당도 종류</h4>
+                                                <h4 id="id_color">당도 종류</h4>
                                                 <div>
                                                     <span className="input_radio ui_complete">
                                                         <input type="radio" id="sw00" name="e_sweet" className=" " value="sweet" onChange={handleSweetRadio01} />
@@ -795,7 +798,7 @@ export default function WineSearch() {
                                         <div className="step clfix bdb0">
                                             <h3 style={{color : 'white'}}>Detail</h3>
                                             <div className="detail_radio_wrap01">
-                                                <h4>알코올 도수</h4>
+                                                <h4 id="id_color">알코올 도수</h4>
                                                 <div className="detail_radio">
                                                     {
                                                         alcoholRadio01 === true ?
