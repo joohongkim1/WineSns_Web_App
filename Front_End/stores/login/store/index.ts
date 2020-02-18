@@ -74,13 +74,16 @@ export function* rootSaga() {
 }
 
 export default function configureStore(initialState : any) {
-  return createStore(
+  
+  const store = createStore(
     rootReducer,
     initialState,
     // applyMiddleware(...middlewares)
     composeWithDevTools(
-      applyMiddleware(...middlewares),
+      applyMiddleware(...middlewares)
     )
   )
+  sagaMiddleware.run(rootSaga)
+  return store
 }
 

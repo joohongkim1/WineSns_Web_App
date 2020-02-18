@@ -2,7 +2,8 @@ import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
-import * as postsAPI from '../lib/api/post';
+// import * as postsAPI from '../lib/api/post';
+import writePosts from '../lib/api/post';
 import { takeLatest } from 'redux-saga/effects';
 import { Record, Map, List } from 'immutable';
 // import writePost from '../lib/api/post'
@@ -62,7 +63,8 @@ export class ContentsState extends ContentsStateRecord {
 // saga 생성
 // const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 // 여기서부터 saga
-const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+const writePostSaga = createRequestSaga(WRITE_POST, writePosts);
 export function* writeSaga() {
   console.log('실행좀...')
   yield takeLatest(WRITE_POST, writePostSaga);
