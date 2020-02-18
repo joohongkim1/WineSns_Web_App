@@ -15,7 +15,6 @@ import WineReview from "./src/components/Review_Page/List";
 // import SignUp from "./stores/login/components/SignUp";
 import SignUp from "./src/components/App/SignUp";
 import MyAccount from "./src/components/App/MyAccount";
-import SmartSearch from "./src/components/smartSearch/WineSearch";
 import SmartList from "./src/components/SearchList/List";
 import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
 import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
