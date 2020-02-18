@@ -7,7 +7,8 @@ export const actions = {
   SET_FEED_DETAIL_PENDING: 'SET_FEED_DETAIL_PENDING',
   SET_FEED_DETAIL_SUCCESS: 'SET_FEED_DETAIL_SUCCESS',
   SET_FEED_DETAIL_ERROR: 'SET_FEED_DETAIL_ERROR',
-  SET_POST_COMMENT_SUCCESS : 'SET_POST_COMMENT_SUCCESS'
+  SET_POST_COMMENT_SUCCESS : 'SET_POST_COMMENT_SUCCESS',
+  SET_COMMENT_UPDATE_SUCCESS : 'SET_COMMENT_UPDATE_SUCCESS'
 }
 export function getFeedDetailByFID(fid : number) {
   return async (dispatch: (arg0: { type: string; isFeedDetailPending?: boolean; isFeedDetailSuccess?: boolean; FeedDetailError?: string; }) => void) => {
@@ -147,6 +148,32 @@ export function deleteFeedLike(fid : number) {
 
 
 
+export function deleteCommentAndUpdate(fid : number, cid : any){
+  
+  return async (dispatch: (arg0: { type: string; isWineDetailPending?: boolean; isWineDetailSuccess?: boolean; WineDetailError?: string; }) => void) => {
+    dispatch(setFeedDetailPending(true));
+
+   await feedService.deleteComment(cid).then(
+     (response : any) => {
+      dispatch(setFeedDetailPending(false));
+      
+
+      // let comment  = JSON.stringify(feedService.getCommentByFID(fid));
+
+      // let commentList = JSON.parse(comment || '{}');
+      
+      // dispatch(setCommentUpdateSuccess(true, commentList));
+
+     },
+     error => {
+      dispatch(setFeedDetailPending(false));
+ 
+     }
+   );
+ }
+}
+
+
 function setFeedDetailPending(isFeedPending : boolean) {
   return {
     type: actions.SET_FEED_DETAIL_PENDING,
@@ -162,6 +189,16 @@ function setFeedDetailSuccess(isFeedSuccess : boolean, feedDetail : feedDetail, 
     commentList
   };
 }
+
+
+function setCommentUpdateSuccess(isCommentSuccess : boolean, commentList : any) {
+  return {
+    type: actions.SET_COMMENT_UPDATE_SUCCESS,
+    isCommentSuccess,
+    commentList
+  };
+}
+
 
 function setPostCommentSuccess(isCommentSuccess : boolean, commentList : any) {
   return {

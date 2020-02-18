@@ -19,6 +19,10 @@ import {
 } from "../../../stores/wine_info/actions/wineDetail";
 import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
 
+import 'antd/dist/antd.css';
+import { Pagination } from 'antd';
+
+
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
@@ -95,6 +99,17 @@ function WineDetail(props: MyComponentProps) {
     await dispatch(deleteWineLike(wid));
     setLikeState(false);
   };
+
+  const [minValue, setMinValue] = React.useState(0);
+  const [maxValue, setMaxValue] = React.useState(30);
+
+  const numEachPage: number = 30;
+  const handleChange = (value: number) => {
+    setMinValue((value - 1) * numEachPage);
+    setMaxValue((value) * numEachPage);
+
+  };
+
 
   if (!wineState) {
     loadWineDetail();
@@ -311,12 +326,13 @@ function WineDetail(props: MyComponentProps) {
 
             {/* Wiine Top 5 리뷰 */}
 
-            <h2 className="tit_h2">Top 3 Review</h2>
+
+            <h2 className="tit_h2">{wine.nameKor} Review</h2>
             <div className="product_info clfix">
               <Container className={classes.cardGrid} maxWidth="md">
                 {/* End hero unit */}
                 <Grid container spacing={4}>
-                  {feedList.map(feed => (
+                  {feedList.slice(minValue, maxValue).map(feed => (
                     <ReviewInfo
                       fid={feed.fid}
                       title={feed.title}
@@ -328,6 +344,14 @@ function WineDetail(props: MyComponentProps) {
                 </Grid>
               </Container>
             </div>
+            <div>
+          <Pagination
+            total={feedList.length}
+            // showTotal={total => `Total ${total} items`}
+            onChange={handleChange}
+            pageSize={numEachPage}
+            defaultCurrent={1}
+          /></div>
           </section>
         </div>
       </main>

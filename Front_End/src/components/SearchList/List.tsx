@@ -128,8 +128,6 @@ export default function List(props : any) {
     (state: rootState) => state.SmartSearchReducer
   );
 ​
-  let start: number = 0;
-  let end: number = 0;
   const loadWineList = async () => {
     console.log("on Smart Search List");
     console.log(taste);

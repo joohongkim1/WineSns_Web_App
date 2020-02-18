@@ -119,6 +119,11 @@ export default function feedReducer(state = initialState, action : any) {
           isCommentSuccess : action.isCommentSuccess,
           commentList : action.commentList
         }
+      case actions.SET_COMMENT_UPDATE_SUCCESS:
+        return {...state,
+          isCommentSuccess : action.isCommentSuccess,
+          commentList : action.commentList
+        }
     default:
       return state;
   }

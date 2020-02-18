@@ -4,6 +4,7 @@ import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import { Typography, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -18,6 +19,24 @@ import IconButton from "@material-ui/core/IconButton";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 // Redux
+<<<<<<< HEAD
+import { useSelector, useDispatch } from 'react-redux';
+import { rootState } from '../../../../stores/login/store';
+import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike 
+,deleteCommentAndUpdate} from '../../../../stores/feed/actions/feedDetail';
+
+import { Comment, Form, Header } from 'semantic-ui-react'
+
+
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
+=======
 import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../../stores/login/store";
 import {
@@ -28,13 +47,20 @@ import {
   createFeedLike,
   deleteFeedLike
 } from "../../../../stores/feed/actions/feedDetail";
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
       maxWidth: 360,
-      backgroundColor: theme.palette.background.paper
+      backgroundColor: theme.palette.background.paper,
+  
+    },
+
+    table: {
+      maxHeight : "100px",
+      overflowY: "auto"
     },
 
     back: {
@@ -46,8 +72,8 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center"
     },
     dividerFullWidth: {
-      fontSize: 24,
-      marginTop: 50
+      fontSize: 20,
+      marginTop: 20
     },
     avatar: {
       display: "inline-block"
@@ -136,6 +162,30 @@ export default function ReviewDetail(props: MyComponentProps) {
     setLikeState(false);
   };
 
+<<<<<<< HEAD
+
+  
+  const deleteCommentByUser = async (cid : any) => {
+    await dispatch(deleteCommentAndUpdate(fid, cid));
+    dispatch(getFeedDetailByFID(fid));
+    setFeedState(true);
+
+    
+    let userLikeFeed = JSON.parse(sessionStorage.getItem('userLikeFeed') || '{}');
+
+
+    for (var i = 0; i < userLikeFeed.length; i++) {
+      if (userLikeFeed[i].fid == fid) {
+        setLikeState(true)
+        break
+      }
+    }
+ };
+
+
+
+=======
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
   if (!feedState) {
     dispatch(getFeedDetailByFID(fid));
     setFeedState(true);
@@ -151,11 +201,19 @@ export default function ReviewDetail(props: MyComponentProps) {
       }
     }
   } else {
+<<<<<<< HEAD
+
+  }
+  return (
+ 
+    <Container>
+=======
     console.log("코멘트들");
     console.log(feedDetail);
   }
   return (
     <Container fixed style={{ height: 1000 }}>
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
       <div style={{ height: 100 }}></div>
       <Box color="text.primary">
         <Link
@@ -176,6 +234,29 @@ export default function ReviewDetail(props: MyComponentProps) {
         <br />
         {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
         <span>
+<<<<<<< HEAD
+          <Typography className={classes.visit}>[방문자수] {feedDetail.visit}</Typography>
+          <Typography className={classes.visit}>[좋아요수] {feedDetail.likeNum}</Typography>
+          {(function () {
+
+if (likeState) {
+
+  return (
+    <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
+      <FavoriteIcon color="secondary" />
+
+    </IconButton>
+  )
+} else {
+  return (
+
+    <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
+      <FavoriteIcon color="inherit" />
+    </IconButton>
+  );
+}
+})()}
+=======
           <Typography className={classes.visit}>
             [방문자수] {feedDetail.visit}
           </Typography>
@@ -197,6 +278,7 @@ export default function ReviewDetail(props: MyComponentProps) {
               );
             }
           })()}
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
           {(function() {
             if (!followState) {
               return (
@@ -232,6 +314,7 @@ export default function ReviewDetail(props: MyComponentProps) {
         </Box>
         <Divider className={classes.divider} />
 
+
         <Card variant="outlined">
           <CardContent>
             <Typography
@@ -244,13 +327,32 @@ export default function ReviewDetail(props: MyComponentProps) {
             </Typography>
           </CardContent>
         </Card>
+
         <CommentIcon className={classes.commentIcon} />
         <Typography className={classes.commentIcon}>
           {" "}
           댓글 [댓글 숫자 표시]
         </Typography>
       </Box>
+      <Box style={{overflow:"auto"}}> 
       <Divider component="li" />
+<<<<<<< HEAD
+      <Table className={classes.table}>
+        
+        {commentList.map((comment: any) => (
+   
+   <TableRow key={comment.cid}>
+   <TableCell component="th" scope="row">
+            {comment.content} 작성자 : {comment.user.nickName} : {comment.createdTimeAt}
+
+            {comment.user.uid == sessionStorage.getItem("uid") ?
+                (<Button onClick={() => deleteCommentByUser(comment.cid)}>댓글삭제</Button>)
+                  : (<span></span>)
+        }
+          </TableCell>
+          </TableRow>
+         
+=======
       <Card variant="outlined" style={{ marginTop: 40 }}>
         <CardContent>
           {commentList.map((comment: any) => (
@@ -265,9 +367,11 @@ export default function ReviewDetail(props: MyComponentProps) {
                 {comment.createdTimeAt}
               </Typography>
             </div>
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
           ))}
-        </CardContent>
-      </Card>
+        
+     </Table>
+      </Box>
 
       <TextField
         style={{ width: "100%", marginTop: 20 }}
@@ -283,6 +387,10 @@ export default function ReviewDetail(props: MyComponentProps) {
       >
         댓글 작성
       </Button>
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 2154ead49415719006250c3762694eb979d20a84
     </Container>
   );
 }
