@@ -55,7 +55,6 @@ body {
   font-weight: 400;
   font-size: 40px;
 
-  line-height: 1;
   letter-spacing: -0.5px;
 }
 
@@ -83,8 +82,6 @@ body {
 
 .product_wine .more_info li strong span {
   display: block;
-  font-weight: 700;
-  font-size: 28px;
 }
 
 .product_wine .more_info li strong {
@@ -117,7 +114,7 @@ p {
 }
 
 .sz619 {
-  height: 400px;
+  height: 600px;
 }
 
 .product_wine + .btn_area {
@@ -239,6 +236,7 @@ button:hover:after {
   width: 45px;
   height: 54px;
   display: block;
+  font-family: "Cafe24Shiningstar";
   background: url(images/common/img_wine_alcohol.png) no-repeat;
 }
 .wrap .detail_wine .product_wine.clfix .bxr .more_info.clfix .imgWineKind {
@@ -267,21 +265,39 @@ button:hover:after {
 }
 
 .wrap .detail_wine .product_info.clfix .info01Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info01.jpg) no-repeat;
 }
 .wrap .detail_wine .product_info.clfix .info02Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info02.jpg) no-repeat;
 }
 .wrap .detail_wine .product_info.clfix .info03Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info03.jpg) no-repeat;
 }
 .wrap .detail_wine .product_info.clfix .info04Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info04.jpg) no-repeat;
 }
 .wrap .detail_wine .product_info.clfix .info05Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info05.jpg) no-repeat;
 }
 .wrap .detail_wine .product_info.clfix .info06Img {
+  width: 60px;
+  height: 54px;
+  display: inline-block;
   background: url(images/common/img_pro_info06.jpg) no-repeat;
 }
 
@@ -289,4 +305,9 @@ button:hover:after {
   display: table-cell;
 
   margin-left: 30%;
+}
+
+#wineKorName {
+  font-family: "S-CoreDream-8Heavy";
+  font-size: 32px;
 }

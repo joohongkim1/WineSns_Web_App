@@ -52,8 +52,18 @@ const useStyles = makeStyles((theme: Theme) =>
   more : {
     "& > *": {
       margin: theme.spacing(1, 8)
-    }        
-  }                                                                                                                 
+    },
+    fontSize : '18px', 
+    display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center'
+  },
+  center : {
+   fontSize : '18px', 
+   display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+  }                                                                                           
 }),
 );
 
@@ -75,14 +85,16 @@ function ReviewInfo(review: ReviewInfo) {
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
-                 
-      <Typography>
+                <Typography className={classes.center}>
+                  {review.title}
+                    </Typography>
+                <Typography className={classes.center}>
                         {review.content.substring(0,80)}...
-      </Typography>
+              </Typography>
                 </CardContent>
                
                 <Box component="fieldset" mb={3} borderColor="transparent">
-        <Rating name="read-only" value={review.rating} readOnly />
+        <Rating name="read-only" value={review.rating} readOnly  className={classes.center}/>
       </Box>
       <div className={classes.more}>
                   <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
