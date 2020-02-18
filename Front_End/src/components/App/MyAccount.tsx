@@ -86,7 +86,12 @@ function MyAccount() {
   // } = useSelector((state: rootState) => state.registerReducer);
 
   const [state, setState] = useState( { email : '', password : '', provider : '', id : ''});
- 
+  const {
+    isRegisterPending,
+    isRegisterSuccess,
+    registerError,
+    emailState
+  } = useSelector((state: rootState) => state.registerReducer);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -169,11 +174,16 @@ function MyAccount() {
               >
                 Email 중복 체크
               </Button>
-              {/* {(function() {
+              {(function() {
                 if (emailState != "not yet") {
-                  return <span>{emailState}</span>;
+                  return (
+                    <Typography style={{ fontSize : '18px', display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'}}>{emailState}
+                    </Typography>
+                  );
                 }
-              })()} */}
+              })()}
               <TextField
                 variant="outlined"
                 required
@@ -224,7 +234,7 @@ function MyAccount() {
                   </div>
                 );
               } */}
-            }}
+            
           </div>
         </Grid>
       </Grid>

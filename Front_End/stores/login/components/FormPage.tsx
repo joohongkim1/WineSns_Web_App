@@ -83,7 +83,7 @@ class FormPage extends React.Component<IProps, IState> {
     let { email, password } = this.state;
     let { isLoginPending, isLoginSuccess, loginError } = this.props;
 
-    if (!isLoginSuccess) {
+    if (!sessionStorage.getItem('userInfo')) {
       return (
         <div>
           <form name="form" onSubmit={this.onSubmit} className="login-form">
@@ -130,14 +130,18 @@ class FormPage extends React.Component<IProps, IState> {
             </div>
             <GoogleLogin
               clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-              render={props => (
-                <button
-                  className="login100-social-item bg1"
-                  onClick={props.onClick}
-                >
-                  <i className="fa fa-google"></i>
-                </button>
-              )}
+              // render={props => (
+              //   // <button
+              //   //   className="login100-social-item bg1"
+              //   //   onClick={props.onClick}
+              //   // >
+              //   //   <i className="fa fa-google"></i>
+              //   // </button>
+              //   // <button className="loginBtn loginBtn--google">
+              //   //   Login with Google
+              //   // </button>
+
+              // )}
               buttonText="Google"
               onSuccess={this.responseGoogle}
               onFailure={this.responseFail}
@@ -146,14 +150,16 @@ class FormPage extends React.Component<IProps, IState> {
 
             <KakaoLogin
               jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-              render={(props: any) => (
-                <button
-                  className="login100-social-item bg2"
-                  onClick={props.onClick}
-                >
-                  <i className="fa fa-kakao"></i>
-                </button>
-              )}
+              // render={(props: any) => (
+              //   // <button
+              //   //   className="login100-social-item bg2"
+              //   //   onClick={props.onClick}
+              //   // >
+              //   //   <i className="fa fa-kakao"></i>
+              //   // </button>
+              //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
+              // )}
+              buttonText="KaKao"
               onSuccess={this.responseKakao}
               onFailure={this.responseFail}
               throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
