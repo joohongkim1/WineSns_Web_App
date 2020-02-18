@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "1200px"
     },
     gridContainer: {
+      justifyContent: "center",
       width: "",
       height: "100%",
-      // paddingTop: theme.spacing(6),
-      paddingLeft: "25%"
+      paddingLeft: "5%"
     },
 
     listFont: {

@@ -174,3 +174,7 @@ img {
   height: 130px;
   margin-left: -65px;
 }
+main {
+  background-color: white;
+  display: block;
+}

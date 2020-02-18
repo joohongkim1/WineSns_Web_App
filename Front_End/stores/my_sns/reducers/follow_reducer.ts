@@ -25,19 +25,19 @@ export default function followReducer(state = initialState, action : any) {
   switch (action.type) {
     case actions.SET_USER_FOLLOW_PENDING:
       return {...state, 
-        isUserFollowPending: action.isUserFeedPending
+        isUserFollowPending: action.isUserFollowPending
       }
 
     case actions.SET_USER_FOLLOW_SUCCESS:
       return {...state,
-        isUserFollowSuccess: action.isUserFeedSuccess,
+        isUserFollowSuccess: action.isUserFollowSuccess,
         follow : action.follow,
         follower : action.follower
       }
 
     case actions.SET_USER_FOLLOW_ERROR:
       return {...state,
-        isUserFollowError: action.UserFeedError
+        isUserFollowError: action.UserFollowError
       }
     default:
       return state;

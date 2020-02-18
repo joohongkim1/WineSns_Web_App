@@ -19,6 +19,7 @@ import SmartList from "./src/components/SearchList/List";
 import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
 import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
 import WineSearch from "./src/components/smartSearch/WineSearch";
+import { Switch } from "@material-ui/core";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
