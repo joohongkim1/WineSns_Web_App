@@ -15,6 +15,7 @@ import ReviewInfo from "../Interface/Review";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
+import Modal from "@material-ui/core/Modal";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -43,6 +44,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// 모달 사이즈 조절
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
+
+
 interface RouterProps {
   // type for `match.params`
   wid: string; // must be type `string` since value comes from the URL
@@ -57,6 +75,19 @@ function WineDetail(props: MyComponentProps) {
   console.log(props);
   const wid = +props.match.params.wid;
   console.log(wid);
+
+  // 모달 상태 관리
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const [wineState, setWineState] = React.useState(false);
   const [likeState, setLikeState] = React.useState(false);
@@ -168,7 +199,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineSparkling" />
                       <strong>
                         탄산 분류
-                        {(function() {
+                        {(function () {
                           if (wine.sparkling) {
                             return <span>Sparkling</span>;
                           } else {
@@ -181,7 +212,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineSugar" />
                       <strong>
                         당도
-                        {(function() {
+                        {(function () {
                           if (wine.sweet == 5) {
                             return <span>Sweet</span>;
                           } else if (wine.sweet == 4) {
@@ -201,7 +232,7 @@ function WineDetail(props: MyComponentProps) {
                       <img className="imgWineBody" />
                       <strong>
                         바디
-                        {(function() {
+                        {(function () {
                           if (wine.body >= 4) {
                             return <span>Full Bodied</span>;
                           } else if (wine.body >= 2) {
@@ -218,7 +249,7 @@ function WineDetail(props: MyComponentProps) {
             </div>
 
             <div className="btn_area right">
-              {(function() {
+              {(function () {
                 if (likeState) {
                   return (
                     <IconButton
@@ -240,7 +271,21 @@ function WineDetail(props: MyComponentProps) {
                 }
               })()}
 
-              <button className="btns btn_line_type blue">리뷰작성</button>
+              <button className="btns btn_line_type blue" onClick={handleOpen}>리뷰작성</button>
+              <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={open}
+                onClose={handleClose}
+              >
+                <div style={modalStyle}>
+                  <h2 id="simple-modal-title">My Review</h2>
+                  <div>
+                    {/* 에디터 들어갈 공간 */}
+                    {/* <WritePage /> */}
+                  </div>
+                </div>
+              </Modal>
 
               {/* Wiine 제품 정보 */}
             </div>
