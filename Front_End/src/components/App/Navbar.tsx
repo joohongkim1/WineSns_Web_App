@@ -42,19 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       margin: theme.spacing(1, 1.5)
     },
-    // paper: {
-    //   backgroundColor: theme.palette.background.paper,
-    //   border: "2px solid #000",
-    //   boxShadow: theme.shadows[5],
-    //   padding: theme.spacing(2, 4, 3)
-    // },
+
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`,
       height: 100
     },
     toolbar: {
-      flexWrap: "wrap",
-      height: 100
+      height: 100,
+      paddingLeft: 100
     },
     grow: {
       flexGrow: 1
@@ -68,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "block"
       },
       fontSize: 40,
-      fontFamily: "Recipekorea"
+      fontFamily: "S-CoreDream-8Heavy"
     },
     sign: {
       marginLeft: "20px"
@@ -216,19 +211,7 @@ export default function Navbar() {
               Dionysos
             </Typography>
           </Link>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div> */}
+
           <Section />
           <div className={classes.grow} />
 
@@ -296,18 +279,6 @@ export default function Navbar() {
                     >
                       <AccountCircle />
                     </IconButton>
-
-                    {/* <div className={classes.sectionMobile}>
-                <IconButton
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div> */}
 
                     <Button onClick={logoutFunction} className={classes.link}>
                       Logout{" "}

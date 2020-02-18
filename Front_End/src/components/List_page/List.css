@@ -226,3 +226,103 @@ strong {
   margin-left: 30%;
   margin-top: 3%;
 }
+
+.imgFrance {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgGermany {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgItaly {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgSpain {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgUSA {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgChile {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgAustralia {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+.imgArgentina {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 0.7;
+}
+
+.imgFrance:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+
+.imgGermany:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+.imgItaly:hover {
+  display: block;
+  width: 100px;
+  opacity: 1;
+  height: 60px;
+}
+.imgSpain:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+
+.imgUSA:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+.imgChile:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+.imgAustralia:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
+.imgArgentina:hover {
+  display: block;
+  width: 100px;
+  height: 60px;
+  opacity: 1;
+}
