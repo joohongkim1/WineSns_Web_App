@@ -62,7 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       backgroundColor: "#36342f",
-      marginBottom: "80px"
+      marginBottom: "80px",
+      height: 10
     },
     divider2: {
       backgroundColor: "#36342f",
@@ -158,7 +159,6 @@ export default function List() {
           </Typography>
         </Container>
       </div>
-      {/* <ReviewModal /> */}
       <div>
         <Link
           to={"/ranking"}
@@ -253,8 +253,8 @@ export default function List() {
         <Typography className={classes.total}>
           Total {wineList.length}
         </Typography>
-        <Search />
         <Divider variant="middle" className={classes.divider} />
+        <Search />
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
