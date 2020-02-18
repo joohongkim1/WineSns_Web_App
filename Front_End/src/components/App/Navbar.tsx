@@ -130,7 +130,6 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const menuId = "primary-search-account-menu";
@@ -145,14 +144,14 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-   
       <MenuItem>
-      <Link
-                      to="/myAccount"
-                      className={classes.link}
-                      style={{ textDecoration: "none", color: "#000000" }}
-                    >
-                      My Account</Link>
+        <Link
+          to="/myAccount"
+          className={classes.link}
+          style={{ textDecoration: "none", color: "#000000" }}
+        >
+          My Account
+        </Link>
       </MenuItem>
     </Menu>
   );
@@ -232,7 +231,6 @@ export default function Navbar() {
           </div> */}
           <Section />
           <div className={classes.grow} />
-        
 
           {(function() {
             if (!sessionStorage.getItem("userInfo")) {
@@ -273,30 +271,33 @@ export default function Navbar() {
             } else {
               return (
                 <div>
-                    <div className={classes.sectionDesktop}>
-            {/* 메일 및 쪽지 알림참 */}
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={8} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+                  <div className={classes.sectionDesktop}>
+                    {/* 메일 및 쪽지 알림참 */}
+                    <IconButton aria-label="show 4 new mails" color="inherit">
+                      <Badge badgeContent={8} color="secondary">
+                        <MailIcon />
+                      </Badge>
+                    </IconButton>
+                    <IconButton
+                      aria-label="show 17 new notifications"
+                      color="inherit"
+                    >
+                      <Badge badgeContent={17} color="secondary">
+                        <NotificationsIcon />
+                      </Badge>
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      aria-label="account of current user"
+                      aria-controls={menuId}
+                      aria-haspopup="true"
+                      onClick={handleProfileMenuOpen}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
 
-                {/* <div className={classes.sectionMobile}>
+                    {/* <div className={classes.sectionMobile}>
                 <IconButton
                   aria-label="show more"
                   aria-controls={mobileMenuId}
@@ -307,11 +308,11 @@ export default function Navbar() {
                   <MoreIcon />
                 </IconButton>
               </div> */}
-              
-                <Button onClick={logoutFunction} className={classes.link}>
-                  Logout{" "}
-                </Button>
-                </div>
+
+                    <Button onClick={logoutFunction} className={classes.link}>
+                      Logout{" "}
+                    </Button>
+                  </div>
                 </div>
               );
             }
