@@ -41,7 +41,7 @@ export default function Section() {
     await dispatch(getWineListByType("KOR_UP"));
   };
   return (
-    <div className="container">
+    <React.Fragment>
       <Toolbar
         component="nav"
         variant="dense"
@@ -60,6 +60,6 @@ export default function Section() {
           </Link>
         ))}
       </Toolbar>
-    </div>
+    </React.Fragment>
   );
 }

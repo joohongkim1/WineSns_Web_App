@@ -70,6 +70,7 @@ img {
   color: #483e1c;
 }
 .wine_list li .tags em {
+  display: inline-block;
   margin-right: 5px;
 }
 .tag.type {
@@ -84,6 +85,7 @@ img {
   display: inline-block;
   vertical-align: top;
 }
+
 .wine_list li .img {
   position: absolute;
   top: 0;
@@ -206,7 +208,7 @@ strong {
   background-size: cover;
 }
 .wine_list .tags .flag.s32 .Italy {
-  display: block;
+  display: inline-block;
   background: url(images/Italy.png) no-repeat;
   background-size: cover;
 }
