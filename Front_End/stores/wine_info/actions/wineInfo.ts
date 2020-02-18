@@ -83,6 +83,33 @@ export function getWineListByNameList(names : string[]) {
 }
 
 
+
+export function searchWineByName(name : string) {
+  return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
+   dispatch(setWinePending(true));
+
+   dispatch(setWineError("not yet"));
+ 
+   
+   await wineService.searchWineByName(name).then(
+     (response : any) => {
+      dispatch(setWinePending(false));
+    
+      let wines : Wine[] = response;
+  
+      console.log(wines);
+      dispatch(setWineSuccess(true, wines));
+      
+     },
+     error => {
+       dispatch(setWinePending(false));
+       dispatch(setWineError("searchWineByName  error"));
+     }
+   );
+ }
+}
+
+
 function setWinePending(isWinePending : boolean) {
   return {
     type: actions.SET_WINE_INFO_PENDING,
