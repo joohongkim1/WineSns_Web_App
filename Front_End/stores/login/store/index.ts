@@ -1,7 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { combineReducers } from 'redux';
 import { logger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk';
+import { all } from 'redux-saga/effects';
 import loginReducer from '../reducers/login_reducer';
 import registerReducer from "../../register/reducers/register_reducer";
 import wineReducer from "../../wine_info/reducers/wine_reducer";
@@ -22,12 +24,20 @@ import {feedState} from "../../feed/reducers/feed_reducer";
 import {feedAll} from "../../feed/reducers/feed_all_reducer";
 import {smartSearch} from "../../smartSearch/reducers/wine_reducer";
 import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
+import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
+// import write, {ContentsState} from "../../mysns/actions/write"
+import loading, {ILoadingState} from '../../mysns/lib/loading';
+
 import {feedDetail} from "../../feed/reducers/feed_detail_reducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const sagaMiddleware = createSagaMiddleware()
 
 const middlewares: any[] = [];
 
 middlewares.push(logger);
 middlewares.push(thunk);
+middlewares.push(sagaMiddleware);
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -39,6 +49,8 @@ const rootReducer = combineReducers({
   feedAllReducer,
   SmartSearchReducer,
   MyFeedReducer,
+  write,
+  loading,
   FeedDetailReducer
 });
 
@@ -50,16 +62,25 @@ export interface rootState {
   wineDetailReducer : wineDetailState,
   feedReducer : feedState,
   feedAllReducer : feedAll,
-  SmartSearchReducer : smartSearch,
+  SmartSearchReducer : smartSearch
   MyFeedReducer : userFeedState,
-  FeedDetailReducer : feedDetail
+  write: ContentsState,
+  loading: ILoadingState,
+  FeedDetailReducer : feedDetail,
 }
 
+export function* rootSaga() {
+  yield all([writeSaga()]);
+}
 
 export default function configureStore(initialState : any) {
   return createStore(
     rootReducer,
     initialState,
-    applyMiddleware(...middlewares)
-  );
+    // applyMiddleware(...middlewares)
+    composeWithDevTools(
+      applyMiddleware(...middlewares),
+    )
+  )
 }
+
