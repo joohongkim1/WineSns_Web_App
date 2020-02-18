@@ -20,10 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.common.white,
-      backgroundImage:
-        "url(https://i.gifer.com/MQt.gif)",
+      backgroundImage: "url(https://i.gifer.com/MQt.gif)",
       backgroundSize: "contain",
-   
+
       backgroundRepeat: "no-repeat",
       backgroundPosition: "right"
     },
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "600px",
       height: "400px",
       top: "30%",
-      left: "18%",
+      left: "6%",
       backgroundColor: pink[800],
       opacity: "0.9"
     },
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
       width: 230,
       height: 100,
-      display: "text-align: center;flex",
+      display: "inline-block",
 
       marginRight: theme.spacing(2),
       padding: theme.spacing(1)
@@ -79,7 +78,7 @@ export default function Entrance() {
           style={{ width: "100%", height: "100vh" }}
         >
           {/* End hero unit */}
-          <Grid container className={classes.cardGrid}>
+          <Grid className={classes.cardGrid}>
             <Typography
               variant="h3"
               component="h2"

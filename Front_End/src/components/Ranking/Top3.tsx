@@ -1,21 +1,8 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
-import { Rating } from "@material-ui/lab";
-import Box from "@material-ui/core/Box";
-import Switch from "@material-ui/core/Switch";
-import Paper from "@material-ui/core/Paper";
-import Slide from "@material-ui/core/Slide";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import WineInfo from "../Interface/Wine";
 
 // Redux
@@ -112,16 +99,15 @@ export default function TempTop3() {
       <main>
         {/* Hero unit */}
         <img
-        style={{width:'100%', height:'380px'}}
-           src="https://images.squarespace-cdn.com/content/v1/537389d2e4b07f58912b984c/1526416085429-D2H95FD5WEM6NZQGIO7W/ke17ZwdGBToddI8pDm48kIdjNHBVPtCPmDHS5OrNq_pZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIQzMTntcupKyj55gjnAg9F4yZODDO3HH_T7LbRYIUQtA/anniv.gif?format=1500w"
-          // src="https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif"
+          style={{ width: "100%", height: "380px" }}
+          src="https://images.squarespace-cdn.com/content/v1/537389d2e4b07f58912b984c/1526416085429-D2H95FD5WEM6NZQGIO7W/ke17ZwdGBToddI8pDm48kIdjNHBVPtCPmDHS5OrNq_pZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIQzMTntcupKyj55gjnAg9F4yZODDO3HH_T7LbRYIUQtA/anniv.gif?format=1500w"
           className={classes.heroContent}
         >
           ​
         </img>
-     
+
         <Container className={classes.cardGrid} maxWidth="md">
-        <h3 className="tit40_line">Top3 Wine</h3>
+          <h3 className="tit40_line">Top3 Wine</h3>
           <Grid container spacing={4}>
             {wineTop3.map(wine => (
               <WineInfo
