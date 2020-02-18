@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 
-import Friends from './Friends/Friends'
+import Friends from './Friends/MyFriends'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,7 +27,7 @@ export default function RightSide() {
   const classes = useStyles();
   return (
     <div className={classes.mrSide}>
-      <Friends />
+      {/* <Friends /> */}
     </div>
   );
 }

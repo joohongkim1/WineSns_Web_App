@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
+import MyAccount from '../../App/MyAccount';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -104,8 +106,14 @@ export default function Profile(profile: User) {
     <ul className={classes.mrProfile}>
       <li className={classes.profileHeader}>
         <div className={classes.profileHead}>Profile</div>
+        <Link
+                // noWrap
+                // key={button.title}
+                // variant="body2"
+                to="/MyAccount"
+              >
         <Button size="small" className={classes.margin} onClick={editOpen}><EditIcon fontSize="small" /></Button>
-        
+        </Link>
       </li>
       <li className={classes.liCommon}>
         닉네임: {profile.data.nickName}
