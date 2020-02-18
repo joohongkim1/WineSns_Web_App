@@ -8,7 +8,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import LeftSide from './LeftSide';
 import RightSide from './RightSide'
-import Feed from './Feed';
 import MyFeed from './MyFeed/MyFeed';
 import MyPageList from './MyPageList';
 
@@ -36,12 +35,13 @@ export default function Timelinesection() {
 
   return (
     <div id="mrMainContents" className={classes.mrMainContents}>
-
+      {/*  */}
       <LeftSide />
       <div className={classes.mrFeed}>
-        <Route path="/mypage" exact component={MyFeed} />
-        <Route path="/mypage/:title" component={MyPageList} />
-
+        {/*  */}
+        <Route path="/friend/:uid/post" exact component={MyFeed} />
+        <Route path="/friend/:uid/:title" component={MyPageList} />
+        
 
       </div>
       {/* <RightSide /> */}

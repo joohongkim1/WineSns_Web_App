@@ -2,7 +2,8 @@ import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
-import * as postsAPI from '../lib/api/post';
+// import * as postsAPI from '../lib/api/post';
+import writePosts from '../lib/api/post';
 import { takeLatest } from 'redux-saga/effects';
 import { Record, Map, List } from 'immutable';
 // import writePost from '../lib/api/post'
@@ -62,7 +63,8 @@ export class ContentsState extends ContentsStateRecord {
 // saga 생성
 // const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 // 여기서부터 saga
-const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+const writePostSaga = createRequestSaga(WRITE_POST, writePosts);
 export function* writeSaga() {
   console.log('실행좀...')
   yield takeLatest(WRITE_POST, writePostSaga);
@@ -82,82 +84,27 @@ const initialState = {
 const write = handleActions<ContentsStateParams, any>(
   { 
     [INITIALIZE]: state => initialState, // initialState를 넣으면 초기상태로 바뀜
-    [CHANGE_FIELD]: (state, { payload: { key, value }}) => {
-      if (key === 'content'){
-        state.content = value
-        return state;
-      }
-      else if(key === 'rating') {
-        state.rating = value;
-        return state;
-      }
-      else if(key === 'title') {
-        state.title = value;
-        return state;
-      }
-      else {
-        state.wid = value;
-        return state;
-      }
-    },
+    [CHANGE_FIELD]: (state, { payload: { key, value }}) => ({
+      ...state,
+      [key]: value
+    }),
     [WRITE_POST]: (state:any, action:any) => ({
       ...state,
       post: null,
       postError: null,
-      [action.payload]: state,
     }),
 
-    //   ...state,
-    //   // post와 postError를 초기화
-    //   post: null,
-    //   postError: null,
-      
-
-    // }),   
     // 포스트 작성 성공
-    [WRITE_POST_SUCCESS]: (state, { payload: post }) => {
-      state.post = post
-      return state;
-    },
+    [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post
+    }),
     // 포스트 작성 실패
-    [WRITE_POST_FAILURE]: (state, { payload: postError }) => {
-      state.postError = postError;
-      return state;
-    },
+    [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
+      ...state,
+      postError
+    }),
   },
   initialState,
 );
 export default write;
-
-// export default function write(state:contents = initialState, action : any) {
-//   switch (action.type) {
-//     case INITIALIZE:
-//       return {...state, 
-//         state: initialState
-//       }
-
-//     case CHANGE_FIELD:
-//       return {...state,
-//         [action.payload.key]:action.payload.value
-      
-//       }
-
-//     case WRITE_POST:
-//       return {...state,
-//         state:state,
-//         post: null,
-//         postError: null,
-//       }
-
-//     case WRITE_POST_SUCCESS:
-//       return {...state,
-//         post:action.payload.post,
-//       }
-//       case WRITE_POST_FAILURE:
-//         return {...state,
-//           postError:action.payload.postError,
-//         }
-//     default:
-//       return state;
-//   }
-// }

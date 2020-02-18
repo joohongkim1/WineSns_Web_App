@@ -39,12 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heroContent: {
       padding: theme.spacing(15, 0, 20),
+      display: "flex",
       backgroundImage:
         "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: "#ffffff"
+      backgroundPosition: "center"
     },
     card: {
       maxWidth: 300,
@@ -54,9 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      width: "70px",
+      display: "flex",
+      width: "100%",
       //paddingTop: '56.25%', // 16:9
-      position: "relative",
+      position: "absolute",
       marginLeft: "40%",
       height: "230px"
     },
@@ -204,21 +205,41 @@ export default function List() {
               >
                 <Row>
                   <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/338px-Flag_of_France.svg.png"
+                      alt="france"
+                      className="imgFrance"
+                    />
                     <Checkbox value="France">
                       <span style={{ fontSize: "22px" }}>France</span>
                     </Checkbox>
                   </Col>
                   <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/375px-Flag_of_Germany.svg.png"
+                      alt="germany"
+                      className="imgGermany"
+                    />
                     <Checkbox value="Germany">
                       <span style={{ fontSize: "22px" }}>Germany</span>
                     </Checkbox>
                   </Col>
                   <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/338px-Flag_of_Italy.svg.png"
+                      alt="italy"
+                      className="imgItaly"
+                    />
                     <Checkbox value="Italy">
                       <span style={{ fontSize: "22px" }}>Italy</span>
                     </Checkbox>
                   </Col>
                   <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png"
+                      alt="spain"
+                      className="imgSpain"
+                    />
                     <Checkbox value="Spain">
                       <span style={{ fontSize: "22px" }}>Spain</span>
                     </Checkbox>
@@ -233,22 +254,42 @@ export default function List() {
                 onChange={onChangeCountryChk}
               >
                 <Row>
-                  <Col span={8}>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/428px-Flag_of_the_United_States.svg.png"
+                      alt="USA"
+                      className="imgUSA"
+                    />
                     <Checkbox value="USA">
                       <span style={{ fontSize: "22px" }}>USA</span>
                     </Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/420px-Flag_of_Chile.svg.png"
+                      alt="chile"
+                      className="imgChile"
+                    />
                     <Checkbox value="Chile">
                       <span style={{ fontSize: "22px" }}>Chile</span>
                     </Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/450px-Flag_of_Australia.svg.png"
+                      alt="australia"
+                      className="imgAustralia"
+                    />
                     <Checkbox value="Australia">
                       <span style={{ fontSize: "22px" }}>Australia</span>
                     </Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/360px-Flag_of_Argentina.svg.png"
+                      alt="argentina"
+                      className="imgArgentina"
+                    />
                     <Checkbox value="Argentina">
                       <span style={{ fontSize: "22px" }}>Argentina</span>
                     </Checkbox>
@@ -283,7 +324,7 @@ export default function List() {
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
-            <Grid item xs={4}>
+            <Grid item xs={4} key={wine.wid}>
               <div className="wine_list">
                 <li>
                   <div className="tags">

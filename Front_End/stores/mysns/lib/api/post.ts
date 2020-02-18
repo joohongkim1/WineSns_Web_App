@@ -1,4 +1,5 @@
 import axios from 'axios';
+import HTTPS from '../../../api';
 
 interface contents {
   content: any,
@@ -8,34 +9,34 @@ interface contents {
 }
 
 
-export const writePost = ({content, rating, title, wid}:contents) => {
+async function writePost({content, rating, title, wid}:contents) : Promise<Response>{
   console.log('publish 받음')
-  return axios.post('https://i02a303.p.ssafy.io/WineProject/feed/create', null, {
-    params: {
-      content: content,
-      rating: rating,
+  let data = JSON.stringify({
+    content: content,
+      rating: 10,
       title: title,
-      wid: wid
-    },
-    headers: { 
-      'TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiRU1BSUxfVVNFUiJdLCJpYXQiOjE1ODE4OTg0NzgsImV4cCI6MTU4MTkwMjA3OH0.Mnb57qTFdSON1w14JOMKC2DMvWgvJJOO1hRWRvFBq4c',
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json"
-    },
-  }
-  )
-    .then(function (response: Response | any) {
+      wid: 10
+  })
+  let url = '/feed/create'
+  return HTTPS.post(url, data, {
+    headers : { 
+      'TOKEN' : localStorage.getItem('token'),
+      'Content-Type': 'application/json; charset=utf-8'
+      }
+  })
 
+    .then(function (response: Response | any) {
       if (!response) {
         return Promise.reject(response.statusText);
 
       }
-      console.log("heeeey");
-      return response.data.data;
+      return response.data as any;
     })
-    .catch(() => {
+    .catch((e) => {
       return Promise.reject('Backend not reachable');
 
     })
 
 }
+
+export default writePost;

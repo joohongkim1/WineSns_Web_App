@@ -8,6 +8,7 @@ import Footer from "./src/components/App/Footer";
 import Section from "./src/components/App/Section";
 import { BrowserRouter, Route } from "react-router-dom";
 import MyPage from "./src/components/MyPage";
+import YourPage from "./src/components/YourPage";
 import List from "./src/components/List_page/List";
 import WineDetail from "./src/components/WineDetail/WineDetail";
 import Entrance from "./src/components/App/Entrance";
@@ -19,6 +20,7 @@ import SmartList from "./src/components/SearchList/List";
 import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
 import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
 import WineSearch from "./src/components/smartSearch/WineSearch";
+import { Switch } from "@material-ui/core";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -33,6 +35,7 @@ class AppForm extends Component {
           <Route path="/ranking" component={App} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/list" component={List} />
+          <Route path="/friend/:uid" component={YourPage} />
           <Route path="/detail/:wid" component={WineDetail} />
           <Route path="/wineReview" component={WineReview} />
           <Route path="/signUp" component={SignUp} />
