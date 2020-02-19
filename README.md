@@ -28,6 +28,9 @@ Dionysos - Wine Web Community
     - MySQL
     - JWT
     - Java Security
+    - AWS EC2 Server
+    - SSL Certificate
+    - Ngnix
 
 - ### Front-End
     - React
