@@ -3,11 +3,15 @@ import EditorContainer from './containers/EditorContainer';
 import WriteActionButtonsContainer from './containers/WriteActionButtonsContainer';
 import WriteActionButtons from './WriteActionButtons';
 
-export default function WritePage() {
+interface wid {
+  wid: number
+}
+
+export default function WritePage({wid}:wid) {
   return(
     <div>
-      <EditorContainer />
-      <WriteActionButtonsContainer />
+      <EditorContainer  wineId={wid} />
+      <WriteActionButtonsContainer/>
     </div>
   );
 }

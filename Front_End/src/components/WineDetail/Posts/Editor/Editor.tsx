@@ -73,6 +73,7 @@ export default function Editor({ content, rating, title, wid, onChangeField}: po
         placeholder="평점을 입력하세요"
         onChange={onChangeRating}
         value={rating}
+        type="number"
       />
     </div>
   );
