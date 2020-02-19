@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import TimelineSection from './MR/TimelineSection';
 import MainContent from './MR/MainContent';
 
@@ -12,7 +12,7 @@ import MainContent from './MR/MainContent';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-import { ButtonGroup } from "@material-ui/core";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 // import Link from '@material-ui/core/Link';
 
 const buttons = [

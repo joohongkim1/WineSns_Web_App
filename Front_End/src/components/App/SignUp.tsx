@@ -10,9 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-
-import { connect } from "react-redux";
+import "./SignUp.css";
 import {
   register,
   emailCheck,
@@ -32,27 +30,30 @@ import { bindActionCreators, Dispatch } from "redux";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      height: "100vh"
-    },
-    image: {
-      backgroundImage: "url(https://source.unsplash.com/random)",
+      height: "100vh",
+      backgroundImage:
+        "url(https://media.istockphoto.com/photos/red-wine-and-cheese-picture-id689341058?k=6&m=689341058&s=612x612&w=0&h=V-i9n7IafA7sw-O799Fp9LDjLmW6IfVEAgI174JJOb4=)",
       backgroundRepeat: "no-repeat",
-      backgroundColor:
-        theme.palette.type === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.grey[50],
+      // backgroundColor:
+      //   theme.palette.type === "dark"
+      //     ? theme.palette.grey[900]
+      //     : theme.palette.grey[50],
       backgroundSize: "cover",
       backgroundPosition: "center"
     },
+    // image: {
+
+    // },
+
     paper: {
-      margin: theme.spacing(8, 4),
+      margin: theme.spacing(4, 4),
       display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
+      flexDirection: "column"
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
+      left: "43%"
     },
     form: {
       width: "100%", // Fix IE 11 issue.
@@ -62,11 +63,42 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(3, 0, 2)
     },
     check: {
-      marginLeft: "38%",
+      marginLeft: "33%",
       margin: theme.spacing(3, 0, 2)
     },
     font: {
       color: "black"
+    },
+    google: {
+      marginBottom: 20,
+      borderRadius: 5,
+      width: "87%",
+      backgroundColor: "#000000"
+    },
+    kakao: {
+      backgroundColor: "#f5e042",
+      color: "#000000",
+      borderRadius: 5,
+      boxShadow: "0px 2px rgba(0, 0, 0, 0.24)",
+      border: "border: 1px solid transparent",
+      marginBottm: 40,
+      width: "87%"
+    },
+    signUpSns: {
+      display: "flex",
+      flexDirection: "column",
+      paddingBottom: 30
+    },
+    typo: {
+      display: "flex",
+      justifyContent: "center",
+      justifySelf: "center"
+    },
+    signUpForm: {
+      position: "absolute",
+      left: "33%",
+      top: "15%",
+      paddingBottom: "1%"
     }
   })
 );
@@ -99,8 +131,13 @@ function SignUp() {
     emailState
   } = useSelector((state: rootState) => state.registerReducer);
 
-  const [state, setState] = useState( {nickname : '', email : '', password : '', provider : '', id : ''});
- 
+  const [state, setState] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+    provider: "",
+    id: ""
+  });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,7 +160,7 @@ function SignUp() {
       password: "",
       id: res.googleId,
 
-      nickname : "Hello",
+      nickname: "Hello",
       provider: "GOOGLE"
     });
 
@@ -166,171 +203,172 @@ function SignUp() {
   if (!isRegisterSuccess) {
     return (
       <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign Up
-            </Typography>
-            <form className={classes.form} onSubmit={onSubmit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="nickname"
-                label="nickname"
-                name="nickname"
-                autoComplete="nickname"
-                autoFocus
-                onChange={e =>
-                  setState({
-                    nickname: e.target.value,
-                    email: state.email,
-                    password: state.password,
-                    id: "",
-                    provider: ""
-                  })
-                }
-                value={state.nickname}
-              />
+        {/* <CssBaseline /> */}
+        <Grid>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={4}
+            component={Paper}
+            elevation={6}
+            className={classes.signUpForm}
+          >
+            <div className={classes.paper} id="paper">
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5" className={classes.typo}>
+                Sign Up
+              </Typography>
+              <form className={classes.form} onSubmit={onSubmit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="nickname"
+                  label="nickname"
+                  name="nickname"
+                  autoComplete="nickname"
+                  autoFocus
+                  onChange={e =>
+                    setState({
+                      nickname: e.target.value,
+                      email: state.email,
+                      password: state.password,
+                      id: "",
+                      provider: ""
+                    })
+                  }
+                  value={state.nickname}
+                />
 
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={e =>
-                  setState({
-                    nickname: state.nickname,
-                    email: e.target.value,
-                    password: state.password,
-                    id: "",
-                    provider: ""
-                  })
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={e =>
+                    setState({
+                      nickname: state.nickname,
+                      email: e.target.value,
+                      password: state.password,
+                      id: "",
+                      provider: ""
+                    })
+                  }
+                  value={state.email}
+                />
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.check}
+                  onClick={onEmailCheck}
+                >
+                  Email 중복 체크
+                </Button>
+                {(function() {
+                  if (emailState != "not yet") {
+                    return (
+                      <Typography
+                        style={{
+                          fontSize: "18px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        {emailState}
+                      </Typography>
+                    );
+                  }
+                })()}
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={classes.font}
+                  name="password"
+                  label="password"
+                  type="password"
+                  id="password"
+                  // value={password}
+                  // onChange={handlePassword}
+                  onChange={e =>
+                    setState({
+                      nickname: state.nickname,
+                      email: state.email,
+                      password: e.target.value,
+                      id: "",
+                      provider: ""
+                    })
+                  }
+                  value={state.password}
+                  placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
+                  autoComplete="current-password"
+                />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+              </form>
+            </div>
+            <div className="message">
+              {isRegisterPending && <div>Please wait...</div>}
+
+              {function() {
+                if (registerError == "register error") {
+                  return <span>입력하신 정보로 가입 하실 수 없습니다.</span>;
                 }
-                value={state.email}
-              />
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.check}
-                onClick={onEmailCheck}
-              >
-                Email 중복 체크
-              </Button>
-              {(function() {
-                if (emailState != "not yet") {
+
+                if (isRegisterSuccess) {
                   return (
-                    <Typography style={{ fontSize : '18px', display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'}}>{emailState}
-                    </Typography>
+                    <div>
+                      <span>회원 가입 완료</span>;
+                    </div>
                   );
                 }
-              })()}
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={classes.font}
-                name="password"
-                label="password"
-                type="password"
-                id="password"
-                // value={password}
-                // onChange={handlePassword}
-                onChange={e =>
-                  setState({
-                    nickname: state.nickname,
-                    email: state.email,
-                    password: e.target.value,
-                    id: "",
-                    provider: ""
-                  })
-                }
-                value={state.password}
-                placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
-                autoComplete="current-password"
+              }}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+              className={classes.signUpSns}
+            >
+              <GoogleLogin
+                clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
+                buttonText="Google 로 가입하기"
+                onSuccess={responseGoogle}
+                onFailure={responseFail}
+                cookiePolicy={"single_host_origin"}
+                className={classes.google}
               />
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-            </form>
-          </div>
-          <div className="message">
-            {isRegisterPending && <div>Please wait...</div>}
-
-            {function() {
-              if (registerError == "register error") {
-                return <span>입력하신 정보로 가입 하실 수 없습니다.</span>;
-              }
-
-              if (isRegisterSuccess) {
-                return (
-                  <div>
-                    <span>회원 가입 완료</span>;
-                  </div>
-                );
-              }
-            }}
-          </div>
-          <div style={{display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'}}>
-            <GoogleLogin
-              clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-              // render={props => (
-              //   // <button
-              //   //   className="login100-social-item bg1"
-              //   //   onClick={props.onClick}
-              //   // >
-              //   //   <i className="fa fa-google"></i>
-              //   // </button>
-              //   // <button className="loginBtn loginBtn--google">
-              //   //   Login with Google
-              //   // </button>
-
-              // )}
-              buttonText="Google"
-              onSuccess={responseGoogle}
-              onFailure={responseFail}
-              cookiePolicy={"single_host_origin"}
-            />
-
-            <KakaoLogin
-              jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-              // render={(props: any) => (
-              //   // <button
-              //   //   className="login100-social-item bg2"
-              //   //   onClick={props.onClick}
-              //   // >
-              //   //   <i className="fa fa-kakao"></i>
-              //   // </button>
-              //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
-              // )}
-              buttonText="KaKao"
-              onSuccess={responseKakao}
-              onFailure={responseFail}
-              throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
-              getProfile={true}
-            />
-          </div>
+              <KakaoLogin
+                jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
+                buttonText="KaKao 로 가입하기"
+                onSuccess={responseKakao}
+                onFailure={responseFail}
+                throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
+                getProfile={true}
+                className={classes.kakao}
+              />
+            </div>
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -341,8 +379,4 @@ function SignUp() {
   }
 }
 
-
-
-
 export default SignUp;
-

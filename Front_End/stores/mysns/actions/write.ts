@@ -53,17 +53,7 @@ export class ContentsState extends ContentsStateRecord {
   post?: any;
   postError?: any;
 }
-
-
-
-// saga 생성
-// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
-// export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}: contents) => ({content, rating, title, wid}));
-
-// saga 생성
-// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
-// 여기서부터 saga
-// const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+// Saga 생성
 const writePostSaga = createRequestSaga(WRITE_POST, writePosts);
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
@@ -87,7 +77,7 @@ const write = handleActions<ContentsStateParams, any>(
       ...state,
       [key]: value
     }),
-    [WRITE_POST]: (state:any, action:any) => ({
+    [WRITE_POST]: (state:any) => ({
       ...state,
       post: null,
       postError: null,
@@ -96,7 +86,7 @@ const write = handleActions<ContentsStateParams, any>(
     // 포스트 작성 성공
     [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
-      post
+      post,
     }),
     // 포스트 작성 실패
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({

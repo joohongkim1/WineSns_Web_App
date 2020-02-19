@@ -9,6 +9,16 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide'
 import MyPageList from './MyPageList';
+import {RouteComponentProps} from 'react-router-dom';
+
+
+interface RouterProps { // type for `match.params`]
+  uid : string,
+}
+
+interface MyComponentProps extends RouteComponentProps<RouterProps> {
+  uid : number,
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function Timelinesection() {
+export default function Timelinesection(props:MyComponentProps) {
   const classes = useStyles();
   
   return (

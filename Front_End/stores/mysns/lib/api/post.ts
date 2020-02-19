@@ -1,4 +1,3 @@
-import axios from 'axios';
 import HTTPS from '../../../api';
 
 interface contents {
@@ -15,7 +14,7 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
     content: content,
       rating: rating,
       title: title,
-      wid: 10
+      wid: wid
   })
   let url = '/feed/create'
   return HTTPS.post(url, data, {
@@ -28,7 +27,6 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
     .then(function (response: Response | any) {
       if (!response) {
         return Promise.reject(response.statusText);
-
       }
       return response.data as any;
     })

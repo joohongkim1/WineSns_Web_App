@@ -19,94 +19,97 @@ import '../../index.css';
 
 
 interface ReviewInfo {
-    fid : number; 
-    title : string;
-    nameEng : string;
-    content: string;
-    rating : number;
+  fid: number;
+  title: string;
+  nameEng: string;
+  content: string;
+  rating: number;
 }
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    // width: '100%',
-    // maxHeight: 'auto',
-    width:'70px',
-    //paddingTop: '56.25%', // 16:9
-    position: 'relative',
-    marginLeft : '40%',
-    height: '230px',
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  typography: {
-    fontFamily: 'Cafe24Shiningstar',
-  },        
-  more : {
-    "& > *": {
-      margin: theme.spacing(1, 8)
+    card: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
     },
-    fontSize : '18px', 
-    display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center'
-  },
-  center : {
-   fontSize : '18px', 
-   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-  }                                                                                           
-}),
+    cardMedia: {
+      // width: '100%',
+      // maxHeight: 'auto',
+      width: '70px',
+      //paddingTop: '56.25%', // 16:9
+      position: 'relative',
+      marginLeft: '40%',
+      height: '230px',
+    },
+    cardContent: {
+      flexGrow: 1,
+    },
+    typography: {
+      fontFamily: 'Cafe24Shiningstar',
+    },
+    more: {
+      "& > *": {
+        margin: theme.spacing(1, 8)
+      },
+      fontSize: '18px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    center: {
+      fontSize: '18px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }),
 );
 
 function ReviewInfo(review: ReviewInfo) {
   const classes = useStyles();
 
   const [checked] = React.useState(true);
-  
 
-    return (
-      <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
-        {/* <Grid item xs={12} sm={6} md={4}> */}
-        <Grid item xs={4}>
-            <Card className={classes.card}>
-                <CardMedia
-                    
-                    className={classes.cardMedia}
-                    image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${review.nameEng}.gif`}
-                    title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                <Typography className={classes.center}>
-                  {review.title}
-                    </Typography>
-                <Typography className={classes.center}>
-                        {review.content.substring(0,80)}...
-              </Typography>
-                </CardContent>
-               
-                <Box component="fieldset" mb={3} borderColor="transparent">
-        <Rating name="read-only" value={review.rating} readOnly  className={classes.center}/>
-      </Box>
-      <div className={classes.more}>
-                  <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
-                      <Button variant="outlined">View More</Button>
-                    </Link>
-                  </div>
+
+  return (
+    <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
+      {/* <Grid item xs={12} sm={6} md={4}> */}
+      <Grid item xs={4}>
+        <Card className={classes.card}>
+          <CardMedia
+
+            className={classes.cardMedia}
+            image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${review.nameEng}.gif`}
+            title="Image title"
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography className={classes.center}>
+              {review.title}
+            </Typography>
+            <Typography className={classes.center}>
+              <div dangerouslySetInnerHTML={{ __html: review.content.substring(0, 80) }}>
+
+              </div>
               
-            </Card>
-            </Grid>
-        {/* </Grid> */}
-        </Slide>
-    );
+              </Typography>
+          </CardContent>
+
+          <Box component="fieldset" mb={3} borderColor="transparent">
+            <Rating name="read-only" value={review.rating} readOnly className={classes.center} />
+          </Box>
+          <div className={classes.more}>
+            <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
+              <Button variant="outlined">View More</Button>
+            </Link>
+          </div>
+
+        </Card>
+      </Grid>
+      {/* </Grid> */}
+    </Slide>
+  );
 }
 
 export default ReviewInfo;
