@@ -111,6 +111,7 @@ export default function TempTop3() {
           <Grid container spacing={4}>
             {wineTop3.map(wine => (
               <WineInfo
+              key={wine.wid}
                 wid={wine.wid}
                 nameKor={wine.nameKor}
                 nameEng={wine.nameEng}

@@ -16,7 +16,8 @@ import { rootState } from "../../../stores/login/store";
 import {
   getWineListByType,
   getWineListByNameList,
-  searchWineByName
+  searchWineByName,
+  getWineUseList
 } from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
@@ -105,7 +106,8 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-    }
+    },
+ 
   })
 );
 export default function List() {
@@ -115,6 +117,7 @@ export default function List() {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
+  const [value, setValue] = React.useState<number | null>(2);
   const[search, setSearch] = useState('');
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
@@ -130,6 +133,9 @@ export default function List() {
     await dispatch(getWineListByNameList(checkedValues));
   };
 
+  const loadWineListByUse = async (checkedValues: any) => {
+    await dispatch(getWineUseList(checkedValues));
+  };
 
   const submitSearch = async () => {
   
@@ -144,11 +150,21 @@ export default function List() {
     console.log("checked = ", checkedValues);
     await loadWineListByChecked(checkedValues);
   }
+
+  async function onChangeWineUse(checkedValues: any) {
+    console.log("checked = ", checkedValues);
+    await loadWineListByUse(checkedValues);
+  }
+  
   const handleEuropeBtn = () => {
     setBtnNum(1);
   };
   const handleAmericaBtn = () => {
     setBtnNum(2);
+  };
+
+  const handleWineUseBtn = () => {
+    setBtnNum(3);
   };
 
   if (!isWineSucceess && !wineState) {
@@ -192,6 +208,9 @@ export default function List() {
           </Button>
           <Button className={classes.btn} onClick={handleAmericaBtn}>
             신대륙 와인
+          </Button>
+          <Button className={classes.btn} onClick={handleWineUseBtn}>
+            와인 용도
           </Button>
         </ButtonGroup>
       </div>
@@ -294,6 +313,34 @@ export default function List() {
                       <span style={{ fontSize: "22px" }}>Argentina</span>
                     </Checkbox>
                   </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } else if (btnNum == 3) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeWineUse}
+              >
+                <Row>
+                  <Col span={4}>
+                    <Checkbox value="테이블 와인">
+                      <span style={{ fontSize: "22px" }}>테이블 와인</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+
+                    <Checkbox value="에피타이저">
+                      <span style={{ fontSize: "22px" }}>에피타이저</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                
+                    <Checkbox value="디저트">
+                      <span style={{ fontSize: "22px" }}>디저트</span>
+                    </Checkbox>
+                  </Col>
+
                 </Row>
               </Checkbox.Group>
             );

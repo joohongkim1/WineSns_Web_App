@@ -1,5 +1,5 @@
 import { actions } from '../actions/follow'
-import {User} from "../reducers/userFeed_reducer";
+import {User} from "./myFeed_reducer";
 
 
   export interface userFollow {

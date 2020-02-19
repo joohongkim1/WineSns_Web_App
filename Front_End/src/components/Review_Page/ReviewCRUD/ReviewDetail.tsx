@@ -16,7 +16,7 @@ import CardContent from "@material-ui/core/CardContent";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
-
+import Rating from "@material-ui/lab/Rating";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,8 +25,6 @@ import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, cr
 ,deleteCommentAndUpdate} from '../../../../stores/feed/actions/feedDetail';
 
 import { Comment, Form, Header } from 'semantic-ui-react'
-
-
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -44,7 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
   
     },
-
+    rating: {
+      display: "inline-block",
+      float: "right",
+      position: "relative"
+    },
     table: {
       maxHeight : "100px",
       overflowY: "auto"
@@ -117,7 +119,7 @@ export default function ReviewDetail(props: MyComponentProps) {
     isFeedDetailSucceess,
     isFeedDetailPending
   } = useSelector((state: rootState) => state.FeedDetailReducer);
-
+  const [value, setValue] = React.useState<number | null>(2);
   const [likeState, setLikeState] = React.useState(false);
   const [followState, setFollowState] = React.useState(false);
 
@@ -219,7 +221,12 @@ export default function ReviewDetail(props: MyComponentProps) {
             src="https://image.shutterstock.com/image-photo/beautiful-face-young-caucasian-woman-260nw-1550451308.jpg"
           />
         </span>
-        <span style={{ fontSize: 24 }}>작성자 {feedDetail.user.nickName}</span>
+        <Link
+                    to={`/friend/${feedDetail.user.uid}`}
+                    style={{ textDecoration: "none" }}
+                  >  
+        <span style={{ fontSize: 24 }}>작성자
+           {feedDetail.user.nickName}</span></Link>
         <br />
         {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
         <span>
@@ -273,8 +280,14 @@ if (likeState) {
         <Divider component="li" />
         <Box component="span" m={1}>
           <Typography className={classes.wine}>
-            {feedDetail.wine.nameKor} <Star></Star>
+            {feedDetail.wine.nameKor} 
+            
           </Typography>
+          <Rating
+          name="simple-controlled"
+          value={feedDetail.rating}
+          size="large"
+        />
           {/* <span className={classes.star}>별점:</span> */}
         </Box>
         <Divider className={classes.divider} />

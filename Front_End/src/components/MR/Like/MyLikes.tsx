@@ -146,7 +146,7 @@ export default function MyLikes() {
         <Grid container spacing={10}>
           {userLike.map((wine: WineLike) => (
 ​
-            <Grid item xs={4}>
+            <Grid item xs={4} key={wine.wid}>
               <Card className={classes.card}>
                 <CardHeader
                   action={

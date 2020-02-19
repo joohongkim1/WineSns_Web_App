@@ -25,7 +25,7 @@ export default function MyPageList(props:MyComponentProps) {
   }
   else if (props.match.params.title === 'myfriends') {
     return (
-      <div><MyFriends uid={uid} /></div>
+      <div><MyFriends uid={4}/></div>
     );
   }
   else {

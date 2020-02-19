@@ -26,7 +26,7 @@ export interface Feed {
   }
 
   export interface friendFeedState {
-    userFeed : Feed[],
+    friendFeed : Feed[],
     isUserFeedPending : boolean,
     isUserFeedSucceess : boolean,
     isUserFeedError : string
@@ -36,17 +36,7 @@ export interface Feed {
 
 
 const initialState : friendFeedState = { 
-
-  // fid: 0,
-  // content: '',
-  // // createdTimeAt: string,
-  // // updateTimeAt: string,
-  // visit: 0,
-  // likeNum: 0,
-  // rating: 0,
-  // wine: null,
-  // user: null,
-  userFeed : [],
+  friendFeed : [],
   isUserFeedPending : false,
   isUserFeedSucceess : false,
   isUserFeedError : ''
@@ -55,18 +45,18 @@ const initialState : friendFeedState = {
 
 export default function feedReducer(state = initialState, action : any) {
   switch (action.type) {
-    case actions.SET_USER_FEED_INFO_PENDING:
+    case actions.SET_FRIEND_FEED_INFO_PENDING:
       return {...state, 
         isUserFeedPending: action.isUserFeedPending
       }
 
-    case actions.SET_USER_FEED_INFO_SUCCESS:
+    case actions.SET_FRIEND_FEED_INFO_SUCCESS:
       return {...state,
         isUserFeedSuccess: action.isUserFeedSuccess,
-        userFeed : action.userFeed
+        friendFeed : action.userFeed
       }
 
-    case actions.SET_USER_FEED_INFO_ERROR:
+    case actions.SET_FRIEND_FEED_INFO_ERROR:
       return {...state,
         isUserFeedError: action.UserFeedError
       }

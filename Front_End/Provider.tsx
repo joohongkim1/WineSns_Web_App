@@ -21,6 +21,7 @@ import ReviewList from "./src/components/Review_Page/ReviewCRUD/ReviewList";
 import ReviewDetail from "./src/components/Review_Page/ReviewCRUD/ReviewDetail";
 import WineSearch from "./src/components/smartSearch/WineSearch";
 import { Switch } from "@material-ui/core";
+import ScrollToTop from "./src/ScrollToTop";
 class AppForm extends Component {
   public store = (): object => {
     const store = Object.assign({}, this.props);
@@ -29,6 +30,7 @@ class AppForm extends Component {
   public render(): JSX.Element {
     return (
       <Provider store={this.store() as any}>
+        {/* <ScrollToTop /> */}
         <BrowserRouter>
           <Navbar />
           <Route exact={true} path="/" component={Entrance} />

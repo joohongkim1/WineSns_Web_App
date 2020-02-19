@@ -26,8 +26,6 @@ async function getSmartSearch(alcohol : number, country : string, sparkling : bo
 
       }
 
-      console.log("GET Wine List");
-
       return response.data as any;
     })
     .catch(() => {
@@ -38,8 +36,6 @@ async function getSmartSearch(alcohol : number, country : string, sparkling : bo
 }
 
 async function getSmartSearchByName(name : string): Promise<Response> {
-  console.log("this is name")
- console.log(name)
   return HTTPS.get('/wine/findByName/' + name
   )
   .then(function (response: Response | any) {
@@ -48,9 +44,6 @@ async function getSmartSearchByName(name : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
-      console.log("GET Wine List");
-
       return response.data as any;
     })
     .catch(() => {

@@ -22,20 +22,10 @@ export function getWineTop3(type : string) {
    await wineMainService.getWineTop3(type).then(
      (response : any) => {
       dispatch(setWinePending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
-    
 
     
       let wines : Wine[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is wine Top 3 List");
-      console.log(wines);
       dispatch(setWineTop3Success(true, wines));
       
      },
@@ -58,14 +48,10 @@ export function getWineTop5(type : string) {
      await wineMainService.getWineTop5(type).then(
        (response : any) => {
         dispatch(setWinePending(false));
-        console.log("this wine response");
-        console.log(response);
-        console.log("success");
+  
       
         let wines : Wine[] = response;
-  
-        console.log("this is wine Top 10 List");
-        console.log(wines);
+ 
         dispatch(setWineTop5Success(true, wines));
         
        },

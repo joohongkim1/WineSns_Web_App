@@ -7,7 +7,7 @@ import Followings from './Followings';
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
 import {UnfollowUserByUID, getUserFollowList, setUserFollowPending } from '../../../../stores/my_sns/actions/follow';
-import { Link } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 
@@ -133,9 +133,12 @@ if (!followState) {
             <ul className={classes.ulCommon}>
             <h1 className={classes.mrFriendsHeader}>Followings</h1>
             {follow.map(following => (
-               <div>
-               <li className={classes.liContainer}>
-                 <Link>{following.nickName}</Link>
+               <div key={following.uid}>
+               <li key={following.uid} className={classes.liContainer}>
+               <Link
+                    to={`/friend/${following.uid}`}
+                    style={{ textDecoration: "none" }}
+                  >  {following.nickName}</Link>
             
             
                              <Button

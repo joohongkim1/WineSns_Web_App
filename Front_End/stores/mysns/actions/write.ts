@@ -66,7 +66,6 @@ export class ContentsState extends ContentsStateRecord {
 // const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 const writePostSaga = createRequestSaga(WRITE_POST, writePosts);
 export function* writeSaga() {
-  console.log('실행좀...')
   yield takeLatest(WRITE_POST, writePostSaga);
 }
 

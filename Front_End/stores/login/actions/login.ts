@@ -39,8 +39,7 @@ export function SNSLogin(id : string, nickname: string, provider : string) {
    dispatch(setLoginPending(true));
    dispatch(setLoginSuccess(false));
    dispatch(setLoginError("not yet"));
- 
-   console.log("come on");
+
    await loginService.SNSLogin(id, nickname, provider).then(
      
     response => {
@@ -49,11 +48,11 @@ export function SNSLogin(id : string, nickname: string, provider : string) {
       //  console.log(localStorage.getItem('token'));
        dispatch(setLoginPending(false));
        dispatch(setLoginSuccess(true));
-      console.log("hey");
+
 
      },
      error => {
-       console.log(error);
+    
        dispatch(setLoginPending(false));
        dispatch(setLoginError("login error"));
      }

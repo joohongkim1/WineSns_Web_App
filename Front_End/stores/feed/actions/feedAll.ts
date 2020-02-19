@@ -18,14 +18,9 @@ export function getFeedAll() {
    await feedAllService.getFeedAll().then(
      (response : any) => {
       dispatch(setFeedAllPending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
 
       let feedList : feedState[] = response;
 
-      console.log("this is feedList");
-      console.log(feedList);
       dispatch(setFeedAllSuccess(true, feedList));
       
      },

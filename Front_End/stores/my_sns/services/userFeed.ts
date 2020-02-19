@@ -25,9 +25,6 @@ async function getUserFeedList(type : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
-      console.log("GET User Feed List");
-
       return response.data as any;
     })
     .catch(() => {
@@ -54,8 +51,6 @@ async function getWineListByName(name : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
-      console.log("GET Wine List");
 
       return response.data;
     })

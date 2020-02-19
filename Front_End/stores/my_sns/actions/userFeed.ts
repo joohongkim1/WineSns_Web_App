@@ -1,6 +1,6 @@
 import { userFeedService } from '../services/userFeed';
 import { createBrowserHistory } from 'history';
-import {userFeedState} from "../reducers/userFeed_reducer";
+import {userFeedState} from "../reducers/myFeed_reducer";
 
 export const actions = {
   SET_USER_FEED_INFO_PENDING: 'SET_USER_FEED_INFO_PENDING',
@@ -17,18 +17,10 @@ export function getUserFeedList() {
    await userFeedService.getUserFeedList("REVIEW").then(
      (response : any) => {
       dispatch(setUserFeedPending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
+
 
       let userFeed : userFeedState[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is userFeed");
-      console.log(userFeed);
       dispatch(setUserFeedSuccess(true, userFeed));
       
      },

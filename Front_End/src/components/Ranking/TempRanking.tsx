@@ -86,7 +86,7 @@ export default function Ranking() {
                 {" "}
                 <ul className="clfix" id="monthly-detail-nav">
                   {wineTop5.map(wine => (
-                    <li>
+                    <li key={wine.wid}>
                       <Link
                         to={`/detail/${wine.wid}`}
                         style={{ textDecoration: "none" }}
@@ -138,8 +138,8 @@ export default function Ranking() {
                   {" "}
                   <ul className="clfix" id="monthly-detail-nav">
                     {reviewTop5.map(review => (
-                      <li>
-                        <Link
+                      <li key={review.fid}>
+                        <Link key={review.fid}
                           to={`/review/${review.fid}`}
                           style={{ textDecoration: "none" }}
                         >

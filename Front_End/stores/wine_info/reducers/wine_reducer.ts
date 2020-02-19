@@ -40,27 +40,6 @@ const initialState : wineState = {
     isWineError : ''
 }
 
-// {
-  // wid: 0,
-  // nameKor : '',
-  // nameEng: '',
-  // type: '',
-  // sparkling: false,
-  // grape: '',
-  // country: '',
-  // countrySub: '',
-  // winery: '',
-  // alcohol: 0,
-  // whenUse: '',
-  // grade: '',
-  // sweet: 0,
-  // body: 0,
-  // acid: 0,
-  // tannin: 0,
-  // foodMatch: '',
-  // info: '',
-  // visit : 0,
-  // likeNum: 0}
 
 export default function rootReducer(state = initialState, action : any) {
   switch (action.type) {
