@@ -15,6 +15,8 @@ import SmartSearchReducer from "../../smartSearch/reducers/wine_reducer";
 import MyFeedReducer from "../../my_sns/reducers/userFeed_reducer";
 import FollowReducer from "../../my_sns/reducers/follow_reducer";
 import FeedDetailReducer from "../../feed/reducers/feed_detail_reducer";
+import FriendFollowReducer  from "../../your_sns/reducers/follow_reducer";
+import FriendFeedReducer from "../../your_sns/reducers/userFeed_reducer";
 
 import {loginState} from "../reducers/login_reducer";
 import {registerState} from "../../register/reducers/register_reducer";
@@ -26,6 +28,8 @@ import {feedAll} from "../../feed/reducers/feed_all_reducer";
 import {smartSearch} from "../../smartSearch/reducers/wine_reducer";
 import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
 import {userFollow} from "../../my_sns/reducers/follow_reducer";
+import {friendFollow} from "../../your_sns/reducers/follow_reducer";
+import {friendFeedState} from "../../your_sns/reducers/userFeed_reducer";
 
 import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
 import loading, {ILoadingState} from '../../mysns/lib/loading';
@@ -55,7 +59,9 @@ const rootReducer = combineReducers({
   write,
   loading,
   FeedDetailReducer,
-  FollowReducer
+  FollowReducer,
+  FriendFollowReducer,
+  FriendFeedReducer
 });
 
 export interface rootState {
@@ -72,7 +78,8 @@ export interface rootState {
   loading: ILoadingState,
   FeedDetailReducer : feedDetail,
   FollowReducer : userFollow,
-
+  FriendFollowReducer : friendFollow,
+  FriendFeedReducer : friendFeedState
 }
 
 export function* rootSaga() {

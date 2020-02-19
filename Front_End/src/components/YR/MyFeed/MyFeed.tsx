@@ -23,7 +23,7 @@ import { Pagination } from 'antd';
 // Redux
 
 import { rootState } from '../../../../stores/login/store';
-import { getUserFeedList } from '../../../../stores/my_sns/actions/userFeed';
+import { getUserFeedList } from '../../../../stores/your_sns/actions/userFeed';
 
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ import TextField from '@material-ui/core/TextField';
 
 import WritePage from '../Posts/Editor/WirtePage';
 
-
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -143,15 +143,24 @@ function getModalStyle() {
   };
 }
 
-export default function MyFeed() {
+interface RouterProps {
+  // type for `match.params`
+  uid: string; // must be type `string` since value comes from the URL
+}
+interface MyComponentProps extends RouteComponentProps<RouterProps> {
+  uid: number;
+}
+export default function MyFeed(props: MyComponentProps) {
   const classes = useStyles();
+  const uid = +props.match.params.uid;
+
   const [reviewState, setReviewState] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed} = useSelector(
-    (state: rootState) => state.MyFeedReducer
+  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed } = useSelector(
+    (state: rootState) => state.FriendFeedReducer
   );
 
   let start : number = 0;
@@ -169,7 +178,7 @@ export default function MyFeed() {
   };
 
   if(!isUserFeedSucceess && !reviewState) {
-    dispatch(getUserFeedList());
+    dispatch(getUserFeedList("REVIEW", uid));
     setReviewState(true);
   } else {
 

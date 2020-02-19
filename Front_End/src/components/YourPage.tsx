@@ -16,9 +16,9 @@ import { ButtonGroup } from "@material-ui/core";
 // import Link from '@material-ui/core/Link';
 
 const buttons = [
-  { title: "My Review", url: "/mypage" },
-  { title: "My Likes", url: "/mypage/mylikes" },
-  { title: "My Friends", url: "/mypage/myfriends" }
+  { title: "Review", url: "/friend" },
+  { title: "Likes", url: "/friend/mylikes" },
+  { title: "Friends", url: "/friend/myfriends" }
 ];
 
 const useStyles = makeStyles((theme: Theme) =>
