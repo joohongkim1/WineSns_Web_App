@@ -81,16 +81,8 @@ export default function Feed() {
           <h2 id="simple-modal-title">My Review</h2>
           <div>
             {/* 에디터 들어갈 공간 */}
-            <WritePage />
+            <WritePage onCancel={handleClose}/>
           </div>
-
-          {/* <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div>
-
-          <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div> */}
         </div>
       </Modal>
       {/* 작성된 Post를 전부 모아두는 곳 */}

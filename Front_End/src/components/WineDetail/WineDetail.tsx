@@ -294,7 +294,7 @@ function WineDetail(props: MyComponentProps) {
           <h2 id="simple-modal-title">My Review</h2>
           <div>
             {/* 에디터 들어갈 공간 */}
-            <WritePage wid={wid}/>
+            <WritePage wid={wid} onCancel={handleClose} />
           </div>
 
 

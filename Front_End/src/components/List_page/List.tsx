@@ -351,7 +351,7 @@ export default function List() {
         })()}
       </div>
       <Container className={classes.cardGrid}>
-        <div className={classes.search}>
+        <div>
           <Typography className={classes.total}>
             Total {wineList.length}
           </Typography>
