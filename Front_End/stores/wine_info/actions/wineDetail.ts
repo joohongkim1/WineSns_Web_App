@@ -18,14 +18,9 @@ export function getWineDetail(wid : number) {
    await wineDetailService.getWineDetail(wid).then(
      (response : any) => {
       dispatch(setWineDetailPending(false));
-      console.log(response);
-      console.log("success");
-    
 
-    
       let wine : Wine = response;
-      console.log("this is wine");
-      console.log(wine);
+
       dispatch(setWineDetailSuccess(true, wine));
       
      },

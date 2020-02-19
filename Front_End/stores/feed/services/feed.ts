@@ -26,8 +26,6 @@ async function getFeedListByWID(wid: number, type : string): Promise<Response> {
 
       }
 
-      console.log("GET Feed List");
-
       return response.data as any;
     })
     .catch(() => {
@@ -54,9 +52,6 @@ async function getWineListByName(name : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
-      console.log("GET Wine List");
-
       return response.data;
     })
     .catch(() => {

@@ -1,7 +1,7 @@
 import { userFollowService } from '../services/follow';
 import { createBrowserHistory } from 'history';
 import {userFollow} from "../reducers/follow_reducer";
-import {User} from "../reducers/userFeed_reducer";
+import {User} from "../reducers/myFeed_reducer";
 
 export const actions = {
   SET_USER_FOLLOW_PENDING: 'SET_USER_FOLLOW_PENDING',

@@ -76,10 +76,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   uid : string;
 }
-export default function MyFriend(props : IProps) {
+export default function MyFriend({uid} : {uid : number}) {
   const classes = useStyles();
   // const uid = +props.match.params.uid;
-  let uid : number = +(props.uid);
+  // let uid : number = +(props.uid);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const {follow, follower,isUserFollowError, isUserFollowSucceess, isUserFoolowPending } = useSelector(
@@ -150,13 +150,13 @@ if (!followState) {
                  <Link>{following.nickName}</Link>
             
             
-                             <Button
+                             {/* <Button
                              variant="contained"
                              color="primary"
                              className={classes.follow} onClick={()=> unfollow(following.uid)}
                            >
                              팔로우취소
-                           </Button>
+                           </Button> */}
                 
                </li>
              </div>

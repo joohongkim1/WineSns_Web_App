@@ -29,7 +29,6 @@ async function login(email: string, password: string): Promise<Response> {
       // console.log("in axios");
       // console.log(response);
       localStorage.setItem('token', <any>response.data.list[0].toString());
-      console.log(localStorage.getItem('token'));
 
 
       sessionStorage.setItem(
@@ -73,17 +72,14 @@ async function likeWineByUser(): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-      console.log(response);
-      console.log(response.data);
+
       sessionStorage.setItem(
         "userLike", JSON.stringify(response.data)
       );
       
-      console.log("user Like");
 
       let userLike = JSON.parse(sessionStorage.getItem('userLike') || '{}');
       
-      console.log(userLike);
       
       return response;
     })
@@ -117,11 +113,6 @@ async function likeFeedByUser(): Promise<Response> {
       );
       
 
-
-      let userLikeFeed = JSON.parse(sessionStorage.getItem('userLikeFeed') || '{}');
-      
-    
-      
       return response;
     })
     .catch(() => {
@@ -157,10 +148,6 @@ async function getUserFollowList(): Promise<Response> {
       );
       
 
-
-      //let userFollow = JSON.parse(sessionStorage.getItem('userFollow') || '{}');
-      
-    
       
       return response;
     })
@@ -175,7 +162,7 @@ async function getUserFollowList(): Promise<Response> {
 
 
 async function SNSLogin(id: string, nickname: string, provider: string): Promise<Response> {
-  console.log("whahwhwhwh");
+
   return HTTPS.post('/user/sns/signup',null, {
     params : {
       nickName : "Hello",
@@ -193,27 +180,18 @@ async function SNSLogin(id: string, nickname: string, provider: string): Promise
         return Promise.reject(response.statusText);
 
       }
-        console.log("in axios");
-      console.log(response);
+
       localStorage.setItem('token', <any>response.data.list[0].toString());
-      console.log(localStorage.getItem('token'));
 
 
-      console.log("hey1");
+
       sessionStorage.setItem(
         "uid", response.data.list[1].toString()
       );
       
-      console.log("hey2");
       sessionStorage.setItem(
         "userInfo", response.data.list[2].toString()
       );
-
-      console.log("why");
-
-
-
-      console.log("hey");
 
       return response;
 

@@ -25,13 +25,11 @@ async function register(nickname : string, email : string, password: string): Pr
       
      }
      
-     console.log(response.data.success);
-     
+
      return response.data.success;
     })
     .catch((e) => {
 
-      console.log(e);
       return Promise.reject('Backend not reachable');
      
     })

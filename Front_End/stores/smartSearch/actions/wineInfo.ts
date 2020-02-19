@@ -19,20 +19,9 @@ export function getSmartSearch(alcohol : number, country : string, sparkling : b
    await wineService.getSmartSearch(alcohol, country, sparkling, sweet, type).then(
      (response : any) => {
       dispatch(setSmartSearchPending(false));
-      console.log("this smart search response");
-      console.log(response);
-      console.log("success");
-    
 
     
       let wines : Wine[] = response;
-
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is search wineList");
-      console.log(wines);
       dispatch(setSmartSearchSuccess(true, wines));
       
      },
@@ -57,20 +46,9 @@ export function getSmartSearchByName(name : string) {
    await wineService.getSmartSearchByName(name).then(
      (response : any) => {
       dispatch(setSmartSearchPending(false));
-      console.log("this smart search response");
-      console.log(response);
-      console.log("success");
-    
 
-    
       let wines : Wine[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is search wineList");
-      console.log(wines);
       dispatch(setSmartSearchSuccess(true, wines));
       
      },

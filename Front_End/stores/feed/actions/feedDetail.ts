@@ -20,9 +20,6 @@ export function getFeedDetailByFID(fid : number) {
    await feedService.getFeedDetailByFID(fid).then(
      async (response : any) => {
       dispatch(setFeedDetailPending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
 
       let feedDetail : feedDetail = response;
        
@@ -35,14 +32,12 @@ export function getFeedDetailByFID(fid : number) {
       //   console.log(item);
       // });
 
-      console.log("this is feedList");
-      console.log(feedDetail);
       dispatch(setFeedDetailSuccess(true, feedDetail, commentList));
       
      },
      error => {
        dispatch(setFeedDetailPending(false));
-       dispatch(setFeedDetailError("getWineListByType error"));
+       dispatch(setFeedDetailError("feedDetail error"));
      }
    );
  }

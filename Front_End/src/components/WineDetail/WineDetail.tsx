@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
     backgroundImage:
-      "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
+    "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -156,7 +156,7 @@ function WineDetail(props: MyComponentProps) {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container>
-            <Typography component="h1" variant="h1" align="center">
+            <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
               Wine List
             </Typography>
           </Container>
@@ -384,6 +384,7 @@ function WineDetail(props: MyComponentProps) {
                 <Grid container spacing={4}>
                   {feedList.map(feed => (
                     <ReviewInfo
+                      key={feed.fid}
                       fid={feed.fid}
                       title={feed.title}
                       nameEng={feed.wine.nameEng}

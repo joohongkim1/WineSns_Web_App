@@ -3,12 +3,11 @@
 // about: Review page 중 위쪽 파트, 배경 사진, 프로필 사진, toolbar를 포함하고 있다.
 
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import LeftSide from './LeftSide';
 import RightSide from './RightSide'
-import MyFeed from './MyFeed/MyFeed';
 import MyPageList from './MyPageList';
 import {RouteComponentProps} from 'react-router-dom';
 
@@ -49,9 +48,9 @@ export default function Timelinesection(props:MyComponentProps) {
       <LeftSide />
       <div className={classes.mrFeed}>
         {/*  */}
-        <Route path="/friend/:uid" exact component={MyFeed} />
-        <Route path="/friend/:uid/:title" component={MyPageList} />
-        
+  
+        {/* <Route path="/friend/:uid" exact component={MyFeed} /> */}
+        {/* <Route path="/friend/:uid/:title" component={MyPageList} /> */}
 
       </div>
       {/* <RightSide /> */}

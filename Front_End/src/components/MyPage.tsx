@@ -43,7 +43,7 @@ export default function MyPage() {
 
   return (
     <div id="globalContainer">
-      <div>
+      <div >
       {/* 프로필 사진 단 */}
         
 
@@ -57,7 +57,7 @@ export default function MyPage() {
               <Link
                 color="inherit"
                 // noWrap
-                key={button.title}
+                key={button.url}
                 // variant="body2"
                 to={button.url}
               >

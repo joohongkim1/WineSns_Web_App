@@ -26,8 +26,7 @@ async function getWineDetail(wid : number): Promise<Response> {
       if (!response) {
         return Promise.reject(response.statusText);
       }
-        // console.log("in axios");
-        // console.log(response.data);
+   
       return response.data as any;
     })
     .catch(() => {
@@ -56,8 +55,7 @@ async function createWineLike(wid : number): Promise<Response> {
       }
 
       loginService.likeWineByUser();
-        // console.log("in axios");
-        // console.log(response.data);
+        
       return response.data as any;
     })
     .catch(() => {
@@ -86,8 +84,7 @@ async function deleteWineLike(wid : number): Promise<Response> {
       if (!response) {
         return Promise.reject(response.statusText);
       }
-        // console.log("in axios");
-        // console.log(response.data);
+      
         loginService.likeWineByUser();
 
       return response.data as any;

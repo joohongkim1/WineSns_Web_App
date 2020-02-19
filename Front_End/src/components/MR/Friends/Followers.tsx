@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
-import { Link } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles =  makeStyles((theme: Theme) =>
 createStyles({
@@ -24,9 +24,12 @@ interface Followers {
 export default function Followers(followers: Followers) {
   const classes = useStyles();
   return (
-    <div>
-      <li className={classes.liContainer}>
-        <Link>{followers.nickName}</Link>
+    <div  key={followers.uid}>
+      <li key={followers.uid} className={classes.liContainer}>
+      <Link
+                    to={`/friend/${followers.uid}`}
+                    style={{ textDecoration: "none" }}
+                  >  {followers.nickName}</Link>
       </li>
     </div>
   )

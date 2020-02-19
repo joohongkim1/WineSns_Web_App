@@ -24,8 +24,6 @@ async function getWineTop3(type: string): Promise<Response> {
 
       }
 
-      console.log("GET TOP 3 Wine List");
-
       return response.data as any;
     })
     .catch(() => {
@@ -51,8 +49,7 @@ async function getWineTop5(type : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-      console.log(response.data);
-      console.log("GET TOP 5 Review List");
+
 
       return response.data as any;
     })
@@ -79,8 +76,6 @@ async function getReviewTop5(type : string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-
-      console.log("GET TOP 10 Wine List");
 
       return response.data as any;
     })

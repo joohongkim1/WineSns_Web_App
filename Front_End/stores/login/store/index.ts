@@ -12,11 +12,12 @@ import wineDetailReducer from "../../wine_info/reducers/wineDetail_reducer";
 import feedReducer from "../../feed/reducers/feed_reducer";
 import feedAllReducer from "../../feed/reducers/feed_all_reducer";
 import SmartSearchReducer from "../../smartSearch/reducers/wine_reducer";
-import MyFeedReducer from "../../my_sns/reducers/userFeed_reducer";
+import MyFeedReducer from "../../my_sns/reducers/myFeed_reducer";
 import FollowReducer from "../../my_sns/reducers/follow_reducer";
 import FeedDetailReducer from "../../feed/reducers/feed_detail_reducer";
 import FriendFollowReducer  from "../../your_sns/reducers/follow_reducer";
 import FriendFeedReducer from "../../your_sns/reducers/userFeed_reducer";
+import FriendInfoReducer from "../../your_sns/reducers/friendInfo_reducer";
 
 import {loginState} from "../reducers/login_reducer";
 import {registerState} from "../../register/reducers/register_reducer";
@@ -26,11 +27,11 @@ import {wineDetailState} from "../../wine_info/reducers/wineDetail_reducer";
 import {feedState} from "../../feed/reducers/feed_reducer";
 import {feedAll} from "../../feed/reducers/feed_all_reducer";
 import {smartSearch} from "../../smartSearch/reducers/wine_reducer";
-import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
+import {userFeedState} from "../../my_sns/reducers/myFeed_reducer";
 import {userFollow} from "../../my_sns/reducers/follow_reducer";
 import {friendFollow} from "../../your_sns/reducers/follow_reducer";
 import {friendFeedState} from "../../your_sns/reducers/userFeed_reducer";
-
+import { Friend} from "../../your_sns/reducers/friendInfo_reducer";
 import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
 import loading, {ILoadingState} from '../../mysns/lib/loading';
 
@@ -61,7 +62,8 @@ const rootReducer = combineReducers({
   FeedDetailReducer,
   FollowReducer,
   FriendFollowReducer,
-  FriendFeedReducer
+  FriendFeedReducer,
+  FriendInfoReducer,
 });
 
 export interface rootState {
@@ -79,7 +81,8 @@ export interface rootState {
   FeedDetailReducer : feedDetail,
   FollowReducer : userFollow,
   FriendFollowReducer : friendFollow,
-  FriendFeedReducer : friendFeedState
+  FriendFeedReducer : friendFeedState,
+  FriendInfoReducer : Friend,
 }
 
 export function* rootSaga() {

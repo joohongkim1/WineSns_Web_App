@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-import ReviewInfo from "../../../components/Interface/Review";
+import ReviewInfo from "../../Interface/Review";
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 // Redux
@@ -150,21 +150,22 @@ interface RouterProps {
 interface MyComponentProps extends RouteComponentProps<RouterProps> {
   uid: number;
 }
-export default function MyFeed(props: MyComponentProps) {
+// props: MyComponentProps
+export default function MyFeed({uid} : {uid : number}) {
+
   const classes = useStyles();
-  const uid = +props.match.params.uid;
+  // const uid = +props.match.params.uid;
+ 
 
   const [reviewState, setReviewState] = useState(false);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed } = useSelector(
+  const { isUserFeedError,isUserFeedPending, isUserFeedSucceess, friendFeed } = useSelector(
     (state: rootState) => state.FriendFeedReducer
   );
 
-  let start : number = 0;
-  let end : number = 0;
 
   const numEachPage : number = 30;
 
@@ -197,40 +198,13 @@ export default function MyFeed(props: MyComponentProps) {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        게시글 작성
-      </button>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">My Review</h2>
-          <div>
-            {/* 에디터 들어갈 공간 */}
-            <WritePage />
-
-          </div>
-          
-          {/* <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div>
-
-          <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div> */}
-          
-
-        </div>
-      </Modal>
+    
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {userFeed.length}</Typography>
+        <Typography className={classes.total}>Total {friendFeed.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
      
         <Grid container spacing={10}>
-          {userFeed.slice(minValue, maxValue).map(feed => (
+          {friendFeed.slice(minValue, maxValue).map(feed => (
           
              <ReviewInfo
              fid={feed.fid}
@@ -246,7 +220,7 @@ export default function MyFeed(props: MyComponentProps) {
         </Grid>
         <div>
         <Pagination
-      total={userFeed.length}
+      total={friendFeed.length}
       // showTotal={total => `Total ${total} items`}
       onChange={handleChange}
       pageSize={numEachPage}

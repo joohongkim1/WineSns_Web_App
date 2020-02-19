@@ -38,15 +38,6 @@ export interface Feed {
 
 const initialState : feedState = { 
 
-  // fid: 0,
-  // content: '',
-  // // createdTimeAt: string,
-  // // updateTimeAt: string,
-  // visit: 0,
-  // likeNum: 0,
-  // rating: 0,
-  // wine: null,
-  // user: null,
   feedList : [],
   isFeedPending : false,
   isFeedSucceess : false,

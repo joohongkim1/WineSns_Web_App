@@ -21,20 +21,10 @@ export function getWineListByType(type : string) {
    await wineService.getWineListByType(type).then(
      (response : any) => {
       dispatch(setWinePending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
-    
-
+  
     
       let wines : Wine[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is wineList");
-      console.log(wines);
       dispatch(setWineSuccess(true, wines));
       
      },
@@ -57,20 +47,9 @@ export function getWineListByNameList(names : string[]) {
    await wineService.getWineListByNameList(names).then(
      (response : any) => {
       dispatch(setWinePending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
-    
 
-    
       let wines : Wine[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is wineList in name array");
-      console.log(wines);
       dispatch(setWineSuccess(true, wines));
       
      },
@@ -81,6 +60,34 @@ export function getWineListByNameList(names : string[]) {
    );
  }
 }
+
+
+
+export function getWineUseList(name : string) {
+  return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
+   dispatch(setWinePending(true));
+
+   dispatch(setWineError("not yet"));
+ 
+   
+   await wineService.getWineUseList(name).then(
+     (response : any) => {
+      dispatch(setWinePending(false));
+
+      let wines : Wine[] = response;
+
+      dispatch(setWineSuccess(true, wines));
+      
+     },
+     error => {
+       dispatch(setWinePending(false));
+       dispatch(setWineError("getWineListByType error"));
+     }
+   );
+ }
+}
+
+
 
 
 
@@ -96,8 +103,6 @@ export function searchWineByName(name : string) {
       dispatch(setWinePending(false));
     
       let wines : Wine[] = response;
-  
-      console.log(wines);
       dispatch(setWineSuccess(true, wines));
       
      },

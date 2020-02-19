@@ -28,7 +28,6 @@ async function getUserFollowerList(uid : number): Promise<Response> {
   
         }
   
-        console.log("GET User Follower List");
   
         return response.data as any;
       })

@@ -33,8 +33,6 @@ async function getFeedDetailByFID(fid : number): Promise<Response> {
         return Promise.reject(response.statusText);
       }
 
-      console.log("GET Feed Detail List");
-
       return response.data as any;
     })
     .catch(() => {
@@ -84,8 +82,6 @@ async function getCommentByFID(fid : number): Promise<Response> {
   
         }
   
-        console.log("GET Comment List");
-        console.log(response.data);
         return response.data as any;
       })
       .catch(() => {

@@ -2,20 +2,16 @@
 import axios from "axios";
 import HTTPS from '../../api';
 // import { Wine } from "../reducers/feed_reducer";
-export const userFeedService = {
-  getUserFeedList
+export const friendInfoService = {
+    getFriendInfo
 }
 
-async function getUserFeedList(type : string, uid : number): Promise<Response> {
+async function getFriendInfo(uid : number): Promise<Response> {
 
-  return HTTPS.get('/feed/findByUser', {
+  return HTTPS.get('/user/findByUid', {
     
     params: {
-      type : type,
       uid : uid
-    },
-    headers: {
-      'TOKEN' : localStorage.getItem('token'),
     }
   }
   )
@@ -34,4 +30,3 @@ async function getUserFeedList(type : string, uid : number): Promise<Response> {
     })
 
 }
-

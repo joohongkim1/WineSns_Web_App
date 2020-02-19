@@ -18,18 +18,9 @@ export function getFeedListByWID(wid : number, type : string) {
    await feedService.getFeedListByWID(wid, type).then(
      (response : any) => {
       dispatch(setFeedPending(false));
-      console.log("this wine response");
-      console.log(response);
-      console.log("success");
 
       let feedList : feedState[] = response;
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
-      console.log("this is feedList");
-      console.log(feedList);
       dispatch(setFeedSuccess(true, feedList));
       
      },
