@@ -190,24 +190,4 @@ public class FeedController {
 			throw e;
 		}
 	}
-
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "해당 유저의 모든 Feed 제거")
-	@DeleteMapping("/deleteAllByUser")
-	public ResponseEntity<Object> deleteAllByUser() {
-		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String uid = authentication.getName();
-
-			int delNum = feedService.deleteAllByUser(Long.parseLong(uid));
-			StringBuilder result = new StringBuilder();
-			result.append("Request User: ").append(uid).append("\n").append("Delete Num: ").append(delNum)
-					.append("개 삭제되었습니다.");
-			return new ResponseEntity<Object>(result, HttpStatus.OK);
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
 }

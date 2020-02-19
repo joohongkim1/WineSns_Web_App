@@ -115,6 +115,20 @@ public class WineServiceImpl implements WineService {
 		return modelMapper.map(wines, typeToken);
 	}
 	
+
+	@Override
+	public List<WineDto> findByWhenUse(String name) {
+		List<Wine> wines = wineRepository.findByWhenUseContains(name);
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
+	}
+	@Override
+	public List<WineDto> findByFoodMatch(String name) {
+		List<Wine> wines = wineRepository.findByFoodMatchContains(name);
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
+	}
+	
 	@Override
 	public List<String> findCountryAll(){
 		return wineRepository.findDistinctCountryAll();
@@ -128,8 +142,7 @@ public class WineServiceImpl implements WineService {
 	@Override
 	public List<String> findWineryByCountry(WineCountryEnum country) {
 		return wineRepository.findDistinctWineryByCountry(country.toString());
-
-	}
+	}	
 
 	@Override
 	@Transactional
@@ -142,4 +155,5 @@ public class WineServiceImpl implements WineService {
 	public void deleteAll() {
 		wineRepository.deleteAll();
 	}
+
 }

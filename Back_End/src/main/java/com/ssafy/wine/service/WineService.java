@@ -25,6 +25,10 @@ public interface WineService {
 	public List<String> findWineryAll();
 	
 	public List<String> findWineryByCountry(WineCountryEnum country);
+	
+	public List<WineDto> findByWhenUse(String name);
+
+	public List<WineDto> findByFoodMatch(String name);
 
 	public Integer updateVisit(Long wid);
 	

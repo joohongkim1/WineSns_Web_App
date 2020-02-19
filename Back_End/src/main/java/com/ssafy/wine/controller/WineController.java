@@ -80,7 +80,7 @@ public class WineController {
 		}
 	}
 
-	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country[],  sweet")
+	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country[], sweet")
 	@GetMapping("/search")
 	public ResponseEntity<Object> search(
 			@RequestParam(required = false) String type,
@@ -90,6 +90,28 @@ public class WineController {
 			@RequestParam(required = false) BigDecimal alcohol) {
 		try {
 			List<WineDto> wines = wineService.search(type, sparkling, country, sweet, alcohol);
+			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "와인 When_Use 검색")
+	@GetMapping("/findByWhenUse/{name}")
+	public ResponseEntity<Object> findByWhenUse(@PathVariable String name) {
+		try {
+			List<WineDto> wines = wineService.findByWhenUse(name);
+			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "와인 Food_Match 검색")
+	@GetMapping("/findByFoodMatch/{name}")
+	public ResponseEntity<Object> findByFoodMatch(@PathVariable String name) {
+		try {
+			List<WineDto> wines = wineService.findByFoodMatch(name);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;

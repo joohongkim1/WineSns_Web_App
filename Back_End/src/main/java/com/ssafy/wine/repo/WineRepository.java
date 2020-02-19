@@ -37,6 +37,10 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 
 	List<Wine> findByNameKorLike(String name);
 
+	List<Wine> findByWhenUseContains(String name);
+	
+	List<Wine> findByFoodMatchContains(String name);
+
 	@Query(value = "select DISTINCT w.country from wine w", nativeQuery = true)
 	List<String> findDistinctCountryAll();
 
