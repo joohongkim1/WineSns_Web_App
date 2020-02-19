@@ -69,7 +69,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "100px",
       position: "relative",
       height: "1px",
-      marginBottom: "50px"
+      marginBottom: "50px",
+      marginLeft: "8%",
+      marginRight: "8%"
     },
 
     divider2: {
@@ -174,14 +176,17 @@ export default function List() {
         <Link
           to={"/ranking"}
           className={classes.home}
-          style={{ textDecoration: "none" }}
+          style={{
+            textDecoration: "none",
+            color: "black",
+            paddingTop: "70px",
+            marginRight: "140px"
+          }}
         >
           <Typography>Home > 와인 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider}>
-        <Divider variant="middle" />
-      </div>
+      <Divider variant="middle" className={classes.divider} />
       <div className={classes.btnGroup}>
         <ButtonGroup
           size="large"
