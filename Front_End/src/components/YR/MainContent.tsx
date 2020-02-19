@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Timelinesection() {
   const classes = useStyles();
-
+  
   return (
     <div id="mrMainContents" className={classes.mrMainContents}>
       {/*  */}
       <LeftSide />
       <div className={classes.mrFeed}>
         {/*  */}
-        <Route path="/friend/:uid/post" exact component={MyFeed} />
+        <Route path="/friend/:uid" exact component={MyFeed} />
         <Route path="/friend/:uid/:title" component={MyPageList} />
         
 
