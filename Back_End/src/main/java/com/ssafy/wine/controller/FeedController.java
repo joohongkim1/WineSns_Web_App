@@ -29,11 +29,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Api(tags = { "4. Feed" }, description = "Feed 정보 REST API")
 @RequestMapping(value = "/feed")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class FeedController {
 
 	@Autowired
@@ -41,12 +43,18 @@ public class FeedController {
 
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "Feed 추가 - rating 값으로 review 판단")
+	@ApiOperation(value = "Feed 추가 - rating == null = Feed / rating != null = review")
 	@PostMapping("/create")
-	public ResponseEntity<Object> createReview(@RequestBody FeedInputDto feedInput) {
+	public ResponseEntity<Object> createFeed(@RequestBody FeedInputDto feedInput) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
+
+			if (feedInput.getWid() != null && feedInput.getWid() == 0)
+				feedInput.setWid(null);
+			if (feedInput.getWid() == null && feedInput.getRating() != null)
+				return new ResponseEntity<Object>("입력에 문제가 있습니다.\nrating값이 존재하는데 wine값이 존재하지 않습니다",
+						HttpStatus.ACCEPTED);
 
 			Feed feed = feedService.create(uid, feedInput);
 			StringBuilder result = new StringBuilder();
@@ -54,7 +62,8 @@ public class FeedController {
 					.append(feed.getFid()).append("\nFeed 작성완료");
 			return new ResponseEntity<Object>(result, HttpStatus.OK);
 		} catch (Exception e) {
-			throw e;
+			log.error("Feed Create Fail", e);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 
@@ -127,6 +136,12 @@ public class FeedController {
 			result.append("Request User: ").append(uid).append("\nFeed UID: ").append(feed.getUser().getUid());
 
 			if (uid.equals(feed.getUser().getUid().toString())) {
+				if (feedInput.getWid() != null && feedInput.getWid() == 0)
+					feedInput.setWid(null);
+				if (feedInput.getWid() == null && feedInput.getRating() != null)
+					return new ResponseEntity<Object>("입력에 문제가 있습니다.\nrating값이 존재하는데 wine값이 존재하지 않습니다",
+							HttpStatus.ACCEPTED);
+
 				feedService.update(fid, feedInput);
 				result.append("\n수정되었습니다.");
 				return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -171,7 +186,25 @@ public class FeedController {
 				result.append("\n삭제 실패: 삭제을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
 				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
 			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "해당 유저의 모든 Feed 제거")
+	@DeleteMapping("/deleteAllByUser")
+	public ResponseEntity<Object> deleteAllByUser() {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String uid = authentication.getName();
+
+			int delNum = feedService.deleteAllByUser(Long.parseLong(uid));
+			StringBuilder result = new StringBuilder();
+			result.append("Request User: ").append(uid).append("\n").append("Delete Num: ").append(delNum)
+					.append("개 삭제되었습니다.");
+			return new ResponseEntity<Object>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

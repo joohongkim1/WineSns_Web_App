@@ -1,5 +1,19 @@
 spring:
-  profiles:    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/wineproject?serverTimezone=UTC
+    username: root
+    password: ssafy
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      
   http:
     encoding:
       charset: UTF-8

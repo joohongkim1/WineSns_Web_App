@@ -53,8 +53,6 @@ public class FollowController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "following - 해당 유저가 팔로우하는 전체 그룹 반환")
 	@GetMapping("/findByFollowing")
 	public ResponseEntity<Object> findByFollowing(@RequestParam Long fromUid) {
@@ -66,8 +64,6 @@ public class FollowController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "follower - 해당 유저를 팔로우한 전체 그룹 반환")
 	@GetMapping("/findByFollower")
 	public ResponseEntity<Object> findByFollower(@RequestParam Long toUid) {

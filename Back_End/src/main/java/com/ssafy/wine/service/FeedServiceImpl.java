@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.ssafy.wine.dto.FeedInputDto;
 import com.ssafy.wine.dto.FeedOutputDto;
-import com.ssafy.wine.dto.WineDto;
 import com.ssafy.wine.entity.Feed;
 import com.ssafy.wine.entity.User;
 import com.ssafy.wine.entity.Wine;
@@ -44,13 +43,16 @@ public class FeedServiceImpl implements FeedService {
 	public Feed create(Long uid, FeedInputDto feedInput) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		Wine wine = null;
-		if (feedInput.getWid() != null)
+		if (feedInput.getWid() != null) {
 			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
-		return feedRepository.save(new Feed(user, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent()));
+			return feedRepository.save(new Feed(user, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent()));
+		} else {
+			return feedRepository.save(new Feed(user, feedInput.getTitle(), feedInput.getContent()));
+		}
 	}
 
 	@Override
-	public List<FeedOutputDto> findAll(FeedReviewEnum type){
+	public List<FeedOutputDto> findAll(FeedReviewEnum type) {
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
 		case ALL:
@@ -134,7 +136,8 @@ public class FeedServiceImpl implements FeedService {
 		Wine wine = null;
 		if (feedInput.getWid() != null)
 			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
-		return feedRepository.updateFeed(fid, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent());
+		return feedRepository.updateFeed(fid, wine, feedInput.getRating(), feedInput.getTitle(),
+				feedInput.getContent());
 	}
 
 	@Override
@@ -142,7 +145,7 @@ public class FeedServiceImpl implements FeedService {
 	public Integer updateVisit(Long fid) {
 		return feedRepository.updateVisit(fid);
 	}
-	
+
 	@Override
 	@Transactional
 	public void delete(Long fid) {
@@ -153,6 +156,13 @@ public class FeedServiceImpl implements FeedService {
 	public FeedOutputDto findById(Long fid) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
 		return modelMapper.map(feed, FeedOutputDto.class);
+	}
+
+	@Override
+	@Transactional
+	public Integer deleteAllByUser(Long uid) {
+		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
+		return feedRepository.deleteAllByUser(user);
 	}
 
 }

@@ -27,4 +27,6 @@ public interface FeedService {
 	public Integer updateVisit(Long fid);
 
 	public void delete(Long fid);
+
+	public Integer deleteAllByUser(Long uid);
 }
