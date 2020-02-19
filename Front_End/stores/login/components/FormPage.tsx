@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./login_style.css";
+import { Link } from "react-router-dom";
 
 import { login, SNSLogin } from "../actions/login";
 import { logout } from "../actions/login";
@@ -31,7 +32,6 @@ class FormPage extends React.Component<IProps, IState> {
     super(props);
 
     console.log(props);
- 
 
     this.state = {
       id: "",
@@ -46,8 +46,6 @@ class FormPage extends React.Component<IProps, IState> {
 
   // Google Login
   responseGoogle = async (res: any) => {
-
-    
     this.setState({
       id: res.googleId,
       nickname: "HELLO",
@@ -75,19 +73,17 @@ class FormPage extends React.Component<IProps, IState> {
   };
 
   // Login Fail
-  responseFail = (err: any) => {
-
-  };
+  responseFail = (err: any) => {};
 
   render() {
     let { email, password } = this.state;
     let { isLoginPending, isLoginSuccess, loginError } = this.props;
 
-    if (!sessionStorage.getItem('userInfo')) {
+    if (!sessionStorage.getItem("userInfo")) {
       return (
         <div>
           <form name="form" onSubmit={this.onSubmit} className="login-form">
-            <h1>Login</h1>
+            <div className="login">Login</div>
 
             <div className="txtb">
               <input
@@ -104,7 +100,6 @@ class FormPage extends React.Component<IProps, IState> {
               <input
                 type="password"
                 disabled={isLoginPending}
-                className="form-control"
                 name="password"
                 onChange={e => this.setState({ password: e.target.value })}
                 value={password}
@@ -128,43 +123,54 @@ class FormPage extends React.Component<IProps, IState> {
               <a href="#">Forgot Password?</a>
               <a href="/signUp">Sign up</a>
             </div>
-            <GoogleLogin
-              clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
-              // render={props => (
-              //   // <button
-              //   //   className="login100-social-item bg1"
-              //   //   onClick={props.onClick}
-              //   // >
-              //   //   <i className="fa fa-google"></i>
-              //   // </button>
-              //   // <button className="loginBtn loginBtn--google">
-              //   //   Login with Google
-              //   // </button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+              className="signUpSns"
+            >
+              <GoogleLogin
+                clientId="605769507433-205lj47uj46v02ucrpvbgpck6n2mmed6.apps.googleusercontent.com"
+                // render={props => (
+                //   // <button
+                //   //   className="login100-social-item bg1"
+                //   //   onClick={props.onClick}
+                //   // >
+                //   //   <i className="fa fa-google"></i>
+                //   // </button>
+                //   // <button className="loginBtn loginBtn--google">
+                //   //   Login with Google
+                //   // </button>
 
-              // )}
-              buttonText="Google"
-              onSuccess={this.responseGoogle}
-              onFailure={this.responseFail}
-              cookiePolicy={"single_host_origin"}
-            />
+                // )}
+                buttonText="Google 로 로그인하기"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseFail}
+                cookiePolicy={"single_host_origin"}
+                className="google"
+              />
 
-            <KakaoLogin
-              jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
-              // render={(props: any) => (
-              //   // <button
-              //   //   className="login100-social-item bg2"
-              //   //   onClick={props.onClick}
-              //   // >
-              //   //   <i className="fa fa-kakao"></i>
-              //   // </button>
-              //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
-              // )}
-              buttonText="KaKao"
-              onSuccess={this.responseKakao}
-              onFailure={this.responseFail}
-              throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
-              getProfile={true}
-            />
+              <KakaoLogin
+                jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
+                // render={(props: any) => (
+                //   // <button
+                //   //   className="login100-social-item bg2"
+                //   //   onClick ={props.onClick}
+                //   // >
+                //   //   <i className="fa fa-kakao"></i>
+                //   // </button>
+                //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
+                // )}
+                buttonText="KaKao 로 로그인 하기"
+                onSuccess={this.responseKakao}
+                onFailure={this.responseFail}
+                throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
+                getProfile={true}
+                className="kakao"
+              />
+            </div>
           </form>
         </div>
       );
@@ -175,8 +181,11 @@ class FormPage extends React.Component<IProps, IState> {
         // //   //<h1>{sessionStorage.getItem("userInfo")}</h1>
 
         <div>
-        <img src="https://1.bp.blogspot.com/-nF66cG_pBcI/W2cC6-vBoQI/AAAAAAApbw0/OM3urq7sYPoonAi8fxCW9s0fBZVHkSrAwCLcBGAs/s1600/AW1483012_00.gif" alt="WELCOME TO Dionysos" />
-      </div>
+          <img
+            src="https://1.bp.blogspot.com/-nF66cG_pBcI/W2cC6-vBoQI/AAAAAAApbw0/OM3urq7sYPoonAi8fxCW9s0fBZVHkSrAwCLcBGAs/s1600/AW1483012_00.gif"
+            alt="WELCOME TO Dionysos"
+          />
+        </div>
       );
     }
   }
@@ -184,7 +193,7 @@ class FormPage extends React.Component<IProps, IState> {
   async onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let { email, password } = this.state;
-   
+
     await this.props.dispatch(login(email, password));
   }
 }

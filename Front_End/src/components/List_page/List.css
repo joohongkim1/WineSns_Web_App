@@ -220,6 +220,7 @@ strong {
 
 .pagination {
   text-align: center;
+  margin-top: 100px;
 }
 
 .checkbox {
@@ -231,49 +232,41 @@ strong {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgGermany {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgItaly {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgSpain {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgUSA {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgChile {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgAustralia {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 .imgArgentina {
   display: block;
   width: 100px;
   height: 60px;
-  opacity: 0.7;
 }
 
 .imgFrance:hover {
@@ -325,4 +318,24 @@ strong {
   width: 100px;
   height: 60px;
   opacity: 1;
+}
+
+/* .ant-checkbox {
+  display: none;
+} */
+
+#france:checked {
+  display: none;
+}
+
+#searchbtn {
+  margin-right: 30px;
+}
+/* #s {
+  margin-right: 10px;
+} */
+
+.MuiGrid-grid-xs-4 {
+  padding-left: 20px;
+  padding-bottom: 20px;
 }
