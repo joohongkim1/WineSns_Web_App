@@ -6,10 +6,10 @@ import Followings from './Followings';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
-import {UnfollowUserByUID, getUserFollowList, setUserFollowPending } from '../../../../stores/my_sns/actions/follow';
+import {UnfollowUserByUID, getUserFollowList, setUserFollowPending } from '../../../../stores/your_sns/actions/follow';
 import { Link } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,24 +65,36 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default function MyFriends() {
-  const classes = useStyles();
+// interface RouterProps {
+//   // type for `match.params`
+//   uid: string; // must be type `string` since value comes from the URL
+// }
+// interface MyComponentProps extends RouteComponentProps<RouterProps> {
+//   uid: number;
+// }
 
+interface IProps {
+  uid : string;
+}
+export default function MyFriend(props : IProps) {
+  const classes = useStyles();
+  // const uid = +props.match.params.uid;
+  let uid : number = +(props.uid);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const {follow, follower,isUserFollowError, isUserFollowSucceess, isUserFoolowPending } = useSelector(
-    (state: rootState) => state.FollowReducer
+    (state: rootState) => state.FriendFollowReducer
   );
 ​
 const [followState, setFollowState] = React.useState(false);
 
 const loadFollowList = async () => {
   console.log("onReviewList");
-  await dispatch(getUserFollowList());
+  await dispatch(getUserFollowList(uid));
 };
 
-const unfollow = async (uid : number) => {
-  await dispatch(UnfollowUserByUID(uid));
+const unfollow = async (tagid : number) => {
+  await dispatch(UnfollowUserByUID(tagid));
   loadFollowList();
 };
 
