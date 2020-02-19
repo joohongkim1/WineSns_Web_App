@@ -24,7 +24,6 @@ import { Checkbox, Row, Col } from "antd";
 import "./List.css";
 import Search from "./Search";
 
-
 import "./Search.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,19 +61,23 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "230px"
     },
     cardGrid: {
-      paddingTop: theme.spacing(20),
+      paddingTop: theme.spacing(12),
       paddingBottom: theme.spacing(12)
     },
     divider: {
       backgroundColor: "#36342f",
-      marginBottom: "80px",
-      height: 10
-    },
-    divider2: {
-      backgroundColor: "#36342f",
       marginTop: "100px",
       position: "relative",
-      zIndex: 6
+      height: "1px",
+      marginBottom: "50px"
+    },
+
+    divider2: {
+      backgroundColor: "#36342f",
+      marginTop: "10px",
+      position: "relative",
+      height: "1px",
+      marginBottom: "50px"
     },
     btn: {
       fontSize: "25px",
@@ -92,10 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "inline-block",
       marginLeft: "15px"
     },
-    search: {
-      display: "flex",
-      justifycontent: "right"
-    },
+
     home: {
       display: "inline-block flex",
       float: "right",
@@ -105,6 +105,9 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
+    },
+    search: {
+      marginBottom: "20px"
     }
   })
 );
@@ -115,7 +118,7 @@ export default function List() {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
-  const[search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
@@ -123,16 +126,13 @@ export default function List() {
   let start: number = 0;
   let end: number = 0;
   const loadWineList = async () => {
-   
     await dispatch(getWineListByType("KOR_UP"));
   };
   const loadWineListByChecked = async (checkedValues: any) => {
     await dispatch(getWineListByNameList(checkedValues));
   };
 
-
   const submitSearch = async () => {
-  
     await dispatch(searchWineByName(search));
   };
   const numEachPage: number = 15;
@@ -176,10 +176,10 @@ export default function List() {
           className={classes.home}
           style={{ textDecoration: "none" }}
         >
-          <Typography>Home > 와인 list</Typography>ㄹ
+          <Typography>Home > 와인 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider2}>
+      <div className={classes.divider}>
         <Divider variant="middle" />
       </div>
       <div className={classes.btnGroup}>
@@ -210,7 +210,7 @@ export default function List() {
                       alt="france"
                       className="imgFrance"
                     />
-                    <Checkbox value="France">
+                    <Checkbox value="France" id="france" checked>
                       <span style={{ fontSize: "22px" }}>France</span>
                     </Checkbox>
                   </Col>
@@ -301,26 +301,27 @@ export default function List() {
         })()}
       </div>
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>
-          Total {wineList.length}
-        </Typography>
-        <Divider variant="middle" className={classes.divider} />
-        <div>
-        <button name="searchbtn" id="searchbtn" value="" onClick={submitSearch}></button>
-      <input
-        type="text"
-        name="s"
-        id="s"
-        className="searchfield"
-        placeholder="와인명 입력"
-        onChange={e =>
-          setSearch(e.target.value)
-        }
-        value={search}
-      />
-
-                                                
-</div>
+        <div className={classes.search}>
+          <Typography className={classes.total}>
+            Total {wineList.length}
+          </Typography>
+          <button
+            name="searchbtn"
+            id="searchbtn"
+            value=""
+            onClick={submitSearch}
+          ></button>
+          <input
+            type="text"
+            name="s"
+            id="s"
+            className="searchfield"
+            placeholder="와인명 입력"
+            onChange={e => setSearch(e.target.value)}
+            value={search}
+          />
+        </div>
+        <Divider className={classes.divider2} variant="middle" />
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
@@ -386,6 +387,7 @@ export default function List() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
+            size="large"
           />
         </div>
         {/* <ReviewModal /> */}
