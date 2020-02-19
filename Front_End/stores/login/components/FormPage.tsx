@@ -163,7 +163,7 @@ class FormPage extends React.Component<IProps, IState> {
                 //   // </button>
                 //   <button className="loginBtn loginBtn--kakao"><span style={{color : 'black'}}>Login with KaKao</span></button>
                 // )}
-                buttonText="KaKao 로 로그인 하기"
+                buttonText="KaKao 로 로그인하기"
                 onSuccess={this.responseKakao}
                 onFailure={this.responseFail}
                 throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
