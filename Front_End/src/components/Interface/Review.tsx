@@ -15,6 +15,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import { Link } from "react-router-dom";
 
+import LongMenu from './LongMenu'
+
 import '../../index.css';
 
 
@@ -103,6 +105,7 @@ function ReviewInfo(review: ReviewInfo) {
             <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
               <Button variant="outlined">View More</Button>
             </Link>
+            <LongMenu />
           </div>
 
         </Card>
