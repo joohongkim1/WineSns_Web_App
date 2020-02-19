@@ -3,15 +3,16 @@ import EditorContainer from './containers/EditorContainer';
 import WriteActionButtonsContainer from './containers/WriteActionButtonsContainer';
 import WriteActionButtons from './WriteActionButtons';
 
-interface wid {
-  wid: number
+interface params {
+  wid: number,
+  onCancel: any,
 }
 
-export default function WritePage({wid}:wid) {
+export default function WritePage( {wid, onCancel}:params ) {
   return(
     <div>
       <EditorContainer  wineId={wid} />
-      <WriteActionButtonsContainer/>
+      <WriteActionButtonsContainer onCancel={onCancel} />
     </div>
   );
 }

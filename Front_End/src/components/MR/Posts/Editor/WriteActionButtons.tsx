@@ -13,6 +13,6 @@ export default function WriteActionButtons( params: { onCancel: any, onPublish: 
       <Button onClick={params.onCancel}>
         취소
       </Button>
-      </div>
+    </div>
   );
 };

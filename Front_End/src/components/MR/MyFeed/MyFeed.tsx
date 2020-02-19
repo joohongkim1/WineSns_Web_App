@@ -201,7 +201,7 @@ export default function MyFeed() {
           <h2 id="simple-modal-title">My Review</h2>
           <div>
             {/* 에디터 들어갈 공간 */}
-            <WritePage />
+            <WritePage onCancel={handleClose}/>
 
           </div>
           

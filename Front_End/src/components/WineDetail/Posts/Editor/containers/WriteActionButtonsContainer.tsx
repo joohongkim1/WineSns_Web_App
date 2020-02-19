@@ -18,16 +18,21 @@ interface write {
 }
 
 
-const WriteActionButtonsContainer = ( {history}: Props ) => {
+const WriteActionButtonsContainer = ( {onCancel}:any ) => {
   console.log('aaaaaaa')
   const dispatch = useDispatch();
   const { content, rating, title, wid, post, postError } = useSelector(( state: rootState ) => (
     state.write
   ));
   console.log(content, rating, title, wid, post, postError)
-
+  function refreshPage() {
+    window.location.reload(true);
+  }
   // 포스트 등록
   const onPublish = () => {
+    dispatch(
+      refreshPage
+    )
     console.log('publish')
     dispatch(
       writePost({
@@ -37,26 +42,23 @@ const WriteActionButtonsContainer = ( {history}: Props ) => {
         wid,
       }),
     );
-
   };
 
-  // 취소
-  const onCancel = () => {
-  };
 
-  // 성공 혹은 실패시 할 작업
-  useEffect(() => {
-    if (post) {
-      const { _id, user } = post;
-      history.push(`/@${user.username}/${_id}`);
-    }
-    if (postError) {
-      console.log(postError);
-    }
-  }, [history, post, postError]);
+  // // 성공 혹은 실패시 할 작업
+  // useEffect(() => {
+  //   if (post) {
+  //     const { _id, user } = post;
+  //     history.push(`/@${user.username}/${_id}`);
+  //   }
+  //   if (postError) {
+  //     console.log(postError);
+  //   }
+  // }, [history, post, postError]);
   return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
 
   
 };
 
-export default withRouter(WriteActionButtonsContainer);
+// export default withRouter(WriteActionButtonsContainer);
+export default WriteActionButtonsContainer;
