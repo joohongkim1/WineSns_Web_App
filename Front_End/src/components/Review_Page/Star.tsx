@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+
 export default function Star() {
   const [value, setValue] = React.useState<number | null>(2);
   const classes = useStyles();

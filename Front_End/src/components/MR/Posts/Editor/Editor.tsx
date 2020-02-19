@@ -56,6 +56,10 @@ export default function Editor({ content, rating, title, wid, onChangeField}: po
     onChangeField({ key: 'title', value: e.target.value });
   };
 
+  const onChangeRating = (e: any) => {
+    onChangeField({ key: 'rating', value: e.target.value as number });
+  };
+  
   return (
     <div>
       <input
