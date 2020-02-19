@@ -28,8 +28,8 @@ import {userFeedState} from "../../my_sns/reducers/userFeed_reducer";
 import {userFollow} from "../../my_sns/reducers/follow_reducer";
 
 import write, {writeSaga, ContentsState} from "../../mysns/actions/write"
-// import write, {ContentsState} from "../../mysns/actions/write"
 import loading, {ILoadingState} from '../../mysns/lib/loading';
+
 
 import {feedDetail} from "../../feed/reducers/feed_detail_reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';

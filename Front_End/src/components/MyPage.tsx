@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function YourPage() {
+export default function MyPage() {
   const classes = useStyles();
 
   return (

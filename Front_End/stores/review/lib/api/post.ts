@@ -13,7 +13,7 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
   console.log('publish 받음')
   let data = JSON.stringify({
     content: content,
-      rating: rating,
+      rating: 10,
       title: title,
       wid: 10
   })
