@@ -2,11 +2,14 @@ import React, {useRef, useEffect} from 'react';
 // import * as Quill from 'quill';
 import * as Q from 'quill';
 import Button from '@material-ui/core/Button';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const Quill: any = Q;
 // import styled from 'styled-components'
 import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/styles';
-import { Rating } from '@material-ui/lab';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +27,9 @@ interface post {
 }
 
 export default function Editor({ content, rating, title, wid, onChangeField}: post){
+
+  const [value, setValue] = React.useState<number | null>(2);
+
   const quillElement = useRef<any>();
   const quillInstance = useRef<any>();
   useEffect(() => {
@@ -56,10 +62,6 @@ export default function Editor({ content, rating, title, wid, onChangeField}: po
     onChangeField({ key: 'title', value: e.target.value });
   };
 
-  const onChangeRating = (e: any) => {
-    onChangeField({ key: 'rating', value: e.target.value as number });
-  };
-
   return (
     <div>
       <input
@@ -69,12 +71,17 @@ export default function Editor({ content, rating, title, wid, onChangeField}: po
       />
         <div ref={quillElement} />
 
-        <input
-        placeholder="평점을 입력하세요"
-        onChange={onChangeRating}
-        value={rating}
-        type="number"
-      />
+      <Box component="fieldset" mb={3} borderColor="transparent">
+        <Typography component="legend">Controlled</Typography>
+        <Rating
+          name="simple-controlled"
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            onChangeField({ key: 'rating', value: newValue as number })
+          }}
+        />
+      </Box>
     </div>
   );
 };
