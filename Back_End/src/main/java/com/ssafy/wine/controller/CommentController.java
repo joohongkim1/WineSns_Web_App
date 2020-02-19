@@ -68,7 +68,7 @@ public class CommentController {
 
 	@ApiOperation(value = "comment 단일 불러오기")
 	@GetMapping("/findById")
-	public ResponseEntity<Object> findById(@PathVariable Long cid) {
+	public ResponseEntity<Object> findById(@RequestParam Long cid) {
 		try {
 			CommentDto comment = commentService.findById(cid);
 			return new ResponseEntity<Object>(comment, HttpStatus.OK);

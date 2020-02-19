@@ -136,4 +136,10 @@ public class WineServiceImpl implements WineService {
 	public Integer updateVisit(Long wid) {
 		return wineRepository.updateVisit(wid);
 	}
+
+	@Override
+	@Transactional
+	public void deleteAll() {
+		wineRepository.deleteAll();
+	}
 }

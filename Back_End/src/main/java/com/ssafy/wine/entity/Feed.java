@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "feed")
-public class Feed {
+public class Feed extends DateEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,14 +49,6 @@ public class Feed {
 	
 	@Column(length = 4000)
 	private String content;
-
-	@Column
-	@CreationTimestamp
-	private LocalDateTime createdTimeAt;
-
-	@Column
-	@UpdateTimestamp
-	private LocalDateTime updateTimeAt;
 
 	@ManyToOne
 	@JoinColumn(name = "wine_id")

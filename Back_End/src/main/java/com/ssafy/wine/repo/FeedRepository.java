@@ -29,6 +29,9 @@ public interface FeedRepository extends CrudRepository<Feed, Long> {
 	List<Feed> findTop5ByRatingNotNullOrderByVisitDesc();
 
 	List<Feed> findTop5ByRatingNotNullOrderByLikeNumDesc();
+	
+	@Modifying
+	Integer deleteAllByUser(User user);
 
 	@Modifying
 	@Query(value = "UPDATE feed f set f.title = :title, f.content = :content, f.wine_id = :wid, f.rating = :rating, f.update_time_at = now() where f.fid = :fid", nativeQuery = true)

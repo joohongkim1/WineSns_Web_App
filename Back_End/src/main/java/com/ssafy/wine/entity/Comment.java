@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment extends DateEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,14 +48,6 @@ public class Comment {
 
 	@Column(length = 4000)
 	private String content;
-
-	@Column
-	@CreationTimestamp
-	protected LocalDateTime createdTimeAt;
-
-	@Column
-	@UpdateTimestamp
-	protected LocalDateTime updateTimeAt;
 
 	@ManyToOne
 	@JoinColumn(name = "parent")

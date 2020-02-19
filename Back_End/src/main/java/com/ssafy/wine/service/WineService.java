@@ -27,5 +27,7 @@ public interface WineService {
 	public List<String> findWineryByCountry(WineCountryEnum country);
 
 	public Integer updateVisit(Long wid);
+	
+	public void deleteAll();
 
 }
