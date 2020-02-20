@@ -241,6 +241,7 @@ export default function List() {
             variant="h1"
             align="center"
             style={{ color: "white" }}
+            className="typo2"
           >
             Wine List
           </Typography>
