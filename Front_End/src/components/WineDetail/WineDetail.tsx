@@ -10,14 +10,31 @@ import { makeStyles, fade } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import './wineDetail.css';
-import WineInfo from "../Interface/Wine";
+import "./wineDetail.css";
+import ReviewInfo from "../Interface/Review";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import { Link } from "react-router-dom";
+import Modal from "@material-ui/core/Modal";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import {
+  getWineDetail,
+  createWineLike,
+  deleteWineLike
+} from "../../../stores/wine_info/actions/wineDetail";
+import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
+
+// component
+import WritePage from './Posts/Editor/WirtePage';
 
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
     backgroundImage:
-      "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
+    "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -28,125 +45,361 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
   },
-
-
+  // 모달 css
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
 }));
 
+// 모달 사이즈 조절
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
 
-const wines = [{nameKor : "와인의 최고봉", nameEng : "Good Good", 
-info : "너무너무 맛있어요...", type: "Red", rating : 5},
-{nameKor : "이 와인 추천 합니다.", nameEng : "Recommend", 
-info : "과일향이 너무 좋아요...", type: "Red", rating : 4},
-{nameKor : "요새 마신 와인 중 최고", nameEng : "Best", 
-info : "요새 마신 와인들 중에 제일 맛있었습니다....", type: "White", rating : 5 }
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
 
-]; 
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
 
 
-export default function WineList() {
+interface RouterProps {
+  // type for `match.params`
+  wid: string; // must be type `string` since value comes from the URL
+}
+
+interface MyComponentProps extends RouteComponentProps<RouterProps> {
+  wid: number;
+}
+function WineDetail(props: MyComponentProps) {
+  // wid url parameter로 넘어옴
   const classes = useStyles();
+  console.log(props);
+  const wid = +props.match.params.wid;
+  console.log(wid);
 
+  // 모달 상태 관리
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const [wineState, setWineState] = React.useState(false);
+  const [likeState, setLikeState] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const {
+    wine,
+    isWineDetailPending,
+    isWineDetailSucceess,
+    WineDetailError
+  } = useSelector((state: rootState) => state.wineDetailReducer);
+
+  const { feedList, isFeedPending, isFeedSucceess, isFeedError } = useSelector(
+    (state: rootState) => state.feedReducer
+  );
+
+  // console.log("wine initialState");
+  // console.log(wine);
+
+  const loadWineDetail = async () => {
+    let userLike = JSON.parse(sessionStorage.getItem("userLike") || "{}");
+
+    for (var i = 0; i < userLike.length; i++) {
+      if (userLike[i].wid == wid) {
+        setLikeState(true);
+        break;
+      }
+    }
+
+    // console.log("onWine");
+    await dispatch(getWineDetail(wid));
+    await dispatch(getFeedListByWID(wid, "REVIEW"));
+    console.log("this is wine State");
+    console.log(wine);
+  };
+
+  const likeThis = async () => {
+    await dispatch(createWineLike(wid));
+    setLikeState(true);
+  };
+
+  const hateThis = async () => {
+    await dispatch(deleteWineLike(wid));
+    setLikeState(false);
+  };
+
+  if (!wineState) {
+    loadWineDetail();
+    setWineState(true);
+  }
   return (
     <React.Fragment>
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container>
-            <Typography component="h1" variant="h1" align="center">
+            <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
               Wine List
             </Typography>
           </Container>
         </div>
 
-
-        
         {/* Wiine 제품 이미지 및 정보 */}
         <div id="wrap" className="wrap">
-        <section className="detail_wine">
-              <div className="product_wine clfix">
+          <section className="detail_wine">
+            <div className="product_wine clfix">
               <div className="bxl">
-              <div className="img"> 
-              <span> <img src="http://m.wine.co.kr/upload/products/wineList/spain/CavaClassicoDO.png"
-               alt="안나 드 코도르뉴 블랑 드 블랑" className="sz619" id="wineMainImage" /> 
-               </span>
+                <div className="img">
+                  <span>
+                    {" "}
+                    <img
+                      src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                      alt={wine.nameKor}
+                      className="sz619"
+                      id="wineMainImage"
+                    />
+                  </span>
                 </div>
-                 </div>   
-               
-                <div className="bxr"> 
+              </div>
 
-
-            
-               <h1 className="tit">Anna de Codorniu 
-               <span id="wineKorName">안나 드 코도르뉴 블랑 드 블랑</span> </h1>
-                <p id="wineContent">스페인 최초의 샤도네 주 품종의 카바 와인이며 코도르뉴 가문의 마지막 상속녀 ‘안나’의 이름으로 그녀의 남편이 사랑하는 마음을 담아 만든 와인. 웨딩드레스를 연상시키는 순백의 디자인으로 그녀에 대한 남편의 사랑을 느낄수 있다. 일생을 와이너리에 헌신한 ‘안나’는 스페인 현지인으로부터 ‘신 여성’의 이미지가 부각되어 해마다 크리스마스에 지성과 미모를 갖춘 ‘올해의 미스 안나 선발대회’가 열리고 있다.</p> 
-                <div className="hashtag"> #유럽와인 #스페인 #White #Medium Dry</div> 
+              <div className="bxr">
+                <h1 className="tit">
+                  {wine.nameEng}
+                  <span id="wineKorName">{wine.nameKor}</span>{" "}
+                </h1>
+                <p id="wineContent">{wine.info}</p>
+                <div className="hashtag">
+                  #{wine.type} #{wine.country} #{wine.winery}
+                </div>
                 <div className="more_info clfix">
-                     <ul> <li> <img src="/images/common/img_wine_alcohol.png" alt="" />
-                          <strong>알코올 <span>11.5%</span> </strong> </li> 
-                          <li> <img src="/images/common/img_wine_volume.png" alt=""/> 
-                          <strong>용량 <span>750ml</span> </strong> </li>
-                           <li> <img src="/images/common/img_wine_kind.png" alt=""/> 
-                           <strong>와인 종류 <span>White</span> </strong> </li> 
-                           <li> <img src="/images/common/img_wine_sparkling.png" alt=""/> <
-                               strong>탄산 분류 <span>Sparkling</span> </strong> </li> 
-                               <li> <img src="/images/common/img_wine_sugar.png" alt=""/> 
-                               <strong>당도 <span>Medium Dry</span> </strong> </li> 
-                               </ul> 
-                </div> 
+                  <ul>
+                    {" "}
+                    <li>
+                      {" "}
+                      <img className="imgWineAlcohol" />
+                      <strong>
+                        알코올 <span>{wine.alcohol}</span>{" "}
+                      </strong>{" "}
+                    </li>
+                    <li>
+                      {" "}
+                      <img className="imgWineKind" />
+                      <strong>
+                        와인 종류 <span>White</span>{" "}
+                      </strong>{" "}
+                    </li>
+                    <li>
+                      {" "}
+                      <img className="imgWineSparkling" />
+                      <strong>
+                        탄산 분류
+                        {(function() {
+                          if (wine.sparkling) {
+                            return <span>Sparkling</span>;
+                          } else {
+                            return <span>Still</span>;
+                          }
+                        })()}
+                      </strong>
+                    </li>
+                    <li>
+                      <img className="imgWineSugar" />
+                      <strong>
+                        당도
+                        {(function() {
+                          if (wine.sweet == 5) {
+                            return <span>Sweet</span>;
+                          } else if (wine.sweet == 4) {
+                            return <span>Medium Sweet</span>;
+                          } else if (wine.sweet <= 3 && wine.sweet >= 2) {
+                            return <span>Medium Dry</span>;
+                          } else if (wine.sweet == 1) {
+                            return <span>Dry</span>;
+                          } else {
+                            return <span>준비중</span>;
+                          }
+                        })()}
+                      </strong>{" "}
+                    </li>
+                    <li>
+                      {" "}
+                      <img className="imgWineBody" />
+                      <strong>
+                        바디
+                        {(function() {
+                          if (wine.body >= 4) {
+                            return <span>Full Bodied</span>;
+                          } else if (wine.body >= 2) {
+                            return <span>Medium Bodied</span>;
+                          } else {
+                            return <span>Light Bodied</span>;
+                          }
+                        })()}
+                      </strong>{" "}
+                    </li>
+                  </ul>
                 </div>
-            
-                </div>
+              </div>
+            </div>
+
+            <div className="btn_area right">
+              {(function() {
+                if (likeState) {
+                  return (
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={hateThis}
+                    >
+                      <FavoriteIcon color="secondary" />
+                    </IconButton>
+                  );
+                } else {
+                  return (
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={likeThis}
+                    >
+                      <FavoriteIcon color="inherit" />
+                    </IconButton>
+                  );
+                }
+              })()}
+
+              <button className="btns btn_line_type blue" onClick={handleOpen}>리뷰작성</button>
+              <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">My Review</h2>
+          <div>
+            {/* 에디터 들어갈 공간 */}
+            <WritePage wid={wid} onCancel={handleClose} />
+          </div>
 
 
+        </div>
+      </Modal>
 
-                <div className="btn_area right"> 
-                <button className="btns btn_line_type blue"> 
-                <span className="ico fb"></span>리뷰작성</button>
+              {/* Wiine 제품 정보 */}
+            </div>
+            <div className="product_wine clfix">
+              <div className="wineInfo">
+                <h2 className="tit_h2">와인 제품 정보</h2>
+                <div className="product_info clfix">
+                  {" "}
+                  <div>
+                    <dl>
+                      <dt>포도 품종</dt>
+                      <dd>
+                        <span className="info01Img"></span>
+                        {wine.grape}
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>제조사</dt>
+                      <dd>
+                        <span className="info02Img"></span>
+                        {wine.winery}
+                      </dd>
+                    </dl>
+                  </div>
+                  <div>
+                    {" "}
+                    <dl>
+                      {" "}
+                      <dt>원산지</dt>
+                      <dd>
+                        <span className="info03Img"></span> {wine.country},{" "}
+                        {wine.countrySub}{" "}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Grade</dt>{" "}
+                      <dd>
+                        <span className="info04Img"></span> {wine.grade}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  <div>
+                    {" "}
+                    <dl>
+                      {" "}
+                      <dt>Wine Use</dt>{" "}
+                      <dd>
+                        <span className="info05Img"></span> {wine.whenUse}
+                      </dd>{" "}
+                    </dl>
+                    <dl>
+                      {" "}
+                      <dt>Food matching</dt>{" "}
+                      <dd>
+                        <span className="info06Img"></span> {wine.foodMatch}{" "}
+                      </dd>{" "}
+                    </dl>{" "}
+                  </div>
+                  {/* <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
+                                  <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div>  */}
+                </div>{" "}
+              </div>
+            </div>
 
+            <Link
+              to="/list"
+              className="btns btn_line_type blue"
+              style={{ marginLeft: "97%" }}
+            >
+              <button className="btns btn_line_type blue">
+                <span style={{ fontSize: "20px" }}>목록</span>
+              </button>
+            </Link>
 
-                {/* Wiine 제품 정보 */}
+            {/* Wiine Top 5 리뷰 */}
 
-                 </div> 
-                 
-                 <h2 className="tit_h2">와인 제품 정보</h2>
-                       <div className="product_info clfix"> <div> <dl> <dt>포도 품종</dt> <dd> <span>
-                           <img src="/images/common/img_pro_info01.jpg" alt="" /></span> 샤도네이 </dd> </dl> <dl> <dt>제조사</dt> <dd> <span>
-                               <img src="/images/common/img_pro_info02.jpg" alt="" /></span> 코도르뉴 </dd> </dl> </div> 
-                               <div> <dl> <dt>원산지</dt> <dd> <span><img src="/images/common/img_pro_info03.jpg" alt="" /></span> 스페인, 페네데스 </dd> </dl>
-                                <dl> <dt>Color</dt> <dd> <span><img src="/images/common/img_pro_info04.jpg" alt="" /></span> 밝은 볕짚색 </dd> </dl> </div>
-                                  <div> <dl> <dt>Aroma</dt> <dd> <span><img src="/images/common/img_pro_info05.jpg" alt="" /></span> 열대 과일, 시트러스 </dd> </dl> 
-                                  <dl> <dt>Food matching</dt> <dd> <span><img src="/images/common/img_pro_info06.jpg" alt="" /></span> 구운야채, 생선 요리, 각종 해산물, 치킨요리 </dd> </dl> </div> 
-                                  <div> <dl> <dt>Flavor</dt> <dd> <span><img src="/images/common/img_pro_info07.jpg" alt="" /></span> 샴페인에 뒤지지 않는 세밀한 기포가 뛰어나며 풍부한 열대과일 아로마가 주는 크리미 한 느낌이 좋은 식전주, 메인 요리, 식후주 그 어떤 코스 요리의 순서와도 잘 어울린다. </dd> </dl> 
-                                  <dl> <dt>Awards / Selling Point</dt> <dd> <span><img src="/images/common/img_pro_info08.jpg" alt="" /></span> 코도르뉴’ 와이너리는 카탈루냐 3대 건축가가 설계한 주요 건물과 세계에서 가장 큰 지하 와인 저장고의 가치를 인정받아 스페인 국가문화유산으로 지정됐다. </dd> </dl> </div> 
-                                  </div> <div className="btn_area right"> 
-                 <a href="#" className="btns btn_list" >목록 <span className="ico"></span> </a> </div>
-  
-        
-  {/* Wiine Top 5 리뷰 */}
-
-
-  <h2 className="tit_h2">Top 3 Review</h2>
-    <div className="product_info clfix">
-  
-    <Container className={classes.cardGrid} maxWidth="md">
-            ​ ​{/* End hero unit */}​ ​
-            <Grid container spacing={4}>
-              {wines.map(wine => (
-                           <WineInfo
-                           nameKor={wine.nameKor}
-                           nameEng={wine.nameEng}
-                           info={wine.info}
-                           type={wine.type}
-                           rating={wine.rating}
-                         />
-              ))}
-            </Grid>
-          </Container>
-    </div>
-    
-    </section>
-    </div>
+            <h2 className="tit_h2">Top 3 Review</h2>
+            <div className="product_info clfix">
+              <Container className={classes.cardGrid} maxWidth="md">
+                {/* End hero unit */}
+                <Grid container spacing={4}>
+                  {feedList.map(feed => (
+                    <ReviewInfo
+                      key={feed.fid}
+                      fid={feed.fid}
+                      title={feed.title}
+                      nameEng={feed.wine.nameEng}
+                      content={feed.content}
+                      rating={feed.rating}
+                    />
+                  ))}
+                </Grid>
+              </Container>
+            </div>
+          </section>
+        </div>
       </main>
     </React.Fragment>
   );
 }
+
+export default withRouter(WineDetail);

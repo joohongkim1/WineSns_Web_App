@@ -9,7 +9,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.min.js'
+    filename: 'bundle.min.js',
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -17,13 +18,18 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         loader: 'awesome-typescript-loader',
         //test: /\.txt$/, use: 'raw-loader'
-  
-      
       },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
-    },
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
+      }
     ]
   },
   devServer: {

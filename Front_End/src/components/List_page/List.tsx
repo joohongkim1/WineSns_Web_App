@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ReviewModal from "./ReviewModal";
-import OutlinedButtons from "./ViewMore";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "../../../stores/login/store";
+import {
+  getWineListByType,
+  getWineListByNameList,
+  searchWineByName,
+  getWineUseList,
+  searchWineByFood
+} from "../../../stores/wine_info/actions/wineInfo";
+//antDesign
+import "antd/dist/antd.css";
+import { Checkbox, Row, Col } from "antd";
+import "./List.css";
+import Search from "./Search";
+
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import "./Search.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,12 +45,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heroContent: {
       padding: theme.spacing(15, 0, 20),
+      display: "flex",
       backgroundImage:
-        "url(https://cdn.pixabay.com/photo/2015/11/05/19/54/rose-1024710_1280.jpg)",
+        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: "#ffffff"
+      backgroundPosition: "center"
     },
     card: {
       maxWidth: 300,
@@ -46,17 +60,21 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 20
     },
     media: {
-      height: 0,
-      paddingTop: "90%" // 16:9
+      display: "flex",
+      width: "100%",
+      //paddingTop: '56.25%', // 16:9
+      position: "absolute",
+      marginLeft: "40%",
+      height: "230px"
     },
-
     cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
     },
     divider: {
       backgroundColor: "#36342f",
-      marginBottom: "80px"
+      marginBottom: "80px",
+      height: 10
     },
     divider2: {
       backgroundColor: "#36342f",
@@ -73,8 +91,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       zIndex: 5,
-      position: "relative"
-      // marginTop: "20px",
+      position: "relative",
+      marginTop: "20px"
     },
     total: {
       display: "inline-block",
@@ -88,66 +106,155 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "inline-block flex",
       float: "right",
       marginRight: "20px"
-    }
+    },
+    more: {
+      "& > *": {
+        margin: theme.spacing(1, 8)
+      }
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
   })
 );
-
-const wines = [
-  {
-    nameKor: "까스텔로 반 피",
-    nameEng: "Castello Banfi, La Rosa",
-    country: "프랑스",
-    info: "장미빛의 은은한 레드를 띠며 스트로베리, 라즈베리 열매향을 지니며...",
-    type: "Red",
-    rating: 5,
-    image:
-      "data:image/jpeg;base64,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"
-  },
-  {
-    nameKor: "아포틱 레드",
-    nameEng: "Apothic Red",
-    country: "한국",
-    info:
-      "진한 자주빛의 붉은색을 띠며 블랙 베리와 잘 익은 체리의 과실향을 느낄 수...",
-    type: "Red",
-    rating: 5,
-    image:
-      "https://webtong.kr/data/editor/1810/23e927e52e8bad28674036c028b8b15a_1539662421_3026.jpg"
-  },
-  {
-    nameKor: "조닌 아스티",
-    nameEng: "Zonin, Asti",
-    country: "미국",
-    info:
-      "복숭아, 꿀 등의 향긋한 아로마를 느낄 수 있다. 모스카토 품종 특유의...",
-    type: "White",
-    rating: 4,
-    image:
-      "http://wtop.com/wp-content/uploads/2016/12/Even-Smaller-Champagne1-622x485.jpg"
-  }
-];
-
 export default function List() {
+  const [btnNum, setBtnNum] = useState(0);
+  const [wineUse, setWineUse] = useState(0);
   const classes = useStyles();
+  const [wineState, setWineState] = useState(false);
+  const [minValue, setMinValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(15);
+  const dispatch = useDispatch();
+  const [value, setValue] = React.useState<number | null>(2);
+  const[search, setSearch] = useState('');
+  //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
+  const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
+    (state: rootState) => state.wineReducer
+  );
+  const [state, setState] = React.useState<{ type: string | number; name: string }>({
+    type: '',
+    name: '',
+  });
 
+  const [countries, setCountries] = useState([]);
+  const [uses, setUses] = useState([]);
+  // const inputLabel = React.useRef<HTMLLabelElement>(null);
+  // const [labelWidth, setLabelWidth] = React.useState(0);
+  // React.useEffect(() => {
+  //   setLabelWidth(inputLabel.current!.offsetWidth);
+  // }, []);
+
+  const handleChangeType = (name: keyof typeof state) => (
+    event: React.ChangeEvent<{ value: unknown }>,
+  ) => {
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+    console.log(event.target.value); // 이건 맞다...
+  };
+  const numEachPage: number = 15;
+  const [curPage, setCurPage] = useState(1);
+  const handleChange = (value: number) => {
+      setCurPage(value);
+      setMinValue((value - 1) * numEachPage);
+      setMaxValue(value * numEachPage);
+  }
+
+  const loadWineList = async () => {
+   
+    await dispatch(getWineListByType("KOR_UP"));
+  };
+  const loadWineListByChecked = async (checkedValues: any) => {
+    setCountries(checkedValues);
+    handleChange(1);
+    if(checkedValues.length == 0 && uses.length == 0) {
+      await dispatch(getWineListByType("KOR_UP"));
+    } else if(uses.length > 0){
+      await dispatch(getWineUseList(checkedValues, uses));
+    } else {
+      await dispatch(getWineListByNameList(checkedValues));
+    }
+  };
+
+  const loadWineListByUse = async (checkedValues: any) => {
+    handleChange(1);
+    setUses(checkedValues);
+    console.log("hey")
+    if(checkedValues.length > 0) {
+    // console.log(checkedValues);handleChange(1);
+    console.log(checkedValues);
+      await dispatch(getWineUseList(countries, checkedValues));
+    } else if(countries.length > 0) {
+      await dispatch(getWineListByNameList(countries));
+    } else {
+      await dispatch(getWineListByType("KOR_UP"));
+    }
+  };
+
+  const submitSearch = async () => {
+    if(state.type==="food") {
+      await dispatch(searchWineByFood(search));
+    } else {
+      await dispatch(searchWineByName(search));
+    }
+  };
+
+
+  async function onChangeCountryChk(checkedValues: any) {
+    console.log("checked = ", checkedValues);
+    await loadWineListByChecked(checkedValues);
+  }
+
+  async function onChangeWineUse(checkedValues: any) {
+    console.log("checked = ", checkedValues);
+    await loadWineListByUse(checkedValues);
+  }
+  
+  const handleEuropeBtn = () => {
+    setBtnNum(1);
+  };
+
+  const handleAmericaBtn = () => {
+    setBtnNum(2);
+  };
+
+  const handleWineUseBtn = () => {
+    setWineUse(1);
+  };
+
+
+ 
+  if (!isWineSucceess && !wineState) {
+    loadWineList();
+    setWineState(true);
+  } else {
+  }
   return (
     <React.Fragment>
       <div className={classes.heroContent}>
         <Container>
-          <Typography component="h1" variant="h1" align="center">
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
             Wine List
           </Typography>
         </Container>
       </div>
-
-      {/* <ReviewModal /> */}
       <div>
         <Link
           to={"/ranking"}
           className={classes.home}
           style={{ textDecoration: "none" }}
         >
-          <Typography>Home > 와인 list</Typography>
+          <Typography>Home > 와인 list</Typography>ㄹ
         </Link>
       </div>
       <div className={classes.divider2}>
@@ -158,57 +265,265 @@ export default function List() {
           size="large"
           aria-label="large outlined primary button group"
         >
-          <Button className={classes.btn}>유럽 와인</Button>
-          <Button className={classes.btn}>신대륙 와인</Button>
-          <Button className={classes.btn}>한국 와인</Button>
+          <Button className={classes.btn} onClick={handleEuropeBtn}>
+            유럽 와인
+          </Button>
+          <Button className={classes.btn} onClick={handleAmericaBtn}>
+            신대륙 와인
+          </Button>
+  
         </ButtonGroup>
       </div>
+      <div className="checkbox">
+        {(function() {
+          if (btnNum == 1) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/338px-Flag_of_France.svg.png"
+                      alt="france"
+                      className="imgFrance"
+                    />
+                    <Checkbox value="France">
+                      <span style={{ fontSize: "22px" }}>France</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/375px-Flag_of_Germany.svg.png"
+                      alt="germany"
+                      className="imgGermany"
+                    />
+                    <Checkbox value="Germany">
+                      <span style={{ fontSize: "22px" }}>Germany</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/338px-Flag_of_Italy.svg.png"
+                      alt="italy"
+                      className="imgItaly"
+                    />
+                    <Checkbox value="Italy">
+                      <span style={{ fontSize: "22px" }}>Italy</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png"
+                      alt="spain"
+                      className="imgSpain"
+                    />
+                    <Checkbox value="Spain">
+                      <span style={{ fontSize: "22px" }}>Spain</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } else if (btnNum == 2) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeCountryChk}
+              >
+                <Row>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/428px-Flag_of_the_United_States.svg.png"
+                      alt="USA"
+                      className="imgUSA"
+                    />
+                    <Checkbox value="USA">
+                      <span style={{ fontSize: "22px" }}>USA</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/420px-Flag_of_Chile.svg.png"
+                      alt="chile"
+                      className="imgChile"
+                    />
+                    <Checkbox value="Chile">
+                      <span style={{ fontSize: "22px" }}>Chile</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/450px-Flag_of_Australia.svg.png"
+                      alt="australia"
+                      className="imgAustralia"
+                    />
+                    <Checkbox value="Australia">
+                      <span style={{ fontSize: "22px" }}>Australia</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/360px-Flag_of_Argentina.svg.png"
+                      alt="argentina"
+                      className="imgArgentina"
+                    />
+                    <Checkbox value="Argentina">
+                      <span style={{ fontSize: "22px" }}>Argentina</span>
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            );
+          } 
+        })()}
+      </div>
+      <div className={classes.btnGroup}>
+      <ButtonGroup
+          size="large"
+          aria-label="large outlined primary button group"
+        >
+          <Button className={classes.btn} onClick={handleWineUseBtn}>
+            와인 용도
+          </Button>
+        </ButtonGroup>
+        </div>
+        <div className="checkbox">
+        {(function() {
+          if (wineUse == 1) {
+            return (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={onChangeWineUse}
+              >
+                <Row>
+                  <Col span={4}>
+                    <Checkbox value="테이블 와인">
+                      <span style={{ fontSize: "22px" }}>테이블 와인</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
 
+                    <Checkbox value="에피타이저">
+                      <span style={{ fontSize: "22px" }}>에피타이저</span>
+                    </Checkbox>
+                  </Col>
+                  <Col span={4}>
+                
+                    <Checkbox value="디저트">
+                      <span style={{ fontSize: "22px" }}>디저트</span>
+                    </Checkbox>
+                  </Col>
+
+                </Row>
+              </Checkbox.Group>
+            );
+          }
+        })()}
+      </div>
       <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total </Typography>
+        <Typography className={classes.total}>
+          Total {wineList.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
-          {wines.map(wine => (
-            <Grid item xs={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={wine.nameKor}
-                  subheader={wine.nameEng}
-                />
-                <Link to={"/detail"} style={{ textDecoration: "none" }}>
-                  <CardMedia
-                    className={classes.media}
-                    image={wine.image}
-                    title={wine.nameEng}
-                  />
-                </Link>
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
+        <div>
+        <FormControl className={classes.formControl} id="type">
+      <InputLabel htmlFor="age-native-simple">Type</InputLabel>
+      <Select
+        native
+        value={state.type}
+        onChange={handleChangeType('type')}
+      >
+        <option value="name">Name</option>
+        <option value="food">Food</option>
+      </Select>
+    </FormControl>
+        <button name="searchbtn" id="searchbtn" value="" onClick={submitSearch}></button>
+      <input
+        type="text"
+        name="s"
+        id="s"
+        className="searchfield"
+        placeholder="Search"
+        onChange={e =>
+          setSearch(e.target.value)
+        }
+        value={search}
+      />
+
+
+</div>
+
+
+        <Grid container>
+          {wineList.slice(minValue, maxValue).map(wine => (
+            <Grid item xs={4} key={wine.wid}>
+              <div className="wine_list">
+                <li>
+                  <div className="tags">
+                    <span className="flag s32">
+                      <img
+                        className={wine.country}
+                        // src={`images/${wine.country}.png`}
+                        // alt={wine.country}
+                      ></img>
+                    </span>
+                    <em className={`tag type ${wine.type}`}>{wine.type}</em>
+                  </div>
+                  <Link
+                    to={`/detail/${wine.wid}`}
+                    style={{ textDecoration: "none" }}
                   >
-                    {wine.info}
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon color="secondary" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <OutlinedButtons />
-                </CardActions>
-              </Card>
+                    <div className="img">
+                      <img
+                        src={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                        alt={wine.nameKor}
+                      />
+                    </div>
+                  </Link>
+                  <strong
+                    className="tit _dotdotdot is-truncated"
+                    // data-ellipse-height="70"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px"
+                    }}
+                  >
+                    {wine.nameEng}
+                  </strong>
+                  <span
+                    className="tit"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: "215px",
+                      overflow: "hidden"
+                    }}
+                  >
+                    {wine.nameKor}
+                  </span>
+                  <div className="hashtag">
+                    #{wine.country} #{wine.type}
+                  </div>
+                  <Link to={`/detail/${wine.wid}`} className="button">
+                    <Button>View More</Button>
+                  </Link>
+                </li>
+              </div>
             </Grid>
           ))}
         </Grid>
+        <div className="pagination">
+          <Pagination
+            total={wineList.length}
+            current={curPage}
+            // showTotal={total => `Total ${total} items`}
+            onChange={handleChange}
+            pageSize={numEachPage}
+            defaultCurrent={1}
+            size="large"
+          />
+        </div>
         {/* <ReviewModal /> */}
       </Container>
     </React.Fragment>
