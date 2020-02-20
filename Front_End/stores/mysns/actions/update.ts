@@ -3,7 +3,8 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 // import * as postsAPI from '../lib/api/post';
-import post from '../lib/api/post';
+import updatePosts from '../lib/api/update';
+import deletePosts from '../lib/api/delete';
 
 import { takeLatest } from 'redux-saga/effects';
 import { Record, Map, List } from 'immutable';
@@ -14,30 +15,30 @@ const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
 const KEEPUP = 'write/KEEPUP';
 
 const [
-  WRITE_POST,
-  WRITE_POST_SUCCESS,
-  WRITE_POST_FAILURE,
-] = createRequestActionTypes('write/WRITE_POST'); // 포스트 작성
-
-const [
   UPDATE_POST,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
 ] = createRequestActionTypes('write/UPDATE_POST'); // 포스트 작성
 
+const [
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE,
+] = createRequestActionTypes('write/DELETE_POST'); // 포스트 작성
+
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }:params) => ({key, value}));
-export const keepUp = createAction(KEEPUP, ({content, rating, title, wid}: ContentsStateParams, fid:number) => ({content, rating, title, wid, fid}));
+export const keepUp = createAction(KEEPUP, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
 
-export const writePost = createAction(WRITE_POST, ({content, rating, title, wid}: ContentsStateParams) => ({content, rating, title, wid}));
-export const updatePost = createAction(UPDATE_POST, ({content, rating, title, wid}: ContentsStateParams, fid: number) => ({content, rating, title, wid, fid}));
-
+export const updatePost = createAction(UPDATE_POST, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
+export const deletePost = createAction(DELETE_POST, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
 
 const ContentsStateRecord = Record({
   content: '',
   rating: 0,
   title: '',
   wid: 0,
+  fid: 0,
   post: null,
   postError: null,
 }); 
@@ -54,42 +55,45 @@ interface ContentsStateParams {
   wid?: number,
   post?: any,
   postError?: any,
+  fid? : any
 }
 
-export class ReviewContentsState extends ContentsStateRecord {
+
+export class UpdateContentsState extends ContentsStateRecord {
   content?: string;
   rating?: number;
   title?: string;
   wid?: number;
+  fid?: number;
   post?: any;
   postError?: any;
+  
 }
 
 
-
-const writePostSaga = createRequestSaga(WRITE_POST, post.writePost);
-export function* reviewWriteSaga() {
-  console.log('실행좀...')
-  yield takeLatest(WRITE_POST, writePostSaga);
-}
-
-const updatePostSaga = createRequestSaga(UPDATE_POST, post.updatePost); // axios function 생성 필요
-export function* reviewUpdateSaga() {
+const updatePostSaga = createRequestSaga(UPDATE_POST, updatePosts); // axios function 생성 필요
+export function* updateSaga() {
   console.log('실행좀...')
   yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
+const deletePostSaga = createRequestSaga(DELETE_POST, deletePosts); // axios function 생성 필요
+export function* deleteSaga() {
+  console.log('실행좀...')
+  yield takeLatest(DELETE_POST, deletePostSaga);
+}
 
 const initialState = {
   content: '',
   rating: 0,
   title: '',
   wid: 0,
+  fid: 0,
   post: null,
   postError: null,
 };
 
-const write = handleActions<ContentsStateParams, any>(
+const update = handleActions<ContentsStateParams, any>(
   { 
     [INITIALIZE]: state => initialState, // initialState를 넣으면 초기상태로 바뀜
     [CHANGE_FIELD]: (state, { payload: { key, value }}) => ({
@@ -100,24 +104,6 @@ const write = handleActions<ContentsStateParams, any>(
     // 기존 가지고 있던 데이터를 editor로 올리는 기능
     [KEEPUP]: (state: any ) => ({
       ...state
-    }),
-
-    // 새로운 포스트 작성
-    [WRITE_POST]: (state:any, action:any) => ({
-      ...state,
-      post: null,
-      postError: null,
-    }),
-
-    // 포스트 작성 성공
-    [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
-      ...state,
-      post
-    }),
-    // 포스트 작성 실패
-    [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
-      ...state,
-      postError
     }),
 
     // 포스트 수정
@@ -137,7 +123,27 @@ const write = handleActions<ContentsStateParams, any>(
       ...state,
       postError
     }),
+
+    [DELETE_POST]: (state:any, action:any) => ({
+      ...state,
+      post: null,
+      postError: null,
+    }),
+
+    // 포스트 수정 성공
+    [DELETE_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post
+    }),
+    // 포스트 수정 실패
+    [DELETE_POST_FAILURE]: (state, { payload: postError }) => ({
+      ...state,
+      postError
+    }),
+  
+    
   },
   initialState,
 );
-export default write;
+export default update;
+

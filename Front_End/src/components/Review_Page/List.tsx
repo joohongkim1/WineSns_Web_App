@@ -174,7 +174,9 @@ export default function List() {
         <Grid container spacing={10}>
           {feedAll.slice(minValue, maxValue).map(feed => (
             <ReviewInfo
+              wine={feed.wine}
               key={feed.fid}
+              user={feed.user}
               fid={feed.fid}
               title={feed.title}
               nameEng={feed.wine.nameEng}

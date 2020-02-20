@@ -189,14 +189,19 @@ export default function MyFeed() {
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
           {userFeed.slice(minValue, maxValue).map(feed => (
-            <ReviewInfo
-              key={feed.fid}
-              fid={feed.fid}
-              title={feed.title}
-              nameEng={feed.wine.nameEng}
-              content={feed.content}
-              rating={feed.rating}
-            />
+          
+             <ReviewInfo
+             wine={feed.wine}
+             key={feed.fid}
+             user={feed.user}
+             fid={feed.fid}
+             title={feed.title}
+            nameEng={feed.wine.nameEng}
+            content={feed.content}
+            rating={feed.rating}
+           
+          />
+     
           ))}
         </Grid>
         <div>

@@ -387,7 +387,9 @@ function WineDetail(props: MyComponentProps) {
                 <Grid container spacing={4}>
                   {feedList.map(feed => (
                     <ReviewInfo
+                      wine={feed.wine}
                       key={feed.fid}
+                      user={feed.user}
                       fid={feed.fid}
                       title={feed.title}
                       nameEng={feed.wine.nameEng}
