@@ -6,7 +6,8 @@ export const wineService = {
   getWineListByType,
   getWineListByNameList,
   searchWineByName,
-  getWineUseList
+  getWineUseList,
+  searchWineByFood
 }
 
 async function getWineListByType(type: string): Promise<Response> {
@@ -38,6 +39,7 @@ async function getWineListByType(type: string): Promise<Response> {
 
 
 async function getWineListByNameList(names : string[]): Promise<Response> {
+ 
   let query = "country=" + names[0];
   for(var i =1; i<names.length; i++){
      query += "&country=" + names[i];                                      
@@ -68,10 +70,40 @@ async function getWineListByNameList(names : string[]): Promise<Response> {
 
 
 
-async function getWineUseList(name : string): Promise<Response> {
+async function getWineUseList(countries : string[], names : string[]): Promise<Response> {
+  console.log("what");
+    console.log(names);
+  let query1 = "";
+  if(countries.length == 0) {
+    query1 = "";
+  } else {
+      query1 = "country=" + countries[0];
+    for(var i =1; i<countries.length; i++){
+      query1 += "&country=" + countries[i];                                      
+   }
+  }
 
-  return HTTPS.get('/wine/findByWhenUse/' + name, {
+  let url = '';
+  let url2 = '';
 
+  let query2 = "use=" + names[0];
+  if(countries.length == 0) {
+    for(var i =1; i<names.length; i++){
+      query2 += "&use=" + names[i];                                      
+   }
+  } else {
+    query2 = "&use=" + names[0];
+    for(var i =1; i<names.length; i++){
+      query2 += "&use=" + names[i];                                      
+   }
+  }
+ 
+  
+
+  return HTTPS.get('/wine/search?' + query1 + query2, {
+    params : {
+
+    },
     headers: {
       'Access-Control-Allow-Origin': "*",
     }
@@ -99,6 +131,28 @@ async function getWineUseList(name : string): Promise<Response> {
 async function searchWineByName(name : string): Promise<Response> {
  
   return HTTPS.get('/wine/findByName/' + name
+  )
+  .then(function (response: Response | any) {
+
+      if (!response) {
+        return Promise.reject(response.statusText);
+
+      }
+
+      return response.data as any;
+    })
+    .catch(() => {
+      return Promise.reject('Backend not reachable');
+
+    })
+
+}
+
+
+
+async function searchWineByFood(name : string): Promise<Response> {
+ 
+  return HTTPS.get('/wine/findByFoodMatch/' + name
   )
   .then(function (response: Response | any) {
 

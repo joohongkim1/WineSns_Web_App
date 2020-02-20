@@ -1,8 +1,6 @@
 import { wineService } from '../services/wine';
 import { createBrowserHistory } from 'history';
 import { Wine } from "../reducers/wine_reducer";
-import { map } from "rxjs/operators";
-import {Observable } from 'rxjs';
 
 export const actions = {
   SET_WINE_INFO_PENDING: 'SET_WINE_INFO_PENDING',
@@ -16,7 +14,7 @@ export function getWineListByType(type : string) {
    dispatch(setWinePending(true));
 
    dispatch(setWineError("not yet"));
- 
+  
    
    await wineService.getWineListByType(type).then(
      (response : any) => {
@@ -38,6 +36,7 @@ export function getWineListByType(type : string) {
 
 
 export function getWineListByNameList(names : string[]) {
+
   return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
    dispatch(setWinePending(true));
 
@@ -63,14 +62,16 @@ export function getWineListByNameList(names : string[]) {
 
 
 
-export function getWineUseList(name : string) {
+export function getWineUseList(countries : string[], names : string[]) {
+  console.log("www");
+  console.log(names);
   return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
    dispatch(setWinePending(true));
 
    dispatch(setWineError("not yet"));
  
    
-   await wineService.getWineUseList(name).then(
+   await wineService.getWineUseList(countries, names).then(
      (response : any) => {
       dispatch(setWinePending(false));
 
@@ -113,6 +114,35 @@ export function searchWineByName(name : string) {
    );
  }
 }
+
+
+
+
+
+
+export function searchWineByFood(name : string) {
+  return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
+   dispatch(setWinePending(true));
+
+   dispatch(setWineError("not yet"));
+ 
+   
+   await wineService.searchWineByFood(name).then(
+     (response : any) => {
+      dispatch(setWinePending(false));
+    
+      let wines : Wine[] = response;
+      dispatch(setWineSuccess(true, wines));
+      
+     },
+     error => {
+       dispatch(setWinePending(false));
+       dispatch(setWineError("searchWineByName  error"));
+     }
+   );
+ }
+}
+
 
 
 function setWinePending(isWinePending : boolean) {

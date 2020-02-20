@@ -58,6 +58,16 @@ input {
   opacity: 0.9;
 }
 
+
+#type {
+  position: relative;
+
+  border: 0;
+  cursor: pointer;
+  float: right;
+  margin-top : 0px;
+  margin-left: 10px;
+}
 .searchfield:focus + #searchbtn {
   right: 10px;
 }

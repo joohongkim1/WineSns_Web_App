@@ -9,7 +9,7 @@ export const wineService = {
 
 async function getSmartSearch(alcohol : number, country : string, sparkling : boolean, sweet : number, type: string): Promise<Response> {
 
-  return HTTPS.get('/wine/search', {
+  return HTTPS.get('/wine/smartSearch', {
     params: {
       alcohol : alcohol,
       country : country,
