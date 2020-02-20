@@ -14,7 +14,7 @@ public interface WineLikeService {
 
 	public List<UserDto> findByWine(Long wid);
 
-	public void updateLikeNum(Long wid);
+	public Integer updateLikeNum(Long wid);
 
 	public void delete(Long uid, Long wid);
 

@@ -1,6 +1,5 @@
 package com.ssafy.wine.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -57,13 +53,6 @@ public class Comment extends DateEntity {
 	List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Comment(User user, Feed feed, String content) {
-		this.user = user;
-		this.feed = feed;
-		this.content = content;
-	}
-
-	@Builder
 	public Comment(User user, Feed feed, String content, Comment parentComment) {
 		this.user = user;
 		this.feed = feed;
@@ -71,4 +60,9 @@ public class Comment extends DateEntity {
 		this.parentComment = parentComment;
 	}
 
+	public Comment update(String content) {
+		this.content = content;
+		return this;
+	}
+	
 }

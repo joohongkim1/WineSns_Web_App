@@ -10,7 +10,7 @@ public interface FeedLikeService {
 
 	public FeedLike create(Long uid, Long fid);
 
-	public void updateLikeNum(Long fid);
+	public Integer updateLikeNum(Long fid);
 
 	public void delete(Long uid, Long fid);
 

@@ -1,7 +1,6 @@
 package com.ssafy.wine.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ssafy.wine.dto.FeedInputDto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -72,13 +70,6 @@ public class Feed extends DateEntity {
 	private List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Feed(User user, String title, String content) {
-		this.user = user;
-		this.title = title;
-		this.content = content;
-	}
-
-	@Builder
 	public Feed(User user, Wine wine, BigDecimal rating, String title, String content) {
 		this.user = user;
 		this.wine = wine;
@@ -87,5 +78,11 @@ public class Feed extends DateEntity {
 		this.content = content;
 	}
 
-
+	public Feed updateFeed(Wine wine, FeedInputDto dto) {
+		this.wine = wine;
+		this.rating = dto.getRating();
+		this.title = dto.getTitle();
+		this.content = dto.getContent();
+		return this;
+	}
 }

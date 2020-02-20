@@ -3,7 +3,6 @@ package com.ssafy.wine.repo;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -37,6 +36,10 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 
 	List<Wine> findByNameKorLike(String name);
 
+	List<Wine> findByWhenUseContains(String name);
+
+	List<Wine> findByFoodMatchContains(String name);
+
 	@Query(value = "select DISTINCT w.country from wine w", nativeQuery = true)
 	List<String> findDistinctCountryAll();
 
@@ -46,15 +49,7 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 	@Query(value = "select DISTINCT if(w.winery like \"Chateau%\", \"Chateau\", w.winery) from wine w", nativeQuery = true)
 	List<String> findDistinctWineryAll();
 
-	@Modifying
-	@Query(value = "UPDATE wine w set w.visit = w.visit + 1 where w.wid = :wid", nativeQuery = true)
-	Integer updateVisit(@Param("wid") Long wid);
-
-	@Modifying
-	@Query(value = "UPDATE wine w set w.like_num = :num where w.wid = :wid", nativeQuery = true)
-	Integer updateLikeNum(@Param("wid") Long wid, @Param("num") Integer num);
-
-	public default Predicate search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet,
+	public default Predicate smartSearch(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet,
 			BigDecimal alcohol) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QWine wine = QWine.wine;
@@ -71,6 +66,35 @@ public interface WineRepository extends CrudRepository<Wine, Long>, QuerydslPred
 			builder.and(wine.sweet.eq(sweet));
 		if (alcohol != null)
 			builder.and(wine.alcohol.loe(alcohol));
+		return builder;
+	}
+
+	public default Predicate search(WineCountryEnum[] country, String[] use, String name, String food) {
+		BooleanBuilder builder = new BooleanBuilder();
+		QWine wine = QWine.wine;
+
+		if (country != null) {
+			for (int i = 0; i < country.length; i++) {
+				builder.or(wine.country.eq(country[i].toString()));
+			}
+		}
+		if (use != null) {
+			BooleanBuilder temp = new BooleanBuilder();
+			for (int i = 0; i < use.length; i++) {
+				temp.or(wine.whenUse.contains(use[i]));
+			}
+			builder.and(temp);
+		}
+
+		if (name != null) {
+			BooleanBuilder temp = new BooleanBuilder();
+			temp.and(wine.nameKor.contains(name));
+			temp.or(wine.nameEng.contains(name));
+			builder.and(temp);
+		}
+
+		if (food != null)
+			builder.and(wine.foodMatch.contains(food));
 
 		return builder;
 	}

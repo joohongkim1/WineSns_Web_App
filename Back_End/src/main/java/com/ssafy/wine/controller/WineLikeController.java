@@ -46,11 +46,12 @@ public class WineLikeController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
 			WineLike like = wineLikeService.create(uid, wid);
-			wineLikeService.updateLikeNum(wid);
-			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(like.getUser().getEmail()).append("\n").append("Wine: ")
-					.append(like.getWine().getNameKor()).append("\n").append("WineLike 추가되었습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			Integer result = wineLikeService.updateLikeNum(wid);
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("User: ").append(like.getUser().getEmail()).append("\n").append("Wine: ")
+					.append(like.getWine().getNameKor()).append("\n")
+					.append("현재 좋아요: ").append(result).append("개, 추가되었습니다.");
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("WineLike Create Fail", e);
 			throw e;

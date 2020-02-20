@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,10 +45,11 @@ public class CommentController {
 			Long uid = Long.parseLong(authentication.getName());
 
 			Comment comment = commentService.create(fid, uid, cid, content);
-			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(comment.getUser().getEmail()).append("\n").append("Comment_ID: ")
-					.append(comment.getCid()).append("\n").append("Comment가 추가되었습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("User: ").append(comment.getUser().getEmail())
+				.append("\nComment_ID: ").append(comment.getCid())
+				.append("\nComment가 추가되었습니다.");
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -80,23 +80,23 @@ public class CommentController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 Comment 수정")
-	@PutMapping("/update")
+	@PostMapping("/update")
 	public ResponseEntity<Object> update(@RequestParam Long cid, @RequestParam String content) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String uid = authentication.getName();
 			CommentDto comment = commentService.findById(cid);
 
-			StringBuilder result = new StringBuilder();
-			result.append("Request User: ").append(uid).append("\nComment UID: ").append(comment.getUser().getUid());
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("Request User: ").append(uid).append("\nComment 작성자 Uid: ").append(comment.getUser().getUid()).append("\n");
 
 			if (uid.equals(comment.getUser().getUid().toString())) {
-				commentService.update(cid, content);
-				result.append("\n수정되었습니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.OK);
+				comment = commentService.update(cid, content);
+				resStr.append(comment.getCid()).append("번 코멘트가 수정되었습니다.");
+				return new ResponseEntity<Object>(resStr, HttpStatus.OK);
 			} else {
-				result.append("\n수정 실패: 수정을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
+				resStr.append("\n수정 실패: 수정을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
+				return new ResponseEntity<Object>(resStr, HttpStatus.ACCEPTED);
 			}
 		} catch (Exception e) {
 			throw e;
@@ -113,16 +113,16 @@ public class CommentController {
 			String uid = authentication.getName();
 			CommentDto comment = commentService.findById(cid);
 
-			StringBuilder result = new StringBuilder();
-			result.append("Request User: ").append(uid).append("\nComment UID: ").append(comment.getUser().getUid());
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("Request User: ").append(uid).append("\nComment UID: ").append(comment.getUser().getUid());
 
 			if (uid.equals(comment.getUser().getUid().toString())) {
 				commentService.delete(cid);
-				result.append("\n삭제되었습니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.OK);
+				resStr.append("\n삭제되었습니다.");
+				return new ResponseEntity<Object>(resStr, HttpStatus.OK);
 			} else {
-				result.append("\n삭제 실패: 삭제을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
-				return new ResponseEntity<Object>(result, HttpStatus.ACCEPTED);
+				resStr.append("\n삭제 실패: 삭제을 요청한 유저와 삭제할 게시글 작성자와 다릅니다.");
+				return new ResponseEntity<Object>(resStr, HttpStatus.ACCEPTED);
 			}
 
 		} catch (Exception e) {
