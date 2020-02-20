@@ -161,14 +161,7 @@ export default function List() {
         <Divider variant="middle" />
       </div>
       <div className={classes.btnGroup}>
-        <ButtonGroup
-          size="large"
-          aria-label="large outlined primary button group"
-        >
-          <Button className={classes.btn}>유럽 와인</Button>
-          <Button className={classes.btn}>신대륙 와인</Button>
-          <Button className={classes.btn}>한국 와인</Button>
-        </ButtonGroup>
+
       </div>
 
       <Container className={classes.cardGrid}>
