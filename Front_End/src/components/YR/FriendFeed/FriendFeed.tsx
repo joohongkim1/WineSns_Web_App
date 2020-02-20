@@ -34,7 +34,6 @@ import Modal from '@material-ui/core/Modal';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from '@material-ui/core/TextField';
 
-import WritePage from '../Posts/Editor/WirtePage';
 
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
@@ -207,7 +206,10 @@ export default function MyFeed({uid} : {uid : number}) {
           {friendFeed.slice(minValue, maxValue).map(feed => (
           
              <ReviewInfo
+             wine={feed.wine}
+             key={feed.fid}
              fid={feed.fid}
+             user={feed.user}
              title={feed.title}
             nameEng={feed.wine.nameEng}
             content={feed.content}
