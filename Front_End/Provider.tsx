@@ -32,6 +32,7 @@ class AppForm extends Component {
       <Provider store={this.store() as any}>
         {/* <ScrollToTop /> */}
         <BrowserRouter>
+        <ScrollToTop>
           <Navbar />
           <Route exact={true} path="/" component={Entrance} />
           <Route path="/ranking" component={App} />
@@ -46,6 +47,7 @@ class AppForm extends Component {
           <Route path="/searchList" component={SmartList} />
           <Route path="/review/:fid" component={ReviewDetail} />
           <Footer />
+          </ScrollToTop>
         </BrowserRouter>
       </Provider>
     );
