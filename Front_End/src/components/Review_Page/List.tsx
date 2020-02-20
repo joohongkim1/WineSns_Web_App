@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://t3.ftcdn.net/jpg/02/45/32/14/240_F_245321431_XblUS9Lu1sYKcwy68rjejTuzPXhgkLf7.jpg)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
 
@@ -160,16 +160,7 @@ export default function List() {
       <div className={classes.divider2}>
         <Divider variant="middle" />
       </div>
-      <div className={classes.btnGroup}>
-        <ButtonGroup
-          size="large"
-          aria-label="large outlined primary button group"
-        >
-          <Button className={classes.btn}>유럽 와인</Button>
-          <Button className={classes.btn}>신대륙 와인</Button>
-          <Button className={classes.btn}>한국 와인</Button>
-        </ButtonGroup>
-      </div>
+      <div className={classes.btnGroup}></div>
 
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>

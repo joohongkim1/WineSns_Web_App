@@ -353,3 +353,7 @@ strong {
   height: 80px;
   margin-bottom: 10px;
 }
+
+.MuiSelect-select.MuiSelect-select {
+  height: 30px !important;
+}
