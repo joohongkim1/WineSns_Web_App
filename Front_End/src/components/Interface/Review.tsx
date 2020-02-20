@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
     cardMedia: {
       // width: '100%',
       // maxHeight: 'auto',
-      width: '70px',
+      width: '60px',
       //paddingTop: '56.25%', // 16:9
       position: 'relative',
       marginLeft: '40%',
-      height: '230px',
+      height: '255px',
     },
     cardContent: {
       flexGrow: 1,

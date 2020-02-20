@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     follow: {
       display: "inline-block",
-      float: "right"
+      marginLeft : '10px',
+      // float: "right"
     },
     visit: {
       display: "inline-block",
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heart: {
       display: "inline-block",
-      float: "right"
+      // float: "right"
     }
   })
 );
@@ -213,12 +214,12 @@ export default function ReviewDetail(props: MyComponentProps) {
         >
           <Typography className={classes.back}>&lt; ReviewList</Typography>
         </Link>
-        <Typography className={classes.title}>{feedDetail.title}</Typography>
+        <Typography className={classes.title} style={{fontSize : '36px'}}>{feedDetail.title}</Typography>
         <span>
           <Avatar
             className={classes.avatar}
             alt="Remy Sharp"
-            src="https://image.shutterstock.com/image-photo/beautiful-face-young-caucasian-woman-260nw-1550451308.jpg"
+            src="https://image.flaticon.com/icons/svg/1150/1150262.svg"
           />
         </span>
         <Link
@@ -227,31 +228,7 @@ export default function ReviewDetail(props: MyComponentProps) {
                   >  
         <span style={{ fontSize: 24 }}>작성자
            {feedDetail.user.nickName}</span></Link>
-        <br />
-        {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
-        <span>
-          <Typography className={classes.visit}>[방문자수] {feedDetail.visit}</Typography>
-          <Typography className={classes.visit}>[좋아요수] {feedDetail.likeNum}</Typography>
-          {(function () {
-
-if (likeState) {
-
-  return (
-    <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
-      <FavoriteIcon color="secondary" />
-
-    </IconButton>
-  )
-} else {
-  return (
-
-    <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
-      <FavoriteIcon color="inherit" />
-    </IconButton>
-  );
-}
-})()}
-          {(function() {
+            {(function() {
             if (!followState) {
               return (
                 <Button
@@ -276,22 +253,48 @@ if (likeState) {
               );
             }
           })()}
+        <br />
+        {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
+        <span>
+          <Typography className={classes.visit}>[방문자수] {feedDetail.visit}</Typography>
+          <Typography className={classes.visit}>[좋아요수] {feedDetail.likeNum}</Typography>
+          {(function () {
+
+          if (likeState) {
+
+            return (
+              <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
+                <FavoriteIcon color="secondary" />
+
+              </IconButton>
+            )
+          } else {
+            return (
+
+              <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
+                <FavoriteIcon color="inherit" />
+              </IconButton>
+            );
+          }
+          })()}
+         
         </span>
         <Divider component="li" />
-        <Box component="span" m={1}>
-          <Typography className={classes.wine}>
+        <Box component="span" m={1} style={{height : '50px'}}>
+          <span className={classes.wine} style={{ fontSize : '24px'}}>
             {feedDetail.wine.nameKor} 
             
-          </Typography>
+          </span>
           <Rating
           name="simple-controlled"
           value={feedDetail.rating}
           size="large"
+          style={{marginLeft : '10px'}}
         />
           {/* <span className={classes.star}>별점:</span> */}
         </Box>
         <Divider className={classes.divider} />
-
+  
 
         <Card variant="outlined">
           <CardContent>
@@ -338,7 +341,7 @@ if (likeState) {
       <TextField
         style={{ width: "100%", marginTop: 20 }}
         onChange={e => setComment(e.target.value)}
-        value={comment}
+        value={comment} placeholder="댓글을 남겨주세요"
       >
         댓글 작성 창
       </TextField>
