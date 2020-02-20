@@ -304,7 +304,8 @@ export default function ReviewDetail(props: MyComponentProps) {
               display="block"
               variant="caption"
             >
-              {feedDetail.content}
+              <div dangerouslySetInnerHTML={ {__html: feedDetail.content} }>
+              </div>
             </Typography>
           </CardContent>
         </Card>

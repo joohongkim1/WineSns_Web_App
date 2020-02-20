@@ -57,7 +57,6 @@ body {
   color: #444;
   font-size: 14px;
 
-  line-height: 1.5;
   letter-spacing: -0.5px;
 }
 img {
@@ -123,7 +122,6 @@ h6 {
 caption,
 hr,
 legend {
-  width: 0;
   height: 0;
   font-size: 1px;
   text-indent: -9999em;
