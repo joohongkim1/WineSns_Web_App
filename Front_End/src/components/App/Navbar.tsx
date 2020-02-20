@@ -31,6 +31,8 @@ import { Redirect } from "react-router-dom";
 import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
+import AfterSection from "./AfterSection";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -212,7 +214,14 @@ export default function Navbar() {
             </Typography>
           </Link>
 
-          <Section />
+          {(function() {
+            if (!sessionStorage.getItem("userInfo")) {
+                return(<Section />);
+          
+        } else {
+            return(<AfterSection />);
+        }
+      })()}
           <div className={classes.grow} />
 
           {(function() {

@@ -15,15 +15,33 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import { Link } from "react-router-dom";
 
+import LongMenu from './LongMenu'
+
 import '../../index.css';
 
+export interface Wine {
+  wid: number;
+  nameKor : string;
+}
+
+interface User {
+  uid: number,
+  kakaotalkId: string,
+  naverId: string,
+  googleId: string,
+  facebookId: string,
+  email: string,
+  nickName: string,
+}
 
 interface ReviewInfo {
+  user: User,
   fid: number;
   title: string;
   nameEng: string;
   content: string;
   rating: number;
+  wine: Wine
 }
 
 
@@ -71,7 +89,8 @@ function ReviewInfo(review: ReviewInfo) {
   const classes = useStyles();
 
   const [checked] = React.useState(true);
-
+  const userData = sessionStorage.getItem('uid'); // string
+  const feedUserData = String(review.user.uid) //as unknown as string // number
 
   return (
     <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
@@ -92,8 +111,8 @@ function ReviewInfo(review: ReviewInfo) {
               <div dangerouslySetInnerHTML={{ __html: review.content.substring(0, 80) }}>
 
               </div>
-              
-              </Typography>
+
+            </Typography>
           </CardContent>
 
           <Box component="fieldset" mb={3} borderColor="transparent">
@@ -103,11 +122,16 @@ function ReviewInfo(review: ReviewInfo) {
             <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
               <Button variant="outlined">View More</Button>
             </Link>
+            {/* {userData === feedUserData &&
+              <div>
+                <LongMenu review={review}/>
+              </div>
+            } */}
+            
           </div>
 
         </Card>
       </Grid>
-      {/* </Grid> */}
     </Slide>
   );
 }

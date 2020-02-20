@@ -24,13 +24,12 @@ import {
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
 import "./List.css";
-import Search from "./Search";
 
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import NativeSelect from "@material-ui/core/NativeSelect";
 import "./Search.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(15, 0, 20),
       display: "flex",
       backgroundImage:
-        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://t3.ftcdn.net/jpg/02/87/33/42/240_F_287334233_YdBxRrDdoWjPqr3eUR6Sk9JfNHwQf5E3.jpg)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center"
@@ -73,14 +72,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       backgroundColor: "#36342f",
-      marginBottom: "80px",
-      height: 10
+      marginBottom: "80px"
     },
     divider2: {
+      display: "flex",
       backgroundColor: "#36342f",
       marginTop: "100px",
-      position: "relative",
-      zIndex: 6
+      position: "relative"
     },
     btn: {
       fontSize: "25px",
@@ -103,9 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifycontent: "right"
     },
     home: {
-      display: "inline-block flex",
+      display: "flex",
       float: "right",
-      marginRight: "20px"
+      marginRight: "80px",
+      marginTop: "70px"
     },
     more: {
       "& > *": {
@@ -114,11 +113,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 120,
+      minWidth: 200
     },
     selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
+      marginTop: theme.spacing(2)
+    }
   })
 );
 export default function List() {
@@ -130,14 +129,17 @@ export default function List() {
   const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState<number | null>(2);
-  const[search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
   );
-  const [state, setState] = React.useState<{ type: string | number; name: string }>({
-    type: '',
-    name: '',
+  const [state, setState] = React.useState<{
+    type: string | number;
+    name: string;
+  }>({
+    type: "",
+    name: ""
   });
 
   const [countries, setCountries] = useState([]);
@@ -149,32 +151,31 @@ export default function List() {
   // }, []);
 
   const handleChangeType = (name: keyof typeof state) => (
-    event: React.ChangeEvent<{ value: unknown }>,
+    event: React.ChangeEvent<{ value: unknown }>
   ) => {
     setState({
       ...state,
-      [name]: event.target.value,
+      [name]: event.target.value
     });
     console.log(event.target.value); // 이건 맞다...
   };
   const numEachPage: number = 15;
   const [curPage, setCurPage] = useState(1);
   const handleChange = (value: number) => {
-      setCurPage(value);
-      setMinValue((value - 1) * numEachPage);
-      setMaxValue(value * numEachPage);
-  }
+    setCurPage(value);
+    setMinValue((value - 1) * numEachPage);
+    setMaxValue(value * numEachPage);
+  };
 
   const loadWineList = async () => {
-   
     await dispatch(getWineListByType("KOR_UP"));
   };
   const loadWineListByChecked = async (checkedValues: any) => {
     setCountries(checkedValues);
     handleChange(1);
-    if(checkedValues.length == 0 && uses.length == 0) {
+    if (checkedValues.length == 0 && uses.length == 0) {
       await dispatch(getWineListByType("KOR_UP"));
-    } else if(uses.length > 0){
+    } else if (uses.length > 0) {
       await dispatch(getWineUseList(checkedValues, uses));
     } else {
       await dispatch(getWineListByNameList(checkedValues));
@@ -184,12 +185,12 @@ export default function List() {
   const loadWineListByUse = async (checkedValues: any) => {
     handleChange(1);
     setUses(checkedValues);
-    console.log("hey")
-    if(checkedValues.length > 0) {
-    // console.log(checkedValues);handleChange(1);
-    console.log(checkedValues);
+    console.log("hey");
+    if (checkedValues.length > 0) {
+      // console.log(checkedValues);handleChange(1);
+      console.log(checkedValues);
       await dispatch(getWineUseList(countries, checkedValues));
-    } else if(countries.length > 0) {
+    } else if (countries.length > 0) {
       await dispatch(getWineListByNameList(countries));
     } else {
       await dispatch(getWineListByType("KOR_UP"));
@@ -197,13 +198,12 @@ export default function List() {
   };
 
   const submitSearch = async () => {
-    if(state.type==="food") {
+    if (state.type === "food") {
       await dispatch(searchWineByFood(search));
     } else {
       await dispatch(searchWineByName(search));
     }
   };
-
 
   async function onChangeCountryChk(checkedValues: any) {
     console.log("checked = ", checkedValues);
@@ -214,7 +214,7 @@ export default function List() {
     console.log("checked = ", checkedValues);
     await loadWineListByUse(checkedValues);
   }
-  
+
   const handleEuropeBtn = () => {
     setBtnNum(1);
   };
@@ -227,8 +227,6 @@ export default function List() {
     setWineUse(1);
   };
 
-
- 
   if (!isWineSucceess && !wineState) {
     loadWineList();
     setWineState(true);
@@ -243,6 +241,7 @@ export default function List() {
             variant="h1"
             align="center"
             style={{ color: "white" }}
+            className="typo2"
           >
             Wine List
           </Typography>
@@ -252,14 +251,12 @@ export default function List() {
         <Link
           to={"/ranking"}
           className={classes.home}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
-          <Typography>Home > 와인 list</Typography>ㄹ
+          <Typography>Home > 와인 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
+      <Divider variant="middle" className={classes.divider2} />
       <div className={classes.btnGroup}>
         <ButtonGroup
           size="large"
@@ -271,7 +268,6 @@ export default function List() {
           <Button className={classes.btn} onClick={handleAmericaBtn}>
             신대륙 와인
           </Button>
-  
         </ButtonGroup>
       </div>
       <div className="checkbox">
@@ -331,6 +327,7 @@ export default function List() {
               <Checkbox.Group
                 style={{ width: "100%" }}
                 onChange={onChangeCountryChk}
+                className="country"
               >
                 <Row>
                   <Col span={4}>
@@ -376,11 +373,11 @@ export default function List() {
                 </Row>
               </Checkbox.Group>
             );
-          } 
+          }
         })()}
       </div>
       <div className={classes.btnGroup}>
-      <ButtonGroup
+        <ButtonGroup
           size="large"
           aria-label="large outlined primary button group"
         >
@@ -388,34 +385,47 @@ export default function List() {
             와인 용도
           </Button>
         </ButtonGroup>
-        </div>
-        <div className="checkbox">
+      </div>
+      <div className="checkbox">
         {(function() {
           if (wineUse == 1) {
             return (
               <Checkbox.Group
                 style={{ width: "100%" }}
                 onChange={onChangeWineUse}
+                className="classification"
               >
                 <Row>
-                  <Col span={4}>
+                  <Col span={6}>
+                    <img
+                      src="https://t1.daumcdn.net/cfile/tistory/996A32495BC5555E0B"
+                      alt="tableWine"
+                      className="tableWine"
+                    />
                     <Checkbox value="테이블 와인">
                       <span style={{ fontSize: "22px" }}>테이블 와인</span>
                     </Checkbox>
                   </Col>
-                  <Col span={4}>
-
+                  <Col span={6}>
+                    <img
+                      src="https://pbs.twimg.com/media/C5-kRz9U4AArte7.jpg"
+                      alt="appetizerWine"
+                      className="appetizerWine"
+                    />
                     <Checkbox value="에피타이저">
                       <span style={{ fontSize: "22px" }}>에피타이저</span>
                     </Checkbox>
                   </Col>
-                  <Col span={4}>
-                
+                  <Col span={6}>
+                    <img
+                      src="https://t3.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/160i/image/q1d812PExRrLhoBONcd0OVu6cko.jpg"
+                      alt="desertWine"
+                      className="desertWine"
+                    />
                     <Checkbox value="디저트">
-                      <span style={{ fontSize: "22px" }}>디저트</span>
+                      <span style={{ fontSize: "22px" }}>디저트 와인</span>
                     </Checkbox>
                   </Col>
-
                 </Row>
               </Checkbox.Group>
             );
@@ -428,33 +438,33 @@ export default function List() {
         </Typography>
         <Divider variant="middle" className={classes.divider} />
         <div>
-        <FormControl className={classes.formControl} id="type">
-      <InputLabel htmlFor="age-native-simple">Type</InputLabel>
-      <Select
-        native
-        value={state.type}
-        onChange={handleChangeType('type')}
-      >
-        <option value="name">Name</option>
-        <option value="food">Food</option>
-      </Select>
-    </FormControl>
-        <button name="searchbtn" id="searchbtn" value="" onClick={submitSearch}></button>
-      <input
-        type="text"
-        name="s"
-        id="s"
-        className="searchfield"
-        placeholder="Search"
-        onChange={e =>
-          setSearch(e.target.value)
-        }
-        value={search}
-      />
-
-
-</div>
-
+          <FormControl className={classes.formControl} id="type">
+            <InputLabel htmlFor="age-native-simple">Type</InputLabel>
+            <Select
+              native
+              value={state.type}
+              onChange={handleChangeType("type")}
+            >
+              <option value="name">Name</option>
+              <option value="food">Food</option>
+            </Select>
+          </FormControl>
+          <button
+            name="searchbtn"
+            id="searchbtn"
+            value=""
+            onClick={submitSearch}
+          ></button>
+          <input
+            type="text"
+            name="s"
+            id="s"
+            className="searchfield"
+            placeholder="Search"
+            onChange={e => setSearch(e.target.value)}
+            value={search}
+          />
+        </div>
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (

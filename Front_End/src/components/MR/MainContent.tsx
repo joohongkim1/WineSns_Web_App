@@ -7,24 +7,24 @@ import { Route } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import LeftSide from './LeftSide';
-import RightSide from './RightSide'
-import Feed from './Feed';
 import MyFeed from './MyFeed/MyFeed';
 import MyPageList from './MyPageList';
+import MyLikes from './Like/MyLikes';
+import MyFriends from './Friends/MyFriends';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mrMainContents: {
       display: "flex",
       paddingTop: "42px",
-      
+
       margin: "0",
       marginRight: "0",
     },
 
     mrFeed: {
       marginLeft: "20px",
-      width: "900px",
+      width: "3000px",
       display: "inline-block",
     },
 
@@ -40,9 +40,9 @@ export default function Timelinesection() {
       <LeftSide />
       <div className={classes.mrFeed}>
         <Route path="/mypage" exact component={MyFeed} />
-        <Route path="/mypage/:title" component={MyPageList} />
-
-
+        <Route path="/mypage/" component={MyPageList} />
+        <Route path="/mypage/" component={MyLikes} />
+        <Route path="/mypage/" component={MyFriends} />
       </div>
       {/* <RightSide /> */}
     </div>

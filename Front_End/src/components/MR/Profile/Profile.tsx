@@ -1,43 +1,42 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
-import MyAccount from '../../App/MyAccount';
-
+import { Link } from 'react-router-dom';
+import { Icon } from 'antd'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mrProfile: {
-      borderRadius: "5px",
-      // width: "331px",
+      borderRadius: "20px",
       boxSizing: "border-box",
-      background: "#fff",
-      // borderRadius: "3px",
       border: "solid 1px #ddd",
-      fontSize: "12px",
       listStyle: "none",
-      paddingLeft: "0px"
+      paddingLeft: "0px", marginLeft: "auto", marginRight: "auto",
     },
     profileHeader: {
       borderBottom: "solid 1px #ddd",
-      marginLeft: "10px",
-      display: "flex",
-      padding: ""
+      marginLeft: "auto",
+      display: "flex"
     },
     profileHead: {
-      margin: "12px 0px",
-      fontSize: "20px",
+      display: "flex",
+      marginLeft: "auto",
+      marginRight: "auto",
+      backgroundColor: "white",
+      color: "black",
+      textAlign: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: "115px",
+      height: "48px",
+      fontSize: "24px",
+      lineHeight: "50px",
       fontWeight: "bold"
     },
     liCommon: {
       margin: "10px"
     },
     margin: {
-
       margin: theme.spacing(1),
-    
     }
-
   })
 );
 
@@ -93,7 +92,7 @@ interface User {
 export default function Profile(profile: User) {
   const classes = useStyles();
   const [edit, setEdit] = React.useState(false);
-  
+
   const editOpen = () => {
     setEdit(true);
   };
@@ -106,25 +105,47 @@ export default function Profile(profile: User) {
     <ul className={classes.mrProfile}>
       <li className={classes.profileHeader}>
         <div className={classes.profileHead}>Profile</div>
-        <Link
-                // noWrap
-                // key={button.title}
-                // variant="body2"
-                to="/MyAccount"
-              >
-        <Button size="small" className={classes.margin} onClick={editOpen}><EditIcon fontSize="small" /></Button>
+        <Link to="/MyAccount">
+          <button className={classes.margin} onClick={editOpen} style={{
+            display: "flex",
+            marginLeft: "auto",
+            marginRight: "auto",
+            backgroundColor: "white",
+            width: "48px",
+            height: "48px",
+            fontSize: "16px",
+            color: "black",
+            textAlign: "right",
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}><Icon type="setting" style={{ display: "inline" }} /></button>
         </Link>
       </li>
-      <li className={classes.liCommon}>
-        닉네임: {profile.data.nickName}
+      <li>
+        <button style={{ display: "table", marginLeft: "auto", marginRight: "auto", width: "150px", height: "150px", borderRadius: 400 / 2, backgroundImage: "url(https://www.leagueoflegends.co.kr/upload/EditorImages/20181106170936_Rri9oF7H.png)" }}>
+        </button>
       </li>
-      <li className={classes.liCommon}>
-        e-mail: {profile.data.email}
+      <li style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "150px",
+        fontSize: "20px"
+      }}>
+        {sessionStorage.getItem('userInfo')}님
       </li>
-      <li className={classes.liCommon}>
-        선호와인: {profile.data.likes.map((like) => {return like.nameKor})}
+      <li style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "150px",
+        fontSize: "15px"
+      }}>
       </li>
-
-    </ul>
+    </ul >
   );
 }
