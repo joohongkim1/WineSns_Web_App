@@ -3,11 +3,11 @@ import EditorContainer from './containers/EditorContainer';
 import WriteActionButtonsContainer from './containers/WriteActionButtonsContainer';
 import WriteActionButtons from './WriteActionButtons';
 
-export default function WritePage() {
+export default function WritePage({ onCancel}: any ) {
   return(
     <div>
       <EditorContainer />
-      <WriteActionButtonsContainer />
+      <WriteActionButtonsContainer onCancel={onCancel} />
     </div>
   );
 }
