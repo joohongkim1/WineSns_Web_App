@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { rootState } from "../../../stores/login/store";
 import { getWineTop3 } from "../../../stores/wine_info/actions/mainRank";
 import Slider from "./Slider";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,7 +75,9 @@ export default function TempTop3() {
       <main>
         {/* Hero unit */}
         <Slider />
-
+        <Typography style={{ fontSize: "12px" }}>
+          * 좌우 방향키로도 이동 가능합니다.
+        </Typography>
         <Container className={classes.cardGrid} maxWidth="md">
           <h3 className="tit40_line">Top3 Wine</h3>
           <Grid container spacing={4}>
