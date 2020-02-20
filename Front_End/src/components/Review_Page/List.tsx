@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     heroContent: {
       padding: theme.spacing(15, 0, 20),
       backgroundImage:
-        "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+        "url(https://t3.ftcdn.net/jpg/02/45/32/14/240_F_245321431_XblUS9Lu1sYKcwy68rjejTuzPXhgkLf7.jpg)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
 
@@ -82,14 +82,19 @@ const useStyles = makeStyles((theme: Theme) =>
       justifycontent: "right"
     },
     home: {
-      display: "inline-block flex",
+      display: "flex",
       float: "right",
-      marginRight: "20px"
+      marginRight: "80px",
+      marginTop: "70px"
     },
     more: {
       "& > *": {
         margin: theme.spacing(1, 8)
       }
+    },
+    pagination: {
+      textAlign: "center",
+      marginTop: "100px"
     }
   })
 );
@@ -152,17 +157,13 @@ export default function List() {
         <Link
           to={"/ranking"}
           className={classes.home}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
           <Typography>Home > 리뷰 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
-      <div className={classes.btnGroup}>
-
-      </div>
+      <Divider variant="middle" className={classes.divider2} />
+      <div className={classes.btnGroup}></div>
 
       <Container className={classes.cardGrid}>
         <Typography className={classes.total}>
@@ -191,6 +192,7 @@ export default function List() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
+            className={classes.pagination}
           />
         </div>
       </Container>
