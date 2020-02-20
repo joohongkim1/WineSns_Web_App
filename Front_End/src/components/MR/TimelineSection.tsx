@@ -3,53 +3,44 @@
 // about: Review page 중 위쪽 파트, 배경 사진, 프로필 사진, toolbar를 포함하고 있다.
 // 참고: https://github.com/TheoObbard/facebook_clone/blob/master/app/assets/stylesheets/newsfeed.scss
 
-
-import * as React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
+import * as React from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 
 // import TimelineNavbar from './TimelineNavbar'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    mrTimelinesection: {
-      width: '100%',
-      height: '300px',
-
-    },
-    mrTimelineUpperSection: {
-      display: 'block',
-      position: 'relative',
-      height: '250px',
-    },
-
     mrTimelineBackground: {
-      position: 'relative',
-      height: '100%',
-      backgroundColor: theme.palette.grey[800],
-      color: theme.palette.common.white,
-      marginBottom: theme.spacing(0),
-      backgroundImage: 'url(https://www.vertigemazul.com/public/uploads/programas/02SunSetParty/01VertigemAzul_party.jpg)',
-  
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-
-    },
-
-  }),
+      padding: theme.spacing(15, 0, 20),
+      display: "flex",
+      backgroundImage:
+        "url(https://t4.ftcdn.net/jpg/02/35/26/61/240_F_235266127_TKdaIQIb7W1dbJq22K0l9cnkduGxRiPl.jpg)",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    }
+  })
 );
 
 export default function Timelinesection() {
   const classes = useStyles();
 
   return (
-    <div id="mrTimelinesection" className={classes.mrTimelinesection}>
-      <div className={classes.mrTimelineUpperSection}>
-        <div id="mrTimelineBackground" className={classes.mrTimelineBackground}>
-
-        </div>
+    <React.Fragment>
+      <div className={classes.mrTimelineBackground}>
+        <Container>
+          <Typography
+            component="h1"
+            variant="h1"
+            align="center"
+            style={{ color: "white" }}
+          >
+            My SNS
+          </Typography>
+        </Container>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
