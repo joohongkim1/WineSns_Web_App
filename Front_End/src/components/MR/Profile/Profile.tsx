@@ -134,7 +134,7 @@ export default function Profile(profile: User) {
         width: "150px",
         fontSize: "20px"
       }}>
-        {profile.data.nickName}님
+        {sessionStorage.getItem('userInfo')}님
       </li>
       <li style={{
         display: 'flex',
@@ -145,7 +145,6 @@ export default function Profile(profile: User) {
         width: "150px",
         fontSize: "15px"
       }}>
-        {profile.data.email}
       </li>
     </ul >
   );

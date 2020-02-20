@@ -68,7 +68,9 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
+    height: `800px`,
+    width: `2000px`,
   };
 }
 
@@ -290,19 +292,21 @@ function WineDetail(props: MyComponentProps) {
                 리뷰작성
               </button>
               <Modal
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={open}
-                onClose={handleClose}
-              >
-                <div style={modalStyle} className={classes.paper}>
-                  <h2 id="simple-modal-title">My Review</h2>
-                  <div>
-                    {/* 에디터 들어갈 공간 */}
-                    <WritePage wid={wid} onCancel={handleClose} />
-                  </div>
-                </div>
-              </Modal>
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h1 id="simple-modal-title">리뷰 작성하기</h1>
+          <div>
+            {/* 에디터 들어갈 공간 */}
+            <WritePage wid={wid} onCancel={handleClose} />
+          </div>
+
+
+        </div>
+      </Modal>
 
               {/* Wiine 제품 정보 */}
             </div>
