@@ -75,10 +75,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "80px"
     },
     divider2: {
+      display: "flex",
       backgroundColor: "#36342f",
       marginTop: "100px",
-      position: "relative",
-      zIndex: 6
+      position: "relative"
     },
     btn: {
       fontSize: "25px",
@@ -101,9 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifycontent: "right"
     },
     home: {
-      display: "inline-block flex",
+      display: "flex",
       float: "right",
-      marginRight: "20px"
+      marginRight: "80px",
+      marginTop: "70px"
     },
     more: {
       "& > *": {
@@ -249,14 +250,12 @@ export default function List() {
         <Link
           to={"/ranking"}
           className={classes.home}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
           <Typography>Home > 와인 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
+      <Divider variant="middle" className={classes.divider2} />
       <div className={classes.btnGroup}>
         <ButtonGroup
           size="large"

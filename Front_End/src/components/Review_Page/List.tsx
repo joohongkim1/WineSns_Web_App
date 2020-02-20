@@ -82,14 +82,19 @@ const useStyles = makeStyles((theme: Theme) =>
       justifycontent: "right"
     },
     home: {
-      display: "inline-block flex",
+      display: "flex",
       float: "right",
-      marginRight: "20px"
+      marginRight: "80px",
+      marginTop: "70px"
     },
     more: {
       "& > *": {
         margin: theme.spacing(1, 8)
       }
+    },
+    pagination: {
+      textAlign: "center",
+      marginTop: "100px"
     }
   })
 );
@@ -152,14 +157,12 @@ export default function List() {
         <Link
           to={"/ranking"}
           className={classes.home}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "black" }}
         >
           <Typography>Home > 리뷰 list</Typography>
         </Link>
       </div>
-      <div className={classes.divider2}>
-        <Divider variant="middle" />
-      </div>
+      <Divider variant="middle" className={classes.divider2} />
       <div className={classes.btnGroup}></div>
 
       <Container className={classes.cardGrid}>
@@ -187,6 +190,7 @@ export default function List() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
+            className={classes.pagination}
           />
         </div>
       </Container>

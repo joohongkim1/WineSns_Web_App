@@ -18,38 +18,34 @@ import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 import ReviewInfo from "../../../components/Interface/Review";
-import 'antd/dist/antd.css';
-import { Pagination } from 'antd';
+import "antd/dist/antd.css";
+import { Pagination } from "antd";
 // Redux
 
-import { rootState } from '../../../../stores/login/store';
-import { getUserFeedList } from '../../../../stores/my_sns/actions/userFeed';
+import { rootState } from "../../../../stores/login/store";
+import { getUserFeedList } from "../../../../stores/my_sns/actions/userFeed";
 
+import { useSelector, useDispatch } from "react-redux";
 
-import { useSelector, useDispatch } from 'react-redux';
+import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TextField from "@material-ui/core/TextField";
 
-
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import TextField from '@material-ui/core/TextField';
-
-import WritePage from '../Posts/Editor/WirtePage';
-
-
+import WritePage from "../Posts/Editor/WirtePage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      position: 'absolute',
+      position: "absolute",
       width: 400,
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
+      border: "2px solid #000",
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      padding: theme.spacing(2, 4, 3)
     },
     widContainer: {
-      marginBottom: '10px'
+      marginBottom: "10px"
     },
     root: {
       display: "flex",
@@ -119,6 +115,10 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
+    },
+    pagination: {
+      textAlign: "center",
+      marginTop: "100px"
     }
   })
 );
@@ -134,7 +134,7 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(-${top}%, -${left}%)`
   };
 }
 
@@ -145,9 +145,12 @@ export default function MyFeed() {
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed } = useSelector(
-    (state: rootState) => state.MyFeedReducer
-  );
+  const {
+    isUserFeedError,
+    isUserFeedSucceess,
+    isUserFeedPending,
+    userFeed
+  } = useSelector((state: rootState) => state.MyFeedReducer);
 
   let start: number = 0;
   let end: number = 0;
@@ -156,14 +159,13 @@ export default function MyFeed() {
 
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
-    setMaxValue((value) * numEachPage);
+    setMaxValue(value * numEachPage);
   };
 
   if (!isUserFeedSucceess && !reviewState) {
     dispatch(getUserFeedList());
     setReviewState(true);
   } else {
-
   }
 
   const [modalStyle] = React.useState(getModalStyle);
@@ -181,7 +183,9 @@ export default function MyFeed() {
     <div>
       <Container>
         <div style={{ fontWeight: "bold", fontSize: "36px" }}>My Review</div>
-        <Typography className={classes.total}>Total {userFeed.length}</Typography>
+        <Typography className={classes.total}>
+          Total {userFeed.length}
+        </Typography>
         <Divider variant="middle" className={classes.divider} />
         <Grid container spacing={10}>
           {userFeed.slice(minValue, maxValue).map(feed => (
@@ -202,7 +206,9 @@ export default function MyFeed() {
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
-          /></div>
+            className={classes.pagination}
+          />
+        </div>
       </Container>
     </div>
   );

@@ -28,13 +28,13 @@ import {
 import { getFeedListByWID } from "../../../stores/feed/actions/feedInfo";
 
 // component
-import WritePage from './Posts/Editor/WirtePage';
+import WritePage from "./Posts/Editor/WirtePage";
 
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(15, 0, 20),
     backgroundImage:
-    "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
+      "url(https://t3.ftcdn.net/jpg/02/87/33/42/240_F_287334233_YdBxRrDdoWjPqr3eUR6Sk9JfNHwQf5E3.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
-  },
+  }
 }));
 
 // 모달 사이즈 조절
@@ -71,7 +71,6 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`
   };
 }
-
 
 interface RouterProps {
   // type for `match.params`
@@ -99,7 +98,6 @@ function WineDetail(props: MyComponentProps) {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const [wineState, setWineState] = React.useState(false);
   const [likeState, setLikeState] = React.useState(false);
@@ -156,8 +154,13 @@ function WineDetail(props: MyComponentProps) {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container>
-            <Typography component="h1" variant="h1" align="center" style={{color : 'white'}}>
-              Wine List
+            <Typography
+              component="h1"
+              variant="h1"
+              align="center"
+              style={{ color: "white" }}
+            >
+              Wine Detail
             </Typography>
           </Container>
         </div>
@@ -283,23 +286,23 @@ function WineDetail(props: MyComponentProps) {
                 }
               })()}
 
-              <button className="btns btn_line_type blue" onClick={handleOpen}>리뷰작성</button>
+              <button className="btns btn_line_type blue" onClick={handleOpen}>
+                리뷰작성
+              </button>
               <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">My Review</h2>
-          <div>
-            {/* 에디터 들어갈 공간 */}
-            <WritePage wid={wid} onCancel={handleClose} />
-          </div>
-
-
-        </div>
-      </Modal>
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={open}
+                onClose={handleClose}
+              >
+                <div style={modalStyle} className={classes.paper}>
+                  <h2 id="simple-modal-title">My Review</h2>
+                  <div>
+                    {/* 에디터 들어갈 공간 */}
+                    <WritePage wid={wid} onCancel={handleClose} />
+                  </div>
+                </div>
+              </Modal>
 
               {/* Wiine 제품 정보 */}
             </div>
