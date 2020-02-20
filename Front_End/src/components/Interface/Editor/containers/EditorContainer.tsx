@@ -1,15 +1,16 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import Editor from '../Editor';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeField, initialize } from '../../../../../stores/mysns/actions/write';
+import { changeField, initialize } from '../../../../../stores/mysns/actions/update';
 import ReviewInfo from '../.././Review';
 
 
-interface write {
+interface update {
   content: string,
   rating: number,
   title: string,
   wid: number,
+  fid: number
 }
 interface params {
   review: ReviewInfo;
@@ -18,11 +19,12 @@ interface params {
 
 const EditorContainer = ({review}: params) => {
   const dispatch = useDispatch();
-  const { content, rating, title, wid } = useSelector(( write: write) => ({
-    content: write.content,
-    rating: write.rating,
-    title: write.title,
-    wid: write.wid
+  const { content, rating, title, wid, fid } = useSelector(( update: update) => ({
+    content: update.content,
+    rating: update.rating,
+    title: update.title,
+    wid: update.wid,
+    fid: update.fid,
   }));
   const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
     dispatch,
@@ -30,6 +32,7 @@ const EditorContainer = ({review}: params) => {
 
   // 언마운트될 때 초기화
   useEffect(() => {
+    dispatch(onChangeField({ key: 'fid', value: review.fid}))
     dispatch(onChangeField({ key: 'wid', value: review.wine.wid }));
     dispatch(onChangeField({ key: 'content', value: review.content }));
     dispatch(onChangeField({ key: 'title', value: review.title }));

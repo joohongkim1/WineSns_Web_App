@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
@@ -21,11 +21,14 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
-import { getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike 
-,deleteCommentAndUpdate} from '../../../../stores/feed/actions/feedDetail';
+import {
+  getFeedDetailByFID, postComment, followUserByUID, UnfollowUserByUID, createFeedLike, deleteFeedLike
+  , deleteCommentAndUpdate
+} from '../../../../stores/feed/actions/feedDetail';
 
 import { Comment, Form, Header } from 'semantic-ui-react'
 
+import Modal from '@material-ui/core/Modal';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -33,14 +36,51 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import WritePage from '../../Interface/Editor/WirtePage';
+import ReviewInfo from '../../Interface/Review';
+import {deletePost} from '../../../../stores/mysns/actions/update';
+
+interface params{
+  review: ReviewInfo
+}
+
+// 모달 사이즈 조절
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    paper: {
+      position: "absolute",
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3)
+    },
+    menuContainer:{
+      float: "right"
+    },
+    // headerContainer: {
+    //   display: "flex"
+    // },
     root: {
       width: "100%",
       maxWidth: 360,
       backgroundColor: theme.palette.background.paper,
-  
+
     },
     rating: {
       display: "inline-block",
@@ -48,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "relative"
     },
     table: {
-      maxHeight : "100px",
+      maxHeight: "100px",
       overflowY: "auto"
     },
 
@@ -69,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     follow: {
       display: "inline-block",
-      marginLeft : '10px',
+      marginLeft: '10px',
       // float: "right"
     },
     visit: {
@@ -108,10 +148,11 @@ interface RouterProps {
 interface MyComponentProps extends RouteComponentProps<RouterProps> {
   fid: number;
 }
-export default function ReviewDetail(props: MyComponentProps) {
+interface Props extends RouteComponentProps {}
+function ReviewDetail(props: MyComponentProps) {
   const classes = useStyles();
   const fid = +props.match.params.fid;
-
+  
   const [feedState, setFeedState] = React.useState(false);
   const {
     feedDetail,
@@ -120,13 +161,63 @@ export default function ReviewDetail(props: MyComponentProps) {
     isFeedDetailSucceess,
     isFeedDetailPending
   } = useSelector((state: rootState) => state.FeedDetailReducer);
+
   const [value, setValue] = React.useState<number | null>(2);
   const [likeState, setLikeState] = React.useState(false);
   const [followState, setFollowState] = React.useState(false);
-
   const [comment, setComment] = useState("");
+  
+  const review = {
+    user: feedDetail.user, 
+    fid: feedDetail.fid, 
+    title: feedDetail.title, 
+    nameEng: feedDetail.wine.nameEng, 
+    content: feedDetail.content,
+    rating: feedDetail.rating, 
+    wine: feedDetail.wine
+  }
+  const userData = sessionStorage.getItem('uid'); // string
+  const feedUserData = String(review.user.uid)
+
+  const goBack = () => {
+    window.history.back();
+  }
 
   const dispatch = useDispatch();
+  const onDelete = () => {
+
+    dispatch(
+      deletePost({
+        content: review.content, 
+        rating: review.rating, 
+        title: review.title, 
+        wid: review.wine.wid, 
+        fid: review.fid
+        
+      })
+    )
+    dispatch(
+      window.setTimeout(goBack,1000)
+      )
+    
+
+  }
+
+
+
+  const handleClose = () => {
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
+
+    // 모달 상태 관리
+    const [modalStyle] = React.useState(getModalStyle);
+    const [openModal, setOpenModal] = React.useState(false);
+
+
 
   const userComment = async () => {
     await dispatch(postComment(comment, fid));
@@ -153,13 +244,13 @@ export default function ReviewDetail(props: MyComponentProps) {
   };
 
 
-  
-  const deleteCommentByUser = async (cid : any) => {
+
+  const deleteCommentByUser = async (cid: any) => {
     await dispatch(deleteCommentAndUpdate(fid, cid));
     dispatch(getFeedDetailByFID(fid));
     setFeedState(true);
 
-    
+
     let userLikeFeed = JSON.parse(sessionStorage.getItem('userLikeFeed') || '{}');
 
 
@@ -169,7 +260,7 @@ export default function ReviewDetail(props: MyComponentProps) {
         break
       }
     }
- };
+  };
 
 
 
@@ -189,7 +280,7 @@ export default function ReviewDetail(props: MyComponentProps) {
     }
 
 
-    
+
     let userFollow = JSON.parse(
       sessionStorage.getItem("userFollow") || "{}"
     );
@@ -204,7 +295,7 @@ export default function ReviewDetail(props: MyComponentProps) {
 
   }
   return (
- 
+
     <Container>
       <div style={{ height: 100 }}></div>
       <Box color="text.primary">
@@ -214,7 +305,7 @@ export default function ReviewDetail(props: MyComponentProps) {
         >
           <Typography className={classes.back}>&lt; ReviewList</Typography>
         </Link>
-        <Typography className={classes.title} style={{fontSize : '36px'}}>{feedDetail.title}</Typography>
+        <Typography className={classes.title} style={{ fontSize: '36px' }}>{feedDetail.title}</Typography>
         <span>
           <Avatar
             className={classes.avatar}
@@ -223,36 +314,36 @@ export default function ReviewDetail(props: MyComponentProps) {
           />
         </span>
         <Link
-                    to={`/friend/${feedDetail.user.uid}`}
-                    style={{ textDecoration: "none" }}
-                  >  
-        <span style={{ fontSize: 24 }}>작성자
+          to={`/friend/${feedDetail.user.uid}`}
+          style={{ textDecoration: "none" }}
+        >
+          <span style={{ fontSize: 24 }}>작성자
            {feedDetail.user.nickName}</span></Link>
-            {(function() {
-            if (!followState) {
-              return (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.follow}
-                  onClick={follow}
-                >
-                  팔로우
+        {(function () {
+          if (!followState) {
+            return (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.follow}
+                onClick={follow}
+              >
+                팔로우
                 </Button>
-              );
-            } else {
-              return (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.follow}
-                  onClick={unfollow}
-                >
-                  팔로우취소
+            );
+          } else {
+            return (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.follow}
+                onClick={unfollow}
+              >
+                팔로우취소
                 </Button>
-              );
-            }
-          })()}
+            );
+          }
+        })()}
         <br />
         {/* <span style={{ fontSize: 24 }}>[작성 시간]</span> */}
         <span>
@@ -260,41 +351,66 @@ export default function ReviewDetail(props: MyComponentProps) {
           <Typography className={classes.visit}>[좋아요수] {feedDetail.likeNum}</Typography>
           {(function () {
 
-          if (likeState) {
+            if (likeState) {
 
-            return (
-              <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
-                <FavoriteIcon color="secondary" />
+              return (
+                <IconButton aria-label="add to favorites" onClick={hateThis} className={classes.heart}>
+                  <FavoriteIcon color="secondary" />
 
-              </IconButton>
-            )
-          } else {
-            return (
+                </IconButton>
+              )
+            } else {
+              return (
 
-              <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
-                <FavoriteIcon color="inherit" />
-              </IconButton>
-            );
-          }
+                <IconButton aria-label="add to favorites" onClick={likeThis} className={classes.heart}>
+                  <FavoriteIcon color="inherit" />
+                </IconButton>
+              );
+            }
           })()}
-         
+
         </span>
         <Divider component="li" />
-        <Box component="span" m={1} style={{height : '50px'}}>
-          <span className={classes.wine} style={{ fontSize : '24px'}}>
-            {feedDetail.wine.nameKor} 
-            
+        <Box component="span" m={1} style={{ height: '50px' }}>
+          
+          <span className={classes.wine} style={{ fontSize: '24px' }}>
+            {feedDetail.wine.nameKor}
+
           </span>
           <Rating
-          name="simple-controlled"
-          value={feedDetail.rating}
-          size="large"
-          style={{marginLeft : '10px'}}
-        />
+            name="simple-controlled"
+            value={feedDetail.rating}
+            size="large"
+            style={{ marginLeft: '10px' }}
+          />
+          
+          {userData === feedUserData &&
+              <div className={classes.menuContainer}>
+                <Button onClick={handleClose}>수정</Button>
+                <Button onClick={onDelete}>삭제</Button>
+              </div>
+            }
+          {/* 모달 */}
+          <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={openModal}
+            onClose={handleModalClose}
+          >
+            <div style={modalStyle} className={classes.paper}>
+              <h2 id="simple-modal-title">My Review</h2>
+              <div>
+                {/* 에디터 들어갈 공간 */}
+                <WritePage review={review} onCancel={handleModalClose} />
+              </div>
+
+
+            </div>
+          </Modal>
           {/* <span className={classes.star}>별점:</span> */}
         </Box>
         <Divider className={classes.divider} />
-  
+
 
         <Card variant="outlined">
           <CardContent>
@@ -304,7 +420,7 @@ export default function ReviewDetail(props: MyComponentProps) {
               display="block"
               variant="caption"
             >
-              <div dangerouslySetInnerHTML={ {__html: feedDetail.content} }>
+              <div dangerouslySetInnerHTML={{ __html: feedDetail.content }}>
               </div>
             </Typography>
           </CardContent>
@@ -316,26 +432,26 @@ export default function ReviewDetail(props: MyComponentProps) {
           댓글 [댓글 숫자 표시]
         </Typography>
       </Box>
-      <Box style={{overflow:"auto"}}> 
-      <Divider component="li" />
-      <Table className={classes.table}>
-        
-        {commentList.map((comment: any) => (
-   
-   <TableRow key={comment.cid}>
-   <TableCell component="th" scope="row">
-            {comment.content} 작성자 : {comment.user.nickName} : {comment.createdTimeAt}
+      <Box style={{ overflow: "auto" }}>
+        <Divider component="li" />
+        <Table className={classes.table}>
 
-            {comment.user.uid == sessionStorage.getItem("uid") ?
-                (<Button onClick={() => deleteCommentByUser(comment.cid)}>댓글삭제</Button>)
+          {commentList.map((comment: any) => (
+
+            <TableRow key={comment.cid}>
+              <TableCell component="th" scope="row">
+                {comment.content} 작성자 : {comment.user.nickName} : {comment.createdTimeAt}
+
+                {comment.user.uid == sessionStorage.getItem("uid") ?
+                  (<Button onClick={() => deleteCommentByUser(comment.cid)}>댓글삭제</Button>)
                   : (<span></span>)
-        }
-          </TableCell>
-          </TableRow>
-         
+                }
+              </TableCell>
+            </TableRow>
+
           ))}
-        
-     </Table>
+
+        </Table>
       </Box>
 
       <TextField
@@ -352,7 +468,9 @@ export default function ReviewDetail(props: MyComponentProps) {
       >
         댓글 작성
       </Button>
-    
+
     </Container>
   );
 }
+
+export default withRouter(ReviewDetail);

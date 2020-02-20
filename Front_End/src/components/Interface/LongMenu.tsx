@@ -54,6 +54,7 @@ export default function LongMenu({review}:params) {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    
   };
 
   const handleClose = () => {
@@ -86,7 +87,7 @@ export default function LongMenu({review}:params) {
         id="long-menu"
         anchorEl={anchorEl}
         keepMounted
-        open={open}
+        open={Boolean(anchorEl)}
         onClose={handleClose}
         PaperProps={{
           style: {
@@ -100,6 +101,7 @@ export default function LongMenu({review}:params) {
             {option}
           </MenuItem>
         ))} */}
+        
         <MenuItem key="수정" onClick={handleClose}>
           수정
         </MenuItem>

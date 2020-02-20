@@ -9,17 +9,11 @@ interface contents {
 }
 
 
-async function updatePost({content, rating, title, wid, fid}:contents) : Promise<Response>{
+async function deletePost({content, rating, title, wid, fid}:contents) : Promise<Response>{
   console.log('publish 받음')
-  let data = JSON.stringify({
-    content: content,
-      rating: rating,
-      title: title,
-      wid: wid,
-      fid: fid,
-  })
-  let url = '/feed/update'
-  return HTTPS.post(url, data, {
+
+  let url = '/feed/delete'
+  return HTTPS.delete(url, {
     params:{
       fid: fid,
     },
@@ -42,4 +36,4 @@ async function updatePost({content, rating, title, wid, fid}:contents) : Promise
 
 }
 
-export default updatePost;
+export default deletePost;

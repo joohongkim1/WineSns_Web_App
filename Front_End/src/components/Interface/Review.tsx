@@ -21,6 +21,7 @@ import '../../index.css';
 
 export interface Wine {
   wid: number;
+  nameKor : string;
 }
 
 interface User {
@@ -121,11 +122,11 @@ function ReviewInfo(review: ReviewInfo) {
             <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
               <Button variant="outlined">View More</Button>
             </Link>
-            {userData === feedUserData &&
+            {/* {userData === feedUserData &&
               <div>
                 <LongMenu review={review}/>
               </div>
-            }
+            } */}
             
           </div>
 

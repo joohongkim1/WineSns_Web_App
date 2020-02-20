@@ -13,7 +13,7 @@ export default function WritePage( {review, onCancel}:params ) {
   return(
     <div>
       <EditorContainer  review={review} />
-      <WriteActionButtonsContainer onCancel={onCancel} />
+      <WriteActionButtonsContainer onCancel={onCancel} fid={review.fid} />
     </div>
   );
 }

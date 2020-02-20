@@ -3,28 +3,29 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import WriteActionButtons from '../WriteActionButtons';
 import { useSelector, useDispatch } from 'react-redux';
-import write, {writePost} from '../../../../../stores/mysns/actions/write';
+import update, {updatePost} from '../../../../../stores/mysns/actions/update';
 import { rootState } from '../../../../../stores/login/store';
 
 
 interface Props extends RouteComponentProps {}
-interface write {
+interface update {
   content: string,
   rating: number,
   title: string,
   wid: number,
+  fid: number,
   post: any,
   postError: any,
 }
 
 
-const WriteActionButtonsContainer = ( {onCancel}:any ) => {
+const WriteActionButtonsContainer = ( {onCancel}:any) => {
   console.log('aaaaaaa')
   const dispatch = useDispatch();
-  const { content, rating, title, wid, post, postError } = useSelector(( state: rootState ) => (
-    state.write
+  const { content, rating, title, wid, fid, post, postError } = useSelector(( state: rootState ) => (
+    state.update
   ));
-  console.log(content, rating, title, wid, post, postError)
+  console.log(content, rating, title, wid, fid, post, postError)
   function refreshPage() {
     window.location.reload(true);
   }
@@ -33,13 +34,16 @@ const WriteActionButtonsContainer = ( {onCancel}:any ) => {
     dispatch(
       refreshPage
     )
+    console.log('fid');
+    console.log(fid)
     console.log('publish')
     dispatch(
-      writePost({
+      updatePost({
         content,
         rating,
         title,
         wid,
+        fid
       },),
     );
   };

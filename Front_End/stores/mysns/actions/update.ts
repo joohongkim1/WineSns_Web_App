@@ -3,7 +3,8 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 // import * as postsAPI from '../lib/api/post';
-import updatePosts from '../lib/api/post';
+import updatePosts from '../lib/api/update';
+import deletePosts from '../lib/api/delete';
 
 import { takeLatest } from 'redux-saga/effects';
 import { Record, Map, List } from 'immutable';
@@ -19,12 +20,18 @@ const [
   UPDATE_POST_FAILURE,
 ] = createRequestActionTypes('write/UPDATE_POST'); // 포스트 작성
 
+const [
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE,
+] = createRequestActionTypes('write/DELETE_POST'); // 포스트 작성
+
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }:params) => ({key, value}));
-export const keepUp = createAction(KEEPUP, ({content, rating, title, wid}: ContentsStateParams, fid:number) => ({content, rating, title, wid, fid}));
+export const keepUp = createAction(KEEPUP, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
 
 export const updatePost = createAction(UPDATE_POST, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
-
+export const deletePost = createAction(DELETE_POST, ({content, rating, title, wid, fid}: ContentsStateParams) => ({content, rating, title, wid, fid}));
 
 const ContentsStateRecord = Record({
   content: '',
@@ -48,7 +55,7 @@ interface ContentsStateParams {
   wid?: number,
   post?: any,
   postError?: any,
-  fid : number
+  fid? : any
 }
 
 
@@ -57,9 +64,10 @@ export class UpdateContentsState extends ContentsStateRecord {
   rating?: number;
   title?: string;
   wid?: number;
+  fid?: number;
   post?: any;
   postError?: any;
-  fid?: number;
+  
 }
 
 
@@ -69,6 +77,11 @@ export function* updateSaga() {
   yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
+const deletePostSaga = createRequestSaga(DELETE_POST, deletePosts); // axios function 생성 필요
+export function* deleteSaga() {
+  console.log('실행좀...')
+  yield takeLatest(DELETE_POST, deletePostSaga);
+}
 
 const initialState = {
   content: '',
@@ -110,6 +123,25 @@ const update = handleActions<ContentsStateParams, any>(
       ...state,
       postError
     }),
+
+    [DELETE_POST]: (state:any, action:any) => ({
+      ...state,
+      post: null,
+      postError: null,
+    }),
+
+    // 포스트 수정 성공
+    [DELETE_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post
+    }),
+    // 포스트 수정 실패
+    [DELETE_POST_FAILURE]: (state, { payload: postError }) => ({
+      ...state,
+      postError
+    }),
+  
+    
   },
   initialState,
 );
