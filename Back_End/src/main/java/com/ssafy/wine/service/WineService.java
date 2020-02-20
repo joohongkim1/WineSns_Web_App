@@ -18,7 +18,9 @@ public interface WineService {
 
 	public List<WineDto> findByName(String name);
 
-	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol);
+	public List<WineDto> smartSearch(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol);
+	
+	public List<WineDto> search(WineCountryEnum[] country, String[] use, String name, String food);
 
 	public List<String> findCountryAll();
 

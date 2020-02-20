@@ -43,13 +43,14 @@ public class FeedLikeController {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
-			
+
 			FeedLike like = feedLikeService.create(uid, fid);
 			feedLikeService.updateLikeNum(fid);
-			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(like.getUser().getEmail()).append("\n").append("Feed_ID: ")
-					.append(like.getFeed().getFid()).append("\n").append("FeedLike 추가했습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("User: ").append(like.getUser().getEmail())
+				.append("\nFeed_ID: ").append(like.getFeed().getFid())
+				.append("\nFeedLike 추가되었습니다.");
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -87,7 +88,7 @@ public class FeedLikeController {
 			Long uid = Long.parseLong(authentication.getName());
 			feedLikeService.delete(uid, fid);
 			feedLikeService.updateLikeNum(fid);
-			return new ResponseEntity<Object>("FeedLike 삭제했습니다.", HttpStatus.OK);
+			return new ResponseEntity<Object>("FeedLike 삭제되었습니다", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

@@ -36,6 +36,9 @@ public class WineLikeServiceImpl implements WineLikeService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	
+	
+	
 	@Override
 	public WineLike create(Long uid, Long wid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
@@ -67,9 +70,9 @@ public class WineLikeServiceImpl implements WineLikeService {
 	
 	@Override
 	@Transactional
-	public void updateLikeNum(Long wid) {
+	public Integer updateLikeNum(Long wid) {
 		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
-		wineRepository.updateLikeNum(wid, wine.getWineLikes().size());
+		return wine.updateLikeNum(wine.getWineLikes().size());
 	}
 	
 	@Override

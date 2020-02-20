@@ -53,13 +53,6 @@ public class Comment extends DateEntity {
 	List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Comment(User user, Feed feed, String content) {
-		this.user = user;
-		this.feed = feed;
-		this.content = content;
-	}
-
-	@Builder
 	public Comment(User user, Feed feed, String content, Comment parentComment) {
 		this.user = user;
 		this.feed = feed;
@@ -67,4 +60,9 @@ public class Comment extends DateEntity {
 		this.parentComment = parentComment;
 	}
 
+	public Comment update(String content) {
+		this.content = content;
+		return this;
+	}
+	
 }

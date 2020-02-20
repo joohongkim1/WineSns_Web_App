@@ -44,10 +44,10 @@ public class FollowController {
 			if (fromUid.equals(toUid))
 				return new ResponseEntity<Object>("same email", HttpStatus.NOT_ACCEPTABLE);
 			Follow follow = followService.create(fromUid, toUid);
-			StringBuilder sb = new StringBuilder();
-			sb.append("From: ").append(follow.getFrom().getEmail()).append("\n").append("to: ")
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("From: ").append(follow.getFrom().getEmail()).append("\n").append("to: ")
 					.append(follow.getTo().getEmail()).append("\n").append("follow를 추가했습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
