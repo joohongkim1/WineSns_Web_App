@@ -79,10 +79,12 @@ export default function Editor({ contentChange, ratingChange, titleChange, widCh
 
   return (
     <div>
-      <input
+      <div>
+        제목 : <input
         onChange={onChangeTitle}
         value={title}
-      />
+      /></div>
+      
         <div ref={quillElement} />
 
       <Box component="fieldset" mb={3} borderColor="transparent">
