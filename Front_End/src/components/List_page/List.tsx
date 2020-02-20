@@ -17,7 +17,8 @@ import {
   getWineListByType,
   getWineListByNameList,
   searchWineByName,
-  getWineUseList
+  getWineUseList,
+  searchWineByFood
 } from "../../../stores/wine_info/actions/wineInfo";
 //antDesign
 import "antd/dist/antd.css";
@@ -25,7 +26,11 @@ import { Checkbox, Row, Col } from "antd";
 import "./List.css";
 import Search from "./Search";
 
-
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import "./Search.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -107,11 +112,18 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1, 8)
       }
     },
- 
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
   })
 );
 export default function List() {
   const [btnNum, setBtnNum] = useState(0);
+  const [wineUse, setWineUse] = useState(0);
   const classes = useStyles();
   const [wineState, setWineState] = useState(false);
   const [minValue, setMinValue] = useState(0);
@@ -123,29 +135,76 @@ export default function List() {
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
   );
-  let start: number = 0;
-  let end: number = 0;
+  const [state, setState] = React.useState<{ type: string | number; name: string }>({
+    type: '',
+    name: '',
+  });
+
+  const [countries, setCountries] = useState([]);
+  const [uses, setUses] = useState([]);
+  // const inputLabel = React.useRef<HTMLLabelElement>(null);
+  // const [labelWidth, setLabelWidth] = React.useState(0);
+  // React.useEffect(() => {
+  //   setLabelWidth(inputLabel.current!.offsetWidth);
+  // }, []);
+
+  const handleChangeType = (name: keyof typeof state) => (
+    event: React.ChangeEvent<{ value: unknown }>,
+  ) => {
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+    console.log(event.target.value); // 이건 맞다...
+  };
+  const numEachPage: number = 15;
+  const [curPage, setCurPage] = useState(1);
+  const handleChange = (value: number) => {
+      setCurPage(value);
+      setMinValue((value - 1) * numEachPage);
+      setMaxValue(value * numEachPage);
+  }
+
   const loadWineList = async () => {
    
     await dispatch(getWineListByType("KOR_UP"));
   };
   const loadWineListByChecked = async (checkedValues: any) => {
-    await dispatch(getWineListByNameList(checkedValues));
+    setCountries(checkedValues);
+    handleChange(1);
+    if(checkedValues.length == 0 && uses.length == 0) {
+      await dispatch(getWineListByType("KOR_UP"));
+    } else if(uses.length > 0){
+      await dispatch(getWineUseList(checkedValues, uses));
+    } else {
+      await dispatch(getWineListByNameList(checkedValues));
+    }
   };
 
   const loadWineListByUse = async (checkedValues: any) => {
-    await dispatch(getWineUseList(checkedValues));
+    handleChange(1);
+    setUses(checkedValues);
+    console.log("hey")
+    if(checkedValues.length > 0) {
+    // console.log(checkedValues);handleChange(1);
+    console.log(checkedValues);
+      await dispatch(getWineUseList(countries, checkedValues));
+    } else if(countries.length > 0) {
+      await dispatch(getWineListByNameList(countries));
+    } else {
+      await dispatch(getWineListByType("KOR_UP"));
+    }
   };
 
   const submitSearch = async () => {
-  
-    await dispatch(searchWineByName(search));
+    if(state.type==="food") {
+      await dispatch(searchWineByFood(search));
+    } else {
+      await dispatch(searchWineByName(search));
+    }
   };
-  const numEachPage: number = 15;
-  const handleChange = (value: number) => {
-    setMinValue((value - 1) * numEachPage);
-    setMaxValue(value * numEachPage);
-  };
+
+
   async function onChangeCountryChk(checkedValues: any) {
     console.log("checked = ", checkedValues);
     await loadWineListByChecked(checkedValues);
@@ -159,14 +218,17 @@ export default function List() {
   const handleEuropeBtn = () => {
     setBtnNum(1);
   };
+
   const handleAmericaBtn = () => {
     setBtnNum(2);
   };
 
   const handleWineUseBtn = () => {
-    setBtnNum(3);
+    setWineUse(1);
   };
 
+
+ 
   if (!isWineSucceess && !wineState) {
     loadWineList();
     setWineState(true);
@@ -209,9 +271,7 @@ export default function List() {
           <Button className={classes.btn} onClick={handleAmericaBtn}>
             신대륙 와인
           </Button>
-          <Button className={classes.btn} onClick={handleWineUseBtn}>
-            와인 용도
-          </Button>
+  
         </ButtonGroup>
       </div>
       <div className="checkbox">
@@ -316,7 +376,22 @@ export default function List() {
                 </Row>
               </Checkbox.Group>
             );
-          } else if (btnNum == 3) {
+          } 
+        })()}
+      </div>
+      <div className={classes.btnGroup}>
+      <ButtonGroup
+          size="large"
+          aria-label="large outlined primary button group"
+        >
+          <Button className={classes.btn} onClick={handleWineUseBtn}>
+            와인 용도
+          </Button>
+        </ButtonGroup>
+        </div>
+        <div className="checkbox">
+        {(function() {
+          if (wineUse == 1) {
             return (
               <Checkbox.Group
                 style={{ width: "100%" }}
@@ -353,21 +428,33 @@ export default function List() {
         </Typography>
         <Divider variant="middle" className={classes.divider} />
         <div>
+        <FormControl className={classes.formControl} id="type">
+      <InputLabel htmlFor="age-native-simple">Type</InputLabel>
+      <Select
+        native
+        value={state.type}
+        onChange={handleChangeType('type')}
+      >
+        <option value="name">Name</option>
+        <option value="food">Food</option>
+      </Select>
+    </FormControl>
         <button name="searchbtn" id="searchbtn" value="" onClick={submitSearch}></button>
       <input
         type="text"
         name="s"
         id="s"
         className="searchfield"
-        placeholder="와인명 입력"
+        placeholder="Search"
         onChange={e =>
           setSearch(e.target.value)
         }
         value={search}
       />
 
-                                                
+
 </div>
+
 
         <Grid container>
           {wineList.slice(minValue, maxValue).map(wine => (
@@ -429,10 +516,12 @@ export default function List() {
         <div className="pagination">
           <Pagination
             total={wineList.length}
+            current={curPage}
             // showTotal={total => `Total ${total} items`}
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
+            size="large"
           />
         </div>
         {/* <ReviewModal /> */}
