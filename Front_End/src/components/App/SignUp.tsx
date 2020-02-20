@@ -63,26 +63,35 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(3, 0, 2)
     },
     check: {
-      marginLeft: "33%",
+      marginLeft: "28%",
       margin: theme.spacing(3, 0, 2)
     },
     font: {
       color: "black"
     },
     google: {
+      "& > span": {
+        marginLeft: "63px"
+      },
+      "& > div": {
+        background: "transparent !important"
+      },
       marginBottom: 20,
-      borderRadius: 5,
       width: "87%",
-      backgroundColor: "#000000"
+      height: 40,
+      borderRadius: "20px !important",
+      color: "black !important"
     },
+
     kakao: {
       backgroundColor: "#f5e042",
       color: "#000000",
-      borderRadius: 5,
+      borderRadius: 20,
       boxShadow: "0px 2px rgba(0, 0, 0, 0.24)",
       border: "border: 1px solid transparent",
       marginBottm: 40,
-      width: "87%"
+      width: "87%",
+      height: 40
     },
     signUpSns: {
       display: "flex",
@@ -96,9 +105,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     signUpForm: {
       position: "absolute",
-      left: "33%",
-      top: "15%",
-      paddingBottom: "1%"
+      left: "38%",
+      top: "20%",
+      paddingBottom: "1%",
+      width: 400
     }
   })
 );

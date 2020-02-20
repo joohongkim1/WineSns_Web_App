@@ -138,7 +138,7 @@ export default function Entrance() {
               </Link>
             </Card>
             <Card className={classes.card}>
-              <Link to="#">
+              <a href="https://jr.naver.com/">
                 <Typography
                   gutterBottom
                   variant="h3"
@@ -148,7 +148,7 @@ export default function Entrance() {
                 >
                   NO
                 </Typography>
-              </Link>
+              </a>
             </Card>
           </Grid>
         </div>

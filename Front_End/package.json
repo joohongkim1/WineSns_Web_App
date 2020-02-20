@@ -48,6 +48,7 @@
     "image-webpack-loader": "^6.0.0",
     "loadsh": "^0.0.4",
     "lodash": "^4.17.15",
+    "material-auto-rotating-carousel": "^3.0.2",
     "material-ui-flat-pagination": "^4.1.0",
     "material-ui-rating": "^4.2.0",
     "mdbreact": "^4.25.1",

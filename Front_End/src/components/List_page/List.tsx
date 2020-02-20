@@ -23,7 +23,6 @@ import {
 import "antd/dist/antd.css";
 import { Checkbox, Row, Col } from "antd";
 import "./List.css";
-import Search from "./Search";
 
 import "./Search.css";
 
@@ -108,8 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         margin: theme.spacing(1, 8)
       }
-    },
- 
+    }
   })
 );
 export default function List() {
@@ -120,7 +118,7 @@ export default function List() {
   const [maxValue, setMaxValue] = useState(15);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState<number | null>(2);
-  const[search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
   const { wineList, isWinePending, isWineSucceess, isWineError } = useSelector(
     (state: rootState) => state.wineReducer
@@ -155,7 +153,7 @@ export default function List() {
     console.log("checked = ", checkedValues);
     await loadWineListByUse(checkedValues);
   }
-  
+
   const handleEuropeBtn = () => {
     setBtnNum(1);
   };
@@ -274,6 +272,7 @@ export default function List() {
               <Checkbox.Group
                 style={{ width: "100%" }}
                 onChange={onChangeCountryChk}
+                className="country"
               >
                 <Row>
                   <Col span={4}>
@@ -324,26 +323,39 @@ export default function List() {
               <Checkbox.Group
                 style={{ width: "100%" }}
                 onChange={onChangeWineUse}
+                className="classification"
               >
                 <Row>
-                  <Col span={4}>
+                  <Col span={6}>
+                    <img
+                      src="https://t1.daumcdn.net/cfile/tistory/996A32495BC5555E0B"
+                      alt="tableWine"
+                      className="tableWine"
+                    />
                     <Checkbox value="테이블 와인">
                       <span style={{ fontSize: "22px" }}>테이블 와인</span>
                     </Checkbox>
                   </Col>
-                  <Col span={4}>
-
+                  <Col span={6}>
+                    <img
+                      src="https://pbs.twimg.com/media/C5-kRz9U4AArte7.jpg"
+                      alt="appetizerWine"
+                      className="appetizerWine"
+                    />
                     <Checkbox value="에피타이저">
                       <span style={{ fontSize: "22px" }}>에피타이저</span>
                     </Checkbox>
                   </Col>
-                  <Col span={4}>
-                
+                  <Col span={6}>
+                    <img
+                      src="https://t3.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/160i/image/q1d812PExRrLhoBONcd0OVu6cko.jpg"
+                      alt="desertWine"
+                      className="desertWine"
+                    />
                     <Checkbox value="디저트">
-                      <span style={{ fontSize: "22px" }}>디저트</span>
+                      <span style={{ fontSize: "22px" }}>디저트 와인</span>
                     </Checkbox>
                   </Col>
-
                 </Row>
               </Checkbox.Group>
             );
