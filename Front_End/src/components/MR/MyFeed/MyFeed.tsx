@@ -224,7 +224,9 @@ export default function MyFeed() {
           {userFeed.slice(minValue, maxValue).map(feed => (
           
              <ReviewInfo
+             wine={feed.wine}
              key={feed.fid}
+             user={feed.user}
              fid={feed.fid}
              title={feed.title}
             nameEng={feed.wine.nameEng}

@@ -7,8 +7,8 @@ import Modal from "@material-ui/core/Modal";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TextField from "@material-ui/core/TextField";
 
-import PostList from "./Posts/PostList";
-import WritePage from "./Posts/Editor/WirtePage";
+// import PostList from "./Posts/PostList";
+// import WritePage from "./Posts/Editor/WirtePage";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -81,21 +81,14 @@ export default function Feed() {
           <h2 id="simple-modal-title">My Review</h2>
           <div>
             {/* 에디터 들어갈 공간 */}
-            <WritePage />
+            {/* <WritePage /> */}
           </div>
 
-          {/* <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div>
-
-          <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div> */}
         </div>
       </Modal>
       {/* 작성된 Post를 전부 모아두는 곳 */}
     
-      <PostList />
+      {/* <PostList /> */}
     </div>
   );
 }

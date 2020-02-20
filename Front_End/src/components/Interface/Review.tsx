@@ -19,13 +19,28 @@ import LongMenu from './LongMenu'
 
 import '../../index.css';
 
+export interface Wine {
+  wid: number;
+}
+
+interface User {
+  uid: number,
+  kakaotalkId: string,
+  naverId: string,
+  googleId: string,
+  facebookId: string,
+  email: string,
+  nickName: string,
+}
 
 interface ReviewInfo {
+  user: User,
   fid: number;
   title: string;
   nameEng: string;
   content: string;
   rating: number;
+  wine: Wine
 }
 
 
@@ -39,11 +54,11 @@ const useStyles = makeStyles((theme: Theme) =>
     cardMedia: {
       // width: '100%',
       // maxHeight: 'auto',
-      width: '70px',
+      width: '60px',
       //paddingTop: '56.25%', // 16:9
       position: 'relative',
       marginLeft: '40%',
-      height: '230px',
+      height: '255px',
     },
     cardContent: {
       flexGrow: 1,
@@ -73,7 +88,8 @@ function ReviewInfo(review: ReviewInfo) {
   const classes = useStyles();
 
   const [checked] = React.useState(true);
-
+  const userData = sessionStorage.getItem('uid'); // string
+  const feedUserData = String(review.user.uid) //as unknown as string // number
 
   return (
     <Slide direction="up" in={checked} mountOnEnter unmountOnExit >
@@ -94,8 +110,8 @@ function ReviewInfo(review: ReviewInfo) {
               <div dangerouslySetInnerHTML={{ __html: review.content.substring(0, 80) }}>
 
               </div>
-              
-              </Typography>
+
+            </Typography>
           </CardContent>
 
           <Box component="fieldset" mb={3} borderColor="transparent">
@@ -105,12 +121,16 @@ function ReviewInfo(review: ReviewInfo) {
             <Link to={`/review/${review.fid}`} style={{ textDecoration: "none" }}>
               <Button variant="outlined">View More</Button>
             </Link>
-            <LongMenu />
+            {userData === feedUserData &&
+              <div>
+                <LongMenu review={review}/>
+              </div>
+            }
+            
           </div>
 
         </Card>
       </Grid>
-      {/* </Grid> */}
     </Slide>
   );
 }
