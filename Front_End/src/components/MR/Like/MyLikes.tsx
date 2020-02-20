@@ -17,20 +17,20 @@ import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-​
+
 import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 
-​interface WineLike {
-    wid : number; 
-    nameKor: string;
-    nameEng : string;
+interface WineLike {
+  wid: number;
+  nameKor: string;
+  nameEng: string;
 }
 
-​
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-​
+
     root: {
       display: "flex",
       flexDirection: "column",
@@ -61,10 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       marginLeft: '40%',
       height: '230px',
-​
-​
+
+
     },
-​
+
     cardGrid: {
       paddingTop: theme.spacing(20),
       paddingBottom: theme.spacing(12)
@@ -109,13 +109,13 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1, 8)
       }
     },
-    checkbox : {
+    checkbox: {
       marginLeft: '30%',
-      marginTop : '3%'
+      marginTop: '3%'
     }
   })
 );
-​
+
 export default function MyLikes() {
   const [btnNum, setBtnNum] = useState(0);
   const classes = useStyles();
@@ -125,7 +125,7 @@ export default function MyLikes() {
 
   console.log(userLike);
   const numEachPage: number = 30;
-​
+
   const handleChange = (value: number) => {
     setMinValue((value - 1) * numEachPage);
     setMaxValue((value) * numEachPage);
@@ -139,32 +139,33 @@ export default function MyLikes() {
   };
 
   return (
-     
-      <Container className={classes.cardGrid}>
-        <Typography className={classes.total}>Total {userLike.length}</Typography>
-        <Divider variant="middle" className={classes.divider} />
-        <Grid container spacing={10}>
-          {userLike.map((wine: WineLike) => (
-​
-            <Grid item xs={4} key={wine.wid}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={wine.nameKor}
-                  subheader={wine.nameEng}
-                />
-                {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
-                <CardMedia
-                  className={classes.media}
-                  image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
-                  title={wine.nameEng}
-                />
-                {/* </Link> */}
-                {/* <CardContent>
+
+    <Container className={classes.cardGrid}>
+      <div style={{ fontWeight: "bold", fontSize: "36px" }}>My Likes</div>
+      <Typography className={classes.total}>Total {userLike.length}</Typography>
+      <Divider variant="middle" className={classes.divider} />
+      <Grid container spacing={10}>
+        {userLike.map((wine: WineLike) => (
+
+          <Grid item xs={4} key={wine.wid}>
+            <Card className={classes.card}>
+              <CardHeader
+                action={
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={wine.nameKor}
+                subheader={wine.nameEng}
+              />
+              {/* <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}> */}
+              <CardMedia
+                className={classes.media}
+                image={`http://i02a303.p.ssafy.io:8090/WineProject/Wine/${wine.nameEng}.gif`}
+                title={wine.nameEng}
+              />
+              {/* </Link> */}
+              {/* <CardContent>
                   <Typography
                     variant="body2"
                     color="textSecondary"
@@ -173,36 +174,36 @@ export default function MyLikes() {
                     {wine.info.slice(0, 50)}...
                   </Typography>
                 </CardContent> */}
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon color="secondary" />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <div className={classes.more}>
-                    <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
-                      <Button variant="outlined">View More</Button>
-                    </Link>
-                  </div>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-​
-        </Grid>
-        <div>
-          {/* <Pagination
+              <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon color="secondary" />
+                </IconButton>
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+                <div className={classes.more}>
+                  <Link to={`/detail/${wine.wid}`} style={{ textDecoration: "none" }}>
+                    <Button variant="outlined">View More</Button>
+                  </Link>
+                </div>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+
+      </Grid>
+      <div>
+        {/* <Pagination
             total={userLike.length}
             // showTotal={total => `Total ${total} items`}
             onChange={handleChange}
             pageSize={numEachPage}
             defaultCurrent={1}
           /> */}
-          
-          </div>
-        {/* <ReviewModal /> */}
-      </Container>
+
+      </div>
+      {/* <ReviewModal /> */}
+    </Container>
 
   );
 }
