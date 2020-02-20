@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -29,7 +29,7 @@ import { getUserFeedList } from '../../../../stores/my_sns/actions/userFeed';
 import { useSelector, useDispatch } from 'react-redux';
 
 
-import Button from '@material-ui/core/Button';  
+import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from '@material-ui/core/TextField';
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
         "url(https://media.giphy.com/media/jNdw5Qmy5MOpq/giphy.gif)",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      
+
       backgroundPosition: "left",
       color: "#ffffff"
     },
@@ -79,11 +79,6 @@ const useStyles = makeStyles((theme: Theme) =>
     media: {
       height: 0,
       paddingTop: "90%" // 16:9
-    },
-
-    cardGrid: {
-      paddingTop: theme.spacing(20),
-      paddingBottom: theme.spacing(12)
     },
     divider: {
       backgroundColor: "#36342f",
@@ -120,7 +115,7 @@ const useStyles = makeStyles((theme: Theme) =>
       float: "right",
       marginRight: "20px"
     },
-    more : {
+    more: {
       "& > *": {
         margin: theme.spacing(1, 8)
       }
@@ -150,25 +145,21 @@ export default function MyFeed() {
   const [maxValue, setMaxValue] = useState(30);
   const dispatch = useDispatch();
   //  const [state, setState] = useState(nickname : state.RegistUser.nickname, );
-  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed} = useSelector(
+  const { isUserFeedError, isUserFeedSucceess, isUserFeedPending, userFeed } = useSelector(
     (state: rootState) => state.MyFeedReducer
   );
 
-  let start : number = 0;
-  let end : number = 0;
+  let start: number = 0;
+  let end: number = 0;
 
-  const numEachPage : number = 30;
+  const numEachPage: number = 30;
 
-  const handleChange = (value : number) => {
-    setMinValue((value-1) * numEachPage);
+  const handleChange = (value: number) => {
+    setMinValue((value - 1) * numEachPage);
     setMaxValue((value) * numEachPage);
-    // setState({
-    //   minValue: (value - 1) * numEachPage,
-    //   maxValue: value * numEachPage
-    // });
   };
 
-  if(!isUserFeedSucceess && !reviewState) {
+  if (!isUserFeedSucceess && !reviewState) {
     dispatch(getUserFeedList());
     setReviewState(true);
   } else {
@@ -177,7 +168,7 @@ export default function MyFeed() {
 
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -188,38 +179,10 @@ export default function MyFeed() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        게시글 작성
-      </button>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">My Review</h2>
-          <div>
-            {/* 에디터 들어갈 공간 */}
-            <WritePage onCancel={handleClose}/>
-
-          </div>
-          
-          {/* <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div>
-
-          <div className={classes.widContainer}>
-            <TextField id="standard-basic" label="" />
-          </div> */}
-          
-
-        </div>
-      </Modal>
-      <Container className={classes.cardGrid}>
+      <Container>
+        <div style={{ fontWeight: "bold", fontSize: "36px" }}>My Review</div>
         <Typography className={classes.total}>Total {userFeed.length}</Typography>
         <Divider variant="middle" className={classes.divider} />
-     
         <Grid container spacing={10}>
           {userFeed.slice(minValue, maxValue).map(feed => (
           
@@ -236,16 +199,15 @@ export default function MyFeed() {
           />
      
           ))}
-
         </Grid>
         <div>
-        <Pagination
-      total={userFeed.length}
-      // showTotal={total => `Total ${total} items`}
-      onChange={handleChange}
-      pageSize={numEachPage}
-      defaultCurrent={1}
-    /></div>
+          <Pagination
+            total={userFeed.length}
+            // showTotal={total => `Total ${total} items`}
+            onChange={handleChange}
+            pageSize={numEachPage}
+            defaultCurrent={1}
+          /></div>
       </Container>
     </div>
   );
