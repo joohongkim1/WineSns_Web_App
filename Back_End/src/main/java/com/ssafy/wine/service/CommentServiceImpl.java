@@ -38,14 +38,13 @@ public class CommentServiceImpl implements CommentService {
 	public Comment create(Long fid, Long uid, Long cid, String content) {
 		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
-		Comment comment;
-		if (cid != null) {
-			Comment reCid = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
-			comment = new Comment(user, feed, content, reCid);
-		} else {
-			comment = new Comment(user, feed, content);
-		}
-		return commentRepository.save(comment);
+		Comment pComment = cid == null ? null : commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+		return commentRepository.save(Comment.builder()
+				.user(user)
+				.feed(feed)
+				.content(content)
+				.parentComment(pComment)
+				.build());
 	}
 
 	@Override
@@ -63,8 +62,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional
-	public Integer update(Long cid, String content) {
-		return commentRepository.updateFeed(cid, content);
+	public CommentDto update(Long cid, String content) {
+		Comment comment = commentRepository.findById(cid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(comment.update(content), CommentDto.class);
 	}
 	
 	@Override

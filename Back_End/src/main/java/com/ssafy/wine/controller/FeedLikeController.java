@@ -43,20 +43,19 @@ public class FeedLikeController {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long uid = Long.parseLong(authentication.getName());
-			
+
 			FeedLike like = feedLikeService.create(uid, fid);
 			feedLikeService.updateLikeNum(fid);
-			StringBuilder sb = new StringBuilder();
-			sb.append("User: ").append(like.getUser().getEmail()).append("\n").append("Feed_ID: ")
-					.append(like.getFeed().getFid()).append("\n").append("FeedLike 추가했습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("User: ").append(like.getUser().getEmail())
+				.append("\nFeed_ID: ").append(like.getFeed().getFid())
+				.append("\nFeedLike 추가되었습니다.");
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 유저가 좋아요한 피드")
 	@GetMapping("/findByUser")
 	public ResponseEntity<Object> findByUser(@RequestParam Long uid) {
@@ -68,8 +67,6 @@ public class FeedLikeController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "해당 피드 좋아요한 유저")
 	@GetMapping("/findByWine/{fid}")
 	public ResponseEntity<Object> findByWine(@PathVariable Long fid) {
@@ -91,7 +88,7 @@ public class FeedLikeController {
 			Long uid = Long.parseLong(authentication.getName());
 			feedLikeService.delete(uid, fid);
 			feedLikeService.updateLikeNum(fid);
-			return new ResponseEntity<Object>("FeedLike 삭제했습니다.", HttpStatus.OK);
+			return new ResponseEntity<Object>("FeedLike 삭제되었습니다", HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}

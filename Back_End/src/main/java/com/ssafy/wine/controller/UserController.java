@@ -62,9 +62,7 @@ public class UserController {
 		return responseService.getSingleResult(userDto);
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "회원 전체 목록", notes = "access_token으로 회원을 조회한다")
+	@ApiOperation(value = "회원 전체 목록, name값을 안줄경우 전체 목록 반환")
 	@GetMapping(value = "/findByName")
 	public SingleResult<List<UserDto>> findByName(@RequestParam(required = false) String name) {
 		List<User> users = new ArrayList<>();
@@ -75,6 +73,14 @@ public class UserController {
 		Type typeToken = new TypeToken<List<UserDto>>() {}.getType();
 		List<UserDto> userDtos = modelMapper.map(users, typeToken);
 		return responseService.getSingleResult(userDtos);
+	}
+	
+	@ApiOperation(value = "uid 회원 정보 조회")
+	@GetMapping(value = "/findByUid")
+	public SingleResult<UserDto> findByUid(@RequestParam Long uid) {
+		User users = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
+		UserDto userDto = modelMapper.map(users, UserDto.class);
+		return responseService.getSingleResult(userDto);
 	}
 
 	@ApiImplicitParams({

@@ -7,21 +7,26 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
+      // Enable sourcemaps for debugging webpack's output.
+      devtool: "source-map",
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.min.js',
-    publicPath: "/"
+    // publicPath: "/"
   },
   module: {
+    
     rules: [
       {
         test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        
         loader: 'awesome-typescript-loader',
         //test: /\.txt$/, use: 'raw-loader'
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style-loader!css-loader',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -33,7 +38,10 @@ module.exports = {
     ]
   },
   devServer: {
+    host: 'localhost',
+    port: 8080,
     historyApiFallback: true,
+    open: true
   },
   
   plugins: [

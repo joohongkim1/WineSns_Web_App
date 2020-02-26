@@ -40,7 +40,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 	public FeedLike create(Long uid, Long fid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
-		return feedLikeRepository.save(new FeedLike(user, feed));
+		return feedLikeRepository.save(FeedLike.builder().user(user).feed(feed).build());
 	}
 
 	@Override
@@ -67,9 +67,9 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 	
 	@Override
 	@Transactional
-	public void updateLikeNum(Long fid) {
+	public Integer updateLikeNum(Long fid) {
 		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
-		feedRepostitory.updateLikeNum(fid, feed.getFeedLikes().size());
+		return feedRepostitory.updateLikeNum(fid, feed.getFeedLikes().size());
 	}
 	
 	@Override
@@ -77,6 +77,6 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 	public void delete(Long uid, Long fid) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		Feed feed = feedRepostitory.findById(fid).orElseThrow(NoSuchElementException::new);
-		feedLikeRepository.delete(new FeedLike(user, feed));
+		feedLikeRepository.delete(FeedLike.builder().user(user).feed(feed).build());
 	}
 }

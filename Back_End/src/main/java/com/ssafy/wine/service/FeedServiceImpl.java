@@ -39,17 +39,29 @@ public class FeedServiceImpl implements FeedService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	private List<FeedOutputDto> convertListDto(List<Feed> entities) {
+		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
+		return modelMapper.map(entities, typeToken);
+	}
+
 	@Override
 	public Feed create(Long uid, FeedInputDto feedInput) {
 		User user = userRepository.findById(uid).orElseThrow(NoSuchElementException::new);
 		Wine wine = null;
-		if (feedInput.getWid() != null)
+		if (feedInput.getWid() != null) {
 			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
-		return feedRepository.save(new Feed(user, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent()));
+		}
+		return feedRepository.save(Feed.builder()
+				.user(user)
+				.wine(wine)
+				.rating(feedInput.getRating())
+				.title(feedInput.getTitle())
+				.content(feedInput.getContent())
+				.build());
 	}
 
 	@Override
-	public List<FeedOutputDto> findAll(FeedReviewEnum type){
+	public List<FeedOutputDto> findAll(FeedReviewEnum type) {
 		List<Feed> feeds = new ArrayList<>();
 		switch (type) {
 		case ALL:
@@ -64,8 +76,7 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
-		return modelMapper.map(feeds, typeToken);
+		return convertListDto(feeds);
 	}
 
 	@Override
@@ -85,8 +96,7 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
-		return modelMapper.map(feeds, typeToken);
+		return convertListDto(feeds);
 	}
 
 	@Override
@@ -106,8 +116,7 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
-		return modelMapper.map(feeds, typeToken);
+		return convertListDto(feeds);
 	}
 
 	@Override
@@ -123,17 +132,17 @@ public class FeedServiceImpl implements FeedService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<FeedOutputDto>>() {}.getType();
-		return modelMapper.map(feeds, typeToken);
+		return convertListDto(feeds);
 	}
 
 	@Override
 	@Transactional
-	public Integer update(Long fid, FeedInputDto feedInput) {
+	public FeedOutputDto update(Long fid, FeedInputDto feedInput) {
 		Wine wine = null;
 		if (feedInput.getWid() != null)
 			wine = wineRepository.findById(feedInput.getWid()).orElseThrow(NoSuchElementException::new);
-		return feedRepository.updateFeed(fid, wine, feedInput.getRating(), feedInput.getTitle(), feedInput.getContent());
+		Feed feed = feedRepository.findById(fid).orElseThrow(NoSuchElementException::new);
+		return modelMapper.map(feed.updateFeed(wine, feedInput), FeedOutputDto.class);
 	}
 
 	@Override
@@ -141,7 +150,7 @@ public class FeedServiceImpl implements FeedService {
 	public Integer updateVisit(Long fid) {
 		return feedRepository.updateVisit(fid);
 	}
-	
+
 	@Override
 	@Transactional
 	public void delete(Long fid) {

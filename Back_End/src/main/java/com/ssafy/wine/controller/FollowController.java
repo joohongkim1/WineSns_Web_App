@@ -44,17 +44,15 @@ public class FollowController {
 			if (fromUid.equals(toUid))
 				return new ResponseEntity<Object>("same email", HttpStatus.NOT_ACCEPTABLE);
 			Follow follow = followService.create(fromUid, toUid);
-			StringBuilder sb = new StringBuilder();
-			sb.append("From: ").append(follow.getFrom().getEmail()).append("\n").append("to: ")
+			StringBuilder resStr = new StringBuilder();
+			resStr.append("From: ").append(follow.getFrom().getEmail()).append("\n").append("to: ")
 					.append(follow.getTo().getEmail()).append("\n").append("follow를 추가했습니다.");
-			return new ResponseEntity<Object>(sb.toString(), HttpStatus.OK);
+			return new ResponseEntity<Object>(resStr.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "following - 해당 유저가 팔로우하는 전체 그룹 반환")
 	@GetMapping("/findByFollowing")
 	public ResponseEntity<Object> findByFollowing(@RequestParam Long fromUid) {
@@ -66,8 +64,6 @@ public class FollowController {
 		}
 	}
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "follower - 해당 유저를 팔로우한 전체 그룹 반환")
 	@GetMapping("/findByFollower")
 	public ResponseEntity<Object> findByFollower(@RequestParam Long toUid) {

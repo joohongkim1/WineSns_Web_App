@@ -115,4 +115,15 @@ public class Wine {
 		this.foodMatch = foodMatch;
 		this.info = info;
 	}
+
+
+	public Integer updateVisit() {
+		this.visit += 1;
+		return this.getVisit();
+	}
+
+	public Integer updateLikeNum(Integer likeNum) {
+		this.likeNum = likeNum;
+		return this.getLikeNum();
+	}
 }

@@ -28,6 +28,9 @@ Dionysos - Wine Web Community
     - MySQL
     - JWT
     - Java Security
+    - AWS EC2 Server
+    - SSL Certificate
+    - Ngnix
 
 - ### Front-End
     - React
@@ -89,6 +92,6 @@ Dionysos - Wine Web Community
     - <a href="https://nowonbun.tistory.com/548">JPA Entity 관계설정 - cascade, fetch</a>
     - <a href="https://jojoldu.tistory.com/394">JPA + queryDsl을 이용한 간단한 동적 쿼리</a>
 
-- **JWT**
+- **JWT***
     - <a href="https://velopert.com/2350">JWT 란?</a>
     - <a href="https://goodteacher.tistory.com/98?category=763707">JWT 사용하기</a>

@@ -22,7 +22,7 @@ public interface FeedService {
 
 	public List<FeedOutputDto> findRank(FeedRankEnum type);
 
-	public Integer update(Long fid, FeedInputDto feedInput);
+	public FeedOutputDto update(Long fid, FeedInputDto feedInput);
 
 	public Integer updateVisit(Long fid);
 

@@ -79,16 +79,53 @@ public class WineController {
 		}
 	}
 
-	@ApiOperation(value = "와인 필터 검색 - type, sparkling, country[],  sweet")
-	@GetMapping("/search")
-	public ResponseEntity<Object> search(
+	@ApiOperation(value = "와인 스마트 검색 - type, sparkling, country[], sweet")
+	@GetMapping("/smartSearch")
+	public ResponseEntity<Object> smartSearch(
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) Boolean sparkling,
 			@RequestParam(required = false) WineCountryEnum[] country,
 			@RequestParam(required = false) Integer sweet,
 			@RequestParam(required = false) BigDecimal alcohol) {
 		try {
-			List<WineDto> wines = wineService.search(type, sparkling, country, sweet, alcohol);
+			List<WineDto> wines = wineService.smartSearch(type, sparkling, country, sweet, alcohol);
+			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "와인 검색 - country[], use[], name, food")
+	@GetMapping("/search")
+	public ResponseEntity<Object> search(
+			@RequestParam(required = false) WineCountryEnum[] country,
+			@RequestParam(required = false) String[] use,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String food) {
+		try {
+			List<WineDto> wines = wineService.search(country, use, name, food);
+			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "와인 When_Use 검색")
+	@GetMapping("/findByWhenUse/{name}")
+	public ResponseEntity<Object> findByWhenUse(@PathVariable String name) {
+		try {
+			List<WineDto> wines = wineService.findByWhenUse(name);
+			return new ResponseEntity<Object>(wines, HttpStatus.OK);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@ApiOperation(value = "와인 Food_Match 검색")
+	@GetMapping("/findByFoodMatch/{name}")
+	public ResponseEntity<Object> findByFoodMatch(@PathVariable String name) {
+		try {
+			List<WineDto> wines = wineService.findByFoodMatch(name);
 			return new ResponseEntity<Object>(wines, HttpStatus.OK);
 		} catch (Exception e) {
 			throw e;
@@ -134,9 +171,9 @@ public class WineController {
 		try {
 			Integer result = wineService.updateVisit(wid);
 			if (result != null) {
-				return new ResponseEntity<Object>(result + "개 조회수 증가", HttpStatus.OK);
+				return new ResponseEntity<Object>("조회수 업데이트!\n현재 조회수: " + result, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<Object>(result, HttpStatus.NOT_ACCEPTABLE);
+				return new ResponseEntity<Object>("조회수 업데이트 실패", HttpStatus.NOT_ACCEPTABLE);
 			}
 		} catch (Exception e) {
 			log.error("updateVisit fail", e);

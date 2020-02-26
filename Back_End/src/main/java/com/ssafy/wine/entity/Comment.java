@@ -1,6 +1,5 @@
 package com.ssafy.wine.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -32,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment extends DateEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,27 +45,12 @@ public class Comment {
 	@Column(length = 4000)
 	private String content;
 
-	@Column
-	@CreationTimestamp
-	protected LocalDateTime createdTimeAt;
-
-	@Column
-	@UpdateTimestamp
-	protected LocalDateTime updateTimeAt;
-
 	@ManyToOne
 	@JoinColumn(name = "parent")
 	private Comment parentComment;
 
 	@OneToMany(mappedBy = "parentComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Comment> comments = new ArrayList<>();
-
-	@Builder
-	public Comment(User user, Feed feed, String content) {
-		this.user = user;
-		this.feed = feed;
-		this.content = content;
-	}
 
 	@Builder
 	public Comment(User user, Feed feed, String content, Comment parentComment) {
@@ -79,4 +60,9 @@ public class Comment {
 		this.parentComment = parentComment;
 	}
 
+	public Comment update(String content) {
+		this.content = content;
+		return this;
+	}
+	
 }

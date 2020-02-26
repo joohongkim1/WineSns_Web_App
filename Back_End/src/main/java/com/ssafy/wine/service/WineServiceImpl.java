@@ -36,6 +36,12 @@ public class WineServiceImpl implements WineService {
 
 	private final Path wineImgLocation;
 
+	private List<WineDto> convertListDto(List<Wine> wines) {
+		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
+		return modelMapper.map(wines, typeToken);
+	}
+	
+	
 	@Autowired
 	public WineServiceImpl(FileLoadProperties prop) {
 		wineImgLocation = Paths.get(prop.getImgWine()).toAbsolutePath().normalize();
@@ -66,8 +72,7 @@ public class WineServiceImpl implements WineService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
-		return modelMapper.map(wines, typeToken);
+		return convertListDto(wines);
 	}
 
 	@Override
@@ -89,8 +94,7 @@ public class WineServiceImpl implements WineService {
 		default:
 			break;
 		}
-		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
-		return modelMapper.map(wines, typeToken);
+		return convertListDto(wines);
 	}
 
 	@Override
@@ -103,16 +107,33 @@ public class WineServiceImpl implements WineService {
 	public List<WineDto> findByName(String name) {
 		List<Wine> wines = wineRepository.findByNameKorLike("%" + name + "%");
 		wines.addAll(wineRepository.findByNameEngLike("%" + name + "%"));
-		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
-		return modelMapper.map(wines, typeToken);
+		return convertListDto(wines);
 	}
 
 	@Override
-	public List<WineDto> search(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol) {
+	public List<WineDto> smartSearch(String type, Boolean sparkling, WineCountryEnum[] country, Integer sweet, BigDecimal alcohol) {
 		List<Wine> wines = new ArrayList<>();
-		wineRepository.findAll(wineRepository.search(type, sparkling, country, sweet, alcohol)).forEach(wines::add);
-		Type typeToken = new TypeToken<List<WineDto>>() {}.getType();
-		return modelMapper.map(wines, typeToken);
+		wineRepository.findAll(wineRepository.smartSearch(type, sparkling, country, sweet, alcohol)).forEach(wines::add);
+		return convertListDto(wines);
+	}
+
+	@Override
+	public List<WineDto> search(WineCountryEnum[] country, String[] use, String name, String food) {
+		List<Wine> wines = new ArrayList<>();
+		wineRepository.findAll(wineRepository.search(country, use, name, food)).forEach(wines::add);
+		return convertListDto(wines);
+	}
+	
+
+	@Override
+	public List<WineDto> findByWhenUse(String name) {
+		List<Wine> wines = wineRepository.findByWhenUseContains(name);
+		return convertListDto(wines);
+	}
+	@Override
+	public List<WineDto> findByFoodMatch(String name) {
+		List<Wine> wines = wineRepository.findByFoodMatchContains(name);
+		return convertListDto(wines);
 	}
 	
 	@Override
@@ -128,12 +149,19 @@ public class WineServiceImpl implements WineService {
 	@Override
 	public List<String> findWineryByCountry(WineCountryEnum country) {
 		return wineRepository.findDistinctWineryByCountry(country.toString());
-
-	}
+	}	
 
 	@Override
 	@Transactional
 	public Integer updateVisit(Long wid) {
-		return wineRepository.updateVisit(wid);
+		Wine wine = wineRepository.findById(wid).orElseThrow(NoSuchElementException::new);
+		return wine.updateVisit();
 	}
+
+	@Override
+	@Transactional
+	public void deleteAll() {
+		wineRepository.deleteAll();
+	}
+
 }
