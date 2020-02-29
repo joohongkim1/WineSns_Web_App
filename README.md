@@ -13,11 +13,11 @@ Dionysos - Wine Web Community
 - #### 허대원 [Back-End]
     - 와인 서비스를 위한 DB구축과 rest 서비스
 - #### 최예슬 [Front-End]
-    - 입구 페이지 / 메인 페이지 / 와인 상세 페이지 개발, Redux 환경 구축  
+    - 입구 페이지, 메인 페이지, 와인 상세 페이지 개발, 전체 서비스 Redux 개발
 - #### 박재성 [Front-End]
-    - 와인 커뮤니티 페이지 설계 및 구현
+    - 와인 커뮤니티 페이지 설계 및 구현, 리뷰 업로드 Redux 개발
 - #### 김주홍 [Front-End]
-    - 와인 List 및 Review 페이지
+    - 와인 List 및 Review 페이지, 전체 페이지 CSS 개발
 
 ## 개발툴과 기술스택 및 주요기술
 
