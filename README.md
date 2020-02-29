@@ -54,24 +54,52 @@ Dionysos - Wine Web Community
 
 ## 실행화면 캡쳐
 #### 입구 페이지 
-![입구](/img/입구페이지.PNG "Entrance")
+![입구](/img/latest/입구페이지.png "Entrance")
     
-#### 메인 페이지 
-![메인](/img/메인(랭킹)페이지.PNG "Main1")
-![메인](/img/메인(랭킹)Top10.PNG "Main2")
+#### 메인 페이지 로그인 전
+![메인](/img/latest/랭킹페이지_로그인전.png "Main1")
+
+#### 메인 페이지 로그인 후
+![메인](/img/latest/랭킹페이지_로그인후.png "Main2")
     
 #### 와인 리스트 
-![와인](/img/와인리스트1.PNG "Wine1")
-![와인](/img/와인리스트2.PNG "Wine2")
+
+#### 와인 리스트 이름 검색
+![와인](/img/latest/와인리스트_이름검색.png "Wine_by_name")
+
+#### 와인 리스트 음식 검색
+![와인](/img/latest/와인리스트_음식검색.png "Wine_by_food")
+
+#### 와인 리스트 상세 검색
+![와인](/img/latest/와인리스트_상세검색.png "Wine_by_category")
+![와인](/img/latest/와인리스트_상세검색2.png "Wine_by_category2")
     
 #### 와인 상세 페이지 
-![와인](/img/와인상세페이지1.PNG "WineInfo1")
-![와인](/img/와인상세페이지2.PNG "WineInfo2")
-![와인](/img/와인상세페이지3.PNG "WineInfo3")
+![와인](/img/latest/와인상세페이지.png "WineInfo")
+
+#### 리뷰 리스트
+![와인](/img/latest/리뷰리스트.png "Review List")
+
+#### 리뷰 상세 페이지
+![와인](/img/latest/리뷰상세.png "Review Detail")
+
+#### 스마트 서치
+![와인](/img/latest/스마트서치.png "Smart Search")
+
+#### 스마트 서치 결과
+![와인](/img/latest/스마트서치_결과.png "Smart Search 결과")
     
-#### SNS 페이지 
-![SNS](/img/와인SNS.PNG "SNS")
-    
+#### MY SNS 페이지 
+![SNS](/img/latest/MYSNS.png "MY SNS")
+
+#### 친구 SNS 페이지 
+![SNS](/img/latest/친구SNS.png "Friend SNS")
+
+#### 로그인 화면
+![SNS](/img/latest/로그인화면.png "Login")
+
+#### 회원가입 페이지 
+![SNS](/img/latest/회원가입.png "Register")
     
 #### DB Diagram
 ![DB](/img/db.png "db")
