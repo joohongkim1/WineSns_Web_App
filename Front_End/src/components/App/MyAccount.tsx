@@ -90,25 +90,18 @@ function MyAccount() {
     e.preventDefault();
     let { email, password } = state;
 
-    console.log("hey");
     // await dispatch(register(state.email, state.password));
 
-    console.log();
   };
 
   // Login Fail
   const responseFail = (err: any) => {
-    console.log("hey");
-    console.log(err);
-    console.error(err);
   };
 
   const onEmailCheck = async () => {
-    console.log("email");
-    console.log(state.email);
+
     await dispatch(emailCheck(state.email));
 
-    console.log("email State");
   };
 
   return (

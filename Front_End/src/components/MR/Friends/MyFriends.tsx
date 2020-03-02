@@ -92,7 +92,6 @@ export default function MyFriends() {
   const [followState, setFollowState] = React.useState(false);
 
   const loadFollowList = async () => {
-    console.log("onReviewList");
     await dispatch(getUserFollowList());
   };
 

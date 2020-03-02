@@ -6,7 +6,7 @@ import Followings from './Followings';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { rootState } from '../../../../stores/login/store';
-import {UnfollowUserByUID, getUserFollowList, setUserFollowPending } from '../../../../stores/your_sns/actions/follow';
+import {UnfollowUserByUID, getUserFollowList, getUserFollowerList, setUserFollowPending } from '../../../../stores/your_sns/actions/follow';
 import { Link } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withRouter, RouteComponentProps } from "react-router-dom";
@@ -89,13 +89,9 @@ export default function MyFriend({uid} : {uid : number}) {
 const [followState, setFollowState] = React.useState(false);
 
 const loadFollowList = async () => {
-  console.log("onReviewList");
   await dispatch(getUserFollowList(uid));
-};
-
-const unfollow = async (tagid : number) => {
-  await dispatch(UnfollowUserByUID(tagid));
-  loadFollowList();
+  await dispatch(getUserFollowerList(uid));
+  
 };
 
 if (!followState) {
@@ -149,14 +145,6 @@ if (!followState) {
                <li className={classes.liContainer}>
                  <Link>{following.nickName}</Link>
             
-            
-                             {/* <Button
-                             variant="contained"
-                             color="primary"
-                             className={classes.follow} onClick={()=> unfollow(following.uid)}
-                           >
-                             팔로우취소
-                           </Button> */}
                 
                </li>
              </div>

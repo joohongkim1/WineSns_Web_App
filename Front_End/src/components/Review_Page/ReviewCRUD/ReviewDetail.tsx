@@ -265,8 +265,7 @@ function ReviewDetail(props: MyComponentProps) {
 
 
   if (!feedState) {
-    dispatch(getFeedDetailByFID(fid));
-    setFeedState(true);
+
 
     let userLikeFeed = JSON.parse(
       sessionStorage.getItem("userLikeFeed") || "{}"
@@ -286,11 +285,14 @@ function ReviewDetail(props: MyComponentProps) {
     );
 
     for (var i = 0; i < userFollow.length; i++) {
-      if (userFollow[i].uid == feedDetail.user.uid) {
+      if (userFollow[i].uid === feedDetail.user.uid) {
         setFollowState(true);
         break;
       }
     }
+
+    dispatch(getFeedDetailByFID(fid));
+    setFeedState(true);
   } else {
 
   }

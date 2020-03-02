@@ -195,7 +195,6 @@ function SignUp() {
   if (!isRegisterSuccess) {
     return (
       <Grid container component="main" className={classes.root}>
-        {/* <CssBaseline /> */}
         <Grid>
           <Grid
             item
@@ -208,7 +207,7 @@ function SignUp() {
           >
             <div className={classes.paper} id="paper">
               <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
+                <LockOutlinedIcon ></LockOutlinedIcon>
               </Avatar>
               <Typography component="h1" variant="h5" className={classes.typo}>
                 Sign Up
@@ -234,7 +233,7 @@ function SignUp() {
                     })
                   }
                   value={state.nickname}
-                />
+                ></TextField>
 
                 <TextField
                   variant="outlined"
@@ -255,7 +254,7 @@ function SignUp() {
                     })
                   }
                   value={state.email}
-                />
+                ></TextField>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -303,7 +302,7 @@ function SignUp() {
                   value={state.password}
                   placeholder="영어 대/소문자, 숫자, @ 조합 6~20자"
                   autoComplete="current-password"
-                />
+                ></TextField>
 
                 <Button
                   type="submit"
@@ -348,7 +347,7 @@ function SignUp() {
                 onFailure={responseFail}
                 cookiePolicy={"single_host_origin"}
                 className={classes.google}
-              />
+              ></GoogleLogin>
 
               <KakaoLogin
                 jsKey="d507ecdb10512afbd7bfbf2d5a9f788a"
@@ -358,7 +357,7 @@ function SignUp() {
                 throughTalk={true} // If true, Open Kakao Talk instead of new browser tab
                 getProfile={true}
                 className={classes.kakao}
-              />
+              ></KakaoLogin>
             </div>
           </Grid>
         </Grid>
@@ -366,7 +365,7 @@ function SignUp() {
     );
   } else {
     // 회원가입이 성공했을 때!!
-    return <Redirect to="/ranking" />;
+    return <Redirect to="/ranking" ></Redirect>;
     // 여기서 /ranking 으로 바로 넘어가게 만들어주세요!
   }
 }

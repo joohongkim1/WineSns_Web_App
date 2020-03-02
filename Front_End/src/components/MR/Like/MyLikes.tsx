@@ -123,7 +123,6 @@ export default function MyLikes() {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(30);
 
-  console.log(userLike);
   const numEachPage: number = 30;
 
   const handleChange = (value: number) => {
