@@ -70,7 +70,9 @@ class FormPage extends React.Component<IProps, IState> {
   };
 
   // Login Fail
-  responseFail = (err: any) => {};
+  responseFail = (err: any) => {
+    console.log();
+  };
 
   render() {
     let { email, password } = this.state;
