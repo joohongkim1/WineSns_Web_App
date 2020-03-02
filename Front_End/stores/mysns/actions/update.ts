@@ -73,13 +73,11 @@ export class UpdateContentsState extends ContentsStateRecord {
 
 const updatePostSaga = createRequestSaga(UPDATE_POST, updatePosts); // axios function 생성 필요
 export function* updateSaga() {
-  console.log('실행좀...')
   yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
 const deletePostSaga = createRequestSaga(DELETE_POST, deletePosts); // axios function 생성 필요
 export function* deleteSaga() {
-  console.log('실행좀...')
   yield takeLatest(DELETE_POST, deletePostSaga);
 }
 

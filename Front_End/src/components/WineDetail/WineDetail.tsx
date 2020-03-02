@@ -53,6 +53,11 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
+  },
+
+  reviewHeader: {
+    fontSize: "20px",
+    fontStyle: "bold"
   }
 }));
 
@@ -70,7 +75,7 @@ function getModalStyle() {
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
     height: `800px`,
-    width: `2000px`,
+    width: `1300px`,
   };
 }
 
@@ -85,9 +90,7 @@ interface MyComponentProps extends RouteComponentProps<RouterProps> {
 function WineDetail(props: MyComponentProps) {
   // wid url parameter로 넘어옴
   const classes = useStyles();
-  console.log(props);
   const wid = +props.match.params.wid;
-  console.log(wid);
 
   // 모달 상태 관리
   const [modalStyle] = React.useState(getModalStyle);
@@ -116,9 +119,6 @@ function WineDetail(props: MyComponentProps) {
     (state: rootState) => state.feedReducer
   );
 
-  // console.log("wine initialState");
-  // console.log(wine);
-
   const loadWineDetail = async () => {
     let userLike = JSON.parse(sessionStorage.getItem("userLike") || "{}");
 
@@ -129,7 +129,6 @@ function WineDetail(props: MyComponentProps) {
       }
     }
 
-    // console.log("onWine");
     await dispatch(getWineDetail(wid));
     await dispatch(getFeedListByWID(wid, "REVIEW"));
 
@@ -297,7 +296,7 @@ function WineDetail(props: MyComponentProps) {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
-          <h1 id="simple-modal-title">리뷰 작성하기</h1>
+          <div id="simple-modal-title" className={classes.reviewHeader}>리뷰 작성하기</div>
           <div>
             {/* 에디터 들어갈 공간 */}
             <WritePage wid={wid} onCancel={handleClose} />

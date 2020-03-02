@@ -10,7 +10,6 @@ interface contents {
 
 
 async function writePost({content, rating, title, wid}:contents) : Promise<Response>{
-  console.log('publish 받음')
   let data = JSON.stringify({
     content: content,
       rating: 10,
@@ -38,7 +37,6 @@ async function writePost({content, rating, title, wid}:contents) : Promise<Respo
 }
 
 async function updatePost({content, rating, title, wid}:contents, fid:number) : Promise<Response>{
-  console.log('publish 받음')
   let data = JSON.stringify({
     content: content,
       rating: 10,
