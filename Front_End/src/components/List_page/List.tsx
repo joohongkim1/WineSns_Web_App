@@ -157,7 +157,7 @@ export default function List() {
       ...state,
       [name]: event.target.value
     });
-    console.log(event.target.value); // 이건 맞다...
+
   };
   const numEachPage: number = 15;
   const [curPage, setCurPage] = useState(1);
@@ -185,10 +185,9 @@ export default function List() {
   const loadWineListByUse = async (checkedValues: any) => {
     handleChange(1);
     setUses(checkedValues);
-    console.log("hey");
+
     if (checkedValues.length > 0) {
-      // console.log(checkedValues);handleChange(1);
-      console.log(checkedValues);
+
       await dispatch(getWineUseList(countries, checkedValues));
     } else if (countries.length > 0) {
       await dispatch(getWineListByNameList(countries));
@@ -206,12 +205,12 @@ export default function List() {
   };
 
   async function onChangeCountryChk(checkedValues: any) {
-    console.log("checked = ", checkedValues);
+   
     await loadWineListByChecked(checkedValues);
   }
 
   async function onChangeWineUse(checkedValues: any) {
-    console.log("checked = ", checkedValues);
+
     await loadWineListByUse(checkedValues);
   }
 

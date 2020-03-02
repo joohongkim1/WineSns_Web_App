@@ -50,7 +50,7 @@ export default function Ranking() {
   } = useSelector((state: rootState) => state.wineRankReducer);
 
   const loadWineTop10 = async () => {
-    console.log("onWineTop10List");
+
     await dispatch(getWineTop5("VISIT_5"));
     await dispatch(getReviewTop5("LIKE_5"));
   };

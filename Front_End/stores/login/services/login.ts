@@ -26,8 +26,7 @@ async function login(email: string, password: string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-      // console.log("in axios");
-      // console.log(response);
+
       localStorage.setItem('token', <any>response.data.list[0].toString());
 
       sessionStorage.setItem(
@@ -39,10 +38,10 @@ async function login(email: string, password: string): Promise<Response> {
         "userInfo", response.data.list[2].toString()
       );
 
-
+      getUserFollowList();
       likeWineByUser();
       likeFeedByUser();
-      
+
       return response;
     })
     .catch(() => {
@@ -124,6 +123,7 @@ async function likeFeedByUser(): Promise<Response> {
 
 
 
+
 async function getUserFollowList(): Promise<Response> {
 
   return HTTPS.get('/follow/findByFollowing', {
@@ -139,14 +139,10 @@ async function getUserFollowList(): Promise<Response> {
 
       if (!response) {
         return Promise.reject(response.statusText);
-
       }
-
       sessionStorage.setItem(
         "userFollow", JSON.stringify(response.data)
       );
-      
-
       
       return response;
     })
@@ -156,6 +152,7 @@ async function getUserFollowList(): Promise<Response> {
     })
 
 }
+
 
 
 
@@ -192,7 +189,7 @@ async function SNSLogin(id: string, nickname: string, provider: string): Promise
       );
       likeWineByUser();
       likeFeedByUser();
-      
+      getUserFollowList();
       return response;
 
     })

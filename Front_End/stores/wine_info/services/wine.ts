@@ -71,8 +71,7 @@ async function getWineListByNameList(names : string[]): Promise<Response> {
 
 
 async function getWineUseList(countries : string[], names : string[]): Promise<Response> {
-  console.log("what");
-    console.log(names);
+
   let query1 = "";
   if(countries.length == 0) {
     query1 = "";

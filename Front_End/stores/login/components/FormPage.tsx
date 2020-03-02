@@ -31,7 +31,6 @@ class FormPage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    console.log(props);
 
     this.state = {
       id: "",
@@ -58,9 +57,7 @@ class FormPage extends React.Component<IProps, IState> {
   };
   // Kakao Login
   responseKakao = async (res: any) => {
-    // console.log(res);
-    // console.log(res.profile.id);
-    // console.log(res.profile.properties.nickname);
+
     this.setState({
       id: res.profile.id,
       nickname: "HELLO",
@@ -73,7 +70,9 @@ class FormPage extends React.Component<IProps, IState> {
   };
 
   // Login Fail
-  responseFail = (err: any) => {};
+  responseFail = (err: any) => {
+    console.log();
+  };
 
   render() {
     let { email, password } = this.state;
@@ -93,8 +92,9 @@ class FormPage extends React.Component<IProps, IState> {
                 name="email"
                 onChange={e => this.setState({ email: e.target.value })}
                 value={email}
+                placeholder="Email"
               ></input>
-              <span data-placeholder="Email"></span>
+         
             </div>
             <div className="txtb">
               <input
@@ -103,8 +103,9 @@ class FormPage extends React.Component<IProps, IState> {
                 name="password"
                 onChange={e => this.setState({ password: e.target.value })}
                 value={password}
+                placeholder="Password"
               ></input>
-              <span data-placeholder="Password"></span>
+    
             </div>
 
             <input type="submit" className="logbtn" value="Login" />
@@ -120,8 +121,7 @@ class FormPage extends React.Component<IProps, IState> {
               })()}
             </div>
             <div className="bottom-text">
-              <a href="#">Forgot Password?</a>
-              <a href="/signUp">Sign up</a>
+              <a href="/signUp" style={{fontSize : '18px'}}>Sign up</a>
             </div>
             <div
               style={{

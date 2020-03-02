@@ -229,7 +229,7 @@ export default function Navbar() {
               return (
                 <div className={classes.sign}>
                   <Button onClick={handleOpen} className={classes.link}>
-                    Login{" "}
+                    Login
                   </Button>
                   <Modal
                     aria-labelledby="transition-modal-title"

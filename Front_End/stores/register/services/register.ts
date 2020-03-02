@@ -55,13 +55,10 @@ async function SNSRegister(nickname : string, id : string, provider : string): P
     
    }
    
-   console.log(response.data.success);
-   
    return response.data.success;
   })
   .catch((e) => {
 
-    console.log(e);
     return Promise.reject('Backend not reachable');
    
   })
@@ -71,7 +68,6 @@ async function SNSRegister(nickname : string, id : string, provider : string): P
 
 // 이메일 중복 체크 함수
 async function emailCheck(email : string): Promise<Response> {
-  console.log("what")
   return HTTPS.post('/user/checkEmail',null, {
     params :{ 
        email : email
@@ -83,15 +79,12 @@ async function emailCheck(email : string): Promise<Response> {
     if (!response) {
       return Promise.reject(response.statusText);
     
-   }
-   console.log("heys");
+   };
 
-   console.log(response.data.succss);
    return response.data.success;
   })
   .catch((e) => {
 
-    console.log(e);
     return Promise.reject('Backend not reachable');
    
   })

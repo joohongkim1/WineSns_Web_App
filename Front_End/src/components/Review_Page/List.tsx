@@ -117,7 +117,7 @@ export default function List() {
   let end: number = 0;
 
   const loadReviewList = async () => {
-    console.log("onReviewList");
+  
     await dispatch(getFeedAll());
   };
   const numEachPage: number = 30;
