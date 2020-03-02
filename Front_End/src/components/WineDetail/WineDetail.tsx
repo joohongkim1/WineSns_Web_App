@@ -132,8 +132,7 @@ function WineDetail(props: MyComponentProps) {
     // console.log("onWine");
     await dispatch(getWineDetail(wid));
     await dispatch(getFeedListByWID(wid, "REVIEW"));
-    console.log("this is wine State");
-    console.log(wine);
+
   };
 
   const likeThis = async () => {
@@ -149,7 +148,7 @@ function WineDetail(props: MyComponentProps) {
   if (!wineState) {
     loadWineDetail();
     setWineState(true);
-  }
+  } 
   return (
     <React.Fragment>
       <main>
@@ -208,7 +207,7 @@ function WineDetail(props: MyComponentProps) {
                       {" "}
                       <img className="imgWineKind" />
                       <strong>
-                        와인 종류 <span>White</span>{" "}
+                        와인 종류 <span>{wine.type}</span>{" "}
                       </strong>{" "}
                     </li>
                     <li>
