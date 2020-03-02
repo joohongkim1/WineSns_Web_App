@@ -92,8 +92,9 @@ class FormPage extends React.Component<IProps, IState> {
                 name="email"
                 onChange={e => this.setState({ email: e.target.value })}
                 value={email}
+                placeholder="Email"
               ></input>
-              <span data-placeholder="Email"></span>
+         
             </div>
             <div className="txtb">
               <input
@@ -102,8 +103,9 @@ class FormPage extends React.Component<IProps, IState> {
                 name="password"
                 onChange={e => this.setState({ password: e.target.value })}
                 value={password}
+                placeholder="Password"
               ></input>
-              <span data-placeholder="Password"></span>
+    
             </div>
 
             <input type="submit" className="logbtn" value="Login" />
@@ -119,8 +121,7 @@ class FormPage extends React.Component<IProps, IState> {
               })()}
             </div>
             <div className="bottom-text">
-              <a href="#">Forgot Password?</a>
-              <a href="/signUp">Sign up</a>
+              <a href="/signUp" style={{fontSize : '18px'}}>Sign up</a>
             </div>
             <div
               style={{
