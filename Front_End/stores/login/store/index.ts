@@ -44,7 +44,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middlewares: any[] = [];
 
-middlewares.push(logger);
+// middlewares.push(logger);
 middlewares.push(thunk);
 middlewares.push(sagaMiddleware);
 

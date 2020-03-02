@@ -153,18 +153,11 @@ function SignUp() {
     e.preventDefault();
     let { nickname, email, password } = state;
 
-    console.log("hey");
     await dispatch(register(state.nickname, state.email, state.password));
-
-    console.log();
   };
 
   // Google Login
   const responseGoogle = async (res: any) => {
-    console.log("success");
-    console.log(res);
-    // console.log(res.w3.ofa);
-    console.log(res.googleId);
     setState({
       email: "",
       password: "",
@@ -179,9 +172,6 @@ function SignUp() {
   };
   // Kakao Login
   const responseKakao = async (res: any) => {
-    console.log(res);
-    console.log(res.profile.id);
-    console.log(res.profile.properties.nickname);
     setState({
       email: "",
       password: "",
@@ -195,19 +185,11 @@ function SignUp() {
 
   // Login Fail
   const responseFail = (err: any) => {
-    console.log("hey");
-    console.log(err);
-    console.error(err);
   };
 
   const onEmailCheck = async () => {
-    console.log("email");
-    console.log(state.email);
-    await dispatch(emailCheck(state.email));
 
-    console.log("email State");
-    console.log(isRegisterSuccess);
-    console.log(emailState);
+    await dispatch(emailCheck(state.email));
   };
 
   if (!isRegisterSuccess) {

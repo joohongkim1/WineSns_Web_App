@@ -67,7 +67,6 @@ export function SNSRegister(nickname : string, id : string, provider : string) {
     dispatch(setRegisterPending(true));
     dispatch(setRegisterSuccess(false));
     dispatch(setRegisterError("not yet"));
-    console.log("register loading...");
     
     await registerService.register(nickname, id, provider).then(
 

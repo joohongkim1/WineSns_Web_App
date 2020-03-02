@@ -26,8 +26,7 @@ async function login(email: string, password: string): Promise<Response> {
         return Promise.reject(response.statusText);
 
       }
-      // console.log("in axios");
-      // console.log(response);
+
       localStorage.setItem('token', <any>response.data.list[0].toString());
 
       sessionStorage.setItem(

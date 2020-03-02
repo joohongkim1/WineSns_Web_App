@@ -85,9 +85,9 @@ interface MyComponentProps extends RouteComponentProps<RouterProps> {
 function WineDetail(props: MyComponentProps) {
   // wid url parameter로 넘어옴
   const classes = useStyles();
-  console.log(props);
+  // console.log(props);
   const wid = +props.match.params.wid;
-  console.log(wid);
+  // console.log(wid);
 
   // 모달 상태 관리
   const [modalStyle] = React.useState(getModalStyle);

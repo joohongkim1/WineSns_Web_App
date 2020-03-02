@@ -63,8 +63,6 @@ export function getWineListByNameList(names : string[]) {
 
 
 export function getWineUseList(countries : string[], names : string[]) {
-  console.log("www");
-  console.log(names);
   return async (dispatch: (arg0: { type: string; isLoginPending?: boolean; isLoginSuccess?: boolean; loginError?: string; }) => void) => {
    dispatch(setWinePending(true));
 

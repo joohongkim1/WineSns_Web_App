@@ -121,8 +121,6 @@ export default function List(props: any) {
     isSmartSearchError
   } = useSelector((state: rootState) => state.SmartSearchReducer);
   const loadWineList = async () => {
-    console.log("on Smart Search List");
-    console.log(taste);
     await dispatch(
       getSmartSearch(
         taste.alcohol,
@@ -135,8 +133,7 @@ export default function List(props: any) {
   };
 
   const loadWineListByName = async () => {
-    console.log("on Smart Search List By Name");
-    console.log(taste);
+ 
     await dispatch(getSmartSearchByName(name));
   };
 
@@ -153,9 +150,9 @@ export default function List(props: any) {
   if (!isSmartSearchSucceess && !wineState && taste != null) {
     loadWineList();
     setWineState(true);
-    console.log("taste is not null");
+
   } else if (!isSmartSearchSucceess && !wineState && taste == null) {
-    console.log("taste is null");
+
     loadWineListByName();
     setWineState(true);
   } else {
