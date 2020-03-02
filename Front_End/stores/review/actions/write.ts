@@ -69,13 +69,11 @@ export class ReviewContentsState extends ContentsStateRecord {
 
 const writePostSaga = createRequestSaga(WRITE_POST, post.writePost);
 export function* reviewWriteSaga() {
-  console.log('실행좀...')
   yield takeLatest(WRITE_POST, writePostSaga);
 }
 
 const updatePostSaga = createRequestSaga(UPDATE_POST, post.updatePost); // axios function 생성 필요
 export function* reviewUpdateSaga() {
-  console.log('실행좀...')
   yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 

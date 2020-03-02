@@ -7,10 +7,10 @@ import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/style
 export default function WriteActionButtons( params: { onCancel: any, onPublish: any }) {
   return (
     <div>
-      <Button onClick={params.onPublish}>
+      <Button variant="outlined" onClick={params.onPublish}>
         포스트 등록
       </Button>
-      <Button onClick={params.onCancel}>
+      <Button variant="outlined" onClick={params.onCancel}>
         취소
       </Button>
       </div>

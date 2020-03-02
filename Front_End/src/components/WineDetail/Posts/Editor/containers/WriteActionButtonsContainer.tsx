@@ -19,12 +19,10 @@ interface write {
 
 
 const WriteActionButtonsContainer = ( {onCancel}:any ) => {
-  console.log('aaaaaaa')
   const dispatch = useDispatch();
   const { content, rating, title, wid, post, postError } = useSelector(( state: rootState ) => (
     state.write
   ));
-  console.log(content, rating, title, wid, post, postError)
   function refreshPage() {
     window.location.reload(true);
   }
@@ -33,7 +31,6 @@ const WriteActionButtonsContainer = ( {onCancel}:any ) => {
     dispatch(
       refreshPage
     )
-    console.log('publish')
     dispatch(
       writePost({
         content,
@@ -44,21 +41,8 @@ const WriteActionButtonsContainer = ( {onCancel}:any ) => {
     );
   };
 
-
-  // // 성공 혹은 실패시 할 작업
-  // useEffect(() => {
-  //   if (post) {
-  //     const { _id, user } = post;
-  //     history.push(`/@${user.username}/${_id}`);
-  //   }
-  //   if (postError) {
-  //     console.log(postError);
-  //   }
-  // }, [history, post, postError]);
   return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
-
   
 };
 
-// export default withRouter(WriteActionButtonsContainer);
 export default WriteActionButtonsContainer;

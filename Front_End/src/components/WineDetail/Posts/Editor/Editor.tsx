@@ -15,7 +15,16 @@ import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/style
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
+    titleInput: {
+      margin: "13px",
+    },
+    title: {
+      marginTop: "13px",
+      marginBottom: "13px",
+    },
+    titleContainer: {
+      display: "flex"
+    }
   }),
 
 );
@@ -29,7 +38,7 @@ interface post {
 }
 
 export default function Editor({ content, rating, title, wid, onChangeField}: post){
-
+  const classes = useStyles();
   const [value, setValue] = React.useState<number | null>(2);
 
   const quillElement = useRef<any>();
@@ -66,12 +75,16 @@ export default function Editor({ content, rating, title, wid, onChangeField}: po
 
   return (
     <div>
-      <input
-        placeholder="제목을 입력하세요"
-        onChange={onChangeTitle}
-        value={title}
-      />
-        <div ref={quillElement} />
+      <div className={classes.titleContainer}>
+        <div className={classes.title}>제목 : </div>
+        <input
+          placeholder="제목을 입력하세요"
+          onChange={onChangeTitle}
+          value={title}
+          className = {classes.titleInput}
+        />
+      </div>
+      <div ref={quillElement} />
 
       <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend">Controlled</Typography>
