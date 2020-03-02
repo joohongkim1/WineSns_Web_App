@@ -6,7 +6,9 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-const Quill: any = Q;
+// const Quill: any = Q;
+// import * as Q from "quill";
+const Quill = Q.default || Q;
 // import styled from 'styled-components'
 import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/styles';
 

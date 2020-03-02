@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import * as Q from "quill";
-const Quill: any = Q;
+const Quill = Q.default || Q;
+// const Quill: any = Q;
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
