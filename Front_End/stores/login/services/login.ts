@@ -9,7 +9,7 @@ export const loginService = {
 }
 
 async function login(email: string, password: string): Promise<Response> {
-  console.log("normal login");
+
   return HTTPS.get('/user/signin', {
     params: {
       email: email,
@@ -30,12 +30,11 @@ async function login(email: string, password: string): Promise<Response> {
       // console.log(response);
       localStorage.setItem('token', <any>response.data.list[0].toString());
 
-
       sessionStorage.setItem(
         "uid", response.data.list[1].toString()
       );
       
-   
+      
       sessionStorage.setItem(
         "userInfo", response.data.list[2].toString()
       );
@@ -162,7 +161,6 @@ async function getUserFollowList(): Promise<Response> {
 
 
 async function SNSLogin(id: string, nickname: string, provider: string): Promise<Response> {
-  console.log("SNS login");
   return HTTPS.post('/user/sns/signup',null, {
     params : {
       nickName : "Hello",
@@ -175,7 +173,7 @@ async function SNSLogin(id: string, nickname: string, provider: string): Promise
   }
   )
     .then(function (response: Response | any) {
-      console.log("ok");
+
       if (!response) {
         return Promise.reject(response.statusText);
 
