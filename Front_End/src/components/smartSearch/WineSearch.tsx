@@ -392,16 +392,10 @@ export default function WineSearch() {
     }
     function handleClick(e: any) {
         e.preventDefault();
-
-        console.log(search);
     }
 
     function searchTaste(e: any) {
         e.preventDefault();
-        console.log("searchTaste");
-        
-        console.log(search);
-        console.log(state);
     }
 
 

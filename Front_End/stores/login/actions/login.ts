@@ -44,8 +44,6 @@ export function SNSLogin(id : string, nickname: string, provider : string) {
      
     response => {
  
-  
-      //  console.log(localStorage.getItem('token'));
        dispatch(setLoginPending(false));
        dispatch(setLoginSuccess(true));
 

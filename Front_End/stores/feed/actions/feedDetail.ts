@@ -28,10 +28,6 @@ export function getFeedDetailByFID(fid : number) {
       let commentList = JSON.parse(comment || '{}');
       
 
-      // let wineList : Wine[] = response.map((item: Wine) => {
-      //   console.log(item);
-      // });
-
       dispatch(setFeedDetailSuccess(true, feedDetail, commentList));
       
      },

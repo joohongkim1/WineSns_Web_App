@@ -31,7 +31,6 @@ class FormPage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    console.log(props);
 
     this.state = {
       id: "",
@@ -58,9 +57,7 @@ class FormPage extends React.Component<IProps, IState> {
   };
   // Kakao Login
   responseKakao = async (res: any) => {
-    // console.log(res);
-    // console.log(res.profile.id);
-    // console.log(res.profile.properties.nickname);
+
     this.setState({
       id: res.profile.id,
       nickname: "HELLO",

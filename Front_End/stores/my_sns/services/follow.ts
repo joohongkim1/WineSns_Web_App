@@ -27,8 +27,7 @@ async function getUserFollowerList(): Promise<Response> {
           return Promise.reject(response.statusText);
   
         }
-  
-        console.log("GET User Follower List");
+
   
         return response.data as any;
       })

@@ -60,7 +60,7 @@ export default function TempTop3() {
   } = useSelector((state: rootState) => state.wineRankReducer);
 
   const loadWineTop3 = async () => {
-    console.log("onWineTop3List");
+
     await dispatch(getWineTop3("VISIT_3"));
   };
 
