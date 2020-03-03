@@ -105,6 +105,7 @@ export default function Navbar() {
 
     window.location.href = "/ranking";
     sessionStorage.clear();
+    localStorage.clear();
     logout();
   };
 

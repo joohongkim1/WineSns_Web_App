@@ -265,7 +265,7 @@ function WineDetail(props: MyComponentProps) {
 
             <div className="btn_area right">
               {(function() {
-                if (likeState) {
+                if (likeState && sessionStorage.getItem("userInfo")) {
                   return (
                     <IconButton
                       aria-label="add to favorites"
@@ -274,7 +274,7 @@ function WineDetail(props: MyComponentProps) {
                       <FavoriteIcon color="secondary" />
                     </IconButton>
                   );
-                } else {
+                } else if(!likeState && sessionStorage.getItem("userInfo")) {
                   return (
                     <IconButton
                       aria-label="add to favorites"
@@ -286,9 +286,18 @@ function WineDetail(props: MyComponentProps) {
                 }
               })()}
 
-              <button className="btns btn_line_type blue" onClick={handleOpen}>
+        {(function() {
+
+          
+            if (sessionStorage.getItem("userInfo")) {
+              return (
+                <button className="btns btn_line_type blue" onClick={handleOpen}>
                 리뷰작성
               </button>
+              );
+            }
+          })()}
+
               <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
