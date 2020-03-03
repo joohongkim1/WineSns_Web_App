@@ -33,7 +33,6 @@ import { getWineListByType } from "../../../stores/wine_info/actions/wineInfo";
 import { useSelector, useDispatch } from "react-redux";
 import AfterSection from "./AfterSection";
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
@@ -147,7 +146,7 @@ export default function Navbar() {
           className={classes.link}
           style={{ textDecoration: "none", color: "#000000" }}
         >
-          My Account
+          개인정보변경
         </Link>
       </MenuItem>
     </Menu>
@@ -216,12 +215,11 @@ export default function Navbar() {
 
           {(function() {
             if (!sessionStorage.getItem("userInfo")) {
-                return(<Section />);
-          
-        } else {
-            return(<AfterSection />);
-        }
-      })()}
+              return <Section />;
+            } else {
+              return <AfterSection />;
+            }
+          })()}
           <div className={classes.grow} />
 
           {(function() {
@@ -264,20 +262,6 @@ export default function Navbar() {
               return (
                 <div>
                   <div className={classes.sectionDesktop}>
-                    {/* 메일 및 쪽지 알림참 */}
-                    <IconButton aria-label="show 4 new mails" color="inherit">
-                      <Badge badgeContent={8} color="secondary">
-                        <MailIcon />
-                      </Badge>
-                    </IconButton>
-                    <IconButton
-                      aria-label="show 17 new notifications"
-                      color="inherit"
-                    >
-                      <Badge badgeContent={17} color="secondary">
-                        <NotificationsIcon />
-                      </Badge>
-                    </IconButton>
                     <IconButton
                       edge="end"
                       aria-label="account of current user"

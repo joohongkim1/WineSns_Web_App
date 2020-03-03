@@ -75,7 +75,7 @@ export default function TempTop3() {
       <main>
         {/* Hero unit */}
         <Slider />
-        <Typography style={{ fontSize: "12px" }}>
+        <Typography style={{ fontSize: "12px", textAlign: "right" }}>
           * 좌우 방향키로도 이동 가능합니다.
         </Typography>
         <Container className={classes.cardGrid} maxWidth="md">

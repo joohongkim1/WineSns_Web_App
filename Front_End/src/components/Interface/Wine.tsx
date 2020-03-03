@@ -65,10 +65,10 @@ function WineInfo(wine: WineInfo) {
             />
             <CardContent className={classes.cardContent}>
               <Typography className={classes.typography}>
-                {wine.nameKor.substring(0, 20)}
+                {wine.nameKor}
               </Typography>
               <Typography className={classes.typography}>
-                {wine.nameEng.substring(0, 25)}
+                {wine.nameEng}
               </Typography>
               <br />
               <Typography>

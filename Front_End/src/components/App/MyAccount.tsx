@@ -91,17 +91,13 @@ function MyAccount() {
     let { email, password } = state;
 
     // await dispatch(register(state.email, state.password));
-
   };
 
   // Login Fail
-  const responseFail = (err: any) => {
-  };
+  const responseFail = (err: any) => {};
 
   const onEmailCheck = async () => {
-
     await dispatch(emailCheck(state.email));
-
   };
 
   return (
@@ -121,7 +117,7 @@ function MyAccount() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            My Account
+            개인정보변경
           </Typography>
           <form className={classes.form} onSubmit={onSubmit}>
             <TextField

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const sections = [
-  { title: "랭킹", url: "/ranking" },
+  { title: "Home", url: "/ranking" },
   { title: "와인 리스트", url: "/list" },
   { title: "와인 리뷰", url: "/wineReview" },
   { title: "Smart Search", url: "/smartSearch" }
