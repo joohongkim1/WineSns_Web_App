@@ -77,6 +77,9 @@ Dionysos - Wine Web Community
 #### 와인 상세 페이지 
 ![와인](/img/latest/와인상세페이지.png "WineInfo")
 
+#### 리뷰 작성 화면
+![와인](/img/latest/리뷰작성화면.PNG "write review")
+
 #### 리뷰 리스트
 ![와인](/img/latest/리뷰리스트.png "Review List")
 
